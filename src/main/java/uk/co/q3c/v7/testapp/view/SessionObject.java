@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 David Sowerby
+ * Copyright (C) 2014 David Sowerby
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,22 +12,24 @@
  */
 package uk.co.q3c.v7.testapp.view;
 
-import java.util.List;
-
-import uk.co.q3c.v7.base.view.PublicHomeView;
-import uk.co.q3c.v7.base.view.StandardPageViewBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.inject.Inject;
+import com.google.inject.servlet.SessionScoped;
 
-public class TestAppPublicHomeView extends StandardPageViewBase implements PublicHomeView {
+@SessionScoped
+public class SessionObject {
+	private static Logger log = LoggerFactory.getLogger(SessionObject.class);
+	private final String sessionData = "starting the session";
 
 	@Inject
-	public TestAppPublicHomeView() {
+	protected SessionObject() {
 		super();
+		log.debug("~~~ creating session object ~~~");
 	}
 
-	@Override
-	protected void processParams(List<String> params) {
+	public String getSessionData() {
+		return sessionData;
 	}
-
 }
