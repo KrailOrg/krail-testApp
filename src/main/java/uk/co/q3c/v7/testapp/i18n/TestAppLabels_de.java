@@ -12,28 +12,32 @@
  */
 package uk.co.q3c.v7.testapp.i18n;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import com.google.common.collect.ImmutableMap;
 
-import uk.co.q3c.v7.i18n.I18NKey;
+/**
+ * 
+ * 
+ * @author David Sowerby 9 Feb 2013
+ * 
+ */
+public class TestAppLabels_de extends Labels {
 
-public enum DescriptionKey implements I18NKey<Descriptions> {
-	_nullkey_, Notifications
+	private static final ImmutableMap<TestAppLabelKey, String> map;
 
-	;
-	@Override
-	public Descriptions getBundle(Locale locale) {
-		ResourceBundle bundle = ResourceBundle.getBundle(Descriptions.class.getName(), locale);
-		return (Descriptions) bundle;
+	static {
+		map = new ImmutableMap.Builder<TestAppLabelKey, String>()
+// @formatter:off	
+
+		.put(TestAppLabelKey.Yes, "ja")
+		.put(TestAppLabelKey.No, "nein")
+		.build();
+		
+// @formatter:on
 	}
 
 	@Override
-	public String getValue(Locale locale) {
-		return getBundle(locale).getValue(this);
+	public ImmutableMap<TestAppLabelKey, String> getMap() {
+		return map;
 	}
 
-	@Override
-	public boolean isNullKey() {
-		return this.equals(_nullkey_);
-	}
 }
