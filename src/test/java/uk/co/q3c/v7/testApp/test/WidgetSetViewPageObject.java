@@ -13,27 +13,23 @@
 
 package uk.co.q3c.v7.testApp.test;
 
-import com.vaadin.testbench.util.VersionUtil;
-import org.junit.Test;
+import com.google.common.base.Optional;
+import org.vaadin.risto.stepper.IntStepper;
+import uk.co.q3c.v7.testapp.view.WidgetsetView;
 import uk.co.q3c.v7.testbench.V7TestBenchTestCase;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import uk.co.q3c.v7.testbench.page.element.IntStepperElement;
+import uk.co.q3c.v7.testbench.page.object.PageObject;
 
 /**
- * Created by david on 04/10/14.
+ * Created by David Sowerby on 19/10/14.
  */
-public class VaadinVersionTest extends V7TestBenchTestCase {
+public class WidgetSetViewPageObject extends PageObject {
 
-    @Test
-    public void confirmVersion() {
-        //given
-        driver.get(rootUrl());
-        pause(500);
-        //when
+    public WidgetSetViewPageObject(V7TestBenchTestCase parentCase) {
+        super(parentCase);
+    }
 
-        //then
-        assertThat(VersionUtil.getVaadinMajorVersion(getDriver())).isEqualTo(7);
-        assertThat(VersionUtil.getVaadinMinorVersion(getDriver())).isEqualTo(3);
-        assertThat(VersionUtil.getVaadinRevision(getDriver())).isEqualTo(2);
+    public IntStepperElement stepper() {
+        return element(IntStepperElement.class, Optional.absent(), WidgetsetView.class, IntStepper.class);
     }
 }
