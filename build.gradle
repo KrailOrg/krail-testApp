@@ -10,15 +10,29 @@
 //build for Krail test application
 
 apply from: 'http://plugins.jasoft.fi/vaadin.plugin'
+apply plugin: 'eclipse'
+
+version = '0.7.0'
 
 
-ext.tomcatHome = "/home/david/tomcat7_8080"
+project.ext.vaadinVersion = '7.3.4'
+
+ext.userHome = System.getProperty("user.home")
+ext.tomcatHome = userHome + "/tomcat7_8080"
+
+ext.exportDir = userHome + "/temp/jars/" + project.name
+ext.warName = 'krail-testApp.war'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
 
 
 war {
     exclude 'WEB-INF/lib/*'
-    archiveName "testapp.war"
-    destinationDir file("/home/david/temp")
+    archiveName = warName
+    destinationDir file(userHome + "/temp")
 }
 
 vaadin {
@@ -27,19 +41,31 @@ vaadin {
     serverPort 8001
 }
 
+task publish(type: Copy, dependsOn: 'war') {
+    from userHome + "/temp/" + warName
+    into userHome + "/temp/jars/" + project.name
+    rename { String fileName ->
+        fileName.replace('.war', '-' + version + '.war')
+    }
+    doLast {
+        println 'war copied to: ' + exportDir
+    }
+}
+
 
 task stopTomcat(type: Exec) {
 
     //on linux
-    commandLine '/home/david/stop7_8080.sh'
+    commandLine userHome + '/stop7_8080.sh'
 
 }
+
 task startTomcat(type: Exec) {
 
-    commandLine '/home/david/start7_8080.sh'
-
+    commandLine userHome + '/start7_8080.sh'
 
 }
+
 
 task deployToTomcat(type: Copy) {
     it.dependsOn("war")
@@ -58,12 +84,14 @@ task waitForTomcat(dependsOn: startTomcat) {
 }
 
 task showResults(type: Exec, dependsOn: test) {
-    commandLine '/home/david/testapp_results.sh'
+    commandLine userHome + '/testApp_results.sh'
 }
 
+
 task cleanTomcat(type: Delete, dependsOn: stopTomcat) {
-    delete '/home/david/tomcat7_8080/webapps/testapp.war', '/home/david/tomcat7_8080/webapps/testapp'
+    delete tomcatHome + '/webapps/krail-testApp.war', tomcatHome + '/webapps/krail-testApp'
 }
+
 
 
 deployToTomcat.mustRunAfter(stopTomcat)
@@ -83,19 +111,29 @@ task cleantest(dependsOn: ['clean', 'cleanTomcat', 'deployToTomcat', 'waitForTom
 
 dependencies {
 
-    //vaadin push
-    compile 'com.vaadin:vaadin-push:' + vaadinVersion
+
+    //Krail
+    compile 'uk.q3c.krail:krail:0.7+'
+
+    //test
+    testCompile 'uk.q3c.krail:krail-bench:0.7+'
+    testCompile 'uk.q3c.util:testUtil:0.7+'
+    testCompile 'com.mycila:mycila-guice:2.10.ga'
+    testCompile 'com.mycila.testing.plugins:mycila-testing-guice:2.8'
+    testCompile 'com.mycila.testing.plugins:mycila-testing-mockito:2.8'
+    testCompile 'org.mockito:mockito-all:1.9.0'
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.assertj:assertj-core:1.5.0'
+    testCompile 'org.assertj:assertj-joda-time:1.1.0'
+    testCompile 'org.assertj:assertj-guava:1.0.0'
 
     //UI components
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.6'
     compile 'org.vaadin.addons:stepper:2.1.2'
 
-    compile project(':V7')
 
-
-    testCompile project(':krail-bench')
-    testCompile project(':testUtil')
-    testCompile 'com.vaadin:vaadin-testbench:' + testbenchVersion
+    //vaadin push
+    compile 'com.vaadin:vaadin-push:' + vaadinVersion
 
 
 }

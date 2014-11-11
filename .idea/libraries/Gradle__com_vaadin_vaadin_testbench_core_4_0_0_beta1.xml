@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.vaadin:vaadin-testbench-core:4.0.0.beta1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/gradle/caches/modules-2/files-2.1/com.vaadin/vaadin-testbench-core/4.0.0.beta1/e30e458e60f41206fc3fb0350804f7d344d851e0/vaadin-testbench-core-4.0.0.beta1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/gradle/caches/modules-2/files-2.1/com.vaadin/vaadin-testbench-core/4.0.0.beta1/d7604ddb3461cfd96f9fa208d38f68fe3a9a24ba/vaadin-testbench-core-4.0.0.beta1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
