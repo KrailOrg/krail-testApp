@@ -1,6 +1,3 @@
-krail-testApp
-=============
-
 # Krail Test Application
 
 [Krail](https://github.com/davidsowerby/krail) (previously known as V7) provides a framework for rapid Java web development by combining Vaadin, Guice, Apache Shiro, Apache configuration and others.
