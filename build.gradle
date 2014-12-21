@@ -9,13 +9,13 @@
  */
 //build for Krail test application
 
-apply from: 'http://plugins.jasoft.fi/vaadin.plugin'
+apply from: 'http://plugins.jasoft.fi/vaadin-groovy.plugin?version=0.9.2'
 apply plugin: 'eclipse'
 
 version = '0.7.0'
 
 
-project.ext.vaadinVersion = '7.3.4'
+project.ext.vaadinVersion = '7.3.6'
 
 ext.userHome = System.getProperty("user.home")
 ext.tomcatHome = userHome + "/tomcat7_8080"
@@ -113,10 +113,10 @@ dependencies {
 
 
     //Krail
-    compile 'uk.q3c.krail:krail:0.7+'
+    compile 'uk.q3c.krail:krail:0.7.2-draft'
 
     //test
-    testCompile 'uk.q3c.krail:krail-bench:0.7+'
+    testCompile 'uk.q3c.krail:krail-bench:0.7.1'
     testCompile 'uk.q3c.util:testUtil:0.7+'
     testCompile 'com.mycila:mycila-guice:2.10.ga'
     testCompile 'com.mycila.testing.plugins:mycila-testing-guice:2.8'

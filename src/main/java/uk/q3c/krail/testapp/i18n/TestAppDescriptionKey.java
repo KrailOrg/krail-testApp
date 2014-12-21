@@ -14,6 +14,6 @@ package uk.q3c.krail.testapp.i18n;
 
 import uk.q3c.krail.i18n.I18NKey;
 
-public enum TestAppDescriptionKey implements I18NKey<Descriptions> {
+public enum TestAppDescriptionKey implements I18NKey {
     Notifications
 }

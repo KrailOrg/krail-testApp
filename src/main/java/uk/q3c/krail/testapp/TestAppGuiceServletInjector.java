@@ -14,7 +14,7 @@
 package uk.q3c.krail.testapp;
 
 import com.google.inject.Module;
-import uk.q3c.krail.core.guice.BaseGuiceServletInjector;
+import uk.q3c.krail.core.guice.DefaultBindingManager;
 import uk.q3c.krail.core.navigate.sitemap.SystemAccountManagementPages;
 import uk.q3c.krail.testapp.i18n.TestAppI18NModule;
 import uk.q3c.krail.testapp.view.TestAppPages;
@@ -23,7 +23,7 @@ import uk.q3c.krail.testapp.view.TestAppViewModule;
 import java.util.List;
 
 //@WebListener
-public class TestAppGuiceServletInjector extends BaseGuiceServletInjector {
+public class TestAppGuiceServletInjector extends DefaultBindingManager {
 
     @Override
     protected void addAppModules(List<Module> modules) {

@@ -14,7 +14,7 @@ package uk.q3c.krail.testapp.i18n;
 
 import uk.q3c.krail.i18n.I18NKey;
 
-public enum TestAppLabelKey implements I18NKey<Labels> {
+public enum TestAppLabelKey implements I18NKey {
 
     Yes,
     No,

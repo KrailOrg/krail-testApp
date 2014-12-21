@@ -12,8 +12,7 @@
  */
 package uk.q3c.krail.testapp.i18n;
 
-import com.google.common.collect.ImmutableMap;
-import uk.q3c.krail.i18n.MapResourceBundle;
+import uk.q3c.krail.i18n.EnumResourceBundle;
 
 /**
  * The base for the resource bundle of Labels. This is an arbitrary division of i18N keys & values, but is loosely
@@ -22,25 +21,12 @@ import uk.q3c.krail.i18n.MapResourceBundle;
  *
  * @author David Sowerby 9 Feb 2013
  */
-public class Labels extends MapResourceBundle<TestAppLabelKey> {
+public class Labels extends EnumResourceBundle<TestAppLabelKey> {
 
-    private static final ImmutableMap<uk.q3c.krail.testapp.i18n.TestAppLabelKey, String> map;
-
-    static {
-        map = new ImmutableMap.Builder<TestAppLabelKey, String>()
-                // @formatter:off
-				
-		.put(TestAppLabelKey.Yes, "yes")
-		.put(TestAppLabelKey.No, "no")
-		.build();
-		
-// @formatter:on
-
-    }
 
     @Override
-    public ImmutableMap<TestAppLabelKey, String> getMap() {
-        return map;
+    protected void loadMap() {
+        put(TestAppLabelKey.Yes, "yes");
+                put(TestAppLabelKey.No, "no");
     }
-
 }

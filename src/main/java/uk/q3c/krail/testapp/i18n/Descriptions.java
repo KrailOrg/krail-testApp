@@ -12,9 +12,8 @@
  */
 package uk.q3c.krail.testapp.i18n;
 
-import com.google.common.collect.ImmutableMap;
+import uk.q3c.krail.i18n.EnumResourceBundle;
 import uk.q3c.krail.i18n.Labels;
-import uk.q3c.krail.i18n.MapResourceBundle;
 import uk.q3c.krail.i18n.Messages;
 
 /**
@@ -27,28 +26,19 @@ import uk.q3c.krail.i18n.Messages;
  *
  * @author David Sowerby 3 Aug 2013
  */
-public class Descriptions extends MapResourceBundle<TestAppDescriptionKey> {
+public class Descriptions extends EnumResourceBundle<TestAppDescriptionKey> {
 
-    private static final ImmutableMap<uk.q3c.krail.testapp.i18n.TestAppDescriptionKey, String> map;
-
-    static {
-        map = new ImmutableMap.Builder<TestAppDescriptionKey, String>()
-                // @formatter:off
-            .put(TestAppDescriptionKey.Notifications, "Vaadin provides " + "<a href=\"https://vaadin" +
-                    ".com/en_GB/book/vaadin7/-/page/application.notifications.html\" " +
-                    "target=\"\">notification</a>" + " 'splash' messages.  Krail adds to this by enabling the use of " +
-                    "multiple" + " methods of notification, combined or selected for each of the message types - " +
-                    "Error, " + "Warning and Information, and invoked through a single call to the UserNotifier class" +
-                    ".  " + "\nConfiguration is through a Guice module (DefaultUserNotificationModule by default)." +
-                    "\nWhen you try the buttons below, note that the " + "message is presented through both the " +
-                    "Vaadin notification and the message bar.  " + "For more detail see the " + "<a " +
-                    "href=\"https://sites.google.com/site/q3cjava/notifications\" target=\"\">V7 " +
-                    "documentation</a>")
-            .build();
+    @Override
+    protected void loadMap() {
+        put(TestAppDescriptionKey.Notifications, "Vaadin provides " + "<a href=\"https://vaadin" +
+                ".com/en_GB/book/vaadin7/-/page/application.notifications.html\" " +
+                "target=\"\">notification</a>" + " 'splash' messages.  Krail adds to this by enabling the use of " +
+                "multiple" + " methods of notification, combined or selected for each of the message types - " +
+                "Error, " + "Warning and Information, and invoked through a single call to the UserNotifier class" +
+                ".  " + "\nConfiguration is through a Guice module (DefaultUserNotificationModule by default)." +
+                "\nWhen you try the buttons below, note that the " + "message is presented through both the " +
+                "Vaadin notification and the message bar.  " + "For more detail see the " + "<a " +
+                "href=\"https://sites.google.com/site/q3cjava/notifications\" target=\"\">V7 " +
+                "documentation</a>");
     }
-
-	@Override
-	public ImmutableMap<uk.q3c.krail.testapp.i18n.TestAppDescriptionKey, String> getMap() {
-		return map;
-	}
 }
