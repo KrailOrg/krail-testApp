@@ -42,6 +42,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
     @Before
     public void setUp() throws Exception {
+        appContext="krail-testApp";
     }
 
     @Test

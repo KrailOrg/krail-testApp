@@ -36,6 +36,7 @@ public class WidgetsetTest extends KrailTestBenchTestCase {
     @Test
     public void stepper() {
         // given
+        appContext="krail-testApp";
         driver.get(rootUrl());
         pause(500);
         navigateTo("widgetset");

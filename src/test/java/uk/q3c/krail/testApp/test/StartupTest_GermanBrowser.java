@@ -41,6 +41,7 @@ public class StartupTest_GermanBrowser extends KrailTestBenchTestCase {
 
     @Before
     public void setUp() throws Exception {
+        appContext="krail-testApp";
         driver.get(rootUrl());
     }
 

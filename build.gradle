@@ -15,7 +15,7 @@ apply plugin: 'eclipse'
 version = '0.7.0'
 
 
-project.ext.vaadinVersion = '7.3.6'
+project.ext.vaadinVersion = '7.3.4'
 
 ext.userHome = System.getProperty("user.home")
 ext.tomcatHome = userHome + "/tomcat7_8080"

@@ -19,6 +19,6 @@ public class TestAppLabels_de extends Labels {
     @Override
     protected void loadMap() {
         put(TestAppLabelKey.Yes, "ja");
-                put(TestAppLabelKey.No, "nein");
+        put(TestAppLabelKey.No, "nein");
     }
 }
