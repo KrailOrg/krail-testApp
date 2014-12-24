@@ -109,9 +109,6 @@ deployToTomcat.mustRunAfter(cleanTomcat)
 test.mustRunAfter(waitForTomcat)
 
 
-
-
-
 task cleantest(dependsOn: ['clean', 'cleanTomcat', 'deployToTomcat', 'waitForTomcat', 'test']) {
 
 }
