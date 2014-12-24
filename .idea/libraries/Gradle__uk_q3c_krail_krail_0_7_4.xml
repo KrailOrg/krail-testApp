@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: uk.q3c.krail:krail:0.7.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/localRepo/uk/q3c/krail/krail/0.7.4/krail-0.7.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/localRepo/uk/q3c/krail/krail/0.7.4/krail-0.7.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -32,7 +32,7 @@ public class Push_Functional extends KrailTestBenchTestCase {
 
     @Before
     public void setup() {
-        appContext="krail-testApp";
+        appContext = "krail-testapp";
         selectDriver(1);
         driver2 = TestBench.createDriver(new FirefoxDriver());
         driver2.manage()

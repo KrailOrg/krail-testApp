@@ -12,7 +12,6 @@
  */
 package uk.q3c.krail.testapp.view;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -26,6 +25,8 @@ import uk.q3c.krail.core.push.Broadcaster;
 import uk.q3c.krail.core.view.KrailViewChangeEvent;
 import uk.q3c.krail.core.view.component.BroadcastMessageLog;
 import uk.q3c.util.ID;
+
+import java.util.Optional;
 
 public class PushView extends ViewBaseGrid {
 
@@ -73,7 +74,7 @@ public class PushView extends ViewBaseGrid {
 
             @Override
             public void valueChange(ValueChangeEvent event) {
-                applicationConfiguration.setProperty(ConfigKeys.SERVER_PUSH_ENABLED, (boolean) event.getProperty()
+                applicationConfiguration.setProperty(ConfigKeys.SERVER_PUSH_ENABLED, event.getProperty()
                                                                                                     .getValue());
             }
 
@@ -98,12 +99,12 @@ public class PushView extends ViewBaseGrid {
     @Override
     public void setIds() {
         super.setIds();
-        getGrid().setId(ID.getId(Optional.absent(), this, getGrid()));
+        getGrid().setId(ID.getId(Optional.empty(), this, getGrid()));
         sendButton.setId(ID.getId(Optional.of("send"), this, sendButton));
         groupInput.setId(ID.getId(Optional.of("group"), this, groupInput));
         messageInput.setId(ID.getId(Optional.of("message"), this, messageInput));
-        messageLog.setId(ID.getId(Optional.absent(), this, messageLog));
-        pushEnabled.setId(ID.getId(Optional.absent(), this, pushEnabled));
+        messageLog.setId(ID.getId(Optional.empty(), this, messageLog));
+        pushEnabled.setId(ID.getId(Optional.empty(), this, pushEnabled));
     }
 
 

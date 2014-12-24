@@ -12,7 +12,6 @@
  */
 package uk.q3c.krail.testapp.view;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -27,6 +26,8 @@ import org.vaadin.risto.stepper.IntStepper;
 import uk.q3c.krail.core.view.KrailViewChangeEvent;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.util.ID;
+
+import java.util.Optional;
 
 public class WidgetsetView extends ViewBase {
     private static Logger log = LoggerFactory.getLogger(WidgetsetView.class);
@@ -44,9 +45,9 @@ public class WidgetsetView extends ViewBase {
 
 
     /**
-     * Called after the view itself has been constructed but before {@link #buildView()} is called.  Typically checks
-     * whether a valid URI parameters are being passed to the view, or uses the URI parameters to set up some
-     * configuration which affects the way the view is presented.
+     * Called after the view itself has been constructed but before {@link #buildView(KrailViewChangeEvent)} } is
+     * called.  Typically checks whether a valid URI parameters are being passed to the view, or uses the URI
+     * parameters to set up some configuration which affects the way the view is presented.
      *
      * @param event
      *         contains information about the change to this View
@@ -105,8 +106,8 @@ public class WidgetsetView extends ViewBase {
     @Override
     public void setIds() {
         super.setIds();
-        getGrid().setId(ID.getId(Optional.absent(), this, getGrid()));
+        getGrid().setId(ID.getId(Optional.empty(), this, getGrid()));
         popupButton.setId(ID.getId(Optional.of("popup"), this, popupButton));
-        stepper.setId(ID.getId(Optional.absent(), this, stepper));
+        stepper.setId(ID.getId(Optional.empty(), this, stepper));
     }
 }

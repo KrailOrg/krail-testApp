@@ -11,22 +11,48 @@
 
 apply from: 'http://plugins.jasoft.fi/vaadin-groovy.plugin?version=0.9.2'
 apply plugin: 'eclipse'
+apply plugin: 'project-report'
+apply plugin: 'maven'
 
-version = '0.7.0'
+version = '0.7.3'
 
-
-project.ext.vaadinVersion = '7.3.4'
+project.ext.vaadinVersion = '7.3.7'
 
 ext.userHome = System.getProperty("user.home")
 ext.tomcatHome = userHome + "/tomcat7_8080"
 
-ext.exportDir = userHome + "/temp/jars/" + project.name
-ext.warName = 'krail-testApp.war'
+ext.warName = 'krail-testapp.war'
 
 repositories {
+    maven {
+        url "file:///" + System.getProperty("user.home") + "/localRepo"
+    }
     jcenter()
     mavenCentral()
 }
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://localhost/" + System.getProperty("user.home") + "/localRepo")
+            pom {
+                groupId = "uk.q3c.krail"
+                project {
+                    inceptionYear '2014'
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            distribution 'repo'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 
 war {
@@ -40,18 +66,6 @@ vaadin {
     version vaadinVersion
     serverPort 8001
 }
-
-task publish(type: Copy, dependsOn: 'war') {
-    from userHome + "/temp/" + warName
-    into userHome + "/temp/jars/" + project.name
-    rename { String fileName ->
-        fileName.replace('.war', '-' + version + '.war')
-    }
-    doLast {
-        println 'war copied to: ' + exportDir
-    }
-}
-
 
 task stopTomcat(type: Exec) {
 
@@ -83,10 +97,6 @@ task waitForTomcat(dependsOn: startTomcat) {
     }
 }
 
-task showResults(type: Exec, dependsOn: test) {
-    commandLine userHome + '/testApp_results.sh'
-}
-
 
 task cleanTomcat(type: Delete, dependsOn: stopTomcat) {
     delete tomcatHome + '/webapps/krail-testApp.war', tomcatHome + '/webapps/krail-testApp'
@@ -97,12 +107,12 @@ task cleanTomcat(type: Delete, dependsOn: stopTomcat) {
 deployToTomcat.mustRunAfter(stopTomcat)
 deployToTomcat.mustRunAfter(cleanTomcat)
 test.mustRunAfter(waitForTomcat)
-showResults.mustRunAfter(test)
 
 
 
 
-task cleantest(dependsOn: ['clean', 'cleanTomcat', 'deployToTomcat', 'waitForTomcat', 'test', 'showResults']) {
+
+task cleantest(dependsOn: ['clean', 'cleanTomcat', 'deployToTomcat', 'waitForTomcat', 'test']) {
 
 }
 
@@ -113,11 +123,10 @@ dependencies {
 
 
     //Krail
-    compile 'uk.q3c.krail:krail:0.7.2-draft'
+    compile 'uk.q3c.krail:krail:0.7.6'
 
     //test
-    testCompile 'uk.q3c.krail:krail-bench:0.7.1'
-    testCompile 'uk.q3c.util:testUtil:0.7+'
+    testCompile 'uk.q3c.krail:krail-bench:0.7.3'
     testCompile 'com.mycila:mycila-guice:2.10.ga'
     testCompile 'com.mycila.testing.plugins:mycila-testing-guice:2.8'
     testCompile 'com.mycila.testing.plugins:mycila-testing-mockito:2.8'
@@ -134,6 +143,9 @@ dependencies {
 
     //vaadin push
     compile 'com.vaadin:vaadin-push:' + vaadinVersion
+
+    //Testbench
+    testCompile 'com.vaadin:vaadin-testbench:4.0.1'
 
 
 }

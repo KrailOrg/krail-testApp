@@ -12,7 +12,6 @@
  */
 package uk.q3c.krail.testapp.view;
 
-import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -25,6 +24,8 @@ import uk.q3c.krail.i18n.MessageKey;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.TestAppDescriptionKey;
 import uk.q3c.util.ID;
+
+import java.util.Optional;
 
 public class NotificationsView extends ViewBase {
     private final UserNotifier userNotifier;
@@ -45,9 +46,9 @@ public class NotificationsView extends ViewBase {
 
 
     /**
-     * Called after the view itself has been constructed but before {@link #buildView()} is called.  Typically checks
-     * whether a valid URI parameters are being passed to the view, or uses the URI parameters to set up some
-     * configuration which affects the way the view is presented.
+     * Called after the view itself has been constructed but before {@link #buildView(KrailViewChangeEvent)} is
+     * called.  Typically checks whether a valid URI parameters are being passed to the view, or uses the URI
+     * parameters to set up some configuration which affects the way the view is presented.
      *
      * @param event
      *         contains information about the change to this View
@@ -122,7 +123,7 @@ public class NotificationsView extends ViewBase {
     @Override
     public void setIds() {
         super.setIds();
-        grid.setId(ID.getId(Optional.absent(), this, grid));
+        grid.setId(ID.getId(Optional.empty(), this, grid));
         infoButton.setId(ID.getId(Optional.of("information"), this, infoButton));
         warnButton.setId(ID.getId(Optional.of("warning"), this, warnButton));
         errorButton.setId(ID.getId(Optional.of("error"), this, errorButton));

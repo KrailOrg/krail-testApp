@@ -13,12 +13,13 @@
 
 package uk.q3c.krail.testApp.test;
 
-import com.google.common.base.Optional;
 import org.vaadin.risto.stepper.IntStepper;
 import uk.q3c.krail.testapp.view.WidgetsetView;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.element.IntStepperElement;
 import uk.q3c.krail.testbench.page.object.PageObject;
+
+import java.util.Optional;
 
 /**
  * Created by David Sowerby on 19/10/14.
@@ -30,6 +31,6 @@ public class WidgetSetViewPageObject extends PageObject {
     }
 
     public IntStepperElement stepper() {
-        return element(IntStepperElement.class, Optional.absent(), WidgetsetView.class, IntStepper.class);
+        return element(IntStepperElement.class, Optional.empty(), WidgetsetView.class, IntStepper.class);
     }
 }

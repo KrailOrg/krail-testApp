@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: uk.q3c.krail:krail-bench:0.7.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/localRepo/uk/q3c/krail/krail-bench/0.7.2/krail-bench-0.7.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/uk/q3c/krail/krail-bench/0.7.2/krail-bench-0.7.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/localRepo/uk/q3c/krail/krail-bench/0.7.2/krail-bench-0.7.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/uk/q3c/krail/krail-bench/0.7.2/krail-bench-0.7.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

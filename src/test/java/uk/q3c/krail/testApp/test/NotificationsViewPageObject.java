@@ -13,12 +13,13 @@
 
 package uk.q3c.krail.testApp.test;
 
-import com.google.common.base.Optional;
 import com.vaadin.testbench.elements.ButtonElement;
 import com.vaadin.ui.Button;
 import uk.q3c.krail.testapp.view.NotificationsView;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.PageObject;
+
+import java.util.Optional;
 
 /**
  * Created by David Sowerby on 19/10/14.

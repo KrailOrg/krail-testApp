@@ -13,7 +13,6 @@
 
 package uk.q3c.krail.testApp.push;
 
-import com.google.common.base.Optional;
 import com.vaadin.testbench.elements.ButtonElement;
 import com.vaadin.testbench.elements.CheckBoxElement;
 import com.vaadin.testbench.elements.TextAreaElement;
@@ -25,6 +24,8 @@ import uk.q3c.krail.core.view.component.BroadcastMessageLog;
 import uk.q3c.krail.testapp.view.PushView;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.PageObject;
+
+import java.util.Optional;
 
 /**
  * PageObject representing {@link PushView} used to assist the {@link Push_Functional} test
@@ -38,7 +39,7 @@ public class PushViewPageObject extends PageObject {
     }
 
     public TextFieldElement groupBox() {
-        return element(TextFieldElement.class, Optional.of("group"), PushView.class, TextField.class);
+        return element(TextFieldElement.class, java.util.Optional.of("group"), PushView.class, TextField.class);
     }
 
     public TextFieldElement messageBox() {
@@ -50,11 +51,11 @@ public class PushViewPageObject extends PageObject {
     }
 
     public TextAreaElement messageLog() {
-        return element(TextAreaElement.class, Optional.absent(), PushView.class, BroadcastMessageLog.class);
+        return element(TextAreaElement.class, Optional.empty(), PushView.class, BroadcastMessageLog.class);
     }
 
     public CheckBoxElement checkbox() {
-        return element(CheckBoxElement.class, Optional.absent(), PushView.class, CheckBox.class);
+        return element(CheckBoxElement.class, Optional.empty(), PushView.class, CheckBox.class);
     }
 
 }
