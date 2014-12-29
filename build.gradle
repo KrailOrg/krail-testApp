@@ -118,7 +118,6 @@ task cleantest(dependsOn: ['clean', 'cleanTomcat', 'deployToTomcat', 'waitForTom
 
 dependencies {
 
-
     //Krail
     compile 'uk.q3c.krail:krail:0.7.6'
 
@@ -137,13 +136,26 @@ dependencies {
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.6'
     compile 'org.vaadin.addons:stepper:2.1.2'
 
-
     //vaadin push
     compile 'com.vaadin:vaadin-push:' + vaadinVersion
 
     //Testbench
     testCompile 'com.vaadin:vaadin-testbench:4.0.1'
 
+    //JPA
+    //Eclipse Link &  Java Persistence API
+    compile 'org.eclipse.persistence:eclipselink:2.5.2'
+
+    //guice extension
+    compile 'com.google.inject.extensions:guice-persist:3.0'
+    //JPA container
+    compile 'com.vaadin.addon:jpacontainer:3.1.1'
+
+    //HyperSQL DB
+    compile 'org.hsqldb:hsqldb:2.3.2'
+
+    //Derby Db
+    compile 'org.apache.derby:derby:10.11.1.1'
 
 }
 
