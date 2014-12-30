@@ -12,9 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import uk.q3c.krail.testapp.persist.Jpa1;
-import uk.q3c.krail.testapp.persist.PModule;
-import uk.q3c.krail.testapp.persist.Todo;
+import uk.q3c.krail.testapp.persist.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -35,10 +33,16 @@ public class PersistViewTest {
     Injector injector;
     EntityManager em;
     @Inject
-    //    @Jpa1
-            PersistenceService persistService;
+    @Jpa1
+    PersistenceService persistService1;
+
     @Inject
-    //    @Jpa1
+    @Jpa2
+    PersistenceService persistService2;
+
+
+    @Inject
+    @Jpa1
             EntityManagerProvider em2;
 
     @Before
@@ -85,15 +89,14 @@ public class PersistViewTest {
 
     }
 
-    @Transactional(onUnits = Jpa1.class)
     @Test
     public void injected() {
         //given
-        persistService.start();
+        persistService1.start();
         //when
 
         //then
-        assertThat(persistService.isRunning());
+        assertThat(persistService1.isRunning());
         assertThat(em2.get()).isNotNull();
         em = em2.get();
         em.getTransaction()
@@ -127,14 +130,20 @@ public class PersistViewTest {
     @Test
     public void injected2() {
         //given
-        persistService.start();
-        JpaTestClass jpaTestClass = injector.getInstance(JpaTestClass.class);
+        persistService1.start();
+        persistService2.start();
+        JpaTestDao1 jpaTestDao1 = injector.getInstance(JpaTestDao1.class);
+        JpaTestDao2 jpaTestDao2 = injector.getInstance(JpaTestDao2.class);
         //when
-        jpaTestClass.save();
+        jpaTestDao1.save();
+        jpaTestDao2.save();
         //then
-        assertThat(jpaTestClass.readAll()).hasSize(1);
-        System.out.println(jpaTestClass.readAll()
+        assertThat(jpaTestDao1.readAll()).hasSize(2);
+        assertThat(jpaTestDao2.readAll()).hasSize(2);
+        System.out.println(jpaTestDao1.readAll()
                                        .get(0));
+        System.out.println(jpaTestDao1.readAll()
+                                      .get(1));
     }
 
     @After
@@ -143,30 +152,35 @@ public class PersistViewTest {
             em.close();
         }
         System.out.println("stopping service");
-        persistService.stop();
+        persistService1.stop();
+        persistService2.stop();
     }
 
-    public static class JpaTestClass {
+    public static class JpaTestDao1 {
 
         private EntityManagerProvider entityManagerProvider;
 
 
         @Inject
-        public JpaTestClass(EntityManagerProvider entityManagerProvider) {
+        public JpaTestDao1(@Jpa1 EntityManagerProvider entityManagerProvider) {
             this.entityManagerProvider = entityManagerProvider;
         }
 
         @Transactional
         public void save() {
-            Todo todo = new Todo();
-            todo.setSummary("To do summary");
-            todo.setDescription("This is a wiggly test");
+            Todo todo1 = new Todo();
+            todo1.setSummary("Jpa1");
+            todo1.setDescription("pojo 1");
+
+            Todo todo2 = new Todo();
+            todo2.setSummary("Jpa1");
+            todo2.setDescription("pojo 2");
 
             EntityManager entityManager = entityManagerProvider.get();
-            //            entityManager.getTransaction().begin();
 
-            entityManager.persist(todo);
 
+            entityManager.persist(todo1);
+            entityManager.persist(todo2);
         }
 
         @Transactional
@@ -175,6 +189,43 @@ public class PersistViewTest {
             Query q = entityManager.createQuery("select t from Todo t");
             List<Todo> todoList = q.getResultList();
             return todoList;
+        }
+
+    }
+
+    public static class JpaTestDao2 {
+
+        private EntityManagerProvider entityManagerProvider;
+
+
+        @Inject
+        public JpaTestDao2(@Jpa2 EntityManagerProvider entityManagerProvider) {
+            this.entityManagerProvider = entityManagerProvider;
+        }
+
+        @Transactional
+        public void save() {
+            Widget widget1 = new Widget();
+            widget1.setName("Jpa2");
+            widget1.setDescription("pojo 1");
+
+            Widget widget2 = new Widget();
+            widget2.setName("Jpa2");
+            widget2.setDescription("pojo 2");
+
+            EntityManager entityManager = entityManagerProvider.get();
+
+
+            entityManager.persist(widget1);
+            entityManager.persist(widget2);
+        }
+
+        @Transactional
+        public List<Widget> readAll() {
+            EntityManager entityManager = entityManagerProvider.get();
+            Query q = entityManager.createQuery("select t from Widget t");
+            List<Widget> widgetList = q.getResultList();
+            return widgetList;
         }
 
     }

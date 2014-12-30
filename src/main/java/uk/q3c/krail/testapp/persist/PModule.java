@@ -14,7 +14,10 @@ public class PModule extends PersistenceModule {
      */
     @Override
     protected void configurePersistence() {
-        this.bindApplicationManagedPersistenceUnit("todos");
+        this.bindApplicationManagedPersistenceUnit("todos")
+            .annotatedWith(Jpa1.class);
+        this.bindApplicationManagedPersistenceUnit("widgets")
+            .annotatedWith(Jpa2.class);
     }
 
 
