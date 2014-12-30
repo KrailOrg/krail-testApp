@@ -4,6 +4,16 @@
     <facet type="gwt" name="GWT">
       <configuration />
     </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="" />
+        <datasource-mapping>
+          <factory-entry name="todos" />
+        </datasource-mapping>
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
+      </configuration>
+    </facet>
     <facet type="web" name="Web Gradle : krail-testapp.war">
       <configuration>
         <descriptors>
@@ -17,16 +27,6 @@
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
         </sourceRoots>
-      </configuration>
-    </facet>
-    <facet type="jpa" name="JPA">
-      <configuration>
-        <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="" />
-        <datasource-mapping>
-          <factory-entry name="todos" />
-        </datasource-mapping>
-        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/webapp/META-INF/persistence.xml" />
       </configuration>
     </facet>
   </component>
@@ -177,11 +177,11 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.vaadin:vaadin-testbench-api:7.3.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.detro:phantomjsdriver:1.2.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.eclipse.persistence:eclipselink:2.5.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.google.inject.extensions:guice-persist:3.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.vaadin.addon:jpacontainer:3.1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.eclipse.persistence:javax.persistence:2.1.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.eclipse.persistence:commonj.sdo:2.1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.hsqldb:hsqldb:2.3.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.derby:derby:10.11.1.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.apache.onami:org.apache.onami.persist:1.0.1" level="project" />
   </component>
 </module>

@@ -12,16 +12,14 @@
  */
 package uk.q3c.krail.testapp;
 
-import com.google.inject.persist.PersistFilter;
-import com.google.inject.persist.jpa.JpaPersistModule;
 import com.google.inject.servlet.ServletModule;
+import org.apache.onami.persist.PersistenceFilter;
 
 public class TestAppServletModule extends ServletModule {
 
     @Override
     protected void configureServlets() {
-        install(new JpaPersistModule("todos"));  // like we saw earlier.
-        filter("/*").through(PersistFilter.class);
+        filter("/*").through(PersistenceFilter.class);
         serve("/*").with(TestAppServlet.class);
     }
 

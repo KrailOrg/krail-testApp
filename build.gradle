@@ -147,7 +147,7 @@ dependencies {
     compile 'org.eclipse.persistence:eclipselink:2.5.2'
 
     //guice extension
-    compile 'com.google.inject.extensions:guice-persist:3.0'
+    compile 'org.apache.onami:org.apache.onami.persist:1.0.1'
     //JPA container
     compile 'com.vaadin.addon:jpacontainer:3.1.1'
 
