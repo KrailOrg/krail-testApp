@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.mycila.testing.junit.MycilaJunitRunner;
 import com.mycila.testing.plugin.guice.GuiceContext;
-import org.apache.commons.io.FileUtils;
 import org.apache.onami.persist.EntityManagerProvider;
 import org.apache.onami.persist.PersistenceService;
 import org.junit.After;
@@ -14,7 +13,6 @@ import org.junit.runner.RunWith;
 import uk.q3c.krail.testapp.persist.*;
 
 import javax.persistence.EntityManagerFactory;
-import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,14 +38,14 @@ public class JpaViewTest {
 
     @Before
     public void setup() {
-        File f = new File("/home/david/temp/derbyDb");
-        if (f.exists()) {
-            FileUtils.deleteQuietly(f);
-        }
-        f = new File("/home/david/temp/derbyDb2");
-        if (f.exists()) {
-            FileUtils.deleteQuietly(f);
-        }
+        //        File f = new File("/home/david/temp/derbyDb");
+        //        if (f.exists()) {
+        //            FileUtils.deleteQuietly(f);
+        //        }
+        //        f = new File("/home/david/temp/derbyDb2");
+        //        if (f.exists()) {
+        //            FileUtils.deleteQuietly(f);
+        //        }
 
     }
 
