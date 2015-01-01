@@ -17,6 +17,8 @@ import com.google.inject.Module;
 import uk.q3c.krail.core.guice.DefaultBindingManager;
 import uk.q3c.krail.core.navigate.sitemap.SystemAccountManagementPages;
 import uk.q3c.krail.testapp.i18n.TestAppI18NModule;
+import uk.q3c.krail.testapp.persist.DaoModule;
+import uk.q3c.krail.testapp.persist.PModule;
 import uk.q3c.krail.testapp.view.TestAppPages;
 import uk.q3c.krail.testapp.view.TestAppViewModule;
 
@@ -28,6 +30,8 @@ public class TestAppBindingManager extends DefaultBindingManager {
     @Override
     protected void addAppModules(List<Module> modules) {
         modules.add(new TestAppUIModule());
+        modules.add(new PModule());
+        modules.add(new DaoModule());
     }
 
     @Override

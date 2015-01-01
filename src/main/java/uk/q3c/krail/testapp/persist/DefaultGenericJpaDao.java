@@ -2,6 +2,8 @@ package uk.q3c.krail.testapp.persist;
 
 import org.apache.onami.persist.EntityManagerProvider;
 import org.apache.onami.persist.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -12,25 +14,29 @@ import java.util.List;
 
 /**
  * A collection of common persistence actions for JPA data sources.  Note that this class must be injected for
+ *
  * @Transactional to take effect (it is using Guice AOP) and you must call {@link #setEntityManagerProvider
  * (EntityManagerProvider)} with your chosen EntityManagerProvider before calling any other methods.
- *
+ * <p>
  * This is necessary to allow Krail to support multiple JPA persistence units but still provide a generic JPA DAO
- *
+ * <p>
  * <p>
  * Created by David Sowerby on 30/12/14.
  */
 public class DefaultGenericJpaDao implements GenericJpaDao {
+    private static Logger log = LoggerFactory.getLogger(DefaultGenericJpaDao.class);
 
     private EntityManagerProvider entityManagerProvider;
 
     public DefaultGenericJpaDao() {
     }
 
+    @Override
     public EntityManagerProvider getEntityManagerProvider() {
         return entityManagerProvider;
     }
 
+    @Override
     public void setEntityManagerProvider(EntityManagerProvider entityManagerProvider) {
         this.entityManagerProvider = entityManagerProvider;
     }
@@ -45,6 +51,7 @@ public class DefaultGenericJpaDao implements GenericJpaDao {
     public <E extends JpaEntity> void persist(E entity) {
         EntityManager entityManager = entityManagerProvider.get();
         entityManager.persist(entity);
+        log.debug("{} persisted", entity);
     }
 
     /**
@@ -58,6 +65,7 @@ public class DefaultGenericJpaDao implements GenericJpaDao {
     public <E extends JpaEntity> void merge(E entity) {
         EntityManager entityManager = entityManagerProvider.get();
         entityManager.merge(entity);
+        log.debug("{} merged", entity);
     }
 
     @Override
@@ -65,7 +73,10 @@ public class DefaultGenericJpaDao implements GenericJpaDao {
     public <E extends JpaEntity> List<E> loadAll(Class<E> entityClass) {
         EntityManager entityManager = entityManagerProvider.get();
         Query q = entityManager.createQuery("select t from " + tableName(entityClass) + " t");
-        return q.getResultList();
+        log.debug("processing query {}", q);
+        List<E> results = q.getResultList();
+        log.debug("Returning all {} instances of {}", results.size(), entityClass);
+        return results;
     }
 
     protected <E extends JpaEntity> String tableName(Class<E> entityClass) {

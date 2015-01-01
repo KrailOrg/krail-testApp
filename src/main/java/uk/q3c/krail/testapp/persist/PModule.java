@@ -7,7 +7,6 @@ import org.apache.onami.persist.PersistenceModule;
  */
 public class PModule extends PersistenceModule {
 
-    //    private EntityManagerFactory entityManagerFactory= Persistence.createEntityManagerFactory("todos");
 
     /**
      * Configures the persistence units over the exposed methods.

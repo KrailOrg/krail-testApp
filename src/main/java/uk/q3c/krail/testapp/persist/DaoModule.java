@@ -8,10 +8,6 @@ import com.google.inject.AbstractModule;
 public class DaoModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(GenericJpaDao.class).annotatedWith(Jpa1.class)
-                                 .to(DefaultGenericJpaDao.class);
-        bind(GenericJpaDao.class).annotatedWith(Jpa2.class)
-                                 .to(DefaultGenericJpaDao.class);
-
+        bind(GenericJpaDao.class).to(DefaultGenericJpaDao.class);
     }
 }
