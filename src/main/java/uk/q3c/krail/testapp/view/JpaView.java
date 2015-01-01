@@ -1,5 +1,7 @@
 package uk.q3c.krail.testapp.view;
 
+import com.vaadin.ui.Button;
+import com.vaadin.ui.VerticalLayout;
 import uk.q3c.krail.core.ui.ScopedUI;
 import uk.q3c.krail.core.view.KrailViewChangeEvent;
 import uk.q3c.krail.core.view.ViewBase;
@@ -7,7 +9,10 @@ import uk.q3c.krail.core.view.ViewBase;
 /**
  * Created by David Sowerby on 29/12/14.
  */
-public class PersistView extends ViewBase {
+public class JpaView extends ViewBase {
+    private Button saveBtn1;
+    private Button saveBtn2;
+
     /**
      * Called after the view itself has been constructed but before {@link #buildView(KrailViewChangeEvent)} is called.
      * Typically checks
@@ -33,6 +38,11 @@ public class PersistView extends ViewBase {
      */
     @Override
     public void buildView(KrailViewChangeEvent event) {
-
+        VerticalLayout layout = new VerticalLayout();
+        saveBtn1 = new Button("persist 1");
+        saveBtn2 = new Button("persist 2");
+        layout.addComponent(saveBtn1);
+        layout.addComponent(saveBtn2);
+        setRootComponent(layout);
     }
 }

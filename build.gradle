@@ -119,7 +119,7 @@ task cleantest(dependsOn: ['clean', 'cleanTomcat', 'deployToTomcat', 'waitForTom
 dependencies {
 
     //Krail
-    compile 'uk.q3c.krail:krail:0.7.6'
+    compile 'uk.q3c.krail:krail:0.8.0'
 
     //test
     testCompile 'uk.q3c.krail:krail-bench:0.7.3'

@@ -24,6 +24,7 @@ public class TestAppPages extends DirectSitemapModule {
         addEntry("notifications", NotificationsView.class, LabelKey.Notifications, PageAccessControl.PUBLIC);
         addEntry("widgetset", WidgetsetView.class, LabelKey.Message_Box, PageAccessControl.PUBLIC);
         addEntry("notifications/push", PushView.class, LabelKey.Push, PageAccessControl.PUBLIC);
+        addEntry("jpa", JpaView.class, LabelKey.JPA, PageAccessControl.PUBLIC);
     }
 
 }

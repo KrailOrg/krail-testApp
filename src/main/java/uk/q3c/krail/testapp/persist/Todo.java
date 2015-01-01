@@ -6,19 +6,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Todo {
+public class Todo implements JpaEntity {
     private String description;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String summary;
+    private String name;
 
-    public String getSummary() {
-        return summary;
+    public String getName() {
+        return name;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setName(String summary) {
+        this.name = summary;
     }
 
     public String getDescription() {
@@ -31,7 +31,7 @@ public class Todo {
 
     @Override
     public String toString() {
-        return "Todo [summary=" + summary + ", description=" + description + "]";
+        return "Todo [summary=" + name + ", description=" + description + "]";
     }
 
 }

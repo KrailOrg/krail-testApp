@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Widget {
+public class Widget implements JpaEntity {
     private String description;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -14,9 +14,9 @@ public class PModule extends PersistenceModule {
      */
     @Override
     protected void configurePersistence() {
-        this.bindApplicationManagedPersistenceUnit("todos")
+        this.bindApplicationManagedPersistenceUnit("derbyDb1")
             .annotatedWith(Jpa1.class);
-        this.bindApplicationManagedPersistenceUnit("widgets")
+        this.bindApplicationManagedPersistenceUnit("hsqlDb")
             .annotatedWith(Jpa2.class);
     }
 
