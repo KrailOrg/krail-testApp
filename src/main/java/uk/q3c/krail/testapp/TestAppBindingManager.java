@@ -23,7 +23,7 @@ import uk.q3c.krail.testapp.view.TestAppViewModule;
 import java.util.List;
 
 //@WebListener
-public class TestAppGuiceServletInjector extends DefaultBindingManager {
+public class TestAppBindingManager extends DefaultBindingManager {
 
     @Override
     protected void addAppModules(List<Module> modules) {

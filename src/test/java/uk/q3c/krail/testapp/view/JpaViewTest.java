@@ -33,7 +33,13 @@ public class JpaViewTest {
     @Jpa2
     PersistenceService persistService2;
 
+    @Inject
+    @Jpa1
+    EntityManagerProvider entityManagerProvider1;
 
+    @Inject
+    @Jpa2
+    EntityManagerProvider entityManagerProvider2;
 
 
     @Before
@@ -71,29 +77,31 @@ public class JpaViewTest {
         Widget widget2_3 = newWidget("jpa2", 3);
         Widget widget2_4 = newWidget("jpa2", 4);
 
-        Dao1_Widget dao1Widget = injector.getInstance(Dao1_Widget.class);
-        Dao2_Widget dao2Widget = injector.getInstance(Dao2_Widget.class);
-        Dao1_Todo dao1Todo = injector.getInstance(Dao1_Todo.class);
-        Dao2_Todo dao2Todo = injector.getInstance(Dao2_Todo.class);
+        DefaultGenericJpaDao dao1 = injector.getInstance(DefaultGenericJpaDao.class);
+        dao1.setEntityManagerProvider(entityManagerProvider1);
+        DefaultGenericJpaDao dao2 = injector.getInstance(DefaultGenericJpaDao.class);
+        dao2.setEntityManagerProvider(entityManagerProvider2);
+
+
         //when
-        dao1Todo.persist(todo1_1);
-        dao1Widget.persist(widget1_1);
-        dao1Widget.persist(widget1_2);
+        dao1.persist(todo1_1);
+        dao1.persist(widget1_1);
+        dao1.persist(widget1_2);
 
-        dao2Todo.persist(todo2_1);
-        dao2Todo.persist(todo2_2);
-        dao2Todo.persist(todo2_3);
+        dao2.persist(todo2_1);
+        dao2.persist(todo2_2);
+        dao2.persist(todo2_3);
 
-        dao2Widget.persist(widget2_1);
-        dao2Widget.persist(widget2_2);
-        dao2Widget.persist(widget2_3);
-        dao2Widget.persist(widget2_4);
+        dao2.persist(widget2_1);
+        dao2.persist(widget2_2);
+        dao2.persist(widget2_3);
+        dao2.persist(widget2_4);
 
         //then
-        assertThat(dao1Todo.loadAll()).hasSize(1);
-        assertThat(dao1Widget.loadAll()).hasSize(2);
-        assertThat(dao2Todo.loadAll()).hasSize(3);
-        assertThat(dao2Widget.loadAll()).hasSize(4);
+        assertThat(dao1.loadAll(Todo.class)).hasSize(1);
+        assertThat(dao1.loadAll(Widget.class)).hasSize(2);
+        assertThat(dao2.loadAll(Todo.class)).hasSize(3);
+        assertThat(dao2.loadAll(Widget.class)).hasSize(4);
     }
 
     private Widget newWidget(String channel, int i) {
@@ -120,40 +128,6 @@ public class JpaViewTest {
         persistService2.stop();
     }
 
-    public static class Dao1_Widget extends JpaBaseDao<Widget> {
 
-        @Inject
-        public Dao1_Widget(@Jpa1 EntityManagerProvider entityManagerProvider) {
-            super(entityManagerProvider);
-            entityClass = Widget.class;
-        }
-    }
-
-    public static class Dao1_Todo extends JpaBaseDao<Todo> {
-
-        @Inject
-        public Dao1_Todo(@Jpa1 EntityManagerProvider entityManagerProvider) {
-            super(entityManagerProvider);
-            entityClass = Todo.class;
-        }
-    }
-
-
-    public static class Dao2_Widget extends JpaBaseDao<Widget> {
-        @Inject
-        public Dao2_Widget(@Jpa2 EntityManagerProvider entityManagerProvider) {
-            super(entityManagerProvider);
-            entityClass = Widget.class;
-        }
-    }
-
-    public static class Dao2_Todo extends JpaBaseDao<Todo> {
-
-        @Inject
-        public Dao2_Todo(@Jpa2 EntityManagerProvider entityManagerProvider) {
-            super(entityManagerProvider);
-            entityClass = Todo.class;
-        }
-    }
 
 }
