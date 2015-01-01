@@ -9,8 +9,10 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
         <datasource-mapping>
+          <factory-entry name="derbyDb" />
           <factory-entry name="derbyDb1" />
           <factory-entry name="derbyDb2" />
+          <factory-entry name="hsqlDb" />
           <factory-entry name="todos" />
           <factory-entry name="widgets" />
         </datasource-mapping>
