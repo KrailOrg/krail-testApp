@@ -11,6 +11,13 @@ import javax.persistence.metamodel.Metamodel;
 import java.util.List;
 
 /**
+ * A collection of common persistence actions for JPA data sources.  Note that this class must be injected for
+ * @Transactional to take effect (it is using Guice AOP) and you must call {@link #setEntityManagerProvider
+ * (EntityManagerProvider)} with your chosen EntityManagerProvider before calling any other methods.
+ *
+ * This is necessary to allow Krail to support multiple JPA persistence units but still provide a generic JPA DAO
+ *
+ * <p>
  * Created by David Sowerby on 30/12/14.
  */
 public class DefaultGenericJpaDao implements GenericJpaDao {
@@ -58,8 +65,7 @@ public class DefaultGenericJpaDao implements GenericJpaDao {
     public <E extends JpaEntity> List<E> loadAll(Class<E> entityClass) {
         EntityManager entityManager = entityManagerProvider.get();
         Query q = entityManager.createQuery("select t from " + tableName(entityClass) + " t");
-        List<E> todoList = q.getResultList();
-        return todoList;
+        return q.getResultList();
     }
 
     protected <E extends JpaEntity> String tableName(Class<E> entityClass) {
@@ -70,6 +76,7 @@ public class DefaultGenericJpaDao implements GenericJpaDao {
         //Check whether @Table annotation is present on the class.
         Table t = entityClass.getAnnotation(Table.class);
 
+        //If no Table annotation use the default (simple class name)
         String tableName = (t == null) ? entityType.getName() : t.name();
         return tableName;
     }
