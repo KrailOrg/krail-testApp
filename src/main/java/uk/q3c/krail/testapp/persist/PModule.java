@@ -1,13 +1,9 @@
 package uk.q3c.krail.testapp.persist;
 
 import org.apache.onami.persist.PersistenceModule;
-import org.eclipse.persistence.config.PersistenceUnitProperties;
-import org.eclipse.persistence.jpa.PersistenceProvider;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by David Sowerby on 30/12/14.
@@ -23,33 +19,37 @@ public class PModule extends PersistenceModule {
      */
     @Override
     protected void configurePersistence() {
-        //        prepFactory();
-        this.bindApplicationManagedPersistenceUnit("derbyDb")
-            .annotatedWith(Jpa1.class);
-        this.bindApplicationManagedPersistenceUnit("hsqlDb")
-            .annotatedWith(Jpa2.class);
+        prepFactory();
+        //        this.bindApplicationManagedPersistenceUnit("derbyDb")
+        //            .annotatedWith(Jpa1.class);
+        //        this.bindApplicationManagedPersistenceUnit("hsqlDb")
+        //            .annotatedWith(Jpa2.class);
 
-        //        this.bindContainerManagedPersistenceUnit(derbyEntityManagerFactory).annotatedWith(Jpa1.class);
-        //        this.bindContainerManagedPersistenceUnit(hsqlEntityManagerFactory).annotatedWith(Jpa2.class);
+        this.bindContainerManagedPersistenceUnit(derbyEntityManagerFactory)
+            .annotatedWith(Jpa1.class);
+        this.bindContainerManagedPersistenceUnit(hsqlEntityManagerFactory)
+            .annotatedWith(Jpa2.class);
     }
 
     private void prepFactory() {
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("javax.persistence.provider", PersistenceProvider.class);
-        properties.put(PersistenceUnitProperties.TRANSACTION_TYPE, "RESOURCE_LOCAL");
-        //        properties.put(PersistenceUnitProperties.JDBC_DRIVER, "org.apache.derby.jdbc.EmbeddedDriver");
-        properties.put(PersistenceUnitProperties.JDBC_URL, "jdbc:derby:/home/david/temp/derbyDb;create=true");
-        properties.put(PersistenceUnitProperties.JDBC_USER, "test");
-        properties.put(PersistenceUnitProperties.JDBC_PASSWORD, "test");
-        properties.put(PersistenceUnitProperties.DDL_GENERATION, "drop-and-create-tables");
+        JpaConfig config = new JpaConfig();
+
+        config.transactionType(JpaConfig.TransactionType.RESOURCE_LOCAL)
+              .db(JpaConfig.Db.DERBY_EMBEDDED)
+              .url("jdbc:derby:/home/david/temp/derbyDb", true)
+              .user("test")
+              .password("test")
+              .ddlGeneration(JpaConfig.Ddl.DROP_AND_CREATE);
+        derbyEntityManagerFactory = Persistence.createEntityManagerFactory("derbyDb", config);
 
 
-
-        derbyEntityManagerFactory = Persistence.createEntityManagerFactory("derbyDb", properties);
-        properties = new HashMap<>();
-        properties.put("javax.persistence.provider", PersistenceProvider.class);
-        properties.put(PersistenceUnitProperties.JDBC_DRIVER, "org.hsqldb.jdbcDriver");
-        hsqlEntityManagerFactory = Persistence.createEntityManagerFactory("hsqlDb", properties);
+        config = new JpaConfig();
+        config.db(JpaConfig.Db.HSQLDB)
+              .url("jdbc:hsqldb:mem:test", true)
+              .user("sa")
+              .password("")
+              .ddlGeneration(JpaConfig.Ddl.DROP_AND_CREATE);
+        hsqlEntityManagerFactory = Persistence.createEntityManagerFactory("hsqlDb", config);
     }
 
 
