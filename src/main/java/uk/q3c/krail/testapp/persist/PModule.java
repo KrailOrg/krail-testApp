@@ -4,34 +4,34 @@ import org.apache.onami.persist.PersistenceModule;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.lang.annotation.Annotation;
+import java.util.Map;
 
 /**
  * Created by David Sowerby on 30/12/14.
  */
 public class PModule extends PersistenceModule {
 
-    private EntityManagerFactory derbyEntityManagerFactory;
-
-    private EntityManagerFactory hsqlEntityManagerFactory;
-
     /**
      * Configures the persistence units over the exposed methods.
      */
     @Override
     protected void configurePersistence() {
-        prepFactory();
+        addPersistenceUnit("derbyDb", Jpa1.class, derbyConfig());
+        addPersistenceUnit("hsqlDb", Jpa2.class, hsqlConfig());
+
         //        this.bindApplicationManagedPersistenceUnit("derbyDb")
         //            .annotatedWith(Jpa1.class);
         //        this.bindApplicationManagedPersistenceUnit("hsqlDb")
         //            .annotatedWith(Jpa2.class);
 
-        this.bindContainerManagedPersistenceUnit(derbyEntityManagerFactory)
-            .annotatedWith(Jpa1.class);
-        this.bindContainerManagedPersistenceUnit(hsqlEntityManagerFactory)
-            .annotatedWith(Jpa2.class);
+        //        this.bindContainerManagedPersistenceUnit(derbyEntityManagerFactory)
+        //            .annotatedWith(Jpa1.class);
+        //        this.bindContainerManagedPersistenceUnit(hsqlEntityManagerFactory)
+        //            .annotatedWith(Jpa2.class);
     }
 
-    private void prepFactory() {
+    private JpaConfig derbyConfig() {
         JpaConfig config = new JpaConfig();
 
         config.transactionType(JpaConfig.TransactionType.RESOURCE_LOCAL)
@@ -40,28 +40,53 @@ public class PModule extends PersistenceModule {
               .user("test")
               .password("test")
               .ddlGeneration(JpaConfig.Ddl.DROP_AND_CREATE);
-        derbyEntityManagerFactory = Persistence.createEntityManagerFactory("derbyDb", config);
+        return config;
+    }
 
-
-        config = new JpaConfig();
+    private JpaConfig hsqlConfig() {
+        JpaConfig config = new JpaConfig();
         config.db(JpaConfig.Db.HSQLDB)
               .url("jdbc:hsqldb:mem:test", true)
               .user("sa")
               .password("")
               .ddlGeneration(JpaConfig.Ddl.DROP_AND_CREATE);
-        hsqlEntityManagerFactory = Persistence.createEntityManagerFactory("hsqlDb", config);
+        return config;
     }
 
 
-    // Configure provider to be EclipseLink.
-    //    String providerClass = "org.eclipse.persistence.jpa.PersistenceProvider";
-    //    PersistenceProvider provider = null;
-    //    try {
-    //        provider = (PersistenceProvider)Class.forName(providerClass).newInstance();
-    //    } catch (Exception error) {
-    //        throw new TestProblemException("Failed to create persistence provider.", error);
-    //    }
-    //    Map properties = getPersistenceProperties();
-    //    getExecutor().setEntityManagerFactory(provider.createEntityManagerFactory("performance", properties));
+    /**
+     * Adds a JPA persistence unit and associates it with an annotation - the annotation is required in order to
+     * identify different EntityManagers if you are using multiple persistence units.  If you are using only one
+     * persistence unit, see {@link #addPersistenceUnit(String, Map)}
+     *
+     * @param puName
+     *         the persistence unit name - must be defined in persistence.xml
+     * @param annotation
+     *         - the annotation class to associate the persistence unit to.  Must be a @BindingAnnotation
+     * @param map
+     *         (may be null) a map of properties which can be used to supplement or override the values in
+     *         persistence.xml.  {@link JpaConfig} is a useful helper class to define the map
+     */
+    protected void addPersistenceUnit(String puName, Class<? extends Annotation> annotation, Map<String, Object> map) {
+        EntityManagerFactory entityManagerFactory;
+        entityManagerFactory = Persistence.createEntityManagerFactory(puName, map);
+        bindContainerManagedPersistenceUnit(entityManagerFactory).annotatedWith(annotation);
+    }
+
+    /**
+     * Adds a single JPA persistence unit.If you require multiple persistence units, an annotation is required in
+     * order to identify different EntityManagers - use {@link #addPersistenceUnit(String, Class, Map)} instead.
+     *
+     * @param puName
+     *         the persistence unit name - must be defined in persistence.xml
+     * @param map
+     *         (may be null) a map of properties which can be used to supplement or override the values in
+     *         persistence.xml.  {@link JpaConfig} is a useful helper class to define the map
+     */
+    protected void addPersistenceUnit(String puName, Map<String, Object> map) {
+        EntityManagerFactory entityManagerFactory;
+        entityManagerFactory = Persistence.createEntityManagerFactory(puName, map);
+        bindContainerManagedPersistenceUnit(entityManagerFactory);
+    }
 
 }
