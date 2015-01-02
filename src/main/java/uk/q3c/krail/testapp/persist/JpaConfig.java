@@ -7,6 +7,8 @@ import org.eclipse.persistence.jpa.PersistenceProvider;
 import java.util.HashMap;
 
 /**
+ * Helper class to populate the equivalent of persistence.xml properties.  A persistence.xml file is still needed but
+ * can be minimal (persistent unit declarations and
  * Created by David Sowerby on 01/01/15.
  */
 public class JpaConfig extends HashMap<String, Object> {
@@ -51,7 +53,7 @@ public class JpaConfig extends HashMap<String, Object> {
 
     public enum TransactionType {JTA, RESOURCE_LOCAL}
 
-
+    public enum LoggingLevel {OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL}
 
 
     public JpaConfig() {
@@ -92,6 +94,19 @@ public class JpaConfig extends HashMap<String, Object> {
 
     public JpaConfig transactionType(TransactionType transactionType) {
         put(PersistenceUnitProperties.TRANSACTION_TYPE, transactionType.name());
+        return this;
+    }
+
+    /**
+     * Also sets property "eclipselink.logging.level.sql", see http://wiki.eclipse.org/EclipseLink/Examples/JPA/Logging
+     *
+     * @param level
+     *
+     * @return
+     */
+    public JpaConfig loggingLevel(LoggingLevel level) {
+        put(PersistenceUnitProperties.LOGGING_LEVEL, level.name());
+        put("eclipselink.logging.level.sql", level.name());
         return this;
     }
 }

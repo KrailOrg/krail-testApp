@@ -5,7 +5,7 @@ import com.google.inject.AbstractModule;
 /**
  * Created by David Sowerby on 01/01/15.
  */
-public class DaoModule extends AbstractModule {
+public class JpaModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(GenericJpaDao.class).to(DefaultGenericJpaDao.class);
