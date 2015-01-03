@@ -70,12 +70,17 @@ public class PModule extends PersistenceModule {
     protected void addPersistenceUnit(String puName, Class<? extends Annotation> annotation, Map<String, Object> map) {
         EntityManagerFactory entityManagerFactory;
         entityManagerFactory = Persistence.createEntityManagerFactory(puName, map);
+        //bind factory for use with JPAContainer setup
+        bind(EntityManagerFactory.class).annotatedWith(annotation)
+                                        .toInstance(entityManagerFactory);
         bindContainerManagedPersistenceUnit(entityManagerFactory).annotatedWith(annotation);
     }
 
     /**
-     * Adds a single JPA persistence unit.If you require multiple persistence units, an annotation is required in
-     * order to identify different EntityManagers - use {@link #addPersistenceUnit(String, Class, Map)} instead.
+     * Adds a single JPA persistence unit.  If you require multiple persistence units, an annotation is required in
+     * order to identify different EntityManagers - use {@link #addPersistenceUnit(String, Class, Map)} instead.  You
+     * may want to consider using an annotation even if you currently only need a single persistence unit - it would
+     * be much easier then to add another later, while maintaining clarity of which persistence unit is used where.
      *
      * @param puName
      *         the persistence unit name - must be defined in persistence.xml
@@ -86,6 +91,7 @@ public class PModule extends PersistenceModule {
     protected void addPersistenceUnit(String puName, Map<String, Object> map) {
         EntityManagerFactory entityManagerFactory;
         entityManagerFactory = Persistence.createEntityManagerFactory(puName, map);
+        bind(EntityManagerFactory.class).toInstance(entityManagerFactory);
         bindContainerManagedPersistenceUnit(entityManagerFactory);
     }
 

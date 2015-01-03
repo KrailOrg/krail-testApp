@@ -11,5 +11,6 @@ public class JpaModule extends AbstractModule {
 
         bind(GenericJpaDao.class).to(DefaultGenericJpaDao.class);
         bind(GenericJpaDaoProvider.class).to(DefaultGenericJpaDaoProvider.class);
+        bind(JpaContainerProvider.class).to(DefaultJpaContainerProvider.class);
     }
 }
