@@ -1,25 +1,18 @@
 package uk.q3c.krail.testapp.view;
 
 import com.google.inject.Inject;
-import com.vaadin.addon.jpacontainer.JPAContainer;
-import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
-import org.apache.onami.persist.EntityManagerProvider;
 import org.apache.onami.persist.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.ui.ScopedUI;
 import uk.q3c.krail.core.view.KrailViewChangeEvent;
 import uk.q3c.krail.core.view.ViewBase;
-import uk.q3c.krail.testapp.persist.GenericJpaDao;
-import uk.q3c.krail.testapp.persist.Jpa1;
-import uk.q3c.krail.testapp.persist.Jpa2;
-import uk.q3c.krail.testapp.persist.Widget;
+import uk.q3c.krail.testapp.persist.*;
 import uk.q3c.util.ID;
 
-import javax.persistence.EntityManager;
 import java.util.Optional;
 
 /**
@@ -27,8 +20,8 @@ import java.util.Optional;
  */
 public class JpaView extends ViewBase implements Button.ClickListener {
     private static Logger log = LoggerFactory.getLogger(JpaView.class);
-    private final EntityManagerProvider entityManagerProvider1;
-    private final EntityManagerProvider entityManagerProvider2;
+    //    private final EntityManagerProvider entityManagerProvider1;
+    //    private final EntityManagerProvider entityManagerProvider2;
     private final GenericJpaDao dao1;
     private final GenericJpaDao dao2;
     private Button saveBtn1;
@@ -37,14 +30,9 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     private Table table2;
 
     @Inject
-    protected JpaView(@Jpa1 EntityManagerProvider entityManagerProvider1, @Jpa2 EntityManagerProvider
-            entityManagerProvider2, GenericJpaDao dao1, GenericJpaDao dao2) {
-        this.entityManagerProvider1 = entityManagerProvider1;
-        this.entityManagerProvider2 = entityManagerProvider2;
-        this.dao1 = dao1;
-        this.dao2 = dao2;
-        dao1.setEntityManagerProvider(entityManagerProvider1);
-        dao2.setEntityManagerProvider(entityManagerProvider2);
+    protected JpaView(GenericJpaDaoProvider daoProvider) {
+        this.dao1 = daoProvider.getDao(Jpa1.class);
+        this.dao2 = daoProvider.getDao(Jpa2.class);
     }
 
     public Table getTable1() {
@@ -87,14 +75,14 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         saveBtn2 = new Button("persist 2");
         saveBtn2.addClickListener(this);
 
-        EntityManager em1 = entityManagerProvider1.get();
-        log.debug("Entity Manager 1 is open: " + em1.isOpen());
-        JPAContainer<Widget> jpa1data = JPAContainerFactory.make(Widget.class, em1);
+        //        EntityManager em1 = entityManagerProvider1.get();
+        //        log.debug("Entity Manager 1 is open: " + em1.isOpen());
+        //        JPAContainer<Widget> jpa1data = JPAContainerFactory.make(Widget.class, em1);
         //        JPAContainer<Widget> jpa2data = JPAContainerFactory.make(Widget.class, entityManagerProvider2.get());
-        table1 = new Table("Table 1", jpa1data);
+        //        table1 = new Table("Table 1", jpa1data);
         //        table2 = new Table("Table 2", jpa2data);
 
-        layout.addComponent(table1);
+        //        layout.addComponent(table1);
         layout.addComponent(saveBtn1);
         //        layout.addComponent(table2);
         layout.addComponent(saveBtn2);

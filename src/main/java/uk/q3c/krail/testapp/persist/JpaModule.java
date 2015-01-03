@@ -8,6 +8,8 @@ import com.google.inject.AbstractModule;
 public class JpaModule extends AbstractModule {
     @Override
     protected void configure() {
+
         bind(GenericJpaDao.class).to(DefaultGenericJpaDao.class);
+        bind(GenericJpaDaoProvider.class).to(DefaultGenericJpaDaoProvider.class);
     }
 }

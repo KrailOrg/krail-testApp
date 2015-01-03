@@ -1,23 +1,21 @@
-package uk.q3c.krail.testapp.view;
+package uk.q3c.krail.testapp.persist;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.mycila.testing.junit.MycilaJunitRunner;
 import com.mycila.testing.plugin.guice.GuiceContext;
-import org.apache.onami.persist.EntityManagerProvider;
 import org.apache.onami.persist.PersistenceService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import uk.q3c.krail.testapp.persist.*;
 
 import javax.persistence.EntityManagerFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MycilaJunitRunner.class)
-@GuiceContext({PModule.class})
+@GuiceContext({PModule.class, JpaModule.class})
 public class PersistTest {
 
     private static final String PERSISTENCE_UNIT_NAME = "todos";
@@ -33,14 +31,16 @@ public class PersistTest {
     @Jpa2
     PersistenceService persistService2;
 
-    @Inject
-    @Jpa1
-    EntityManagerProvider entityManagerProvider1;
+    //    @Inject
+    //    @Jpa1
+    //    EntityManagerProvider entityManagerProvider1;
+    //
+    //    @Inject
+    //    @Jpa2
+    //    EntityManagerProvider entityManagerProvider2;
 
     @Inject
-    @Jpa2
-    EntityManagerProvider entityManagerProvider2;
-
+    DefaultGenericJpaDaoProvider daoProvider;
 
     @Before
     public void setup() {
@@ -77,10 +77,8 @@ public class PersistTest {
         Widget widget2_3 = newWidget("jpa2", 3);
         Widget widget2_4 = newWidget("jpa2", 4);
 
-        DefaultGenericJpaDao dao1 = injector.getInstance(DefaultGenericJpaDao.class);
-        dao1.setEntityManagerProvider(entityManagerProvider1);
-        DefaultGenericJpaDao dao2 = injector.getInstance(DefaultGenericJpaDao.class);
-        dao2.setEntityManagerProvider(entityManagerProvider2);
+        GenericJpaDao dao1 = daoProvider.getDao(Jpa1.class);
+        GenericJpaDao dao2 = daoProvider.getDao(Jpa2.class);
 
 
         //when
