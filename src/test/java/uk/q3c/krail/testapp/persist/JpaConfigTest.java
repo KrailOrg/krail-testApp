@@ -62,4 +62,28 @@ public class JpaConfigTest {
         //then
         assertThat(config.get(PersistenceUnitProperties.DDL_GENERATION)).isEqualTo("drop-and-create-tables");
     }
+
+    @Test
+    public void urlAfterDb() {
+        //given
+
+        //when
+        config.db(JpaConfig.Db.DERBY_EMBEDDED);
+        config.url("/home/david/temp/derbyDb", true);
+        //then
+        assertThat(config.get(PersistenceUnitProperties.JDBC_URL)).isEqualTo("jdbc:derby:/home/david/temp/derbyDb;" +
+                "create=true");
+    }
+
+    @Test
+    public void dbAfterUr() {
+        //given
+
+        //when
+        config.url("/home/david/temp/derbyDb", true);
+        config.db(JpaConfig.Db.DERBY_EMBEDDED);
+        //then
+        assertThat(config.get(PersistenceUnitProperties.JDBC_URL)).isEqualTo("jdbc:derby:/home/david/temp/derbyDb;" +
+                "create=true");
+    }
 }
