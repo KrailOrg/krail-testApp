@@ -8,7 +8,12 @@ import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.ui.ScopedUI;
 import uk.q3c.krail.core.view.KrailViewChangeEvent;
 import uk.q3c.krail.core.view.ViewBase;
-import uk.q3c.krail.testapp.persist.*;
+import uk.q3c.krail.persist.jpa.GenericJpaDao;
+import uk.q3c.krail.persist.jpa.GenericJpaDaoProvider;
+import uk.q3c.krail.persist.jpa.JpaContainerProvider;
+import uk.q3c.krail.testapp.persist.Jpa1;
+import uk.q3c.krail.testapp.persist.Jpa2;
+import uk.q3c.krail.testapp.persist.Widget;
 import uk.q3c.util.ID;
 
 import java.util.Optional;

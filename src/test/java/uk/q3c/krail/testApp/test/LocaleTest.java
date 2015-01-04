@@ -71,20 +71,20 @@ public class LocaleTest extends KrailTestBenchTestCase {
         String comboValue = localeSelector.getValue();
         assertThat(comboValue).isEqualTo(Locale.GERMANY.getDisplayName(Locale.GERMANY));
         List<String> items = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             items.add(navTree.itemCaption(i));
         }
-        assertThat(items).containsExactly("Benachrichtigungen", "Einloggen", "Nachrichtenfeld",
+        assertThat(items).containsExactly("Benachrichtigungen", "Einloggen", "JPA", "Nachrichtenfeld",
                 "Öffentliche Startseite", "Systemkonto");
 
         items.clear();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             String s = navMenu.item(i);
             items.add(s);
         }
 
         //this is in a different order to navtree. See https://github.com/davidsowerby/krail/issues/257
-        assertThat(items).containsExactly("Benachrichtigungen", "Einloggen", "Nachrichtenfeld", "Systemkonto",
+        assertThat(items).containsExactly("Benachrichtigungen", "Einloggen", "JPA", "Nachrichtenfeld", "Systemkonto",
                 "Öffentliche Startseite");
 
         assertThat(loginStatus.loginButton()

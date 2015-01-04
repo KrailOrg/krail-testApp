@@ -93,7 +93,8 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
         // then
         assertThat(notification()).isNotNull();
-        assertThat(notification().getText()).isEqualTo("private/home is not a valid page");
+        //        assertThat(notification().getText()).isEqualTo("private/home is not a valid page");
+        assertThat(notification().getText()).isEqualTo("Info: private/home is not a valid page");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification humanized v-Notification-humanized");
         closeNotification();
 
@@ -124,7 +125,8 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
         // then
         assertThat(notification()).isNotNull();
-        assertThat(notification().getText()).isEqualTo("rubbish is not a valid page");
+        //        assertThat(notification().getText()).isEqualTo("rubbish is not a valid page");
+        assertThat(notification().getText()).isEqualTo("Info: rubbish is not a valid page");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification humanized v-Notification-humanized");
 
         // then
@@ -157,7 +159,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
         driver.get(rootUrl());
         pause(1000);
         // when
-        navTree.select(4);
+        navTree.select(5);
         // then
         verifyUrl("system-account");
         assertThat(navTree.currentSelection()).isEqualTo("System Account");

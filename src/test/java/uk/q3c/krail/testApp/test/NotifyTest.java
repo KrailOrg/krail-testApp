@@ -59,7 +59,10 @@ public class NotifyTest extends KrailTestBenchTestCase {
         assertThat(messageBar.message()).isEqualTo("ERROR: You cannot use service Fake Service until it has been " +
                 "started");
         assertThat(notification()).isNotNull();
-        assertThat(notification().getText()).isEqualTo("You cannot use service Fake Service until it has been started");
+        //        assertThat(notification().getText()).isEqualTo("You cannot use service Fake Service until it has
+        // been started");
+        assertThat(notification().getText()).isEqualTo("Error: You cannot use service Fake Service until it has been " +
+                "started - close with ESC-key");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification error v-Notification-error");
         closeNotification();
 
@@ -76,7 +79,9 @@ public class NotifyTest extends KrailTestBenchTestCase {
         assertThat(messageBar.message()).isEqualTo("Warning: You cannot use service Fake Service until it has been " +
                 "" + "started");
         assertThat(notification()).isNotNull();
-        assertThat(notification().getText()).isEqualTo("You cannot use service Fake Service until it has been started");
+        //        assertThat(notification().getText()).isEqualTo("You cannot use service Fake Service until it has
+        // been started");
+        assertThat(notification().getText()).isEqualTo("Warning: You cannot use service Fake Service until it has been started");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification warning v-Notification-warning");
         closeNotification();
     }
@@ -92,7 +97,9 @@ public class NotifyTest extends KrailTestBenchTestCase {
         // then
         assertThat(messageBar.message()).isEqualTo("You cannot use service Fake Service until it has been started");
         assertThat(notification()).isNotNull();
-        assertThat(notification().getText()).isEqualTo("You cannot use service Fake Service until it has been started");
+        //        assertThat(notification().getText()).isEqualTo("You cannot use service Fake Service until it has
+        // been started");
+        assertThat(notification().getText()).isEqualTo("Info: You cannot use service Fake Service until it has been started");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification humanized v-Notification-humanized");
         closeNotification();
     }

@@ -1,5 +1,7 @@
 package uk.q3c.krail.testapp.persist;
 
+import uk.q3c.krail.persist.jpa.JpaEntity;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

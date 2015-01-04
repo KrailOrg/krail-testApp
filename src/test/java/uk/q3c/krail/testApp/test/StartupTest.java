@@ -72,10 +72,11 @@ public class StartupTest extends KrailTestBenchTestCase {
 
         // then
         List<String> items = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             items.add(navTree.itemCaption(i));
         }
-        assertThat(items).containsExactly("Log In", "Message Box", "Notifications", "Public Home", "System Account");
+        assertThat(items).containsExactly("JPA", "Log In", "Message Box", "Notifications", "Public Home", "System " +
+                "Account");
     }
 
     @Test
@@ -84,11 +85,11 @@ public class StartupTest extends KrailTestBenchTestCase {
         // given
 
         List<String> items = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             String s = navMenu.item(i);
             items.add(s);
         }
-        assertThat(items).containsExactly("Log In", "Message Box", "Notifications", "Public Home", "System Account");
+        assertThat(items).containsExactly("JPA", "Log In", "Message Box", "Notifications", "Public Home", "System Account");
     }
 
 

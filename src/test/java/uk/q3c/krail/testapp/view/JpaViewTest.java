@@ -36,8 +36,10 @@ public class JpaViewTest extends KrailTestBenchTestCase {
         int startCount2 = countFor(2);
 
         //when
+        pause(500);
         pageObject.saveButton(1)
                   .click();
+        pause(500);
         pageObject.saveButton(2)
                   .click();
         int newCount1 = countFor(1);
