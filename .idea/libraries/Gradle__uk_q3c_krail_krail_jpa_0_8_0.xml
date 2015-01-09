@@ -2,10 +2,12 @@
   <library name="Gradle: uk.q3c.krail:krail-jpa:0.8.0">
     <CLASSES>
       <root url="jar://$USER_HOME$/localRepo/uk/q3c/krail/krail-jpa/0.8.0/krail-jpa-0.8.0.jar!/" />
+      <root url="jar://$USER_HOME$/gradle/caches/modules-2/files-2.1/uk.q3c.krail/krail-jpa/0.8.0/c2e4c265ec053ce741ef0ec5585280e45860c9d1/krail-jpa-0.8.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/localRepo/uk/q3c/krail/krail-jpa/0.8.0/krail-jpa-0.8.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/gradle/caches/modules-2/files-2.1/uk.q3c.krail/krail-jpa/0.8.0/b6542f0cafbfd6a7d77d28720bcfaa91c3cc56a4/krail-jpa-0.8.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

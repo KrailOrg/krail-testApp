@@ -24,7 +24,7 @@ public class JpaViewTest extends KrailTestBenchTestCase {
     public void setUp() throws Exception {
         appContext = "krail-testapp";
         driver.get(rootUrl());
-        pause(500);
+        pause(1500); // without a delay, intermittently fails, possibly because of database connection
     }
 
     @Test

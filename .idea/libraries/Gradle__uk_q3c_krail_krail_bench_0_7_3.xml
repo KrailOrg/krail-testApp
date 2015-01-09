@@ -2,10 +2,12 @@
   <library name="Gradle: uk.q3c.krail:krail-bench:0.7.3">
     <CLASSES>
       <root url="jar://$USER_HOME$/localRepo/uk/q3c/krail/krail-bench/0.7.3/krail-bench-0.7.3.jar!/" />
+      <root url="jar://$USER_HOME$/gradle/caches/modules-2/files-2.1/uk.q3c.krail/krail-bench/0.7.3/61c13a9f5bfbf5a9eb8ce5843a5076b2bb1754bc/krail-bench-0.7.3.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/localRepo/uk/q3c/krail/krail-bench/0.7.3/krail-bench-0.7.3-sources.jar!/" />
+      <root url="jar://$USER_HOME$/gradle/caches/modules-2/files-2.1/uk.q3c.krail/krail-bench/0.7.3/b8d3e0030e759078049d7deca4b8a44497c63f73/krail-bench-0.7.3-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

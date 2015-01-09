@@ -1,0 +1,59 @@
+/*
+ * Copyright (c) 2014 David Sowerby
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ */
+description = 'Functional test application for Krail and its additional modules'
+
+warName = 'krail-testapp.war' // make lowercase
+
+
+vaadin {
+    widgetset "uk.q3c.krail.testapp.widgetset.testAppWidgetset"
+}
+
+task deleteDerbyFolder << {
+    description = "deleting the derby database"
+    File derbyDir = new File('/home/david/temp/derbyDb')
+    description = "deleting derby " + derbyDir.absolutePath
+    tasks.withType(Delete) {
+        delete = derbyDir
+    }
+}
+
+testPreparation {
+    description = "deleting the derby database"
+    File derbyDir = new File('/home/david/temp/derbyDb')
+    description = "deleting derby " + derbyDir.absolutePath
+    tasks.withType(Delete) {
+        delete = derbyDir
+    }
+}
+
+//testPreparation.dependsOn('deleteDerbyFolder')
+//testPreparation.mustRunAfter(deleteDerbyFolder)
+
+dependencies {
+
+    //Krail
+    compile project(':krail-jpa')
+
+    //UI components
+    compile 'de.steinwedel.vaadin.addon:messagebox:2.0.6'
+    compile 'org.vaadin.addons:stepper:2.1.2'
+
+    //vaadin push
+    compile 'com.vaadin:vaadin-push:' + vaadinVersion
+
+    //test
+//    testCompile project(':krail-bench')
+
+}
+
+
+
+

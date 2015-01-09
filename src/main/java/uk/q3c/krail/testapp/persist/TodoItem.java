@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Todo implements JpaEntity {
+public class TodoItem implements JpaEntity {
     private String description;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Todo implements JpaEntity {
 
     @Override
     public String toString() {
-        return "Todo [summary=" + name + ", description=" + description + "]";
+        return "TodoItem [summary=" + name + ", description=" + description + "]";
     }
 
 }
