@@ -9,6 +9,7 @@
  */
 description = 'Functional test application for Krail and its additional modules'
 
+// TODO this should be enforced somewhere to consistently use lowercase for war
 warName = 'krail-testapp.war' // make lowercase
 
 
