@@ -93,9 +93,10 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
         // then
         assertThat(notification()).isNotNull();
-        //        assertThat(notification().getText()).isEqualTo("private/home is not a valid page");
-        assertThat(notification().getText()).isEqualTo("Info: private/home is not a valid page");
+        assertThat(notification().getText()).isEqualTo("private/home is not a valid page");
+        //        assertThat(notification().getText()).isEqualTo("Info: private/home is not a valid page");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification humanized v-Notification-humanized");
+
         closeNotification();
 
         verifyNotUrl("private/home"); // not a valid test, but maybe it should be
@@ -125,8 +126,8 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
         // then
         assertThat(notification()).isNotNull();
-        //        assertThat(notification().getText()).isEqualTo("rubbish is not a valid page");
-        assertThat(notification().getText()).isEqualTo("Info: rubbish is not a valid page");
+        assertThat(notification().getText()).isEqualTo("rubbish is not a valid page");
+        //        assertThat(notification().getText()).isEqualTo("Info: rubbish is not a valid page");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification humanized v-Notification-humanized");
 
         // then
