@@ -26,7 +26,7 @@ task deleteDerbyFolder << {
     }
 }
 
-testPreparation {
+testPrep {
     description = "deleting the derby database"
     File derbyDir = new File('/home/david/temp/derbyDb')
     description = "deleting derby " + derbyDir.absolutePath
@@ -35,8 +35,6 @@ testPreparation {
     }
 }
 
-//testPreparation.dependsOn('deleteDerbyFolder')
-//testPreparation.mustRunAfter(deleteDerbyFolder)
 
 dependencies {
 
@@ -50,8 +48,6 @@ dependencies {
     //vaadin push
     compile 'com.vaadin:vaadin-push:' + vaadinVersion
 
-    //test
-//    testCompile project(':krail-bench')
 
 }
 
