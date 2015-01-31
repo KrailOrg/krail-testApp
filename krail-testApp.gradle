@@ -17,6 +17,8 @@ vaadin {
     widgetset "uk.q3c.krail.testapp.widgetset.testAppWidgetset"
 }
 
+bintrayUpload.enabled = false
+
 task deleteDerbyFolder << {
     description = "deleting the derby database"
     File derbyDir = new File('/home/david/temp/derbyDb')
