@@ -1,14 +1,12 @@
 /*
- * Copyright (c) 2014 David Sowerby
+ * Copyright (c) 2015. David Sowerby
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
- * the specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 
 package uk.q3c.krail.testApp.test;
@@ -67,22 +65,7 @@ public class LoginTest extends KrailTestBenchTestCase {
         assertThat(loginStatus.username()).isEqualTo("ds");
     }
 
-    @Test
-    public void loginFromLogout() {
 
-        // given
-        login();
-        pause(500);
-        loginStatus.loginButton()
-                   .click();
-        pause(500);
-        verifyUrl("logout");
-        // when
-        login();
-        // then
-        pause(500);
-        verifyUrl("private/home");
-    }
 
     /**
      * If previous tests have caused unsuccessful logins, or this test is run repeatedly, login will fail because of
