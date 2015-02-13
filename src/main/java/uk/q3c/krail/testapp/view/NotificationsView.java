@@ -22,7 +22,7 @@ import uk.q3c.krail.core.view.KrailViewChangeEvent;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.i18n.MessageKey;
 import uk.q3c.krail.i18n.Translate;
-import uk.q3c.krail.testapp.i18n.TestAppDescriptionKey;
+import uk.q3c.krail.testapp.i18n.DescriptionKey;
 import uk.q3c.util.ID;
 
 import java.util.Optional;
@@ -114,7 +114,7 @@ public class NotificationsView extends ViewBase {
         infoArea = new Label();
         infoArea.setContentMode(ContentMode.HTML);
         infoArea.setSizeFull();
-        infoArea.setValue(translate.from(TestAppDescriptionKey.Notifications));
+        infoArea.setValue(translate.from(DescriptionKey.Notifications));
         grid.addComponent(infoArea, 0, 1, 1, 1);
         setRootComponent(grid);
     }

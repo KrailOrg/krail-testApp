@@ -12,13 +12,8 @@
  */
 package uk.q3c.krail.testapp.i18n;
 
-/**
- * @author David Sowerby 9 Feb 2013
- */
-public class TestAppLabels_de extends Labels {
-    @Override
-    protected void loadMap() {
-        put(TestAppLabelKey.Yes, "ja");
-        put(TestAppLabelKey.No, "nein");
-    }
+import uk.q3c.krail.i18n.I18NKey;
+
+public enum DescriptionKey implements I18NKey {
+    Notifications
 }

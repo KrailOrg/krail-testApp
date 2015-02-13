@@ -14,11 +14,13 @@ package uk.q3c.krail.testapp.i18n;
 
 import com.vaadin.data.Property;
 import uk.q3c.krail.i18n.CurrentLocale;
+import uk.q3c.krail.i18n.I18NAnnotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.Locale;
 
 /**
  * Annotation used for marking a Vaadin UI component in the demo app as needing I18N translation. The parameters
@@ -31,24 +33,21 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface TestAppI18N {
-    TestAppLabelKey caption() default TestAppLabelKey._nullkey_;
+@I18NAnnotation
+public @interface Caption {
+    LabelKey caption() default LabelKey._nullkey_;
 
-    TestAppLabelKey description() default TestAppLabelKey._nullkey_;
-
-    /**
-     * Usually only used with Vaadin Labels
-     *
-     * @return
-     */
-    TestAppLabelKey value() default TestAppLabelKey._nullkey_;
+    LabelKey description() default LabelKey._nullkey_;
 
     /**
-     * The locale for an annotated component is usually taken from {@link CurrentLocale}, but if this optional
-     * parameter
+     * The locale for an annotated component is usually taken from {@link CurrentLocale}, but if this optional parameter
      * is specified, it will be used instead. This allows specific components to be fixed to display content in a
-     * language different to the rest of the application.
+     * language different to the rest of the application. The format of the string should be as the IETF BCP 47 language
+     * tag string; see {@link Locale#toLanguageTag()}
      */
 
     String locale() default "";
+
+    boolean drillDown() default true;
+
 }

@@ -21,12 +21,12 @@ import uk.q3c.krail.i18n.EnumResourceBundle;
  *
  * @author David Sowerby 9 Feb 2013
  */
-public class Labels extends EnumResourceBundle<TestAppLabelKey> {
+public class Labels extends EnumResourceBundle<LabelKey> {
 
 
     @Override
     protected void loadMap() {
-        put(TestAppLabelKey.Yes, "yes");
-                put(TestAppLabelKey.No, "no");
+        put(LabelKey.Yes, "yes");
+        put(LabelKey.No, "no");
     }
 }

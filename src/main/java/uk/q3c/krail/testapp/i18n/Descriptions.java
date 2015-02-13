@@ -26,11 +26,11 @@ import uk.q3c.krail.i18n.Messages;
  *
  * @author David Sowerby 3 Aug 2013
  */
-public class Descriptions extends EnumResourceBundle<TestAppDescriptionKey> {
+public class Descriptions extends EnumResourceBundle<DescriptionKey> {
 
     @Override
     protected void loadMap() {
-        put(TestAppDescriptionKey.Notifications, "Vaadin provides " + "<a href=\"https://vaadin" +
+        put(DescriptionKey.Notifications, "Vaadin provides " + "<a href=\"https://vaadin" +
                 ".com/en_GB/book/vaadin7/-/page/application.notifications.html\" " +
                 "target=\"\">notification</a>" + " 'splash' messages.  Krail adds to this by enabling the use of " +
                 "multiple" + " methods of notification, combined or selected for each of the message types - " +
