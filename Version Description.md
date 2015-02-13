@@ -1,1 +1,1 @@
-This version removes the IDEA project files from Git, disables bintrayUpload
+This version adds tests for login navigation. Also adds gitattributes file
