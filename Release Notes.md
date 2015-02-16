@@ -1,44 +1,44 @@
-### Release Notes for krail-testApp 0.7.2
+### Release Notes for krail-testApp 0.7.3
 
-This version removes the IDEA project files from Git, disables bintrayUpload
+This version adds tests for login navigation. Also adds gitattributes file
 
 #### Change log
 
--   [1](https://github.com/davidsowerby/krail-testApp/issues/1): Remove IDEA project files from git
+-   [2](https://github.com/davidsowerby/krail-testApp/issues/2): Switch to revised I18N annotations
 
 
 #### Dependency changes
 
-   compile dependency version changed to: krail:0.7.9
-   test compile dependency version changed to: krail-bench:0.7.9
-   compile dependency version changed to: krail-jpa:0.8.2
+   compile dependency version changed to: krail:0.8.0
+   test compile dependency version changed to: krail-bench:0.7.10
+   compile dependency version changed to: krail-jpa:0.8.3
 
 #### Detail
 
-Release notes and version.properties generated
+*Fix [2](https://github.com/davidsowerby/krail-testApp/issues/2) Switch to revised I18N annotations*
 
----
-*Merge branch 'master' into develop*
-
-
----
-*Set version information and disable bintrayUpload*
+And use the same annotation and key names as Krail core
+See [krail 321](https://github.com/davidsowerby/krail/issues/321)
 
 
 ---
-*Updated README files to conform to q3c-gradle format.  See davidsowerby/krail-master#315.*
+*Update version information*
 
 
 ---
-*See [krail-master 6](https://github.com/davidsowerby/krail-master/issues/6).  'testPreparation' task name change to 'testPrep'*
+*fix [krail 322](https://github.com/davidsowerby/krail/issues/322) Rectified failure after login*
+
+The UserSitemap correctly does not contain the login node in its map after login, but the NavigationRule was attempting to use it.  Provided some utility methods in UserSitemap to assist, isLoginUri(), isLogoutUri etc, and also modified the DefaultNavigator.currentNode() method to check specifically for the login node.
+
+Also added some debug statements
+Added equals() methods to Master and UserSitemapNode
+Made DefaultMasterSitemap threadsafe (see #244)
 
 
 ---
-*Updated test for check on Vaadin 7.3.9*
+*gitattributes added*
 
-
----
-*Fix [1](https://github.com/davidsowerby/krail-testApp/issues/1) Removed IDEA project files from Git*
+To overcome Linux/Windows line ending issues
 
 
 ---
