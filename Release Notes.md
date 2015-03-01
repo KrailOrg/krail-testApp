@@ -1,44 +1,31 @@
-### Release Notes for krail-testApp 0.7.3
+### Release Notes for krail-testApp 0.7.4
 
-This version adds tests for login navigation. Also adds gitattributes file
+This version upgrades to Vaadin 7.4.0
 
 #### Change log
 
--   [2](https://github.com/davidsowerby/krail-testApp/issues/2): Switch to revised I18N annotations
+-   [3](https://github.com/davidsowerby/krail-testApp/issues/3): NoClassDef org.json.JSONException
 
 
 #### Dependency changes
 
-   compile dependency version changed to: krail:0.8.0
-   test compile dependency version changed to: krail-bench:0.7.10
-   compile dependency version changed to: krail-jpa:0.8.3
+   compile dependency version changed to: krail-jpa:0.8.4
+   compile dependency version changed to: krail:0.8.1
+   test compile dependency version changed to: krail-bench:0.7.11
 
 #### Detail
 
-*Fix [2](https://github.com/davidsowerby/krail-testApp/issues/2) Switch to revised I18N annotations*
-
-And use the same annotation and key names as Krail core
-See [krail 321](https://github.com/davidsowerby/krail/issues/321)
+*Updated version information*
 
 
 ---
-*Update version information*
+*Fix [3](https://github.com/davidsowerby/krail-testApp/issues/3) NoClassDef*
+
+Dependency missing from stepper component. Included org.json:json in the build and that has fixed it.  Also updated versions of stepper and message box components
 
 
 ---
-*fix [krail 322](https://github.com/davidsowerby/krail/issues/322) Rectified failure after login*
-
-The UserSitemap correctly does not contain the login node in its map after login, but the NavigationRule was attempting to use it.  Provided some utility methods in UserSitemap to assist, isLoginUri(), isLogoutUri etc, and also modified the DefaultNavigator.currentNode() method to check specifically for the login node.
-
-Also added some debug statements
-Added equals() methods to Master and UserSitemapNode
-Made DefaultMasterSitemap threadsafe (see #244)
-
-
----
-*gitattributes added*
-
-To overcome Linux/Windows line ending issues
+[krail 329](https://github.com/*davidsowerby/krail/issues/329) Upgrade to Vaadin 7.3.10*
 
 
 ---
