@@ -1,1 +1,1 @@
-This version adds tests for login navigation. Also adds gitattributes file
+This version upgrades to Vaadin 7.4.0
