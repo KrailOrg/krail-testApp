@@ -16,9 +16,6 @@ import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.util.converter.ConverterFactory;
 import com.vaadin.server.ErrorHandler;
-import net.engio.mbassy.bus.MBassador;
-import uk.q3c.krail.core.eventbus.BusMessage;
-import uk.q3c.krail.core.eventbus.SessionBus;
 import uk.q3c.krail.core.navigate.Navigator;
 import uk.q3c.krail.core.push.Broadcaster;
 import uk.q3c.krail.core.push.PushMessageRouter;
@@ -47,10 +44,9 @@ public class TestAppUI extends DefaultApplicationUI {
                         SubPagePanel subpage, MessageBar messageBar, Broadcaster broadcaster,
                         PushMessageRouter pushMessageRouter, SessionObject sessionObject,
                         ApplicationTitle applicationTitle, Translate translate, CurrentLocale currentLocale, I18NProcessor translator, LocaleSelector
-                                localeSelector, UserNotifier userNotifier, @SessionBus MBassador<BusMessage> eventBus) {
+                                localeSelector, UserNotifier userNotifier) {
         super(navigator, errorHandler, converterFactory, logo, header, userStatus, menu, navTree, breadcrumb,
-                subpage, messageBar, broadcaster, pushMessageRouter, applicationTitle, translate, currentLocale, translator, localeSelector, userNotifier,
-                eventBus);
+                subpage, messageBar, broadcaster, pushMessageRouter, applicationTitle, translate, currentLocale, translator, localeSelector, userNotifier);
 
     }
 
