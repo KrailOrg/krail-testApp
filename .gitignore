@@ -7,7 +7,7 @@
 /logs
 
 /.krail-testApp.iml
-
+/uk/q3c/krail/testapp/widgetset/testAppWidgetset.gwt.xml
 build.gradle~
 git.ignore~
 README.md~
