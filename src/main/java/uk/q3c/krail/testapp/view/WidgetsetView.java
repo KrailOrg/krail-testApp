@@ -23,8 +23,8 @@ import de.steinwedel.messagebox.MessageBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.risto.stepper.IntStepper;
-import uk.q3c.krail.core.view.KrailViewChangeEvent;
 import uk.q3c.krail.core.view.ViewBase;
+import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.util.ID;
 
 import java.util.Optional;
@@ -45,7 +45,7 @@ public class WidgetsetView extends ViewBase {
 
 
     /**
-     * Called after the view itself has been constructed but before {@link #buildView(KrailViewChangeEvent)} } is
+     * Called after the view itself has been constructed but before {@link #buildView(ViewChangeBusMessage)}  is
      * called.  Typically checks whether a valid URI parameters are being passed to the view, or uses the URI
      * parameters to set up some configuration which affects the way the view is presented.
      *
@@ -53,12 +53,12 @@ public class WidgetsetView extends ViewBase {
      *         contains information about the change to this View
      */
     @Override
-    public void beforeBuild(KrailViewChangeEvent event) {
+    public void beforeBuild(ViewChangeBusMessage event) {
 
     }
 
     @Override
-    public void buildView(KrailViewChangeEvent event) {
+    public void buildView(ViewChangeBusMessage event) {
         buttonPanel = new Panel();
         VerticalLayout verticalLayout = new VerticalLayout();
         buttonPanel.setContent(verticalLayout);

@@ -18,8 +18,8 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import uk.q3c.krail.core.user.notify.UserNotifier;
-import uk.q3c.krail.core.view.KrailViewChangeEvent;
 import uk.q3c.krail.core.view.ViewBase;
+import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.MessageKey;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.DescriptionKey;
@@ -46,20 +46,20 @@ public class NotificationsView extends ViewBase {
 
 
     /**
-     * Called after the view itself has been constructed but before {@link #buildView(KrailViewChangeEvent)} is
+     * Called after the view itself has been constructed but before {@link #buildView(ViewChangeBusMessage)} is
      * called.  Typically checks whether a valid URI parameters are being passed to the view, or uses the URI
      * parameters to set up some configuration which affects the way the view is presented.
      *
-     * @param event
+     * @param busMessage
      *         contains information about the change to this View
      */
     @Override
-    public void beforeBuild(KrailViewChangeEvent event) {
+    public void beforeBuild(ViewChangeBusMessage busMessage) {
 
     }
 
     @Override
-    public void buildView(KrailViewChangeEvent event) {
+    public void buildView(ViewChangeBusMessage busMessage) {
         buttonPanel = new Panel();
         VerticalLayout verticalLayout = new VerticalLayout();
         buttonPanel.setContent(verticalLayout);

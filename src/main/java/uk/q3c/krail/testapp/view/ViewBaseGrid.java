@@ -1,11 +1,9 @@
 /*
- * Copyright (C) 2014 David Sowerby
- * 
+ * Copyright (c) 2015. David Sowerby
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ * the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -15,8 +13,8 @@ package uk.q3c.krail.testapp.view;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
-import uk.q3c.krail.core.view.KrailViewChangeEvent;
 import uk.q3c.krail.core.view.ViewBase;
+import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 
 /**
  * Creates a grid, 4 rows x 3 cols. The top row is just a spacer.
@@ -32,7 +30,7 @@ public abstract class ViewBaseGrid extends ViewBase {
     }
 
     @Override
-    public void buildView(KrailViewChangeEvent event) {
+    public void buildView(ViewChangeBusMessage busMessage) {
         GridLayout grid = new GridLayout(3, 4);
         Panel topMarginPanel = new Panel();
         topMarginPanel.setHeight(topMargin + "px");
@@ -88,7 +86,7 @@ public abstract class ViewBaseGrid extends ViewBase {
     }
 
     /**
-     * Called after the view itself has been constructed but before {@link #buildView()} is called.  Typically checks
+     * Called after the view itself has been constructed but before {@link #buildView(ViewChangeBusMessage)}  is called.  Typically checks
      * whether a valid URI parameters are being passed to the view, or uses the URI parameters to set up some
      * configuration which affects the way the view is presented.
      *
@@ -96,7 +94,7 @@ public abstract class ViewBaseGrid extends ViewBase {
      *         contains information about the change to this View
      */
     @Override
-    public void beforeBuild(KrailViewChangeEvent event) {
+    public void beforeBuild(ViewChangeBusMessage event) {
 
     }
 
