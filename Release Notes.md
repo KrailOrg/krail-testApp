@@ -1,17 +1,16 @@
-### Release Notes for krail-testApp 0.7.4
+### Release Notes for krail-testApp 0.7.5
 
-This version upgrades to Vaadin 7.4.0
+Changes to support introduction of an Event Bus in the Krail core
 
 #### Change log
 
--   [3](https://github.com/davidsowerby/krail-testApp/issues/3): NoClassDef org.json.JSONException
 
 
 #### Dependency changes
 
-   compile dependency version changed to: krail-jpa:0.8.4
-   compile dependency version changed to: krail:0.8.1
-   test compile dependency version changed to: krail-bench:0.7.11
+   compile dependency version changed to: krail:0.9.0
+   test compile dependency version changed to: krail-bench:0.7.12
+   compile dependency version changed to: krail-jpa:0.8.5
 
 #### Detail
 
@@ -19,13 +18,31 @@ This version upgrades to Vaadin 7.4.0
 
 
 ---
-*Fix [3](https://github.com/davidsowerby/krail-testApp/issues/3) NoClassDef*
-
-Dependency missing from stepper component. Included org.json:json in the build and that has fixed it.  Also updated versions of stepper and message box components
+*See [krail 346](https://github.com/davidsowerby/krail/issues/346) ViewChangeListeners replaced by Event Bus*
 
 
 ---
-[krail 329](https://github.com/*davidsowerby/krail/issues/329) Upgrade to Vaadin 7.3.10*
+*Widgetset deleted and aded to .gitignore*
+
+
+---
+*See [krail 349](https://github.com/davidsowerby/krail/issues/349) Event bus does not need to be injected into subscribers, only publishers.*
+
+
+---
+*See [krail 345](https://github.com/davidsowerby/krail/issues/345) Locale change listeners replaced by event bus*
+
+
+---
+[krail 342](https://github.com/*davidsowerby/krail/issues/342) Scopes corrected*
+
+Some new tests, but also the need to explicilty add standard pages has been removed.
+
+
+---
+*See [krail 304](https://github.com/davidsowerby/krail/issues/304) Change to logback*
+
+Logging configuration files changed
 
 
 ---
