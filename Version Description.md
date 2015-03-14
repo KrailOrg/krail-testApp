@@ -1,1 +1,1 @@
-This version upgrades to Vaadin 7.4.0
+Changes to support introduction of an Event Bus in the Krail core
