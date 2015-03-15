@@ -1,11 +1,9 @@
 /*
- * Copyright (C) 2014 David Sowerby
- * 
+ * Copyright (c) 2015. David Sowerby
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ * the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -51,11 +49,14 @@ public class Push_Functional extends KrailTestBenchTestCase {
     public void enabled() {
         // given
         navigateTo("notifications/push");
+        pause(1500);
         selectDriver(2);
+        pause(1500);
         navigateTo("notifications/push");
         // when
 
         selectDriver(1);
+        pause(1500);
         pushView.groupBox()
                 .sendKeys("a");
         pushView.messageBox()
@@ -63,11 +64,12 @@ public class Push_Functional extends KrailTestBenchTestCase {
         pushView.sendButton()
                 .click();
         // then
-
+        pause(1500);
         assertThat(pushView.messageLog()
                            .getValue()).isEqualTo("a:a1\n");
         assertThat(messageBar.message()).isEqualTo("a:a1");
         selectDriver(2);
+        pause(1500);
         assertThat(pushView.messageLog()
                            .getValue()).isEqualTo("a:a1\n");
 
@@ -79,7 +81,7 @@ public class Push_Functional extends KrailTestBenchTestCase {
                 .sendKeys("b1");
         pushView.sendButton()
                 .click();
-
+        pause(1500);
         // then
         assertThat(pushView.messageLog()
                            .getValue()).isEqualTo("b:b1\na:a1\n");
