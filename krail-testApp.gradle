@@ -10,9 +10,6 @@
  */
 description = 'Functional test application for Krail and its additional modules'
 
-// TODO this should be enforced somewhere to consistently use lowercase for war
-warName = 'krail-testapp.war' // make lowercase
-
 
 vaadin {
     widgetset "uk.q3c.krail.testapp.widgetset.testAppWidgetset"
@@ -20,23 +17,7 @@ vaadin {
 
 bintrayUpload.enabled = false
 
-task deleteDerbyFolder << {
-    description = "deleting the derby database"
-    File derbyDir = new File('/home/david/temp/derbyDb')
-    description = "deleting derby " + derbyDir.absolutePath
-    tasks.withType(Delete) {
-        delete = derbyDir
-    }
-}
 
-testPrep {
-    description = "deleting the derby database"
-    File derbyDir = new File('/home/david/temp/derbyDb')
-    description = "deleting derby " + derbyDir.absolutePath
-    tasks.withType(Delete) {
-        delete = derbyDir
-    }
-}
 
 
 dependencies {

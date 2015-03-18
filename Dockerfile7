@@ -1,0 +1,8 @@
+FROM tomcat:7-jre8
+
+COPY krail-testapp.war /usr/local/tomcat/webapps/
+
+
+
+
+
