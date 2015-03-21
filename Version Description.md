@@ -1,1 +1,1 @@
-Changes to support introduction of an Event Bus in the Krail core
+This version provides changes in support of switch to Docker containers for testing, and in support of fixes made in the Krail core
