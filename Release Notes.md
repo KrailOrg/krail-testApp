@@ -25,7 +25,7 @@ This version provides changes in support of switch to Docker containers for test
 [krail 353](https://github.com/*davidsowerby/krail/issues/353) Vaadin 7.4.2*
 
 Updated tests.  Had to undo the fix of [152](https://github.com/davidsowerby/krail-testApp/issues/152), as it was causing mock to fail for VaadinSession.  Raised a new ticket [354](https://github.com/davidsowerby/krail-testApp/issues/354).
-rechecked and eliminated some 'force' statements in the Gradle ResolutionStrategy
+Also reviewed and eliminated some 'force' statements in the Gradle ResolutionStrategy
 
 
 ---
