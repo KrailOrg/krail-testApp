@@ -1,6 +1,6 @@
-### Release Notes for krail-testApp 0.7.5
+### Release Notes for krail-testApp 0.7.6
 
-Changes to support introduction of an Event Bus in the Krail core
+This version provides changes in support of switch to Docker containers for testing, and in support of fixes made in the Krail core
 
 #### Change log
 
@@ -8,41 +8,40 @@ Changes to support introduction of an Event Bus in the Krail core
 
 #### Dependency changes
 
-   compile dependency version changed to: krail:0.9.0
-   test compile dependency version changed to: krail-bench:0.7.12
-   compile dependency version changed to: krail-jpa:0.8.5
+   compile dependency version changed to: krail-jpa:0.8.6
+   compile dependency version changed to: krail:0.9.1
+   test compile dependency version changed to: krail-bench:0.7.13
 
 #### Detail
 
-*Updated version information*
+*Version update information*
 
 
 ---
-*See [krail 346](https://github.com/davidsowerby/krail/issues/346) ViewChangeListeners replaced by Event Bus*
+*Change to test for [krail 257](https://github.com/davidsowerby/krail/issues/257)*
 
 
 ---
-*Widgetset deleted and aded to .gitignore*
+[krail 353](https://github.com/*davidsowerby/krail/issues/353) Vaadin 7.4.2*
+
+Updated tests.  Had to undo the fix of [152](https://github.com/davidsowerby/krail-testApp/issues/152), as it was causing mock to fail for VaadinSession.  Raised a new ticket [354](https://github.com/davidsowerby/krail-testApp/issues/354).
+rechecked and eliminated some 'force' statements in the Gradle ResolutionStrategy
 
 
 ---
-*See [krail 349](https://github.com/davidsowerby/krail/issues/349) Event bus does not need to be injected into subscribers, only publishers.*
+[krail 260](https://github.com/*davidsowerby/krail/issues/260) Tests set up for Tomcat 8*
+
+Now defaults to Tomcat 8
 
 
 ---
-*See [krail 345](https://github.com/davidsowerby/krail/issues/345) Locale change listeners replaced by event bus*
+*Changes to support [krail-master 18](https://github.com/davidsowerby/krail-master/issues/18)*
 
 
 ---
-[krail 342](https://github.com/*davidsowerby/krail/issues/342) Scopes corrected*
+*Modify test timing for container*
 
-Some new tests, but also the need to explicilty add standard pages has been removed.
-
-
----
-*See [krail 304](https://github.com/davidsowerby/krail/issues/304) Change to logback*
-
-Logging configuration files changed
+The push test in a container needed to be slowed down
 
 
 ---
