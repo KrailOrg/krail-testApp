@@ -47,7 +47,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void navigateFromTree() throws InterruptedException {
 
         // given
-        driver.get(rootUrl());
+         startDriver();
         // when
 
         // then
@@ -82,7 +82,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void navigateToUnauthorisedPage() {
 
         // given
-        driver.get(rootUrl());
+         startDriver();
         pause(1000);
         // when
 
@@ -115,7 +115,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     @Test
     public void navigateToInvalidPage() {
         // given
-        driver.get(rootUrl());
+         startDriver();
         pause(1000);
         // when
 
@@ -136,7 +136,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void redirectFromPrivate() {
 
         // given
-        driver.get(rootUrl());
+         startDriver();
         pause(1000);
         login();
         pause(1000);
@@ -155,7 +155,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void browserBackForward() {
 
         // given
-        driver.get(rootUrl());
+        startDriver();
         pause(1000);
         // when
         navTree.select(5);
@@ -222,7 +222,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void menuNavigate() {
 
         // given
-        driver.get(rootUrl());
+       startDriver();
         pause(1000);
         // when
 
@@ -258,7 +258,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     @Test
     public void selectPath() {
         //given
-        driver.get(rootUrl());
+         startDriver();
         pause(1200);
         //when
         navTree.select("System Account/Enable Account");

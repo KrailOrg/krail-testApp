@@ -39,7 +39,7 @@ public class LocaleTest extends KrailTestBenchTestCase {
     @Before
     public void setUp() throws Exception {
         appContext = "krail-testapp";
-        driver.get(rootUrl());
+        startDriver();
 
     }
 
@@ -48,7 +48,6 @@ public class LocaleTest extends KrailTestBenchTestCase {
     public void defaultLocale() {
 
         // given
-
         // when
 
         // then

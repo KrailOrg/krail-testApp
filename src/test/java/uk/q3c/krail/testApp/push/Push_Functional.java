@@ -24,15 +24,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class Push_Functional extends KrailTestBenchTestCase {
 
-    private WebDriver driver2;
     private MessageBarPageObject messageBar = new MessageBarPageObject(this);
     private PushViewPageObject pushView = new PushViewPageObject(this);
 
     @Before
     public void setup() {
         appContext = "krail-testapp";
-        selectDriver(1);
-        driver2 = TestBench.createDriver(new FirefoxDriver());
+        selectDriver(0);
+        WebDriver driver2 = TestBench.createDriver(new FirefoxDriver());
         driver2.manage()
                .window()
                .setPosition(new Point(1026, 0));
@@ -50,12 +49,12 @@ public class Push_Functional extends KrailTestBenchTestCase {
         // given
         navigateTo("notifications/push");
         pause(1500);
-        selectDriver(2);
+        selectDriver(1);
         pause(1500);
         navigateTo("notifications/push");
         // when
 
-        selectDriver(1);
+        selectDriver(0);
         pause(1500);
         pushView.groupBox()
                 .sendKeys("a");
@@ -68,7 +67,7 @@ public class Push_Functional extends KrailTestBenchTestCase {
         assertThat(pushView.messageLog()
                            .getValue()).isEqualTo("a:a1\n");
         assertThat(messageBar.message()).isEqualTo("a:a1");
-        selectDriver(2);
+        selectDriver(1);
         pause(1500);
         assertThat(pushView.messageLog()
                            .getValue()).isEqualTo("a:a1\n");
@@ -86,7 +85,7 @@ public class Push_Functional extends KrailTestBenchTestCase {
         assertThat(pushView.messageLog()
                            .getValue()).isEqualTo("b:b1\na:a1\n");
 
-        selectDriver(1);
+        selectDriver(0);
         assertThat(pushView.messageLog()
                            .getValue()).isEqualTo("b:b1\na:a1\n");
         assertThat(messageBar.message()).isEqualTo("b:b1");
@@ -97,9 +96,9 @@ public class Push_Functional extends KrailTestBenchTestCase {
     public void disabled() {
         // given
         navigateTo("notifications/push");
-        selectDriver(2);
-        navigateTo("notifications/push");
         selectDriver(1);
+        navigateTo("notifications/push");
+        selectDriver(0);
         pushView.checkbox()
                 .click();
         pause(1000);
