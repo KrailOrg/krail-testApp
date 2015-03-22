@@ -26,7 +26,6 @@ import ch.qos.logback.core.ConsoleAppender
 import ch.qos.logback.core.FileAppender
 
 import static ch.qos.logback.classic.Level.DEBUG
-import static ch.qos.logback.classic.Level.INFO
 
 appender("STDOUT", ConsoleAppender) {
     encoder(PatternLayoutEncoder) {
@@ -42,5 +41,5 @@ appender("FILE", FileAppender) {
     }
 }
 
-logger("uk.q3c", DEBUG)
-root(INFO, ["STDOUT", "FILE"])
+//logger("uk.q3c", DEBUG)
+root(DEBUG, ["STDOUT", "FILE"])

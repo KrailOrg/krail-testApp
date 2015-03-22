@@ -30,7 +30,7 @@ public class LoginTest extends KrailTestBenchTestCase {
     @Before
     public void setUp() throws Exception {
         appContext = "krail-testapp";
-        driver.get(rootUrl());
+        startDriver();
     }
 
     @Test

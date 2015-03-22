@@ -26,7 +26,7 @@ public class VaadinVersionTest extends KrailTestBenchTestCase {
     public void confirmVersion() {
         //given
         appContext = "krail-testapp";
-        driver.get(rootUrl());
+        startDriver();
         pause(500);
         //when
 
