@@ -16,20 +16,23 @@ import uk.q3c.krail.i18n.I18NKey;
 
 public enum LabelKey implements I18NKey {
 
-    Yes,
-    No,
-    View1,
-    View2,
+
+    Data_Sources,
+    Enable_Account,
     Home,
+    Krail_Test_Application,
+    Login,
+    Logout,
+    No,
     Private,
     Public,
-    Reset_Account,
-    Logout,
-    Unlock_Account,
-    Enable_Account,
-    Login,
     Refresh_Account,
+    Reset_Account,
     Request_Account,
-    Krail_Test_Application, _nullkey_
+    Unlock_Account,
+    View1,
+    View2,
+    Yes,
+    _nullkey_
 
 }

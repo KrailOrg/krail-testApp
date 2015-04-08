@@ -9,14 +9,13 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package uk.q3c.krail.testapp.view;
+package uk.q3c.krail.testApp.test.persist;
 
 import com.vaadin.testbench.elements.LabelElement;
 import com.vaadin.testbench.elements.TableElement;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import uk.q3c.krail.testApp.test.JpaViewPageObject;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,7 +46,7 @@ public class JpaViewTest extends KrailTestBenchTestCase {
         int startCount2 = countFor(2);
 
         //when
-        pause(500);
+        pause(1000);
         pageObject.saveButton(1)
                   .click();
         pause(500);
@@ -60,7 +59,7 @@ public class JpaViewTest extends KrailTestBenchTestCase {
         TableElement t2 = pageObject.table(2);
         assertThat(t1.getRow(0)).isNotNull();
         assertThat(t2.getRow(0)).isNotNull();
-        assertThat(newCount1).isEqualTo(startCount1 + 1);
+        assertThat(newCount1).isEqualTo(startCount1 + 2);
         assertThat(newCount2).isEqualTo(startCount2 + 1);
     }
 

@@ -9,7 +9,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package uk.q3c.krail.testApp.test;
+package uk.q3c.krail.testApp.test.navigate;
 
 import com.vaadin.testbench.By;
 import com.vaadin.testbench.ScreenshotOnFailureRule;

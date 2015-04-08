@@ -12,16 +12,13 @@
 package uk.q3c.krail.testapp.view;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.ui.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.ui.ScopedUI;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
-import uk.q3c.krail.persist.jpa.GenericJpaDao;
-import uk.q3c.krail.persist.jpa.GenericJpaDaoProvider;
-import uk.q3c.krail.persist.jpa.JpaContainerProvider;
+import uk.q3c.krail.persist.jpa.*;
 import uk.q3c.krail.testapp.persist.Jpa1;
 import uk.q3c.krail.testapp.persist.Jpa2;
 import uk.q3c.krail.testapp.persist.Widget;
@@ -30,15 +27,14 @@ import uk.q3c.util.ID;
 import java.util.Optional;
 
 /**
+ * A view for testing JPA
+ * <p>
  * Created by David Sowerby on 29/12/14.
  */
 
 public class JpaView extends ViewBase implements Button.ClickListener {
-    private static Logger log = LoggerFactory.getLogger(JpaView.class);
-    //    private final EntityManagerProvider entityManagerProvider1;
-    //    private final EntityManagerProvider entityManagerProvider2;
-    private final GenericJpaDao dao1;
-    private final GenericJpaDao dao2;
+    private final JpaBlockDao blockDao;
+    private final JpaStatementDao statementDao;
     private final JpaContainerProvider containerProvider;
     private int count1;
     private int count2;
@@ -52,19 +48,20 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     private Table table2;
 
     @Inject
-    protected JpaView(GenericJpaDaoProvider daoProvider, JpaContainerProvider containerProvider) {
+    protected JpaView(@Jpa1 Provider<StandardJpaBlockDao> blockDaoProvider, @Jpa2 Provider<StandardJpaStatementDao> statementDaoProvider,
+                      JpaContainerProvider containerProvider) {
         this.containerProvider = containerProvider;
-        this.dao1 = daoProvider.getDao(Jpa1.class);
-        this.dao2 = daoProvider.getDao(Jpa2.class);
+        this.blockDao = blockDaoProvider.get();
+        this.statementDao = statementDaoProvider.get();
     }
 
-    public Table getTable1() {
-        return table1;
-    }
-
-    public Table getTable2() {
-        return table2;
-    }
+    //    public Table getTable1() {
+    //        return table1;
+    //    }
+    //
+    //    public Table getTable2() {
+    //        return table2;
+    //    }
 
     /**
      * Called after the view itself has been constructed but before {@link #buildView(ViewChangeBusMessage)} is
@@ -151,13 +148,19 @@ public class JpaView extends ViewBase implements Button.ClickListener {
             Widget widget = new Widget();
             widget.setName("a" + count1++);
             widget.setDescription("a");
-            dao1.persist(widget);
+            Widget widget1 = new Widget();
+            widget1.setName("aa" + count1++);
+            widget1.setDescription("aa");
+            blockDao.transact(d -> {
+                d.save(widget);
+                d.save(widget1);
+            });
             refresh(1);
         } else {
             Widget widget = new Widget();
             widget.setName("b" + count2++);
             widget.setDescription("b");
-            dao2.persist(widget);
+            statementDao.save(widget);
             refresh(2);
         }
     }

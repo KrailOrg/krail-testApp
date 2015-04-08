@@ -33,6 +33,10 @@ dependencies {
     //vaadin push
     compile 'com.vaadin:vaadin-push:' + vaadinVersion
 
+    compile 'junit:junit:4.11'
+
+//    testCompile project(':krail-orient')
+
 
 }
 
