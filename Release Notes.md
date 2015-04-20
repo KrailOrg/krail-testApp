@@ -1,6 +1,6 @@
-### Release Notes for krail-testApp 0.7.6
+### Release Notes for krail-testApp 0.7.7
 
-This version provides changes in support of switch to Docker containers for testing, and in support of fixes made in the Krail core
+Upgrade to Vaadin 7.4.4
 
 #### Change log
 
@@ -8,9 +8,9 @@ This version provides changes in support of switch to Docker containers for test
 
 #### Dependency changes
 
-   compile dependency version changed to: krail-jpa:0.8.6
-   compile dependency version changed to: krail:0.9.1
-   test compile dependency version changed to: krail-bench:0.7.13
+   compile dependency version changed to: krail-jpa:0.8.7
+   compile dependency version changed to: krail:0.9.2
+   test compile dependency version changed to: krail-bench:0.7.14
 
 #### Detail
 
@@ -18,30 +18,22 @@ This version provides changes in support of switch to Docker containers for test
 
 
 ---
-*Change to test for [krail 257](https://github.com/davidsowerby/krail/issues/257)*
+*Upgrade to Vaadin 7.4.4*
 
 
 ---
-[krail 353](https://github.com/*davidsowerby/krail/issues/353) Vaadin 7.4.2*
+*Upgrade to Vaadin 7.4.3*
 
-Updated tests.  Had to undo the fix of [152](https://github.com/davidsowerby/krail-testApp/issues/152), as it was causing mock to fail for VaadinSession.  Raised a new ticket [354](https://github.com/davidsowerby/krail-testApp/issues/354).
-Also reviewed and eliminated some 'force' statements in the Gradle ResolutionStrategy
 
 
 ---
-[krail 260](https://github.com/*davidsowerby/krail/issues/260) Tests set up for Tomcat 8*
-
-Now defaults to Tomcat 8
+*Merge branch 'krail317' into develop*
 
 
----
-*Changes to support [krail-master 18](https://github.com/davidsowerby/krail-master/issues/18)*
 
 
 ---
-*Modify test timing for container*
-
-The push test in a container needed to be slowed down
+*Modify tests to support changes to krail-bench*
 
 
----
+Standardised use of multiple drivers, and correct handling of trailing slash, see davidsowerby/krail#317
