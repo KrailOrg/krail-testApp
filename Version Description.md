@@ -1,1 +1,1 @@
-This version provides changes in support of switch to Docker containers for testing, and in support of fixes made in the Krail core
+Upgrade to Vaadin 7.4.4

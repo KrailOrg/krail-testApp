@@ -1,18 +1,18 @@
-/.gradle
-/.idea
-/.settings
-/bin
-/build
-/gradle
-/logs
+.gradle
+.idea
+.settings
+bin
+build
+gradle
+logs
 
-/.krail-testApp.iml
+.krail-testApp.iml
 /uk/q3c/krail/testapp/widgetset/testAppWidgetset.gwt.xml
 build.gradle~
 git.ignore~
 README.md~
 
-/.classpath
-/.project
-/.gradle
-/error-screenshots
+.classpath
+.project
+
+error-screenshots
