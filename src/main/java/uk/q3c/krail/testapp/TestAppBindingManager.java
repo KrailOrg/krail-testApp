@@ -26,7 +26,6 @@ public class TestAppBindingManager extends DefaultBindingManager {
 
     @Override
     protected void addAppModules(List<Module> modules) {
-        modules.add(new TestAppUIModule());
         modules.add(new TestAppJpaModule());
     }
 
@@ -52,4 +51,8 @@ public class TestAppBindingManager extends DefaultBindingManager {
         return new TestAppI18NModule();
     }
 
+    @Override
+    protected Module uiModule() {
+        return new TestAppUIModule();
+    }
 }

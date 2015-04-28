@@ -13,11 +13,11 @@ package uk.q3c.krail.testapp;
 
 import com.google.inject.multibindings.MapBinder;
 import com.vaadin.ui.UI;
+import uk.q3c.krail.core.ui.DefaultUIModule;
 import uk.q3c.krail.core.ui.ScopedUIProvider;
-import uk.q3c.krail.core.ui.UIModule;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 
-public class TestAppUIModule extends UIModule {
+public class TestAppUIModule extends DefaultUIModule {
     @Override
     protected void bindUIProvider() {
         bind(ScopedUIProvider.class).to(TestAppUIProvider.class);
