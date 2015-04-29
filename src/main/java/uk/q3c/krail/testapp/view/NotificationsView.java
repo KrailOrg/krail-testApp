@@ -45,18 +45,7 @@ public class NotificationsView extends ViewBase {
     }
 
 
-    /**
-     * Called after the view itself has been constructed but before {@link #buildView(ViewChangeBusMessage)} is
-     * called.  Typically checks whether a valid URI parameters are being passed to the view, or uses the URI
-     * parameters to set up some configuration which affects the way the view is presented.
-     *
-     * @param busMessage
-     *         contains information about the change to this View
-     */
-    @Override
-    public void beforeBuild(ViewChangeBusMessage busMessage) {
 
-    }
 
     @Override
     public void buildView(ViewChangeBusMessage busMessage) {

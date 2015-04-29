@@ -55,26 +55,7 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         this.statementDao = statementDaoProvider.get();
     }
 
-    //    public Table getTable1() {
-    //        return table1;
-    //    }
-    //
-    //    public Table getTable2() {
-    //        return table2;
-    //    }
 
-    /**
-     * Called after the view itself has been constructed but before {@link #buildView(ViewChangeBusMessage)} is
-     * called. Typically checks whether a valid URI parameters are being passed to the view, or uses the URI
-     * parameters to set up some configuration which affects the way the view is presented.
-     *
-     * @param event
-     *         contains information about the change to this View
-     */
-    @Override
-    public void beforeBuild(ViewChangeBusMessage event) {
-
-    }
 
     /**
      * Builds the UI components of the view.  MUST set the root component of the View (returned by {@link
