@@ -15,7 +15,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.ui.*;
-import uk.q3c.krail.core.ui.ScopedUI;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.persist.jpa.*;
@@ -58,17 +57,11 @@ public class JpaView extends ViewBase implements Button.ClickListener {
 
 
     /**
-     * Builds the UI components of the view.  MUST set the root component of the View (returned by {@link
-     * #getRootComponent()}, which is used to insert into the {@link ScopedUI} view area. The view implementation may
-     * need to check whether components have already been constructed, as this method may be called when the View is
-     * selected again after initial construction.
-     *
-     * @param event
-     *         contains information about the change to this View
+     * {@inheritDoc}
      */
     @Override
 
-    public void buildView(ViewChangeBusMessage event) {
+    public void doBuild(ViewChangeBusMessage event) {
         VerticalLayout rootLayout = new VerticalLayout();
         saveBtn1 = new Button("persist 1");
         saveBtn1.addClickListener(this);

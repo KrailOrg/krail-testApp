@@ -47,7 +47,7 @@ public class WidgetsetView extends ViewBase {
 
 
     @Override
-    public void buildView(ViewChangeBusMessage event) {
+    public void doBuild(ViewChangeBusMessage event) {
         buttonPanel = new Panel();
         VerticalLayout verticalLayout = new VerticalLayout();
         buttonPanel.setContent(verticalLayout);

@@ -51,8 +51,8 @@ public class PushView extends ViewBaseGrid {
 
 
     @Override
-    public void buildView(ViewChangeBusMessage busMessage) {
-        super.buildView(busMessage);
+    public void doBuild(ViewChangeBusMessage busMessage) {
+        super.doBuild(busMessage);
         groupInput = new TextField("Group");
         groupInput.setWidth("100px");
         messageInput = new TextField("Message");

@@ -30,7 +30,7 @@ public abstract class ViewBaseGrid extends ViewBase {
     }
 
     @Override
-    public void buildView(ViewChangeBusMessage busMessage) {
+    public void doBuild(ViewChangeBusMessage busMessage) {
         GridLayout grid = new GridLayout(3, 4);
         Panel topMarginPanel = new Panel();
         topMarginPanel.setHeight(topMargin + "px");

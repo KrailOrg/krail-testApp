@@ -48,7 +48,7 @@ public class NotificationsView extends ViewBase {
 
 
     @Override
-    public void buildView(ViewChangeBusMessage busMessage) {
+    public void doBuild(ViewChangeBusMessage busMessage) {
         buttonPanel = new Panel();
         VerticalLayout verticalLayout = new VerticalLayout();
         buttonPanel.setContent(verticalLayout);
