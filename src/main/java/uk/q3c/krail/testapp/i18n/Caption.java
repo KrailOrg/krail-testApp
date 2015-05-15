@@ -28,8 +28,9 @@ import java.util.Locale;
  * the keys for I18N lookup. All parameters are optional, but the value parameter is relevant only for those components
  * which implement {@link Property}. Its value would be ignored otherwise
  *
+ * See documentation at https://sites.google.com/site/q3cjava/internationalisation-i18n
+ *
  * @author David Sowerby 9 Feb 2013
- * @see https://sites.google.com/site/q3cjava/internationalisation-i18n
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
@@ -48,6 +49,5 @@ public @interface Caption {
 
     String locale() default "";
 
-    boolean drillDown() default true;
 
 }
