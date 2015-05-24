@@ -63,6 +63,12 @@ public class LoginTest extends KrailTestBenchTestCase {
         assertThat(loginStatus.loginButton()
                               .getText()).isEqualTo("log out");
         assertThat(loginStatus.username()).isEqualTo("ds");
+
+        // when
+        navTree.select("Private/Finance/Accounts");
+
+        //then making sure page is visible
+        verifyUrl("private/finance/accounts");
     }
 
 
@@ -97,14 +103,6 @@ public class LoginTest extends KrailTestBenchTestCase {
         assertThat(loginForm.message()).isEqualTo("That username or password was not recognised");
     }
 
-    //	@After
-    //    public void tearDown2() throws Exception {
-    //        String verificationErrorString = verificationErrors.toString();
-    //		System.out.println(verificationErrorString);
-    //		if (!"".equals(verificationErrorString)) {
-    //			fail(verificationErrorString);
-    //		}
-    //	}
 
     public void init(WebDriver driver, String baseUrl) {
         this.setDriver(driver);
