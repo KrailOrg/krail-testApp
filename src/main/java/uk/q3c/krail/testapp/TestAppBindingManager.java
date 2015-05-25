@@ -44,7 +44,7 @@ public class TestAppBindingManager extends DefaultBindingManager {
         baseModules.add(new TestAppPages());
         baseModules.add(new FinancePages());
         baseModules.add(new AnnotationPagesModule());
-        baseModules.add(new SystemAdminPages());
+        baseModules.add(new SystemAdminPages().rootURI("private/sysadmin"));
     }
 
     @Override

@@ -37,7 +37,7 @@ public class LoginTest extends KrailTestBenchTestCase {
     public void testLogin() {
         // given
         pause(1000);
-        navTree.expand(0);
+        navTree.expandCollapse(0);
         // navTree().index(0).expand().get().click();
         String startFragment = "system-account";
         navigateTo(startFragment);
@@ -64,11 +64,20 @@ public class LoginTest extends KrailTestBenchTestCase {
                               .getText()).isEqualTo("log out");
         assertThat(loginStatus.username()).isEqualTo("ds");
 
+        //when
+        navTree.select("Private/System Administration");
+
+        //then
+        verifyUrl("private/sysadmin");
+
         // when
+        navTree.expandCollapse(3); // TODO must be a better way to identify the "Private" branch (preload pageObject?)
         navTree.select("Private/Finance/Accounts");
 
         //then making sure page is visible
         verifyUrl("private/finance/accounts");
+
+
     }
 
 
