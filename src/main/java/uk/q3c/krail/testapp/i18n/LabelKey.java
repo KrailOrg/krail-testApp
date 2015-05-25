@@ -33,6 +33,6 @@ public enum LabelKey implements I18NKey {
     View1,
     View2,
     Yes,
-    Finance, Accounts, Payroll, _nullkey_
+    Finance, Accounts, Payroll, Purchasing, _nullkey_
 
 }

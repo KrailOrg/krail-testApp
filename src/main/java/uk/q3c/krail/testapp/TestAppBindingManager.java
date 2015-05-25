@@ -14,8 +14,10 @@ package uk.q3c.krail.testapp;
 import com.google.inject.Module;
 import uk.q3c.krail.core.guice.DefaultBindingManager;
 import uk.q3c.krail.core.navigate.sitemap.SystemAccountManagementPages;
+import uk.q3c.krail.core.sysadmin.SystemAdminPages;
 import uk.q3c.krail.testapp.i18n.TestAppI18NModule;
 import uk.q3c.krail.testapp.persist.TestAppJpaModule;
+import uk.q3c.krail.testapp.view.AnnotationPagesModule;
 import uk.q3c.krail.testapp.view.FinancePages;
 import uk.q3c.krail.testapp.view.TestAppPages;
 import uk.q3c.krail.testapp.view.TestAppViewModule;
@@ -41,6 +43,8 @@ public class TestAppBindingManager extends DefaultBindingManager {
         baseModules.add(new SystemAccountManagementPages());
         baseModules.add(new TestAppPages());
         baseModules.add(new FinancePages());
+        baseModules.add(new AnnotationPagesModule());
+        baseModules.add(new SystemAdminPages());
     }
 
     @Override
