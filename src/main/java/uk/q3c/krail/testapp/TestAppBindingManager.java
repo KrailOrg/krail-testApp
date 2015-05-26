@@ -15,6 +15,8 @@ import com.google.inject.Module;
 import uk.q3c.krail.core.guice.DefaultBindingManager;
 import uk.q3c.krail.core.navigate.sitemap.SystemAccountManagementPages;
 import uk.q3c.krail.core.sysadmin.SystemAdminPages;
+import uk.q3c.krail.core.ui.DefaultUIModule;
+import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.krail.testapp.i18n.TestAppI18NModule;
 import uk.q3c.krail.testapp.persist.TestAppJpaModule;
 import uk.q3c.krail.testapp.view.AnnotationPagesModule;
@@ -59,6 +61,7 @@ public class TestAppBindingManager extends DefaultBindingManager {
 
     @Override
     protected Module uiModule() {
-        return new TestAppUIModule();
+        return new DefaultUIModule().uiClass(TestAppUI.class)
+                                    .applicationTitleKey(LabelKey.Krail_Test_Application);
     }
 }
