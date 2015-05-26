@@ -36,9 +36,9 @@ import java.util.Locale;
 @Target(ElementType.FIELD)
 @I18NAnnotation
 public @interface Caption {
-    LabelKey caption() default LabelKey._nullkey_;
+    LabelKey caption();
 
-    LabelKey description() default LabelKey._nullkey_;
+    LabelKey description();
 
     /**
      * The locale for an annotated component is usually taken from {@link CurrentLocale}, but if this optional parameter
