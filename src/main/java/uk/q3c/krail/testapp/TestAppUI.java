@@ -21,7 +21,8 @@ import uk.q3c.krail.core.push.Broadcaster;
 import uk.q3c.krail.core.push.PushMessageRouter;
 import uk.q3c.krail.core.ui.ApplicationTitle;
 import uk.q3c.krail.core.ui.DefaultApplicationUI;
-import uk.q3c.krail.core.user.notify.UserNotifier;
+import uk.q3c.krail.core.user.notify.InformationNotificationMessage;
+import uk.q3c.krail.core.user.notify.VaadinNotification;
 import uk.q3c.krail.core.user.opt.Option;
 import uk.q3c.krail.core.view.component.*;
 import uk.q3c.krail.i18n.CurrentLocale;
@@ -44,16 +45,16 @@ public class TestAppUI extends DefaultApplicationUI {
                         UserNavigationMenu menu, UserNavigationTree navTree, Breadcrumb breadcrumb,
                         SubPagePanel subpage, MessageBar messageBar, Broadcaster broadcaster,
                         PushMessageRouter pushMessageRouter, SessionObject sessionObject,
-                        ApplicationTitle applicationTitle, Translate translate, CurrentLocale currentLocale, I18NProcessor translator, LocaleSelector localeSelector, UserNotifier userNotifier, Option option) {
+                        ApplicationTitle applicationTitle, Translate translate, CurrentLocale currentLocale, I18NProcessor translator, LocaleSelector localeSelector, VaadinNotification vaadinNotification, Option option) {
         super(navigator, errorHandler, converterFactory, logo, header, userStatus, menu, navTree, breadcrumb, subpage, messageBar, broadcaster,
-                pushMessageRouter, applicationTitle, translate, currentLocale, translator, localeSelector, userNotifier, option);
+                pushMessageRouter, applicationTitle, translate, currentLocale, translator, localeSelector, vaadinNotification, option);
 
     }
 
     @Override
     protected void processBroadcastMessage(String group, String message) {
         super.processBroadcastMessage(group, message);
-        getMessageBar().informationMessage(group + ":" + message);
+        getMessageBar().informationMessage(new InformationNotificationMessage(group +":" + message));
     }
 
 }
