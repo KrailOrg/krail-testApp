@@ -55,6 +55,10 @@ public class NotificationsViewPageObject extends PageObject {
     }
 
     public CheckBoxElement optionsPopupInformationCheckbox() {
-        return element(CheckBoxElement.class, Optional.of("Information"), CheckBox.class);
+        return element(CheckBoxElement.class, Optional.of("Information"), DefaultOptionPopup.class, CheckBox.class);
+    }
+
+    public ButtonElement optionsPopupDefaultsButton() {
+        return element(ButtonElement.class, Optional.of("Information"), DefaultOptionPopup.class, Button.class);
     }
 }

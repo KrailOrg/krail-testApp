@@ -13,6 +13,7 @@
 package uk.q3c.krail.testApp.test;
 
 import com.vaadin.testbench.ScreenshotOnFailureRule;
+import com.vaadin.testbench.elements.ButtonElement;
 import com.vaadin.testbench.elements.CheckBoxElement;
 import com.vaadin.testbench.elements.WindowElement;
 import org.junit.Before;
@@ -145,6 +146,18 @@ public class NotifyTest extends KrailTestBenchTestCase {
         checkBoxElement.click();
         checkBoxElement.sendKeys(" ");
         assertThat(infoButtonVisible()).isNotEqualTo(infoButtonIsVisible);
+
+        //given
+        ensureInfoButtonVisible();
+        checkBoxElement.click();
+        checkBoxElement.sendKeys(" ");
+
+        //when
+        ButtonElement defaultsButton = notificationsView.optionsPopupDefaultsButton();
+        defaultsButton.click();
+        assertThat(infoButtonIsVisible);
+        assertThat(notificationsView.optionsPopupInformationCheckbox()
+                                    .getValue()).isEqualTo("checked");
 
     }
 }
