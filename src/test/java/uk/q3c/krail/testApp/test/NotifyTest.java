@@ -13,9 +13,12 @@
 package uk.q3c.krail.testApp.test;
 
 import com.vaadin.testbench.ScreenshotOnFailureRule;
+import com.vaadin.testbench.elements.CheckBoxElement;
+import com.vaadin.testbench.elements.WindowElement;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.openqa.selenium.NoSuchElementException;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.MessageBarPageObject;
 
@@ -89,6 +92,7 @@ public class NotifyTest extends KrailTestBenchTestCase {
     public void notifyInformation() {
         // given
         navigateTo(testPage);
+        ensureInfoButtonVisible();
 
         // when
         notificationsView.informationButton()
@@ -100,5 +104,47 @@ public class NotifyTest extends KrailTestBenchTestCase {
         //        assertThat(notification().getText()).isEqualTo("Info: You cannot use service Fake Service until it has been started");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification humanized v-Notification-humanized");
         closeNotification();
+    }
+
+    private void ensureInfoButtonVisible() {
+        if (!infoButtonVisible()) {
+            notificationsView.optionsButton()
+                             .click();
+            final CheckBoxElement checkBoxElement = notificationsView.optionsPopupInformationCheckbox();
+            checkBoxElement.click();
+            checkBoxElement.sendKeys(" ");
+        }
+    }
+
+    private boolean infoButtonVisible() {
+        try {
+            notificationsView.informationButton();
+            return true;
+        } catch (NoSuchElementException nse) {
+            return false;
+        }
+    }
+
+    @Test
+    public void optionsPopup() {
+        //given
+        navigateTo(testPage);
+        //when
+        notificationsView.optionsButton()
+                         .click();
+
+        //then make sure popup is there
+        final WindowElement windowElement = notificationsView.optionsWindow();
+        assertThat(notificationsView.optionsPopupInformationCheckbox()
+                                    .isDisplayed()).isTrue();
+        assertThat(windowElement.getCaption()).isEqualTo("Notification Options");
+
+        //when the state is reversed (successive tests may leave previous value in Option store)
+        boolean infoButtonIsVisible = infoButtonVisible();
+        final CheckBoxElement checkBoxElement = notificationsView.optionsPopupInformationCheckbox();
+        checkBoxElement.click();
+        checkBoxElement.sendKeys(" ");
+        assertThat(infoButtonVisible()).isNotEqualTo(infoButtonIsVisible);
+
     }
 }

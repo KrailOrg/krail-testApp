@@ -13,21 +13,34 @@
 package uk.q3c.krail.testapp.view;
 
 import com.google.inject.Inject;
+import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.user.notify.UserNotifier;
+import uk.q3c.krail.core.user.opt.Option;
+import uk.q3c.krail.core.user.opt.OptionContext;
+import uk.q3c.krail.core.user.opt.OptionKey;
+import uk.q3c.krail.core.user.opt.OptionPopup;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
+import uk.q3c.krail.i18n.LabelKey;
 import uk.q3c.krail.i18n.MessageKey;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.DescriptionKey;
 import uk.q3c.util.ID;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 
-public class NotificationsView extends ViewBase {
+public class NotificationsView extends ViewBase implements OptionContext {
+    private static final OptionKey<Boolean> errorButtonVisible = new OptionKey<>(true, NotificationsView.class, LabelKey.Error, MessageKey.Button_is_Visible);
+    private static final OptionKey<Boolean> infoButtonVisible = new OptionKey<>(true, NotificationsView.class, LabelKey.Information, MessageKey
+            .Button_is_Visible);
+    private static final OptionKey<Boolean> warningButtonVisible = new OptionKey<>(true, NotificationsView.class, LabelKey.Warning, MessageKey
+            .Button_is_Visible);
+    private static Logger log = LoggerFactory.getLogger(NotificationsView.class);
     private final UserNotifier userNotifier;
     private final Translate translate;
     protected GridLayout grid;
@@ -35,16 +48,19 @@ public class NotificationsView extends ViewBase {
     private Button errorButton;
     private Label infoArea;
     private Button infoButton;
+    private Option option;
+    private OptionPopup optionPopup;
+    private Button optionsButton;
     private Button warnButton;
 
     @Inject
-    protected NotificationsView(UserNotifier userNotifier, Translate translate) {
+    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup) {
         super();
         this.userNotifier = userNotifier;
         this.translate = translate;
+        this.option = option;
+        this.optionPopup = optionPopup;
     }
-
-
 
 
     @Override
@@ -66,39 +82,26 @@ public class NotificationsView extends ViewBase {
         grid.setRowExpandRatio(2, 0.4f);
         grid.setRowExpandRatio(3, 0.15f);
 
-
         errorButton = new Button("Fake an error");
         errorButton.setWidth("100%");
-        errorButton.addClickListener(new ClickListener() {
+        errorButton.addClickListener(c -> userNotifier.notifyError(MessageKey.Service_not_Started, "Fake Service"));
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                userNotifier.notifyError(MessageKey.Service_not_Started, "Fake Service");
-            }
-        });
         verticalLayout.addComponent(errorButton);
 
         warnButton = new Button("Fake a warning");
         warnButton.setWidth("100%");
-        warnButton.addClickListener(new ClickListener() {
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                userNotifier.notifyWarning(MessageKey.Service_not_Started, "Fake Service");
-            }
-        });
+        warnButton.addClickListener(c -> userNotifier.notifyWarning(MessageKey.Service_not_Started, "Fake Service"));
         verticalLayout.addComponent(warnButton);
 
         infoButton = new Button("Fake user information");
         infoButton.setWidth("100%");
-        infoButton.addClickListener(new ClickListener() {
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                userNotifier.notifyInformation(MessageKey.Service_not_Started, "Fake Service");
-            }
-        });
+        infoButton.addClickListener(c -> userNotifier.notifyInformation(MessageKey.Service_not_Started, "Fake Service"));
         verticalLayout.addComponent(infoButton);
+
+        optionsButton = new Button("Show options");
+        optionsButton.addClickListener(c -> optionPopup.popup(this, LabelKey.Notification_Options));
+        optionsButton.setWidth("100%");
+        verticalLayout.addComponent(optionsButton);
 
         infoArea = new Label();
         infoArea.setContentMode(ContentMode.HTML);
@@ -106,8 +109,17 @@ public class NotificationsView extends ViewBase {
         infoArea.setValue(translate.from(DescriptionKey.Notifications));
         grid.addComponent(infoArea, 0, 1, 1, 1);
         setRootComponent(grid);
+        optionValueChanged(null);
+
     }
 
+    @Override
+    public void optionValueChanged(Property.ValueChangeEvent event) {
+        errorButton.setVisible(option.get(errorButtonVisible));
+        warnButton.setVisible(option.get(warningButtonVisible));
+        infoButton.setVisible(option.get(infoButtonVisible));
+
+    }
 
     @Override
     public void setIds() {
@@ -116,6 +128,19 @@ public class NotificationsView extends ViewBase {
         infoButton.setId(ID.getId(Optional.of("information"), this, infoButton));
         warnButton.setId(ID.getId(Optional.of("warning"), this, warnButton));
         errorButton.setId(ID.getId(Optional.of("error"), this, errorButton));
+        optionsButton.setId(ID.getId(Optional.of("options"), this, optionsButton));
+
+    }
+
+    /**
+     * Returns the {@link Option} instance being used by this context
+     *
+     * @return the {@link Option} instance being used by this context
+     */
+    @Nonnull
+    @Override
+    public Option getOption() {
+        return option;
     }
 
 
