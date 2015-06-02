@@ -1,6 +1,6 @@
-### Release Notes for krail-testApp 0.7.8
+### Release Notes for krail-testApp 0.7.9
 
-Upgrade to Vaadin 7.4.6, Guice 4.0.  Minor change to build file for bintrayUpload.  Changes to reflect different I18N processing
+tests for revised Option handling ( davidsowerby/krail#401 ) and use for Event Bus for notifications.  
 
 #### Change log
 
@@ -8,49 +8,57 @@ Upgrade to Vaadin 7.4.6, Guice 4.0.  Minor change to build file for bintrayUploa
 
 #### Dependency changes
 
-   compile dependency version changed to: krail:0.9.3
-   test compile dependency version changed to: krail-bench:0.7.15
-   compile dependency version changed to: krail-jpa:0.8.8
+   compile dependency version changed to: krail:0.9.4
+   test compile dependency version changed to: krail-bench:0.7.16
+   compile dependency version changed to: krail-jpa:0.8.9
 
 #### Detail
 
-*Updated version info*
+*Version info updated*
 
 
 ---
-*Vaadin 7.4.6*
+*Tests for OptionPopup*
 
 
 ---
-*Vaadin 7.4.5*
+*Restore to default added to OptionPopup.  This deletes the user level option entry, thus defaulting to next highest ranked entry.*
 
 
 ---
-*Drilldown removed from @Caption etc, as it is no longer used by the I18NProcessor*
+*OptionKey includes default value, OptionPopup introduced*
 
 
 ---
-*Modified views as a result of [krail 283](https://github.com/davidsowerby/krail/issues/283)*
+*nullkey removed from default of 18NKey, so some values required*
 
 
 ---
-*Updated to reflect simplification of application setup, see [krail 374](https://github.com/davidsowerby/krail/issues/374)*
+*See [krail 402](https://github.com/davidsowerby/krail/issues/402) UI changed for revised user notifications*
 
 
 ---
-*UI modified to include Option*
+*Fluent init calls for DefaultUIModule*
+
+See [krail 374](https://github.com/davidsowerby/krail/issues/374).  Remove the end for sub-classing DefaultUIModule just to set the UI class and application name.  Both can now be done in the Binding Manager by:
+
+ - new DefaultUIModule().applicationTitleKey(key).uiClass(clazz)
 
 
 ---
-[krail 371](https://github.com/*davidsowerby/krail/issues/371) ViewBase implements KrailView.beforeBuild()*
-
-Empty implementations removed
+*Tests modified for [krail 292](https://github.com/davidsowerby/krail/issues/292)*
 
 
 ---
-*See [krail 374](https://github.com/davidsowerby/krail/issues/374) UIModule provides defaults*
+*Grid3x3ViewBase added*
 
-UIModule was previously abstract and had to be sub-classed for every application.  It has been renamed DefaultUIModule, and uses DefaultApplicationUI to remove the need for sub-classing.  This application updated for this change.
+A convenience KrailView class with a 3x3 grid
+
+
+---
+[krail 396](https://github.com/*davidsowerby/krail/issues/396) Private pages visibility*
+
+The issue with BasicForest was causing private pages not to display properly.  Test added to confirm that this is no longer the case
 
 
 ---
