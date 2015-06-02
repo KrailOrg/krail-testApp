@@ -1,1 +1,1 @@
-Upgrade to Vaadin 7.4.6, Guice 4.0.  Minor change to build file for bintrayUpload.  Changes to reflect different I18N processing
+tests for revised Option handling ( davidsowerby/krail#401 ) and use for Event Bus for notifications.  
