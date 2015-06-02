@@ -19,10 +19,8 @@ import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.user.notify.UserNotifier;
-import uk.q3c.krail.core.user.opt.Option;
-import uk.q3c.krail.core.user.opt.OptionContext;
-import uk.q3c.krail.core.user.opt.OptionKey;
-import uk.q3c.krail.core.user.opt.OptionPopup;
+import uk.q3c.krail.core.user.opt.*;
+import uk.q3c.krail.core.user.opt.cache.OptionCache;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.LabelKey;
@@ -45,21 +43,28 @@ public class NotificationsView extends ViewBase implements OptionContext {
     private final Translate translate;
     protected GridLayout grid;
     private Panel buttonPanel;
+    private Button clearOptionStoreButton;
     private Button errorButton;
     private Label infoArea;
     private Button infoButton;
     private Option option;
+    private OptionCache optionCache;
     private OptionPopup optionPopup;
+    private OptionStore optionStore;
     private Button optionsButton;
+    private Button systemLevelOptionButton;
     private Button warnButton;
 
     @Inject
-    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup) {
+    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup, OptionStore optionStore, OptionCache
+            optionCache) {
         super();
         this.userNotifier = userNotifier;
         this.translate = translate;
         this.option = option;
         this.optionPopup = optionPopup;
+        this.optionStore = optionStore;
+        this.optionCache = optionCache;
     }
 
 
@@ -103,6 +108,23 @@ public class NotificationsView extends ViewBase implements OptionContext {
         optionsButton.setWidth("100%");
         verticalLayout.addComponent(optionsButton);
 
+        systemLevelOptionButton = new Button("Set system level option - info button not visible");
+        systemLevelOptionButton.addClickListener(event -> {
+            option.set(false, 1, infoButtonVisible);
+            optionValueChanged(null);
+        });
+        systemLevelOptionButton.setWidth("100%");
+        verticalLayout.addComponent(systemLevelOptionButton);
+
+        clearOptionStoreButton = new Button("clear option store");
+        clearOptionStoreButton.setWidth("100%");
+        clearOptionStoreButton.addClickListener(event -> {
+            optionStore.clear();
+            optionCache.clear();
+            optionValueChanged(null);
+        });
+        verticalLayout.addComponent(clearOptionStoreButton);
+
         infoArea = new Label();
         infoArea.setContentMode(ContentMode.HTML);
         infoArea.setSizeFull();
@@ -129,6 +151,8 @@ public class NotificationsView extends ViewBase implements OptionContext {
         warnButton.setId(ID.getId(Optional.of("warning"), this, warnButton));
         errorButton.setId(ID.getId(Optional.of("error"), this, errorButton));
         optionsButton.setId(ID.getId(Optional.of("options"), this, optionsButton));
+        systemLevelOptionButton.setId(ID.getId(Optional.of("system-level-option"), this, optionsButton));
+        clearOptionStoreButton.setId(ID.getId(Optional.of("clear-store"), this, clearOptionStoreButton));
 
     }
 

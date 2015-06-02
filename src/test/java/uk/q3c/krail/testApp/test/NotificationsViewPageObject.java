@@ -13,10 +13,8 @@ package uk.q3c.krail.testApp.test;
 
 import com.vaadin.testbench.elements.ButtonElement;
 import com.vaadin.testbench.elements.CheckBoxElement;
-import com.vaadin.testbench.elements.WindowElement;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Window;
 import uk.q3c.krail.core.user.opt.DefaultOptionPopup;
 import uk.q3c.krail.testapp.view.NotificationsView;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
@@ -50,9 +48,15 @@ public class NotificationsViewPageObject extends PageObject {
         return element(ButtonElement.class, Optional.of("options"), NotificationsView.class, Button.class);
     }
 
-    public WindowElement optionsWindow() {
-        return element(WindowElement.class, Optional.empty(), NotificationsView.class, DefaultOptionPopup.class, Window.class);
+
+    public ButtonElement systemLevelOptionButton() {
+        return element(ButtonElement.class, Optional.of("system-level-option"), NotificationsView.class, Button.class);
     }
+
+    public ButtonElement clearStoreButton() {
+        return element(ButtonElement.class, Optional.of("clear-store"), NotificationsView.class, Button.class);
+    }
+
 
     public CheckBoxElement optionsPopupInformationCheckbox() {
         return element(CheckBoxElement.class, Optional.of("Information"), DefaultOptionPopup.class, CheckBox.class);

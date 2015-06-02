@@ -16,6 +16,7 @@ import com.vaadin.testbench.ScreenshotOnFailureRule;
 import com.vaadin.testbench.elements.ButtonElement;
 import com.vaadin.testbench.elements.CheckBoxElement;
 import com.vaadin.testbench.elements.WindowElement;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,10 +33,17 @@ public class NotifyTest extends KrailTestBenchTestCase {
     public ScreenshotOnFailureRule screenshotOnFailureRule = new ScreenshotOnFailureRule(this, true);
     private MessageBarPageObject messageBar = new MessageBarPageObject(this);
     private NotificationsViewPageObject notificationsView = new NotificationsViewPageObject(this);
+    private OptionsPopupPageObject optionsPopup = new OptionsPopupPageObject(this);
 
     @Before
     public void setUp() throws Exception {
         appContext = "krail-testapp";
+    }
+
+    @After
+    public void teardown() {
+        navigateTo(testPage);
+        notificationsView.clearStoreButton();
     }
 
     @Test
@@ -108,12 +116,15 @@ public class NotifyTest extends KrailTestBenchTestCase {
     }
 
     private void ensureInfoButtonVisible() {
-        if (!infoButtonVisible()) {
+        notificationsView.clearStoreButton()
+                         .click();
+        while (!infoButtonVisible()) {
             notificationsView.optionsButton()
                              .click();
             final CheckBoxElement checkBoxElement = notificationsView.optionsPopupInformationCheckbox();
             checkBoxElement.click();
             checkBoxElement.sendKeys(" ");
+            optionsPopup.closeWindow();
         }
     }
 
@@ -130,12 +141,14 @@ public class NotifyTest extends KrailTestBenchTestCase {
     public void optionsPopup() {
         //given
         navigateTo(testPage);
+        login();
+
         //when
         notificationsView.optionsButton()
                          .click();
 
         //then make sure popup is there
-        final WindowElement windowElement = notificationsView.optionsWindow();
+        final WindowElement windowElement = optionsPopup.window();
         assertThat(notificationsView.optionsPopupInformationCheckbox()
                                     .isDisplayed()).isTrue();
         assertThat(windowElement.getCaption()).isEqualTo("Notification Options");
@@ -146,18 +159,80 @@ public class NotifyTest extends KrailTestBenchTestCase {
         checkBoxElement.click();
         checkBoxElement.sendKeys(" ");
         assertThat(infoButtonVisible()).isNotEqualTo(infoButtonIsVisible);
+        optionsPopup.closeWindow();
 
         //given
         ensureInfoButtonVisible();
-        checkBoxElement.click();
-        checkBoxElement.sendKeys(" ");
+
 
         //when
+        notificationsView.optionsButton()
+                         .click();
         ButtonElement defaultsButton = notificationsView.optionsPopupDefaultsButton();
         defaultsButton.click();
         assertThat(infoButtonIsVisible);
         assertThat(notificationsView.optionsPopupInformationCheckbox()
                                     .getValue()).isEqualTo("checked");
 
+        optionsPopup.closeWindow();
+    }
+
+    @Test
+    public void systemLevelOption() {
+        //given
+        navigateTo(testPage);
+        notificationsView.clearStoreButton()
+                         .click(); // previous tests debris
+        login();
+
+        //when user makes info button visible
+        notificationsView.optionsButton()
+                         .click();
+        clickInfoButtonCheckBox();
+        //then check user permissions allowed change
+        assertThat(infoButtonVisible()).isFalse();
+        //when
+        notificationsView.optionsPopupDefaultsButton()
+                         .click();
+        //then default is true (no system option has been set)
+        assertThat(infoButtonVisible()).isTrue();
+        optionsPopup.closeWindow();
+
+        //when
+
+        loginStatus.loginButton()
+                   .click();//logout
+        loginForm.setCredentials("admin", "password");
+        login();
+
+        //set the system option to false
+        navigateTo(testPage);
+        notificationsView.systemLevelOptionButton()
+                         .click();
+        loginStatus.loginButton()
+                   .click();//logout
+
+        loginForm.setCredentials("ds", "password");
+        login();
+        navigateTo(testPage);
+        notificationsView.optionsButton()
+                         .click();
+        notificationsView.optionsPopupDefaultsButton()
+                         .click();
+
+        //then
+        pause(500);
+        //then default is false (system option has been set false)
+        assertThat(infoButtonVisible()).isFalse();
+        optionsPopup.closeWindow();
+
+        //when user tries to set system option
+
+    }
+
+    private void clickInfoButtonCheckBox() {
+        final CheckBoxElement checkBoxElement = notificationsView.optionsPopupInformationCheckbox();
+        checkBoxElement.click();
+        checkBoxElement.sendKeys(" ");
     }
 }
