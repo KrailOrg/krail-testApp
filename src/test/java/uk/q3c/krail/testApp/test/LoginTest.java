@@ -34,15 +34,13 @@ public class LoginTest extends KrailTestBenchTestCase {
     }
 
     @Test
-    public void testLogin() {
+    public void loginLogout() {
         // given
-        pause(1000);
         navTree.expandCollapse(0);
         // navTree().index(0).expand().get().click();
         String startFragment = "system-account";
         navigateTo(startFragment);
 
-        pause(1000);
 
         // when
         // then initial state
@@ -78,8 +76,17 @@ public class LoginTest extends KrailTestBenchTestCase {
         verifyUrl("private/finance/accounts");
 
 
-    }
+        //when
+        // when LoginStatusPanel button clicked (logout)
+        loginStatus.loginButton()
+                   .click();
 
+        //then
+        verifyUrl("logout");
+        assertThat(loginStatus.loginButton()
+                              .getText()).isEqualTo("log in");
+        assertThat(loginStatus.username()).isEqualTo("Guest");
+    }
 
 
     /**
