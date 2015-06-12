@@ -27,12 +27,11 @@ public class VaadinVersionTest extends KrailTestBenchTestCase {
         //given
         appContext = "krail-testapp";
         startDriver();
-        pause(500);
         //when
 
         //then
         assertThat(VersionUtil.getVaadinMajorVersion(getDriver())).isEqualTo(7);
         assertThat(VersionUtil.getVaadinMinorVersion(getDriver())).isEqualTo(4);
-        assertThat(VersionUtil.getVaadinRevision(getDriver())).isEqualTo(7);
+        assertThat(VersionUtil.getVaadinRevision(getDriver())).isEqualTo(8);
     }
 }
