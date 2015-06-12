@@ -28,6 +28,7 @@ public class Login_Navigation_Rule extends KrailTestBenchTestCase {
     @Before
     public void setUp() throws Exception {
         appContext = "krail-testapp";
+        startDriver();
     }
 
     @Test
@@ -36,7 +37,6 @@ public class Login_Navigation_Rule extends KrailTestBenchTestCase {
         navigateTo("login");
         //when
         login();
-        pause(500);
         //then
         verifyUrl("private/home");
     }
@@ -47,7 +47,6 @@ public class Login_Navigation_Rule extends KrailTestBenchTestCase {
         navigateTo("system-account/refresh-account");
         //when
         login();
-        pause(500);
         //then
         verifyUrl("system-account/refresh-account");
     }
@@ -57,12 +56,10 @@ public class Login_Navigation_Rule extends KrailTestBenchTestCase {
         //given
         navigateTo("system-account/refresh-account");
         login();
-        pause(500);
         loginStatus.loginButton()
                    .click(); // logout
         //when
         login();
-        pause(500);
         //then
 
         verifyUrl("private/home");
@@ -74,7 +71,6 @@ public class Login_Navigation_Rule extends KrailTestBenchTestCase {
         navigateTo("logout");
         //when
         login();
-        pause(500);
         //then
         verifyUrl("private/home");
     }

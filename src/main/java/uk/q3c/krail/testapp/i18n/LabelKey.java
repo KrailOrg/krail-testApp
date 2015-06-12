@@ -33,5 +33,5 @@ public enum LabelKey implements I18NKey {
     View1,
     View2,
     Yes,
-    Finance, Accounts, Payroll, Purchasing
+    Finance, Accounts, Payroll, Authenticated, Guest, Purchasing
 }

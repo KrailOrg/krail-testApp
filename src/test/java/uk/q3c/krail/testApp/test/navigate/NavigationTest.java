@@ -83,11 +83,9 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
         // given
          startDriver();
-        pause(1000);
         // when
 
         navigateTo("private/home");
-        pause(500);
 
         // then
         assertThat(notification()).isNotNull();
@@ -99,7 +97,6 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
         verifyNotUrl("private/home"); // not a valid test, but maybe it should be
         navigateTo("system-account");
-        pause(1500);
         // when
         login();
 
@@ -116,11 +113,9 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void navigateToInvalidPage() {
         // given
          startDriver();
-        pause(1000);
         // when
 
         navigateTo("rubbish");
-        pause(500);
 
         // then
         assertThat(notification()).isNotNull();
@@ -137,14 +132,10 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
         // given
          startDriver();
-        pause(1000);
         login();
-        pause(1000);
         // when
         navigateTo("widgetset");
-        pause(1000);
         navigateTo("private");
-        pause(1000);
         // then
         verifyUrl("private/home");
         assertThat(navTree.currentSelection()).isEqualTo("Private Home");
@@ -156,7 +147,6 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
         // given
         startDriver();
-        pause(1000);
         // when
         navTree.select(5);
         // then
@@ -188,7 +178,6 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void breadcrumb_navigate() {
 
         // given
-        pause(1000);
         // when
         navigateTo("system-account/reset-account");
         assertThat(breadcrumb.button(0)).isNotNull();
@@ -202,7 +191,6 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void subPage_navigate() {
 
         // given
-        pause(1000);
         // when
         navigateTo("system-account");
         //then
@@ -211,7 +199,6 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
         subPagePanel.button(0)
                     .click();
-        pause(500);
         // then
         verifyUrl("system-account/enable-account");
         assertThat(subPagePanel.buttonLabels()).containsExactly("");
@@ -223,7 +210,6 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
         // given
        startDriver();
-        pause(1000);
         // when
 
         //        testBenchElement(driver.findElement(By.vaadin("testapp::PID_SDefaultUserNavigationMenu#item4")))
@@ -231,7 +217,6 @@ public class NavigationTest extends KrailTestBenchTestCase {
         //        testBenchElement(driver.findElement(By.vaadin("testapp::Root/VOverlay[0]/VMenuBar[0]#item0")))
         // .click(44, 8);
 
-        pause(500);
         menu.menuBar()
             .clickItem("System Account");
         assertThat(isItemVisible("Notifications")).isTrue();

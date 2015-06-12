@@ -36,9 +36,7 @@ public class WidgetsetTest extends KrailTestBenchTestCase {
         // given
         appContext = "krail-testapp";
         startDriver();
-        pause(500);
         navigateTo("widgetset");
-        pause(500);
         // when
 
         // then

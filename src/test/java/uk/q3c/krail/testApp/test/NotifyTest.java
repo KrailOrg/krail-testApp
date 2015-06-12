@@ -221,7 +221,6 @@ public class NotifyTest extends KrailTestBenchTestCase {
                          .click();
 
         //then
-        pause(500);
         //then default is false (system option has been set false)
         assertThat(infoButtonVisible()).isFalse();
         optionsPopup.closeWindow();
