@@ -26,6 +26,7 @@ import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.LabelKey;
 import uk.q3c.krail.i18n.MessageKey;
 import uk.q3c.krail.i18n.Translate;
+import uk.q3c.krail.testapp.TestAppUI;
 import uk.q3c.krail.testapp.i18n.DescriptionKey;
 import uk.q3c.util.ID;
 
@@ -51,13 +52,14 @@ public class NotificationsView extends ViewBase implements OptionContext {
     private OptionCache optionCache;
     private OptionPopup optionPopup;
     private OptionStore optionStore;
-    private Button optionsButton;
     private Button systemLevelOptionButton;
+    private TestAppUI ui;
+    private Button uiOptionsButton;
+    private Button viewOptionsButton;
     private Button warnButton;
 
     @Inject
-    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup, OptionStore optionStore, OptionCache
-            optionCache) {
+    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup, OptionStore optionStore, OptionCache optionCache, TestAppUI ui) {
         super();
         this.userNotifier = userNotifier;
         this.translate = translate;
@@ -65,6 +67,7 @@ public class NotificationsView extends ViewBase implements OptionContext {
         this.optionPopup = optionPopup;
         this.optionStore = optionStore;
         this.optionCache = optionCache;
+        this.ui = ui;
     }
 
 
@@ -73,7 +76,6 @@ public class NotificationsView extends ViewBase implements OptionContext {
         buttonPanel = new Panel();
         VerticalLayout verticalLayout = new VerticalLayout();
         buttonPanel.setContent(verticalLayout);
-
         grid = new GridLayout(3, 4);
 
         grid.addComponent(buttonPanel, 1, 2);
@@ -103,10 +105,16 @@ public class NotificationsView extends ViewBase implements OptionContext {
         infoButton.addClickListener(c -> userNotifier.notifyInformation(MessageKey.Service_not_Started, "Fake Service"));
         verticalLayout.addComponent(infoButton);
 
-        optionsButton = new Button("Show options");
-        optionsButton.addClickListener(c -> optionPopup.popup(this, LabelKey.Notification_Options));
-        optionsButton.setWidth("100%");
-        verticalLayout.addComponent(optionsButton);
+        viewOptionsButton = new Button("Show options");
+        viewOptionsButton.addClickListener(c -> optionPopup.popup(this, LabelKey.Notification_Options));
+        viewOptionsButton.setWidth("100%");
+        verticalLayout.addComponent(viewOptionsButton);
+
+
+        uiOptionsButton = new Button("Show UI options");
+        uiOptionsButton.addClickListener(c -> optionPopup.popup(ui, LabelKey.Application_Options));
+        uiOptionsButton.setWidth("100%");
+        verticalLayout.addComponent(uiOptionsButton);
 
         systemLevelOptionButton = new Button("Set system level option - info button not visible");
         systemLevelOptionButton.addClickListener(event -> {
@@ -150,8 +158,9 @@ public class NotificationsView extends ViewBase implements OptionContext {
         infoButton.setId(ID.getId(Optional.of("information"), this, infoButton));
         warnButton.setId(ID.getId(Optional.of("warning"), this, warnButton));
         errorButton.setId(ID.getId(Optional.of("error"), this, errorButton));
-        optionsButton.setId(ID.getId(Optional.of("options"), this, optionsButton));
-        systemLevelOptionButton.setId(ID.getId(Optional.of("system-level-option"), this, optionsButton));
+        viewOptionsButton.setId(ID.getId(Optional.of("view-options"), this, viewOptionsButton));
+        uiOptionsButton.setId(ID.getId(Optional.of("ui-options"), this, viewOptionsButton));
+        systemLevelOptionButton.setId(ID.getId(Optional.of("system-level-option"), this, viewOptionsButton));
         clearOptionStoreButton.setId(ID.getId(Optional.of("clear-store"), this, clearOptionStoreButton));
 
     }

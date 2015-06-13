@@ -44,8 +44,12 @@ public class NotificationsViewPageObject extends PageObject {
         return element(ButtonElement.class, Optional.of("information"), NotificationsView.class, Button.class);
     }
 
-    public ButtonElement optionsButton() {
-        return element(ButtonElement.class, Optional.of("options"), NotificationsView.class, Button.class);
+    public ButtonElement viewOptionsButton() {
+        return element(ButtonElement.class, Optional.of("view-options"), NotificationsView.class, Button.class);
+    }
+
+    public ButtonElement uiOptionsButton() {
+        return element(ButtonElement.class, Optional.of("ui-options"), NotificationsView.class, Button.class);
     }
 
 
@@ -64,5 +68,9 @@ public class NotificationsViewPageObject extends PageObject {
 
     public ButtonElement optionsPopupDefaultsButton() {
         return element(ButtonElement.class, Optional.of("Information"), DefaultOptionPopup.class, Button.class);
+    }
+
+    public CheckBoxElement uiOptionsPopupMessageBarCheckbox() {
+        return element(CheckBoxElement.class, Optional.of("Message_bar_is_Visible"), DefaultOptionPopup.class, CheckBox.class);
     }
 }
