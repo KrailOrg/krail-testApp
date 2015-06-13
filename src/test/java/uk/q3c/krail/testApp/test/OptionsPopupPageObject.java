@@ -15,6 +15,7 @@ import com.vaadin.testbench.By;
 import com.vaadin.testbench.elements.WindowElement;
 import com.vaadin.ui.Window;
 import uk.q3c.krail.core.user.opt.DefaultOptionPopup;
+import uk.q3c.krail.testapp.TestAppUI;
 import uk.q3c.krail.testapp.view.NotificationsView;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.PageObject;
@@ -35,12 +36,16 @@ public class OptionsPopupPageObject extends PageObject {
     }
 
     public void closeWindow() {
-        window().findElement(By.className("v-window-closebox"))
+        windowForViewOptions().findElement(By.className("v-window-closebox"))
                 .click();
     }
 
-    public WindowElement window() {
+    public WindowElement windowForViewOptions() {
         return element(WindowElement.class, Optional.empty(), NotificationsView.class, DefaultOptionPopup.class, Window.class);
+    }
+
+    public WindowElement windowForUIOptions() {
+        return element(WindowElement.class, Optional.empty(), TestAppUI.class, DefaultOptionPopup.class, Window.class);
     }
 
 
