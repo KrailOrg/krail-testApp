@@ -74,8 +74,6 @@ public class NotifyTest extends KrailTestBenchTestCase {
         // has been " +
         //                "started - close with ESC-key");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification error v-Notification-error");
-        closeNotification();
-
     }
 
     @Test
