@@ -1,64 +1,54 @@
-### Release Notes for krail-testApp 0.7.9
+### Release Notes for krail-testApp 0.7.10
 
-tests for revised Option handling ( davidsowerby/krail#401 ) and use for Event Bus for notifications.  
+Tests for krail 0.9.5.  Also replaces the DefaultRealm with a more specific uac set of components
 
 #### Change log
 
+-   [411](https://github.com/davidsowerby/krail-testApp/issues/411): Invalid issue number or uri.   https://api.github.com/repos/davidsowerby/krail-testApp/issues/411
 
 
 #### Dependency changes
 
-   compile dependency version changed to: krail:0.9.4
-   test compile dependency version changed to: krail-bench:0.7.16
-   compile dependency version changed to: krail-jpa:0.8.9
+   compile dependency version changed to: krail-jpa:0.8.10
+   compile dependency version changed to: krail:0.9.5
+   test compile dependency version changed to: krail-bench:0.8.0
 
 #### Detail
 
-*Version info updated*
+*Removed unnecessary closeNotification() - which has also strangely lost its ability to close*
 
 
 ---
-*Tests for OptionPopup*
+*Updated version information*
 
 
 ---
-*Restore to default added to OptionPopup.  This deletes the user level option entry, thus defaulting to next highest ranked entry.*
+*Merge branch 'develop' of https://github.com/davidsowerby/krail-testApp into develop*
 
 
 ---
-*OptionKey includes default value, OptionPopup introduced*
+*Tests for [krail 423](https://github.com/davidsowerby/krail/issues/423)*
 
 
 ---
-*nullkey removed from default of 18NKey, so some values required*
+*See [krail 411](https://github.com/davidsowerby/krail/issues/411) Login status panel shows correct state*
 
 
 ---
-*See [krail 402](https://github.com/davidsowerby/krail/issues/402) UI changed for revised user notifications*
+*Fix [411](https://github.com/davidsowerby/krail-testApp/issues/411) Login status panel shows correct state*
 
 
 ---
-*Fluent init calls for DefaultUIModule*
-
-See [krail 374](https://github.com/davidsowerby/krail/issues/374).  Remove the end for sub-classing DefaultUIModule just to set the UI class and application name.  Both can now be done in the Binding Manager by:
-
- - new DefaultUIModule().applicationTitleKey(key).uiClass(clazz)
+*Vaadin 7.4.8*
 
 
 ---
-*Tests modified for [krail 292](https://github.com/davidsowerby/krail/issues/292)*
+*Replaces DefaultRealm with TestAppRealm and TrivialCredentialsStore, TrivialUserAccount for more flexible access control testing*
+Tests for new Shiro annotation MethodInterceptors.  Removed paus() statements, as change to krail-bench removes the need for most of them
 
 
 ---
-*Grid3x3ViewBase added*
-
-A convenience KrailView class with a 3x3 grid
-
-
----
-[krail 396](https://github.com/*davidsowerby/krail/issues/396) Private pages visibility*
-
-The issue with BasicForest was causing private pages not to display properly.  Test added to confirm that this is no longer the case
+*Upgrade to Vaadin 7.4.7*
 
 
 ---
