@@ -1,1 +1,1 @@
-tests for revised Option handling ( davidsowerby/krail#401 ) and use for Event Bus for notifications.  
+Tests for krail 0.9.5.  Also replaces the DefaultRealm with a more specific uac set of components

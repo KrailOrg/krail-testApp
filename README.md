@@ -2,7 +2,7 @@
 
 A functional test application for [krail](https://github.com/davidsowerby/krail)
 
-This application is intended for functional testing but also provides a reasonable demonstration of site navigation,  notifications, very simple authentication, push and internationalisation.
+This application is intended for functional testing but also provides a reasonable demonstration of site navigation,  notifications, authentication, push and internationalisation.
 
 The [documentation](https://sites.google.com/site/q3cjava/home) and [blog](http://rndjava.blogspot.co.uk/) provide more information about [Krail](https://github.com/davidsowerby/krail)
 
