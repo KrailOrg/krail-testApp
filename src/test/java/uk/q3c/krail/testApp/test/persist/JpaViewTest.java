@@ -35,6 +35,7 @@ public class JpaViewTest extends KrailTestBenchTestCase {
         appContext = "krail-testapp";
         startDriver();
         pause(1500); // without a delay, intermittently fails, possibly because of database connection
+        // TODO better way of ensuring connection is ready
     }
 
     @Test
@@ -49,8 +50,9 @@ public class JpaViewTest extends KrailTestBenchTestCase {
         pause(1000);
         pageObject.saveButton(1)
                   .click();
-        pause(500);
         pageObject.saveButton(2)
+                  .click();
+        pageObject.saveButton(3)
                   .click();
         int newCount1 = countFor(1);
         int newCount2 = countFor(2);
@@ -59,7 +61,7 @@ public class JpaViewTest extends KrailTestBenchTestCase {
         TableElement t2 = pageObject.table(2);
         assertThat(t1.getRow(0)).isNotNull();
         assertThat(t2.getRow(0)).isNotNull();
-        assertThat(newCount1).isEqualTo(startCount1 + 2);
+        assertThat(newCount1).isEqualTo(startCount1 + 3);
         assertThat(newCount2).isEqualTo(startCount2 + 1);
     }
 

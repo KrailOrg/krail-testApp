@@ -15,6 +15,8 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.ui.*;
+import org.apache.onami.persist.EntityManagerProvider;
+import org.apache.onami.persist.Transactional;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.persist.jpa.*;
@@ -23,6 +25,7 @@ import uk.q3c.krail.testapp.persist.Jpa2;
 import uk.q3c.krail.testapp.persist.Widget;
 import uk.q3c.util.ID;
 
+import javax.persistence.EntityManager;
 import java.util.Optional;
 
 /**
@@ -39,21 +42,22 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     private int count2;
     private Label countLabel1;
     private Label countLabel2;
+    private EntityManagerProvider entityManagerProvider1;
     private JPAContainer<Widget> jpa1Container;
     private JPAContainer<Widget> jpa2Container;
     private Button saveBtn1;
     private Button saveBtn2;
+    private Button saveBtn3;
     private Table table1;
     private Table table2;
 
     @Inject
-    protected JpaView(@Jpa1 Provider<StandardJpaBlockDao> blockDaoProvider, @Jpa2 Provider<StandardJpaStatementDao> statementDaoProvider,
-                      JpaContainerProvider containerProvider) {
+    protected JpaView(@Jpa1 Provider<StandardJpaBlockDao> blockDaoProvider, @Jpa2 Provider<StandardJpaStatementDao> statementDaoProvider, JpaContainerProvider containerProvider, @Jpa1 EntityManagerProvider entityManagerProvider1) {
         this.containerProvider = containerProvider;
+        this.entityManagerProvider1 = entityManagerProvider1;
         this.blockDao = blockDaoProvider.get();
         this.statementDao = statementDaoProvider.get();
     }
-
 
 
     /**
@@ -67,6 +71,8 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         saveBtn1.addClickListener(this);
         saveBtn2 = new Button("persist 2");
         saveBtn2.addClickListener(this);
+        saveBtn3 = new Button("persist 3");
+        saveBtn3.addClickListener(this);
 
         jpa1Container = containerProvider.get(Jpa1.class, Widget.class, JpaContainerProvider.ContainerType.CACHED);
         jpa2Container = containerProvider.get(Jpa2.class, Widget.class, JpaContainerProvider.ContainerType.CACHED);
@@ -83,8 +89,9 @@ public class JpaView extends ViewBase implements Button.ClickListener {
 
         HorizontalLayout hl1 = new HorizontalLayout(saveBtn1, countLabel1);
         HorizontalLayout hl2 = new HorizontalLayout(saveBtn2, countLabel2);
+        HorizontalLayout hl3 = new HorizontalLayout(saveBtn3);
 
-        VerticalLayout tableLayout1 = new VerticalLayout(table1, hl1);
+        VerticalLayout tableLayout1 = new VerticalLayout(table1, hl1, hl3);
         VerticalLayout tableLayout2 = new VerticalLayout(table2, hl2);
 
         rootLayout.addComponent(tableLayout1);
@@ -130,13 +137,31 @@ public class JpaView extends ViewBase implements Button.ClickListener {
                 d.save(widget1);
             });
             refresh(1);
-        } else {
+            return;
+        }
+        if (btn == saveBtn2) {
             Widget widget = new Widget();
             widget.setName("b" + count2++);
             widget.setDescription("b");
             statementDao.save(widget);
             refresh(2);
         }
+        if (btn == saveBtn3) {
+
+            annotatedMethod();
+            refresh(1);
+        }
+
+
+    }
+
+    @Transactional
+    protected void annotatedMethod() {
+        Widget widget = new Widget();
+        widget.setName("a" + count1++);
+        widget.setDescription("a");
+        final EntityManager entityManager = entityManagerProvider1.get();
+        entityManager.persist(widget);
     }
 
     /**
@@ -148,6 +173,7 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         super.setIds();
         saveBtn1.setId(ID.getId(Optional.of(1), this, saveBtn1));
         saveBtn2.setId(ID.getId(Optional.of(2), this, saveBtn2));
+        saveBtn3.setId(ID.getId(Optional.of(3), this, saveBtn3));
         table1.setId(ID.getId(Optional.of(1), this, table1));
         table2.setId(ID.getId(Optional.of(2), this, table2));
         countLabel1.setId(ID.getId(Optional.of(1), this, countLabel1));
