@@ -40,8 +40,23 @@ public class JpaViewPageObject extends PageObject {
         return element(TableElement.class, Optional.of(index), JpaView.class, Table.class);
     }
 
-    public LabelElement label(int index) {
-        return element(LabelElement.class, Optional.of(index), JpaView.class, Label.class);
+    public LabelElement countLabel(String qualifier) {
+        return element(LabelElement.class, Optional.of(qualifier), JpaView.class, Label.class);
     }
 
+    public LabelElement container1CountLabel() {
+        return element(LabelElement.class, Optional.of("container 1"), JpaView.class, Label.class);
+    }
+
+    public LabelElement container2CountLabel() {
+        return element(LabelElement.class, Optional.of("container 2"), JpaView.class, Label.class);
+    }
+
+    public LabelElement dao1CountLabel() {
+        return element(LabelElement.class, Optional.of("dao 1"), JpaView.class, Label.class);
+    }
+
+    public LabelElement dao2CountLabel() {
+        return element(LabelElement.class, Optional.of("dao 2"), JpaView.class, Label.class);
+    }
 }

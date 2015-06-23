@@ -43,8 +43,8 @@ public class JpaViewTest extends KrailTestBenchTestCase {
         //given
         navigateTo("jpa");
         pageObject = new JpaViewPageObject(this);
-        int startCount1 = countFor(1);
-        int startCount2 = countFor(2);
+        int startCount1 = countFor("container 1");
+        int startCount2 = countFor("container 2");
 
         //when
         pause(1000);
@@ -54,8 +54,8 @@ public class JpaViewTest extends KrailTestBenchTestCase {
                   .click();
         pageObject.saveButton(3)
                   .click();
-        int newCount1 = countFor(1);
-        int newCount2 = countFor(2);
+        int newCount1 = countFor("container 1");
+        int newCount2 = countFor("container 2");
         //then
         TableElement t1 = pageObject.table(1);
         TableElement t2 = pageObject.table(2);
@@ -63,10 +63,12 @@ public class JpaViewTest extends KrailTestBenchTestCase {
         assertThat(t2.getRow(0)).isNotNull();
         assertThat(newCount1).isEqualTo(startCount1 + 3);
         assertThat(newCount2).isEqualTo(startCount2 + 1);
+        assertThat(countFor("dao 1")).isEqualTo(newCount1);
+        assertThat(countFor("dao 2")).isEqualTo(newCount2);
     }
 
-    private int countFor(int i) {
-        LabelElement label = pageObject.label(i);
+    private int countFor(String qualifier) {
+        LabelElement label = pageObject.countLabel(qualifier);
         String text = label.getText();
         if (StringUtils.isEmpty(text)) {
             return 0;

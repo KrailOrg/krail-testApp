@@ -17,9 +17,11 @@ import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.ui.*;
 import org.apache.onami.persist.EntityManagerProvider;
 import org.apache.onami.persist.Transactional;
+import org.apache.onami.persist.UnitOfWork;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
-import uk.q3c.krail.persist.jpa.*;
+import uk.q3c.krail.persist.jpa.JpaContainerProvider;
+import uk.q3c.krail.persist.jpa.JpaDao_LongInt;
 import uk.q3c.krail.testapp.persist.Jpa1;
 import uk.q3c.krail.testapp.persist.Jpa2;
 import uk.q3c.krail.testapp.persist.Widget;
@@ -35,14 +37,17 @@ import java.util.Optional;
  */
 
 public class JpaView extends ViewBase implements Button.ClickListener {
-    private final JpaBlockDao blockDao;
-    private final JpaStatementDao statementDao;
     private final JpaContainerProvider containerProvider;
     private int count1;
     private int count2;
-    private Label countLabel1;
-    private Label countLabel2;
+    private Label countLabelFromContainer1;
+    private Label countLabelFromContainer2;
+    private Label countLabelFromDao1;
+    private Label countLabelFromDao2;
+    private Provider<JpaDao_LongInt> daoProvider1;
+    private Provider<JpaDao_LongInt> daoProvider2;
     private EntityManagerProvider entityManagerProvider1;
+    private EntityManagerProvider entityManagerProvider2;
     private JPAContainer<Widget> jpa1Container;
     private JPAContainer<Widget> jpa2Container;
     private Button saveBtn1;
@@ -50,13 +55,17 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     private Button saveBtn3;
     private Table table1;
     private Table table2;
+    private UnitOfWork unitOfWork1;
 
     @Inject
-    protected JpaView(@Jpa1 Provider<StandardJpaBlockDao> blockDaoProvider, @Jpa2 Provider<StandardJpaStatementDao> statementDaoProvider, JpaContainerProvider containerProvider, @Jpa1 EntityManagerProvider entityManagerProvider1) {
+    protected JpaView(@Jpa1 Provider<JpaDao_LongInt> daoProvider1, @Jpa2 Provider<JpaDao_LongInt> daoProvider2, JpaContainerProvider containerProvider, @Jpa1
+    EntityManagerProvider entityManagerProvider1, @Jpa2 EntityManagerProvider entityManagerProvider2, @Jpa1 UnitOfWork unitOfWork1) {
+        this.daoProvider1 = daoProvider1;
+        this.daoProvider2 = daoProvider2;
         this.containerProvider = containerProvider;
         this.entityManagerProvider1 = entityManagerProvider1;
-        this.blockDao = blockDaoProvider.get();
-        this.statementDao = statementDaoProvider.get();
+        this.entityManagerProvider2 = entityManagerProvider2;
+        this.unitOfWork1 = unitOfWork1;
     }
 
 
@@ -79,16 +88,24 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         table1 = new Table("Table 1", jpa1Container);
         table2 = new Table("Table 2", jpa2Container);
 
-        countLabel1 = new Label();
-        countLabel2 = new Label();
+
+        countLabelFromContainer1 = new Label();
+        countLabelFromContainer1.setCaption("container 1 count = ");
+        countLabelFromContainer2 = new Label();
+        countLabelFromContainer2.setCaption("container 2 count = ");
+        countLabelFromDao1 = new Label();
+        countLabelFromDao1.setCaption("dao 1 count = ");
+        countLabelFromDao2 = new Label();
+        countLabelFromDao2.setCaption("dao 2 count = ");
+        FormLayout formLayout1 = new FormLayout(countLabelFromContainer1, countLabelFromDao1);
+        FormLayout formLayout2 = new FormLayout(countLabelFromContainer2, countLabelFromDao2);
+
+        countLabelFromContainer1.setWidth("160px");
+        countLabelFromContainer2.setWidth("160px");
 
 
-        countLabel1.setWidth("60px");
-        countLabel2.setWidth("60px");
-
-
-        HorizontalLayout hl1 = new HorizontalLayout(saveBtn1, countLabel1);
-        HorizontalLayout hl2 = new HorizontalLayout(saveBtn2, countLabel2);
+        HorizontalLayout hl1 = new HorizontalLayout(saveBtn1, formLayout1);
+        HorizontalLayout hl2 = new HorizontalLayout(saveBtn2, formLayout2);
         HorizontalLayout hl3 = new HorizontalLayout(saveBtn3);
 
         VerticalLayout tableLayout1 = new VerticalLayout(table1, hl1, hl3);
@@ -105,13 +122,17 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         switch (index) {
             case 1:
                 jpa1Container.refresh();
-                countLabel1.setValue(Integer.toString(jpa1Container.getItemIds()
-                                                                   .size()));
+                countLabelFromContainer1.setValue(Integer.toString(jpa1Container.getItemIds()
+                                                                                .size()));
+                countLabelFromDao1.setValue(Long.toString(daoProvider1.get()
+                                                                      .count(Widget.class)));
                 break;
             case 2:
                 jpa2Container.refresh();
-                countLabel2.setValue(Integer.toString(jpa2Container.getItemIds()
-                                                                   .size()));
+                countLabelFromContainer2.setValue(Integer.toString(jpa2Container.getItemIds()
+                                                                                .size()));
+                countLabelFromDao2.setValue(Long.toString(daoProvider2.get()
+                                                                      .count(Widget.class)));
         }
     }
 
@@ -131,19 +152,33 @@ public class JpaView extends ViewBase implements Button.ClickListener {
             widget.setDescription("a");
             Widget widget1 = new Widget();
             widget1.setName("aa" + count1++);
+
+
             widget1.setDescription("aa");
-            blockDao.transact(d -> {
-                d.save(widget);
-                d.save(widget1);
-            });
+            //            UnitOfWork unitOfWork= (UnitOfWork) entityManagerProvider1;
+            final boolean unitOfWorkWasInactive = !unitOfWork1.isActive();
+            if (unitOfWorkWasInactive) {
+                unitOfWork1.begin();
+            }
+            try {
+                EntityManager entityManager = entityManagerProvider1.get();
+                entityManager.getTransaction()
+                             .begin();
+                entityManager.persist(widget);
+                entityManager.persist(widget1);
+                entityManager.getTransaction()
+                             .commit();
+            } finally {
+                if (unitOfWorkWasInactive) {
+                    unitOfWork1.end();
+                }
+            }
+
             refresh(1);
             return;
         }
         if (btn == saveBtn2) {
-            Widget widget = new Widget();
-            widget.setName("b" + count2++);
-            widget.setDescription("b");
-            statementDao.save(widget);
+            annotatedMethodUsingDao();
             refresh(2);
         }
         if (btn == saveBtn3) {
@@ -164,6 +199,16 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         entityManager.persist(widget);
     }
 
+    @Transactional
+    protected void annotatedMethodUsingDao() {
+        Widget widget = new Widget();
+        widget.setName("b" + count2++);
+        widget.setDescription("b");
+        daoProvider2.get()
+                    .save(widget);
+
+    }
+
     /**
      * You only need to override / implement this method if you are using TestBench, or another testing tool which
      * looks for debug ids. If you do override it to add your own subclass ids, make sure you call super
@@ -176,8 +221,10 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         saveBtn3.setId(ID.getId(Optional.of(3), this, saveBtn3));
         table1.setId(ID.getId(Optional.of(1), this, table1));
         table2.setId(ID.getId(Optional.of(2), this, table2));
-        countLabel1.setId(ID.getId(Optional.of(1), this, countLabel1));
-        countLabel2.setId(ID.getId(Optional.of(2), this, countLabel2));
+        countLabelFromContainer1.setId(ID.getId(Optional.of("container 1"), this, countLabelFromContainer1));
+        countLabelFromContainer2.setId(ID.getId(Optional.of("container 2"), this, countLabelFromContainer2));
+        countLabelFromDao1.setId(ID.getId(Optional.of("dao 1"), this, countLabelFromDao1));
+        countLabelFromDao2.setId(ID.getId(Optional.of("dao 2"), this, countLabelFromDao2));
     }
 
 }
