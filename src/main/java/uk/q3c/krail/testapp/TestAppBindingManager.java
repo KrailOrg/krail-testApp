@@ -43,13 +43,13 @@ public class TestAppBindingManager extends DefaultBindingManager {
     }
 
     @Override
-    protected void addSitemapModules(List<Module> baseModules) {
-        super.addSitemapModules(baseModules);
-        baseModules.add(new SystemAccountManagementPages());
-        baseModules.add(new TestAppPages());
-        baseModules.add(new FinancePages());
-        baseModules.add(new AnnotationPagesModule());
-        baseModules.add(new SystemAdminPages().rootURI("private/sysadmin"));
+    protected void addSitemapModules(List<Module> modules) {
+        super.addSitemapModules(modules);
+        modules.add(new SystemAccountManagementPages());
+        modules.add(new TestAppPages());
+        modules.add(new FinancePages());
+        modules.add(new AnnotationPagesModule());
+        modules.add(new SystemAdminPages().rootURI("private/sysadmin"));
     }
 
     @Override
@@ -80,4 +80,6 @@ public class TestAppBindingManager extends DefaultBindingManager {
     protected Module shiroModule() {
         return new DefaultShiroModule().addRealm(TestAppRealm.class);
     }
+
+
 }
