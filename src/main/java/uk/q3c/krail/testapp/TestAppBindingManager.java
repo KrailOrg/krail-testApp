@@ -18,8 +18,11 @@ import uk.q3c.krail.core.shiro.DefaultShiroModule;
 import uk.q3c.krail.core.shiro.aop.KrailShiroAopModule;
 import uk.q3c.krail.core.sysadmin.SystemAdminPages;
 import uk.q3c.krail.core.ui.DefaultUIModule;
+import uk.q3c.krail.core.user.opt.OptionModule;
+import uk.q3c.krail.i18n.I18NModule;
 import uk.q3c.krail.testapp.i18n.LabelKey;
-import uk.q3c.krail.testapp.i18n.TestAppI18NModule;
+import uk.q3c.krail.testapp.persist.Jpa1;
+import uk.q3c.krail.testapp.persist.Jpa2;
 import uk.q3c.krail.testapp.persist.TestAppJpaModule;
 import uk.q3c.krail.testapp.uac.TestAppRealm;
 import uk.q3c.krail.testapp.view.AnnotationPagesModule;
@@ -28,6 +31,7 @@ import uk.q3c.krail.testapp.view.TestAppPages;
 import uk.q3c.krail.testapp.view.TestAppViewModule;
 
 import java.util.List;
+import java.util.Locale;
 
 //@WebListener
 public class TestAppBindingManager extends DefaultBindingManager {
@@ -59,7 +63,8 @@ public class TestAppBindingManager extends DefaultBindingManager {
 
     @Override
     protected Module i18NModule() {
-        return new TestAppI18NModule();
+        return new I18NModule().supportedLocales(Locale.UK, Locale.ITALY, Locale.GERMANY)
+                               .activeDao(Jpa2.class);
     }
 
     @Override
@@ -81,5 +86,13 @@ public class TestAppBindingManager extends DefaultBindingManager {
         return new DefaultShiroModule().addRealm(TestAppRealm.class);
     }
 
-
+    /**
+     * Override this if you have provided your own {@link OptionModule}.
+     *
+     * @return module instance
+     */
+    @Override
+    protected Module optionModule() {
+        return new OptionModule().activeDao(Jpa1.class);
+    }
 }

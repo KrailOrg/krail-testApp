@@ -18,8 +18,12 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.q3c.krail.core.persist.CoreOptionDaoProvider;
 import uk.q3c.krail.core.user.notify.UserNotifier;
-import uk.q3c.krail.core.user.opt.*;
+import uk.q3c.krail.core.user.opt.Option;
+import uk.q3c.krail.core.user.opt.OptionContext;
+import uk.q3c.krail.core.user.opt.OptionKey;
+import uk.q3c.krail.core.user.opt.OptionPopup;
 import uk.q3c.krail.core.user.opt.cache.OptionCache;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
@@ -50,8 +54,8 @@ public class NotificationsView extends ViewBase implements OptionContext {
     private Button infoButton;
     private Option option;
     private OptionCache optionCache;
+    private CoreOptionDaoProvider optionDaoProvider;
     private OptionPopup optionPopup;
-    private OptionStore optionStore;
     private Button systemLevelOptionButton;
     private TestAppUI ui;
     private Button uiOptionsButton;
@@ -59,15 +63,15 @@ public class NotificationsView extends ViewBase implements OptionContext {
     private Button warnButton;
 
     @Inject
-    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup, OptionStore optionStore, OptionCache optionCache, TestAppUI ui) {
+    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup,  OptionCache optionCache, TestAppUI ui, CoreOptionDaoProvider optionDaoProvider) {
         super();
         this.userNotifier = userNotifier;
         this.translate = translate;
         this.option = option;
         this.optionPopup = optionPopup;
-        this.optionStore = optionStore;
         this.optionCache = optionCache;
         this.ui = ui;
+        this.optionDaoProvider = optionDaoProvider;
     }
 
 
@@ -127,7 +131,7 @@ public class NotificationsView extends ViewBase implements OptionContext {
         clearOptionStoreButton = new Button("clear option store");
         clearOptionStoreButton.setWidth("100%");
         clearOptionStoreButton.addClickListener(event -> {
-            optionStore.clear();
+            optionDaoProvider.get().clear();
             optionCache.clear();
             optionValueChanged(null);
         });
@@ -145,9 +149,11 @@ public class NotificationsView extends ViewBase implements OptionContext {
 
     @Override
     public void optionValueChanged(Property.ValueChangeEvent event) {
-        errorButton.setVisible(option.get(errorButtonVisible));
-        warnButton.setVisible(option.get(warningButtonVisible));
         infoButton.setVisible(option.get(infoButtonVisible));
+        warnButton.setVisible(option.get(warningButtonVisible));
+        errorButton.setVisible(option.get(errorButtonVisible));
+
+
 
     }
 

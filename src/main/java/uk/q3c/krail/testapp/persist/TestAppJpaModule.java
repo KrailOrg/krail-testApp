@@ -61,8 +61,8 @@ public class TestAppJpaModule extends JpaModule {
               .user("test")
               .password("test")
               .useLongIntDao()
-              .usePatternDao()
-              .useOptionDao()
+              .provideOptionDao()
+              .providePatternDao()
               .ddlGeneration(DefaultJpaInstanceConfiguration.Ddl.DROP_AND_CREATE);
         return config;
     }
@@ -75,6 +75,8 @@ public class TestAppJpaModule extends JpaModule {
               .user("sa")
               .password("")
               .useLongIntDao()
+              .provideOptionDao()
+              .providePatternDao()
               .ddlGeneration(DefaultJpaInstanceConfiguration.Ddl.DROP_AND_CREATE);
         return config;
     }
