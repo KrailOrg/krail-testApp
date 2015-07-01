@@ -18,6 +18,7 @@ import com.vaadin.ui.*;
 import org.apache.onami.persist.EntityManagerProvider;
 import org.apache.onami.persist.Transactional;
 import org.apache.onami.persist.UnitOfWork;
+import uk.q3c.krail.core.persist.ContainerType;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.persist.jpa.JpaContainerProvider;
@@ -37,7 +38,8 @@ import java.util.Optional;
  */
 
 public class JpaView extends ViewBase implements Button.ClickListener {
-    private final JpaContainerProvider containerProvider;
+    private final JpaContainerProvider containerProvider1;
+    private JpaContainerProvider containerProvider2;
     private int count1;
     private int count2;
     private Label countLabelFromContainer1;
@@ -58,11 +60,13 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     private UnitOfWork unitOfWork1;
 
     @Inject
-    protected JpaView(@Jpa1 Provider<JpaDao_LongInt> daoProvider1, @Jpa2 Provider<JpaDao_LongInt> daoProvider2, JpaContainerProvider containerProvider, @Jpa1
+    protected JpaView(@Jpa1 Provider<JpaDao_LongInt> daoProvider1, @Jpa2 Provider<JpaDao_LongInt> daoProvider2, @Jpa1 JpaContainerProvider
+            containerProvider1, @Jpa2 JpaContainerProvider containerProvider2, @Jpa1
     EntityManagerProvider entityManagerProvider1, @Jpa2 EntityManagerProvider entityManagerProvider2, @Jpa1 UnitOfWork unitOfWork1) {
         this.daoProvider1 = daoProvider1;
         this.daoProvider2 = daoProvider2;
-        this.containerProvider = containerProvider;
+        this.containerProvider1 = containerProvider1;
+        this.containerProvider2 = containerProvider2;
         this.entityManagerProvider1 = entityManagerProvider1;
         this.entityManagerProvider2 = entityManagerProvider2;
         this.unitOfWork1 = unitOfWork1;
@@ -83,8 +87,8 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         saveBtn3 = new Button("persist 3");
         saveBtn3.addClickListener(this);
 
-        jpa1Container = containerProvider.get(Jpa1.class, Widget.class, JpaContainerProvider.ContainerType.CACHED);
-        jpa2Container = containerProvider.get(Jpa2.class, Widget.class, JpaContainerProvider.ContainerType.CACHED);
+        jpa1Container = containerProvider1.get(Widget.class, ContainerType.CACHED);
+        jpa2Container = containerProvider2.get(Widget.class, ContainerType.CACHED);
         table1 = new Table("Table 1", jpa1Container);
         table2 = new Table("Table 2", jpa2Container);
 
