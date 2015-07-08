@@ -93,6 +93,6 @@ public class TestAppBindingManager extends DefaultBindingManager {
      */
     @Override
     protected Module optionModule() {
-        return new OptionModule().activeDao(Jpa1.class);
+        return new OptionModule().activeSource(Jpa1.class);
     }
 }

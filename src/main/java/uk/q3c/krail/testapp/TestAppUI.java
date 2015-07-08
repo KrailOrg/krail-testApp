@@ -35,7 +35,7 @@ import uk.q3c.krail.testapp.view.SessionObject;
  *
  * @author David Sowerby
  */
-@Theme("reindeer")
+@Theme("valo")
 @Push
 public class TestAppUI extends DefaultApplicationUI {
 

@@ -16,6 +16,8 @@ import org.junit.rules.TemporaryFolder;
 import uk.q3c.krail.persist.jpa.DefaultJpaInstanceConfiguration;
 import uk.q3c.krail.persist.jpa.JpaDb;
 import uk.q3c.krail.persist.jpa.JpaModule;
+import uk.q3c.krail.testapp.i18n.DescriptionKey;
+import uk.q3c.krail.testapp.i18n.LabelKey;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -63,6 +65,9 @@ public class TestAppJpaModule extends JpaModule {
               .useLongIntDao()
               .provideOptionDao()
               .providePatternDao()
+              .name(LabelKey.Derby)
+              .volatilePersistence(false)
+              .description(DescriptionKey.Derby_database_on_temporary_local_disk)
               .ddlGeneration(DefaultJpaInstanceConfiguration.Ddl.DROP_AND_CREATE);
         return config;
     }
@@ -77,6 +82,9 @@ public class TestAppJpaModule extends JpaModule {
               .useLongIntDao()
               .provideOptionDao()
               .providePatternDao()
+              .name(LabelKey.HSQLDB_In_memory)
+              .volatilePersistence(true)
+              .description(DescriptionKey.HSQLDB_volatile_in_memory_database)
               .ddlGeneration(DefaultJpaInstanceConfiguration.Ddl.DROP_AND_CREATE);
         return config;
     }

@@ -18,7 +18,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.q3c.krail.core.persist.CoreOptionDaoProvider;
+import uk.q3c.krail.core.persist.OptionSource;
 import uk.q3c.krail.core.user.notify.UserNotifier;
 import uk.q3c.krail.core.user.opt.Option;
 import uk.q3c.krail.core.user.opt.OptionContext;
@@ -54,7 +54,7 @@ public class NotificationsView extends ViewBase implements OptionContext {
     private Button infoButton;
     private Option option;
     private OptionCache optionCache;
-    private CoreOptionDaoProvider optionDaoProvider;
+    private OptionSource optionDaoProvider;
     private OptionPopup optionPopup;
     private Button systemLevelOptionButton;
     private TestAppUI ui;
@@ -63,7 +63,8 @@ public class NotificationsView extends ViewBase implements OptionContext {
     private Button warnButton;
 
     @Inject
-    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup,  OptionCache optionCache, TestAppUI ui, CoreOptionDaoProvider optionDaoProvider) {
+    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup, OptionCache optionCache, TestAppUI
+            ui, OptionSource optionDaoProvider) {
         super();
         this.userNotifier = userNotifier;
         this.translate = translate;
@@ -131,7 +132,8 @@ public class NotificationsView extends ViewBase implements OptionContext {
         clearOptionStoreButton = new Button("clear option store");
         clearOptionStoreButton.setWidth("100%");
         clearOptionStoreButton.addClickListener(event -> {
-            optionDaoProvider.get().clear();
+            optionDaoProvider.getActiveDao()
+                             .clear();
             optionCache.clear();
             optionValueChanged(null);
         });
