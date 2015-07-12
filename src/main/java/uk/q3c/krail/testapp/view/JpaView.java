@@ -21,8 +21,8 @@ import org.apache.onami.persist.UnitOfWork;
 import uk.q3c.krail.core.persist.ContainerType;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
-import uk.q3c.krail.persist.jpa.JpaContainerProvider;
-import uk.q3c.krail.persist.jpa.JpaDao_LongInt;
+import uk.q3c.krail.jpa.persist.JpaContainerProvider;
+import uk.q3c.krail.jpa.persist.JpaDao_LongInt;
 import uk.q3c.krail.testapp.persist.Jpa1;
 import uk.q3c.krail.testapp.persist.Jpa2;
 import uk.q3c.krail.testapp.persist.Widget;
@@ -137,6 +137,9 @@ public class JpaView extends ViewBase implements Button.ClickListener {
                                                                                 .size()));
                 countLabelFromDao2.setValue(Long.toString(daoProvider2.get()
                                                                       .count(Widget.class)));
+                break;
+            default:
+                throw new RuntimeException("Invalid index");
         }
     }
 

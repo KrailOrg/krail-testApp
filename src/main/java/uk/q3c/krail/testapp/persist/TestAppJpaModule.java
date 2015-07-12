@@ -13,9 +13,9 @@ package uk.q3c.krail.testapp.persist;
 
 import org.apache.onami.persist.PersistenceUnitModuleConfiguration;
 import org.junit.rules.TemporaryFolder;
-import uk.q3c.krail.persist.jpa.DefaultJpaInstanceConfiguration;
-import uk.q3c.krail.persist.jpa.JpaDb;
-import uk.q3c.krail.persist.jpa.JpaModule;
+import uk.q3c.krail.jpa.persist.DefaultJpaInstanceConfiguration;
+import uk.q3c.krail.jpa.persist.JpaDb;
+import uk.q3c.krail.jpa.persist.JpaModule;
 import uk.q3c.krail.testapp.i18n.DescriptionKey;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 
