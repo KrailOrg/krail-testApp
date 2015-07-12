@@ -201,7 +201,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
                     .click();
         // then
         verifyUrl("system-account/enable-account");
-        assertThat(subPagePanel.buttonLabels()).containsExactly("");
+        assertThat(subPagePanel.buttonLabels()).isEmpty();
 
     }
 
