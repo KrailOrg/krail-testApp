@@ -79,6 +79,7 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     @Override
 
     public void doBuild(ViewChangeBusMessage event) {
+
         VerticalLayout rootLayout = new VerticalLayout();
         saveBtn1 = new Button("persist 1");
         saveBtn1.addClickListener(this);
@@ -119,7 +120,7 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         rootLayout.addComponent(tableLayout2);
         refresh(1);
         refresh(2);
-        setRootComponent(rootLayout);
+        setRootComponent(new Panel(rootLayout));
     }
 
     private void refresh(int index) {
