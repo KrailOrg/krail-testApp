@@ -18,6 +18,8 @@ import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * Simply checks that deployment has the correct version
+ *
  * Created by david on 04/10/14.
  */
 public class VaadinVersionTest extends KrailTestBenchTestCase {
@@ -32,6 +34,6 @@ public class VaadinVersionTest extends KrailTestBenchTestCase {
         //then
         assertThat(VersionUtil.getVaadinMajorVersion(getDriver())).isEqualTo(7);
         assertThat(VersionUtil.getVaadinMinorVersion(getDriver())).isEqualTo(5);
-        assertThat(VersionUtil.getVaadinRevision(getDriver())).isEqualTo(2);
+        assertThat(VersionUtil.getVaadinRevision(getDriver())).isEqualTo(3);
     }
 }
