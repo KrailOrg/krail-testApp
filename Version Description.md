@@ -1,1 +1,1 @@
-Tests for krail 0.9.5.  Also replaces the DefaultRealm with a more specific uac set of components
+Tests for Krail 0.9.6. 
