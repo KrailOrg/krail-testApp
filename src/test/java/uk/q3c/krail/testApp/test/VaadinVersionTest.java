@@ -34,6 +34,6 @@ public class VaadinVersionTest extends KrailTestBenchTestCase {
         //then
         assertThat(VersionUtil.getVaadinMajorVersion(getDriver())).isEqualTo(7);
         assertThat(VersionUtil.getVaadinMinorVersion(getDriver())).isEqualTo(5);
-        assertThat(VersionUtil.getVaadinRevision(getDriver())).isEqualTo(3);
+        assertThat(VersionUtil.getVaadinRevision(getDriver())).isEqualTo(7);
     }
 }
