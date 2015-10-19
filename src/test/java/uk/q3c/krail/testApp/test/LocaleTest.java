@@ -59,20 +59,19 @@ public class LocaleTest extends KrailTestBenchTestCase {
     public void switchToGerman_UIComponents() {
 
         // given
-
+        pause(1500);  //for some reason page needs time to catch up
         // when
         localeSelector.selectLocale(Locale.GERMANY);
-        pause(1000);
+        String comboValue = localeSelector.getValue();
 
         // then
-        String comboValue = localeSelector.getValue();
+
         assertThat(comboValue).isEqualTo(Locale.GERMANY.getDisplayName(Locale.GERMANY));
         List<String> items = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             items.add(navTree.itemCaption(i));
         }
-        assertThat(items).containsExactly("Benachrichtigungen", "Einloggen", "JPA", "Nachrichtenfeld",
-                "Öffentliche Startseite", "Systemkonto");
+        assertThat(items).containsExactly("Benachrichtigungen", "Einloggen", "JPA", "Nachrichtenfeld", "Öffentliche Startseite", "Systemkonto");
 
         items.clear();
         for (int i = 0; i < 6; i++) {
