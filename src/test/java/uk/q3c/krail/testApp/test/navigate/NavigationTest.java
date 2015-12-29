@@ -29,6 +29,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+@SuppressWarnings("Duplicates")
 public class NavigationTest extends KrailTestBenchTestCase {
 
     @Rule
@@ -41,6 +42,17 @@ public class NavigationTest extends KrailTestBenchTestCase {
     @Before
     public void setUp() throws Exception {
         appContext = "krail-testapp";
+    }
+
+    @Test
+    public void straight_to_private() {
+        //when
+        navigateWithRedirectExpected("private/finance", "home");
+        //then
+
+        verifyUrl("home");
+        assertThat(notification()).isNotNull();
+        assertThat(notification().getText()).isEqualTo("private/finance is not a valid page");
     }
 
     @Test

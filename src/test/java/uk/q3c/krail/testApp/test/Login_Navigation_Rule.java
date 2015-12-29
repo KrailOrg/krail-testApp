@@ -28,7 +28,7 @@ public class Login_Navigation_Rule extends KrailTestBenchTestCase {
     @Before
     public void setUp() throws Exception {
         appContext = "krail-testapp";
-        startDriver();
+
     }
 
     @Test
