@@ -1,1 +1,1 @@
-Tests for Krail 0.9.6. 
+Tests for Krail 0.9.7.  Vaadin 7.5.10 
