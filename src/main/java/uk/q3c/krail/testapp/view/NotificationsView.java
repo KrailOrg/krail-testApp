@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2013 David Sowerby
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ *
+ *  * Copyright (c) 2016. David Sowerby
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ *  * the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ *  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ *  * specific language governing permissions and limitations under the License.
+ *
  */
 package uk.q3c.krail.testapp.view;
 
@@ -16,6 +16,7 @@ import com.google.inject.Inject;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.persist.OptionSource;
@@ -37,11 +38,13 @@ import uk.q3c.util.ID;
 import javax.annotation.Nonnull;
 import java.util.Optional;
 
+@SuppressFBWarnings({"LSC_LITERAL_STRING_COMPARISON", "FCBL_FIELD_COULD_BE_LOCAL"})
 public class NotificationsView extends ViewBase implements OptionContext {
-    private static final OptionKey<Boolean> errorButtonVisible = new OptionKey<>(true, NotificationsView.class, LabelKey.Error, MessageKey.Button_is_Visible);
-    private static final OptionKey<Boolean> infoButtonVisible = new OptionKey<>(true, NotificationsView.class, LabelKey.Information, MessageKey
+    private static final OptionKey<Boolean> errorButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, LabelKey.Error, MessageKey
             .Button_is_Visible);
-    private static final OptionKey<Boolean> warningButtonVisible = new OptionKey<>(true, NotificationsView.class, LabelKey.Warning, MessageKey
+    private static final OptionKey<Boolean> infoButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, LabelKey.Information, MessageKey
+            .Button_is_Visible);
+    private static final OptionKey<Boolean> warningButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, LabelKey.Warning, MessageKey
             .Button_is_Visible);
     private static Logger log = LoggerFactory.getLogger(NotificationsView.class);
     private final UserNotifier userNotifier;
@@ -123,7 +126,7 @@ public class NotificationsView extends ViewBase implements OptionContext {
 
         systemLevelOptionButton = new Button("Set system level option - info button not visible");
         systemLevelOptionButton.addClickListener(event -> {
-            option.set(false, 1, infoButtonVisible);
+            option.set(Boolean.FALSE, 1, infoButtonVisible);
             optionValueChanged(null);
         });
         systemLevelOptionButton.setWidth("100%");

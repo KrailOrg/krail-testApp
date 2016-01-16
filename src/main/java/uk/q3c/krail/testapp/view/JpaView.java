@@ -1,12 +1,14 @@
 /*
- * Copyright (c) 2015. David Sowerby
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *  * Copyright (c) 2016. David Sowerby
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ *  * the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ *  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ *  * specific language governing permissions and limitations under the License.
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
  */
 
 package uk.q3c.krail.testapp.view;
@@ -49,7 +51,6 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     private Provider<JpaDao_LongInt> daoProvider1;
     private Provider<JpaDao_LongInt> daoProvider2;
     private EntityManagerProvider entityManagerProvider1;
-    private EntityManagerProvider entityManagerProvider2;
     private JPAContainer<Widget> jpa1Container;
     private JPAContainer<Widget> jpa2Container;
     private Button saveBtn1;
@@ -62,13 +63,12 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     @Inject
     protected JpaView(@Jpa1 Provider<JpaDao_LongInt> daoProvider1, @Jpa2 Provider<JpaDao_LongInt> daoProvider2, @Jpa1 JpaContainerProvider
             containerProvider1, @Jpa2 JpaContainerProvider containerProvider2, @Jpa1
-    EntityManagerProvider entityManagerProvider1, @Jpa2 EntityManagerProvider entityManagerProvider2, @Jpa1 UnitOfWork unitOfWork1) {
+                      EntityManagerProvider entityManagerProvider1, @Jpa1 UnitOfWork unitOfWork1) {
         this.daoProvider1 = daoProvider1;
         this.daoProvider2 = daoProvider2;
         this.containerProvider1 = containerProvider1;
         this.containerProvider2 = containerProvider2;
         this.entityManagerProvider1 = entityManagerProvider1;
-        this.entityManagerProvider2 = entityManagerProvider2;
         this.unitOfWork1 = unitOfWork1;
     }
 
@@ -156,7 +156,7 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         Button btn = event.getButton();
         if (btn == saveBtn1) {
             Widget widget = new Widget();
-            widget.setName("a" + count1++);
+            widget.setName('a' + Integer.toString(count1++));
             widget.setDescription("a");
             Widget widget1 = new Widget();
             widget1.setName("aa" + count1++);
@@ -201,7 +201,7 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     @Transactional
     protected void annotatedMethod() {
         Widget widget = new Widget();
-        widget.setName("a" + count1++);
+        widget.setName('a' + Integer.toString(count1++));
         widget.setDescription("a");
         final EntityManager entityManager = entityManagerProvider1.get();
         entityManager.persist(widget);
@@ -210,7 +210,7 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     @Transactional
     protected void annotatedMethodUsingDao() {
         Widget widget = new Widget();
-        widget.setName("b" + count2++);
+        widget.setName('b' + Integer.toString(count2++));
         widget.setDescription("b");
         daoProvider2.get()
                     .save(widget);
