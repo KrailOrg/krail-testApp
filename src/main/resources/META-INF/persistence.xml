@@ -17,8 +17,8 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="derbyDb">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>uk.q3c.krail.jpa.user.opt.JpaOptionEntity</class>
-        <class>uk.q3c.krail.jpa.i18n.JpaPatternEntity</class>
+        <class>uk.q3c.krail.persist.jpa.option.JpaOptionEntity</class>
+        <class>uk.q3c.krail.persist.jpa.i18n.JpaPatternEntity</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
         </properties>
@@ -27,8 +27,8 @@
 
     <persistence-unit name="hsqlDb">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>uk.q3c.krail.jpa.user.opt.JpaOptionEntity</class>
-        <class>uk.q3c.krail.jpa.i18n.JpaPatternEntity</class>
+        <class>uk.q3c.krail.persist.jpa.option.JpaOptionEntity</class>
+        <class>uk.q3c.krail.persist.jpa.i18n.JpaPatternEntity</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
         </properties>

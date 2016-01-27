@@ -18,6 +18,9 @@ import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.util.converter.ConverterFactory;
 import com.vaadin.server.ErrorHandler;
+import uk.q3c.krail.core.i18n.CurrentLocale;
+import uk.q3c.krail.core.i18n.I18NProcessor;
+import uk.q3c.krail.core.i18n.Translate;
 import uk.q3c.krail.core.navigate.Navigator;
 import uk.q3c.krail.core.push.Broadcaster;
 import uk.q3c.krail.core.push.PushMessageRouter;
@@ -27,9 +30,6 @@ import uk.q3c.krail.core.user.notify.InformationNotificationMessage;
 import uk.q3c.krail.core.user.notify.VaadinNotification;
 import uk.q3c.krail.core.user.opt.Option;
 import uk.q3c.krail.core.view.component.*;
-import uk.q3c.krail.i18n.CurrentLocale;
-import uk.q3c.krail.i18n.I18NProcessor;
-import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.view.SessionObject;
 
 /**

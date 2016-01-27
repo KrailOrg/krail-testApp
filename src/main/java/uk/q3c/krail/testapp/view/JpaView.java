@@ -20,11 +20,11 @@ import com.vaadin.ui.*;
 import org.apache.onami.persist.EntityManagerProvider;
 import org.apache.onami.persist.Transactional;
 import org.apache.onami.persist.UnitOfWork;
-import uk.q3c.krail.core.persist.ContainerType;
+import uk.q3c.krail.core.persist.common.common.ContainerType;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
-import uk.q3c.krail.jpa.persist.JpaContainerProvider;
-import uk.q3c.krail.jpa.persist.JpaDao_LongInt;
+import uk.q3c.krail.persist.jpa.common.JpaContainerProvider;
+import uk.q3c.krail.persist.jpa.common.JpaDao_LongInt;
 import uk.q3c.krail.testapp.persist.Jpa1;
 import uk.q3c.krail.testapp.persist.Jpa2;
 import uk.q3c.krail.testapp.persist.Widget;
@@ -81,11 +81,11 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     public void doBuild(ViewChangeBusMessage event) {
 
         VerticalLayout rootLayout = new VerticalLayout();
-        saveBtn1 = new Button("persist 1");
+        saveBtn1 = new Button("common 1");
         saveBtn1.addClickListener(this);
-        saveBtn2 = new Button("persist 2");
+        saveBtn2 = new Button("common 2");
         saveBtn2.addClickListener(this);
-        saveBtn3 = new Button("persist 3");
+        saveBtn3 = new Button("common 3");
         saveBtn3.addClickListener(this);
 
         jpa1Container = containerProvider1.get(Widget.class, ContainerType.CACHED);
