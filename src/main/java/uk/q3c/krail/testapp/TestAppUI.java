@@ -22,13 +22,13 @@ import uk.q3c.krail.core.i18n.CurrentLocale;
 import uk.q3c.krail.core.i18n.I18NProcessor;
 import uk.q3c.krail.core.i18n.Translate;
 import uk.q3c.krail.core.navigate.Navigator;
+import uk.q3c.krail.core.option.Option;
 import uk.q3c.krail.core.push.Broadcaster;
 import uk.q3c.krail.core.push.PushMessageRouter;
 import uk.q3c.krail.core.ui.ApplicationTitle;
 import uk.q3c.krail.core.ui.DefaultApplicationUI;
 import uk.q3c.krail.core.user.notify.InformationNotificationMessage;
 import uk.q3c.krail.core.user.notify.VaadinNotification;
-import uk.q3c.krail.core.user.opt.Option;
 import uk.q3c.krail.core.view.component.*;
 import uk.q3c.krail.testapp.view.SessionObject;
 

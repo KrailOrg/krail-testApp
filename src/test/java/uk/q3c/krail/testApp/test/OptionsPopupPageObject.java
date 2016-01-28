@@ -14,7 +14,7 @@ package uk.q3c.krail.testApp.test;
 import com.vaadin.testbench.By;
 import com.vaadin.testbench.elements.WindowElement;
 import com.vaadin.ui.Window;
-import uk.q3c.krail.core.user.opt.DefaultOptionPopup;
+import uk.q3c.krail.core.option.DefaultOptionPopup;
 import uk.q3c.krail.testapp.TestAppUI;
 import uk.q3c.krail.testapp.view.NotificationsView;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;

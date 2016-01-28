@@ -15,7 +15,7 @@ import com.vaadin.testbench.elements.ButtonElement;
 import com.vaadin.testbench.elements.CheckBoxElement;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
-import uk.q3c.krail.core.user.opt.DefaultOptionPopup;
+import uk.q3c.krail.core.option.DefaultOptionPopup;
 import uk.q3c.krail.testapp.view.NotificationsView;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.PageObject;
