@@ -126,7 +126,7 @@ public class NotificationsView extends ViewBase implements OptionContext {
 
         systemLevelOptionButton = new Button("Set system level option - info button not visible");
         systemLevelOptionButton.addClickListener(event -> {
-            option.set(Boolean.FALSE, 1, infoButtonVisible);
+            option.set(infoButtonVisible, 1, Boolean.FALSE);
             optionValueChanged(null);
         });
         systemLevelOptionButton.setWidth("100%");

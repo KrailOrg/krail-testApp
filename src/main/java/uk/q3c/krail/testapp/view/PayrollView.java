@@ -15,6 +15,7 @@ import com.google.inject.Inject;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextArea;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.onami.persist.Transactional;
 import uk.q3c.krail.core.option.Option;
 import uk.q3c.krail.core.option.OptionContext;
@@ -34,6 +35,8 @@ import java.util.Optional;
 /**
  * Created by David Sowerby on 22/05/15.
  */
+@SuppressFBWarnings({"LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON",
+        "LSC_LITERAL_STRING_COMPARISON"})
 public class PayrollView extends Grid3x3ViewBase implements OptionContext {
     public static final OptionKey<Integer> payrollOption = new OptionKey<>(5, PayrollView.class, LabelKey.Payroll);
     private Option option;
@@ -96,12 +99,12 @@ public class PayrollView extends Grid3x3ViewBase implements OptionContext {
 
     @Transactional
     protected void setSystemLevel() {
-        option.set(999, 1, payrollOption);
+        option.set(payrollOption, 1, 999);
     }
 
     @Transactional
     protected void setUserValue(int value) {
-        option.set(value, payrollOption);
+        option.set(payrollOption, value);
     }
 
 
