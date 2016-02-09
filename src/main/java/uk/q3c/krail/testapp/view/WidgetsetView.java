@@ -23,8 +23,10 @@ import de.steinwedel.messagebox.MessageBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.risto.stepper.IntStepper;
+import uk.q3c.krail.core.i18n.Translate;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
+import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.util.ID;
 
 import java.util.Optional;
@@ -38,8 +40,9 @@ public class WidgetsetView extends ViewBase {
     private IntStepper stepper;
 
     @Inject
-    protected WidgetsetView(SessionObject sessionObject) {
-        super();
+    protected WidgetsetView(SessionObject sessionObject, Translate translate) {
+        super(translate);
+        nameKey = LabelKey.Widgetset;
         log.debug("Constructor injecting with session object");
     }
 

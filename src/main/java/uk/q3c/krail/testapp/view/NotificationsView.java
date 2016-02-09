@@ -68,7 +68,7 @@ public class NotificationsView extends ViewBase implements OptionContext {
     @Inject
     protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup, OptionCache optionCache, TestAppUI
             ui, OptionSource optionDaoProvider) {
-        super();
+        super(translate);
         this.userNotifier = userNotifier;
         this.translate = translate;
         this.option = option;
@@ -76,6 +76,7 @@ public class NotificationsView extends ViewBase implements OptionContext {
         this.optionCache = optionCache;
         this.ui = ui;
         this.optionDaoProvider = optionDaoProvider;
+        nameKey = LabelKey.Notifications;
     }
 
 

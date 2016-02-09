@@ -20,7 +20,7 @@ public enum LabelKey implements I18NKey {
     Data_Sources,
     Enable_Account,
     Home,
-    Krail_Test_Application,
+    Krail_Test,
     Login,
     Logout,
     No,
@@ -33,5 +33,5 @@ public enum LabelKey implements I18NKey {
     View1,
     View2,
     Yes,
-    Finance, Accounts, Payroll, Authenticated, Guest, Derby, HSQLDB_In_memory, Set_System_Level, Purchasing
+    Finance, Accounts, Payroll, Authenticated, Guest, Derby, HSQLDB_In_memory, Set_System_Level, Jpa, Push, Widgetset, Purchasing
 }

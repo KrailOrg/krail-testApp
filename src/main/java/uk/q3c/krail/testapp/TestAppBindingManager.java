@@ -70,7 +70,7 @@ public class TestAppBindingManager extends DefaultBindingManager {
     @Override
     protected Module uiModule() {
         return new DefaultUIModule().uiClass(TestAppUI.class)
-                                    .applicationTitleKey(LabelKey.Krail_Test_Application);
+                                    .applicationTitleKey(LabelKey.Krail_Test);
     }
 
     @Override

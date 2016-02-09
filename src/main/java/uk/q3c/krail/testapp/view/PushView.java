@@ -21,9 +21,11 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import uk.q3c.krail.core.config.ApplicationConfiguration;
 import uk.q3c.krail.core.config.ConfigKeys;
+import uk.q3c.krail.core.i18n.Translate;
 import uk.q3c.krail.core.push.Broadcaster;
 import uk.q3c.krail.core.view.component.BroadcastMessageLog;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
+import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.util.ID;
 
 import java.util.Optional;
@@ -41,12 +43,12 @@ public class PushView extends ViewBaseGrid {
     private Button sendButton;
 
     @Inject
-    protected PushView(Broadcaster broadcaster, BroadcastMessageLog messageLog,
-                       ApplicationConfiguration applicationConfiguration) {
-        super();
+    protected PushView(Broadcaster broadcaster, BroadcastMessageLog messageLog, ApplicationConfiguration applicationConfiguration, Translate translate) {
+        super(translate);
         this.broadcaster = broadcaster;
         this.messageLog = messageLog;
         this.applicationConfiguration = applicationConfiguration;
+        nameKey = LabelKey.Push;
     }
 
 
@@ -75,7 +77,7 @@ public class PushView extends ViewBaseGrid {
             @Override
             public void valueChange(ValueChangeEvent event) {
                 applicationConfiguration.setProperty(ConfigKeys.SERVER_PUSH_ENABLED, event.getProperty()
-                                                                                                    .getValue());
+                                                                                          .getValue());
             }
 
         });

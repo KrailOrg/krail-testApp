@@ -20,11 +20,13 @@ import com.vaadin.ui.*;
 import org.apache.onami.persist.EntityManagerProvider;
 import org.apache.onami.persist.Transactional;
 import org.apache.onami.persist.UnitOfWork;
+import uk.q3c.krail.core.i18n.Translate;
 import uk.q3c.krail.core.persist.common.common.ContainerType;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.persist.jpa.common.JpaContainerProvider;
 import uk.q3c.krail.persist.jpa.common.JpaDao_LongInt;
+import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.krail.testapp.persist.Jpa1;
 import uk.q3c.krail.testapp.persist.Jpa2;
 import uk.q3c.krail.testapp.persist.Widget;
@@ -63,13 +65,15 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     @Inject
     protected JpaView(@Jpa1 Provider<JpaDao_LongInt> daoProvider1, @Jpa2 Provider<JpaDao_LongInt> daoProvider2, @Jpa1 JpaContainerProvider
             containerProvider1, @Jpa2 JpaContainerProvider containerProvider2, @Jpa1
-                      EntityManagerProvider entityManagerProvider1, @Jpa1 UnitOfWork unitOfWork1) {
+                      EntityManagerProvider entityManagerProvider1, @Jpa1 UnitOfWork unitOfWork1, Translate translate) {
+        super(translate);
         this.daoProvider1 = daoProvider1;
         this.daoProvider2 = daoProvider2;
         this.containerProvider1 = containerProvider1;
         this.containerProvider2 = containerProvider2;
         this.entityManagerProvider1 = entityManagerProvider1;
         this.unitOfWork1 = unitOfWork1;
+        nameKey = LabelKey.Jpa;
     }
 
 

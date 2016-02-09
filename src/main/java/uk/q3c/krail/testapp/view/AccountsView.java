@@ -20,6 +20,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import uk.q3c.krail.core.i18n.Translate;
 import uk.q3c.krail.core.user.notify.UserNotifier;
 import uk.q3c.krail.core.view.Grid3x3ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
@@ -39,7 +40,9 @@ public class AccountsView extends Grid3x3ViewBase {
     private UserNotifier userNotifier;
 
     @Inject
-    protected AccountsView(UserNotifier userNotifier) {
+    protected AccountsView(UserNotifier userNotifier, Translate translate) {
+        super(translate);
+        nameKey = LabelKey.Accounts;
         this.userNotifier = userNotifier;
     }
 
@@ -100,7 +103,7 @@ public class AccountsView extends Grid3x3ViewBase {
 
     @RequiresPermissions("counter:increment")
     protected void permissionCheckFail() {
-        userNotifier.notifyWarning(LabelKey.Krail_Test_Application);
+        userNotifier.notifyWarning(LabelKey.Krail_Test);
     }
 
     @RequiresAuthentication
