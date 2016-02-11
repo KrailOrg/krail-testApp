@@ -1,1 +1,1 @@
-Tests for Krail 0.9.7.  Vaadin 7.5.10 
+Tests for Krail 0.9.8.  Vaadin 7.6.2 Build file renamed
