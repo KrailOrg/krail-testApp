@@ -47,15 +47,16 @@ public class Push_Functional extends KrailTestBenchTestCase {
     @Test
     public void enabled() {
         // given
+        int pauseTime = 2000;
         navigateTo("notifications/push");
-        pause(1500);
+        pause(pauseTime);
         selectDriver(1);
-        pause(1500);
+        pause(pauseTime);
         navigateTo("notifications/push");
         // when
 
         selectDriver(0);
-        pause(1500);
+        pause(pauseTime);
         pushView.groupBox()
                 .sendKeys("a");
         pushView.messageBox()
@@ -63,12 +64,12 @@ public class Push_Functional extends KrailTestBenchTestCase {
         pushView.sendButton()
                 .click();
         // then
-        pause(1500);
+        pause(pauseTime);
         assertThat(pushView.messageLog()
                            .getValue()).isEqualTo("a:a1\n");
         assertThat(messageBar.message()).isEqualTo("a:a1");
         selectDriver(1);
-        pause(1500);
+        pause(pauseTime);
         assertThat(pushView.messageLog()
                            .getValue()).isEqualTo("a:a1\n");
 
@@ -80,7 +81,7 @@ public class Push_Functional extends KrailTestBenchTestCase {
                 .sendKeys("b1");
         pushView.sendButton()
                 .click();
-        pause(1500);
+        pause(pauseTime);
         // then
         assertThat(pushView.messageLog()
                            .getValue()).isEqualTo("b:b1\na:a1\n");

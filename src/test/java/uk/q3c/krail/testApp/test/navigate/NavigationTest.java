@@ -271,7 +271,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void selectPath() {
         //given
          startDriver();
-        pause(1200);
+        pause(2000);
         //when
         navTree.select("System Account/Enable Account");
         //then

@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 /*
  *
  *  * Copyright (c) 2016. David Sowerby
@@ -10,14 +12,48 @@
  *  * specific language governing permissions and limitations under the License.
  *
  */
-description = 'Functional test application for Krail and its additional modules'
 
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+
+    dependencies {
+//        classpath 'commons-io:commons-io:2.4'
+        classpath 'uk.q3c:q3c-gradle:0.7.4'
+    }
+}
+
+
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'idea'
+apply plugin: 'q3c-release'
+apply from: 'http://plugins.jasoft.fi/vaadin-groovy.plugin?version=0.10.6'
+apply plugin: 'war'
+
+description = 'Functional test application for Krail and its additional modules'
+ext.versionDescription = 'No version description provided'
+ext.releaseDate = new Date()
+
+group = 'uk.q3c.krail'
+version = '0.8.3'
+//version = versionFromFile(project.projectDir)
+ext.vaadinVersion = '7.6.2'
 
 vaadin {
     widgetset "uk.q3c.krail.testapp.widgetset.testAppWidgetset"
 }
 
-bintrayUpload.enabled = false
+repositories {
+    jcenter()
+    mavenCentral()
+    mavenLocal()
+}
 
 
 
@@ -25,7 +61,8 @@ bintrayUpload.enabled = false
 dependencies {
 
     //Krail
-    compile project(':krail-jpa')
+    compile 'uk.q3c.krail:krail-jpa:0.9.2'
+    compile 'uk.q3c.krail:krail-bench:0.8.4'
 
     //UI components
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'
@@ -33,15 +70,175 @@ dependencies {
     // Missing from stepper
     compile 'org.json:json:20141113'
     //vaadin push
-    compile 'com.vaadin:vaadin-push:' + vaadinVersion
+//    compile 'com.vaadin:vaadin-push:' + vaadinVersion
 
-    compile 'junit:junit:4.11'
+    compile 'junit:junit:4.12' // why compile?
 
 //    testCompile project(':krail-orient')
 
 
 }
 
+ext.userHome = System.getProperty("user.home")
+ext.dockerContextDir = file(userHome + "/temp/docker")
+
+ext.warName = (project.name.toLowerCase() + '.war')
+ext.tomcatVersion = '8'
+
+vaadin.plugin.logToConsole = true
+
+war {
+    exclude 'WEB-INF/lib/*'
+    archiveName = warName
+
+}
+
+
+task clearDockerContext(type: Delete) {
+    doFirst {
+        println 'clear the docker build dir'
+    }
+    delete dockerContextDir
+}
+
+task warToContext(type: Copy) {
+    dependsOn clearDockerContext
+    doFirst {
+        println "copy war to docker build dir"
+    }
+    from war
+    into dockerContextDir
+
+}
+
+task dockerFileToContext(type: Copy) {
+    dependsOn clearDockerContext
+    doFirst {
+        println "copy and rename Dockerfile"
+    }
+    from project.getProjectDir()
+    into dockerContextDir
+    include("Dockerfile" + tomcatVersion)
+    rename("Dockerfile" + tomcatVersion, "Dockerfile")
+
+}
+
+//        task buildImage(type: DockerBuildImage) {
+//            dependsOn warToContext
+//            dependsOn dockerFileToContext
+//            inputDir = dockerContextDir
+//            tag = 'tomcat'+tomcatVersion
+//        }
+
+//builds and starts the container
+task startContainer(type: Exec) {
+    dependsOn warToContext
+    dependsOn dockerFileToContext
+    if (Os.isFamily(Os.FAMILY_UNIX)) {
+        commandLine 'startContainer' + tomcatVersion
+    } else {
+
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            commandLine 'cmd', 'startContainer' + tomcatVersion
+
+        }
+    }
+
+}
+
+task stopContainer(type: Exec) {
+
+
+    if (Os.isFamily(Os.FAMILY_UNIX)) {
+        commandLine 'stopContainer'
+    } else {
+
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            commandLine 'cmd', 'stopContainer'
+
+        }
+    }
+
+}
+
+test.dependsOn(startContainer)
+test.finalizedBy(stopContainer)
+
+
+vaadin {
+    version vaadinVersion
+    manageWidgetset true
+    serverPort 8001
+}
+
+task stopTomcat(type: Exec) {
+
+
+    if (Os.isFamily(Os.FAMILY_UNIX)) {
+        commandLine 'stopTomcat7'
+    } else {
+
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            commandLine 'cmd', 'stopTomcat7'
+
+        }
+    }
+
+}
+
+task startTomcat(type: Exec) {
+
+    if (Os.isFamily(Os.FAMILY_UNIX)) {
+        commandLine 'startTomcat7'
+    } else {
+
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            commandLine 'cmd', 'startTomcat7'
+
+        }
+    }
+
+}
+
+
+
+
+
+
+task waitForTomcat(dependsOn: startTomcat) {
+    doFirst {
+        println "giving Tomcat time to start"
+        sleep(5 * 1000)
+        println "sleep over"
+    }
+}
+
+
+
+
+
+
+
+waitForTomcat.dependsOn(startTomcat)
+waitForTomcat.mustRunAfter(startTomcat)
+
+
+
+stopTomcat.dependsOn(war)
+stopTomcat.mustRunAfter(war)
+
+
+task verifyRelease(type: uk.q3c.gradle.VerificationTask) {
+
+}
+
+task prepareRelease(type: uk.q3c.gradle.PrepareReleaseTask) {
+
+}
+
+task release(type: uk.q3c.gradle.ReleaseTask) {
+
+}
 
 
 
