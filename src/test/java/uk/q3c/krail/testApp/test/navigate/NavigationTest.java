@@ -15,10 +15,7 @@ package uk.q3c.krail.testApp.test.navigate;
 
 import com.vaadin.testbench.By;
 import com.vaadin.testbench.ScreenshotOnFailureRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.WebElement;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.BreadcrumbPageObject;
@@ -125,6 +122,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
 
     @Test
+    @Ignore("https://github.com/davidsowerby/krail-testApp/issues/11")
     public void navigateToInvalidPage() {
         // given
          startDriver();
@@ -233,6 +231,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     }
 
     @Test
+    @Ignore("https://github.com/davidsowerby/krail-testApp/issues/15")
     public void menuNavigate() {
 
         // given

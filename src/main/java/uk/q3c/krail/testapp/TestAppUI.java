@@ -18,6 +18,7 @@ import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.util.converter.ConverterFactory;
 import com.vaadin.server.ErrorHandler;
+import uk.q3c.krail.core.guice.uiscope.UIKey;
 import uk.q3c.krail.core.i18n.CurrentLocale;
 import uk.q3c.krail.core.i18n.I18NProcessor;
 import uk.q3c.krail.core.i18n.Translate;
@@ -54,8 +55,8 @@ public class TestAppUI extends DefaultApplicationUI {
     }
 
     @Override
-    protected void processBroadcastMessage(String group, String message) {
-        super.processBroadcastMessage(group, message);
+    protected void processBroadcastMessage(String group, String message, UIKey uiKey, int messageId) {
+        super.processBroadcastMessage(group, message, uiKey, messageId);
         getMessageBar().informationMessage(new InformationNotificationMessage(group + ':' + message));
     }
 

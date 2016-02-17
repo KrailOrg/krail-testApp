@@ -34,7 +34,6 @@ apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
 apply plugin: 'q3c-release'
 apply from: 'http://plugins.jasoft.fi/vaadin-groovy.plugin?version=0.10.6'
-apply plugin: 'war'
 
 description = 'Functional test application for Krail and its additional modules'
 ext.versionDescription = 'No version description provided'
@@ -61,8 +60,7 @@ repositories {
 dependencies {
 
     //Krail
-    compile 'uk.q3c.krail:krail-jpa:0.9.2'
-    compile 'uk.q3c.krail:krail-bench:0.8.4'
+    compile 'uk.q3c.krail:krail-jpa:0.9.3'
 
     //UI components
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'
@@ -72,8 +70,8 @@ dependencies {
     //vaadin push
 //    compile 'com.vaadin:vaadin-push:' + vaadinVersion
 
-    compile 'junit:junit:4.12' // why compile?
-
+    testCompile 'junit:junit:4.12'
+    testCompile 'uk.q3c.krail:krail-bench:0.8.4'
 //    testCompile project(':krail-orient')
 
 
@@ -82,15 +80,14 @@ dependencies {
 ext.userHome = System.getProperty("user.home")
 ext.dockerContextDir = file(userHome + "/temp/docker")
 
-ext.warName = (project.name.toLowerCase() + '.war')
 ext.tomcatVersion = '8'
 
 vaadin.plugin.logToConsole = true
 
+ext.warName = (project.name.toLowerCase() + '.war')
 war {
     exclude 'WEB-INF/lib/*'
     archiveName = warName
-
 }
 
 

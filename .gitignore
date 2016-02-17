@@ -5,8 +5,11 @@ bin
 build
 gradle
 logs
+classes
 
-.krail-testApp.iml
+krail-testapp.iml
+krail-testApp.iml
+derby.log
 /uk/q3c/krail/testapp/widgetset/testAppWidgetset.gwt.xml
 build.gradle~
 git.ignore~

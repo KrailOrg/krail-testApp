@@ -64,7 +64,7 @@ public class PushView extends ViewBaseGrid {
 
             @Override
             public void buttonClick(ClickEvent event) {
-                broadcaster.broadcast(groupInput.getValue(), messageInput.getValue());
+                broadcaster.broadcast(groupInput.getValue(), messageInput.getValue(), getRootComponent());
             }
         });
 
