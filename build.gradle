@@ -42,7 +42,7 @@ ext.releaseDate = new Date()
 group = 'uk.q3c.krail'
 version = '0.8.3'
 //version = versionFromFile(project.projectDir)
-ext.vaadinVersion = '7.6.2'
+ext.vaadinVersion = '7.6.3'
 
 vaadin {
     widgetset "uk.q3c.krail.testapp.widgetset.testAppWidgetset"
