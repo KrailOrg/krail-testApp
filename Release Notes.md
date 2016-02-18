@@ -1,16 +1,18 @@
-### Release Notes for krail-testApp 0.8.2
+### Release Notes for krail-testApp 0.8.3
 
-Tests for Krail 0.9.8.  Vaadin 7.6.2 Build file renamed
+Tests for Krail 0.9.9.  Vaadin 7.6.3.  Separated from master project
 
 #### Change log
 
+-   [09](https://github.com/davidsowerby/krail-testapp/issues/9): Separate from master project
+-   [10](https://github.com/davidsowerby/krail-testapp/issues/9) Push failure*
 
 
 #### Dependency changes
 
-   compile dependency version changed to: krail:0.9.8
-   test compile dependency version changed to: krail-bench:0.8.3
-   compile dependency version changed to: krail-jpa:0.9.2
+   compile dependency version changed to: krail:0.9.9
+   test compile dependency version changed to: krail-bench:0.8.4
+   compile dependency version changed to: krail-jpa:0.9.3
 
 #### Detail
 
@@ -22,70 +24,18 @@ Tests for Krail 0.9.8.  Vaadin 7.6.2 Build file renamed
 
 
 ---
-*See [krail 520](https://github.com/davidsowerby/krail/issues/520) Some View name keys set*
+*See [9](https://github.com/davidsowerby/krail-testapp/issues/9) Separate from master project*
 
-
----
-*See [krail 517](https://github.com/davidsowerby/krail/issues/517) Vaadin 7.6.2*
-
+All steps complete
 
 ---
-*[krail-master 36](https://github.com/davidsowerby/krail-master/issues/36) rename build file*
+*See [10](https://github.com/davidsowerby/krail-testapp/issues/10) Push failure*
 
-reverted to 'build.gradle' to enable Travis
+The renaming of the war file has been removed from build.gradle, including it caused errors.  File is now renamed as part of Dockerfile.
+Subsequently realised that war renaming is fine, just needs IDEA to use the exploded war, or to set up build paths for exploded/standard war correctly in IDEA
 
+UITestServlet removed, it was causing an Atmosphere warnings about duplicate Endpoints
 
----
-*Option.set() parameter order changed*
-
-See [krail 511](https://github.com/davidsowerby/krail/issues/511)
-
-
----
-*See [krail 343](https://github.com/davidsowerby/krail/issues/343) Multiuser testing*
-
-Tests added
+@Ignore two intermittent test failures, see #11 and #15
 
 
----
-*Refactoring changes in core, see [krail 460](https://github.com/davidsowerby/krail/issues/460)*
-
-
----
-*Fix [508](https://github.com/davidsowerby/krail-testApp/issues/508) restructured packages*
-
-
----
-*SQLInjection cleared by rewrtiign Daos*
-
-
----
-*[krail 340](https://github.com/davidsowerby/krail/issues/340) FindBugs analysis complete*
-
-
----
-*Fix [krail 246](https://github.com/davidsowerby/krail/issues/246) Annotation sitemap entry in TestApp*
-
-File based Sitemap definition has been removed from Krail since the issue was raised
- The test app already contains an annotated entry - specific test step added
-
-
----
-*[krail 496](https://github.com/davidsowerby/krail/issues/496) Vaadin 7.6.1*
-
-And Guava 19.0
-
-
----
-*Tests for [krail 89](https://github.com/davidsowerby/krail/issues/89)*
-
-
----
-*Shiro cache enabled*
-
-
----
-*Vaadin 7.6.0*
-
-
----
