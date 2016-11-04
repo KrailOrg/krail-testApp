@@ -2,8 +2,9 @@
 .idea
 .settings
 bin
-build
-gradle
+build/*
+error-screenshots/*
+
 logs
 classes
 
@@ -18,4 +19,4 @@ README.md~
 .classpath
 .project
 
-error-screenshots
+
