@@ -1,5 +1,3 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-
 /*
  *
  *  * Copyright (c) 2016. David Sowerby
@@ -15,16 +13,19 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 buildscript {
     repositories {
-        jcenter()
         mavenLocal()
+        jcenter()
     }
 
     dependencies {
 //        classpath 'commons-io:commons-io:2.4'
-        classpath 'uk.q3c:q3c-gradle:0.7.4'
+        classpath 'com.bmuschko:gradle-docker-plugin:3.0.12'
     }
 }
 
+plugins {
+    id 'fi.jasoft.plugin.vaadin' version '1.0.1'
+}
 
 
 apply plugin: 'maven'
@@ -32,15 +33,13 @@ apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
-apply plugin: 'q3c-release'
-apply from: 'http://plugins.jasoft.fi/vaadin-groovy.plugin?version=0.10.6'
+//apply from: 'http://plugins.jasoft.fi/vaadin-groovy.plugin?version=0.10.6'
+apply plugin: 'com.bmuschko.docker-remote-api'
 
 description = 'Functional test application for Krail and its additional modules'
-ext.versionDescription = 'No version description provided'
-ext.releaseDate = new Date()
 
 group = 'uk.q3c.krail'
-version = '0.8.3'
+version = '0.9.0'
 //version = versionFromFile(project.projectDir)
 ext.vaadinVersion = '7.6.3'
 
@@ -77,11 +76,6 @@ dependencies {
 
 }
 
-ext.userHome = System.getProperty("user.home")
-ext.dockerContextDir = file(userHome + "/temp/docker")
-
-ext.tomcatVersion = '8'
-
 vaadin.plugin.logToConsole = true
 
 ext.warName = (project.name.toLowerCase() + '.war')
@@ -91,151 +85,36 @@ war {
 }
 
 
-task clearDockerContext(type: Delete) {
-    doFirst {
-        println 'clear the docker build dir'
-    }
-    delete dockerContextDir
-}
-
-task warToContext(type: Copy) {
-    dependsOn clearDockerContext
-    doFirst {
-        println "copy war to docker build dir"
-    }
-    from war
-    into dockerContextDir
-
-}
-
-task dockerFileToContext(type: Copy) {
-    dependsOn clearDockerContext
-    doFirst {
-        println "copy and rename Dockerfile"
-    }
-    from project.getProjectDir()
-    into dockerContextDir
-    include("Dockerfile" + tomcatVersion)
-    rename("Dockerfile" + tomcatVersion, "Dockerfile")
-
-}
-
-//        task buildImage(type: DockerBuildImage) {
-//            dependsOn warToContext
-//            dependsOn dockerFileToContext
-//            inputDir = dockerContextDir
-//            tag = 'tomcat'+tomcatVersion
-//        }
-
-//builds and starts the container
-task startContainer(type: Exec) {
-    dependsOn warToContext
-    dependsOn dockerFileToContext
-    if (Os.isFamily(Os.FAMILY_UNIX)) {
-        commandLine 'startContainer' + tomcatVersion
-    } else {
-
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            commandLine 'cmd', 'startContainer' + tomcatVersion
-
-        }
-    }
-
-}
-
-task stopContainer(type: Exec) {
-
-
-    if (Os.isFamily(Os.FAMILY_UNIX)) {
-        commandLine 'stopContainer'
-    } else {
-
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            commandLine 'cmd', 'stopContainer'
-
-        }
-    }
-
-}
-
-test.dependsOn(startContainer)
-test.finalizedBy(stopContainer)
+//task createDockerfile(type: Dockerfile) {
+//    dependsOn war
+//    destFile = project.file('build/Dockerfile')
+//    from "tomcat:8-jre8"
+////    copy krail-testapp* /usr/local/tomcat/webapps/krail-testapp.war
+//}
+//
+//task buildImage(type: DockerBuildImage) {
+//    dependsOn createDockerfile
+//    inputDir = createDockerfile.destFile.parentFile
+//    tag = 'dsowerby/krail-testapp'
+//}
+//
+//task createContainer(type: DockerCreateContainer) {
+//    dependsOn buildImage
+//    targetImageId { buildImage.getImageId() }
+//    portBindings = ['8080:8080']
+//}
+//
+//test.dependsOn(startContainer)
+//test.finalizedBy(stopContainer)
 
 
 vaadin {
     version vaadinVersion
     manageWidgetset true
-    serverPort 8001
+//    serverPort 8001
 }
 
-task stopTomcat(type: Exec) {
-
-
-    if (Os.isFamily(Os.FAMILY_UNIX)) {
-        commandLine 'stopTomcat7'
-    } else {
-
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            commandLine 'cmd', 'stopTomcat7'
-
-        }
-    }
-
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0.1'
 }
-
-task startTomcat(type: Exec) {
-
-    if (Os.isFamily(Os.FAMILY_UNIX)) {
-        commandLine 'startTomcat7'
-    } else {
-
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            commandLine 'cmd', 'startTomcat7'
-
-        }
-    }
-
-}
-
-
-
-
-
-
-task waitForTomcat(dependsOn: startTomcat) {
-    doFirst {
-        println "giving Tomcat time to start"
-        sleep(5 * 1000)
-        println "sleep over"
-    }
-}
-
-
-
-
-
-
-
-waitForTomcat.dependsOn(startTomcat)
-waitForTomcat.mustRunAfter(startTomcat)
-
-
-
-stopTomcat.dependsOn(war)
-stopTomcat.mustRunAfter(war)
-
-
-task verifyRelease(type: uk.q3c.gradle.VerificationTask) {
-
-}
-
-task prepareRelease(type: uk.q3c.gradle.PrepareReleaseTask) {
-
-}
-
-task release(type: uk.q3c.gradle.ReleaseTask) {
-
-}
-
-
 
