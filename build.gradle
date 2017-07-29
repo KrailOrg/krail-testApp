@@ -1,4 +1,6 @@
 buildscript {
+    ext.kotlin_version = '1.1.3-2'
+    ext.kaytee_plugin_version = "0.15.3.0"
     repositories {
         mavenLocal()
         jcenter()
@@ -6,7 +8,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "uk.q3c.kaytee:kaytee-plugin:$kaytee_plugin_version"
     }
 }
 
@@ -18,7 +21,7 @@ class Pause extends DefaultTask {
 
         int i = delaySecs
         while (i >= 1) {
-            println "${i} seconnds left"
+            println "${i} seconds left"
             i--
             Thread.sleep(1000)
         }
@@ -29,25 +32,14 @@ plugins {
     id 'fi.jasoft.plugin.vaadin' version '1.1.6'
 }
 
-
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
-apply plugin: 'java'
-apply plugin: 'eclipse-wtp'
-apply plugin: 'idea'
-//apply from: 'http://plugins.jasoft.fi/vaadin-groovy.plugin?version=0.10.6'
-apply plugin: 'com.bmuschko.tomcat'
+apply plugin: 'uk.q3c.kaytee'
+apply plugin: "kotlin"
 
 description = 'Functional test application for Krail and its additional modules'
 
 group = 'uk.q3c.krail'
-version = '0.9.0'
-//version = versionFromFile(project.projectDir)
 ext.vaadinVersion = '7.6.3'
 
-//vaadin {
-//    widgetset "uk.q3c.krail.testapp.widgetset.testAppWidgetset"
-//}
 
 repositories {
     jcenter()
@@ -55,18 +47,7 @@ repositories {
     mavenLocal()
 }
 
-tomcat {
-    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
-}
-
-
 dependencies {
-
-    def tomcatVersion = '8.5.16'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
-            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
     //Krail
     compile 'uk.q3c.krail:krail-jpa:0.9.3'
@@ -118,9 +99,26 @@ test.dependsOn pauseForApp
 vaadin {
     version vaadinVersion
 //    manageWidgetset true
-//    serverPort 8001
 }
 
+vaadinRun {
+    serverPort = 8001
+    server = 'jetty'
+    debug false
+}
+
+kaytee {
+    baseVersion = "0.9.0.0"
+    release{
+        toBintray = false
+    }
+}
+
+
+
+bintray {
+    user = 'dsowerby'
+}
 
 
 task wrapper(type: Wrapper) {
