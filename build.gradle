@@ -50,7 +50,8 @@ repositories {
 dependencies {
 
     //Krail
-    compile 'uk.q3c.krail:krail-jpa:0.9.3'
+    compile 'uk.q3c.krail:krail-jpa:0.10.0.0'
+    compile 'uk.q3c.krail:krail:0.9.10.23'
 
     //UI components
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'

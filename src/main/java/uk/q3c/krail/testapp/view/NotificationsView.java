@@ -21,25 +21,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.i18n.LabelKey;
 import uk.q3c.krail.core.i18n.MessageKey;
-import uk.q3c.krail.core.i18n.Translate;
-import uk.q3c.krail.core.option.Option;
-import uk.q3c.krail.core.option.OptionContext;
-import uk.q3c.krail.core.option.OptionKey;
 import uk.q3c.krail.core.option.OptionPopup;
-import uk.q3c.krail.core.persist.cache.option.OptionCache;
-import uk.q3c.krail.core.persist.common.option.OptionSource;
+import uk.q3c.krail.core.option.VaadinOptionContext;
 import uk.q3c.krail.core.user.notify.UserNotifier;
+import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
+import uk.q3c.krail.i18n.Translate;
+import uk.q3c.krail.option.Option;
+import uk.q3c.krail.option.OptionKey;
+import uk.q3c.krail.option.persist.OptionCache;
+import uk.q3c.krail.option.persist.OptionSource;
 import uk.q3c.krail.testapp.TestAppUI;
 import uk.q3c.krail.testapp.i18n.DescriptionKey;
-import uk.q3c.util.ID;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
 
 @SuppressFBWarnings({"LSC_LITERAL_STRING_COMPARISON", "FCBL_FIELD_COULD_BE_LOCAL"})
-public class NotificationsView extends ViewBase implements OptionContext {
+public class NotificationsView extends ViewBase implements VaadinOptionContext {
     private static final OptionKey<Boolean> errorButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, LabelKey.Error, MessageKey
             .Button_is_Visible);
     private static final OptionKey<Boolean> infoButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, LabelKey.Information, MessageKey
@@ -153,6 +153,7 @@ public class NotificationsView extends ViewBase implements OptionContext {
 
     }
 
+
     @Override
     public void optionValueChanged(Property.ValueChangeEvent event) {
         infoButton.setVisible(option.get(infoButtonVisible));
@@ -184,7 +185,7 @@ public class NotificationsView extends ViewBase implements OptionContext {
      */
     @Nonnull
     @Override
-    public Option getOption() {
+    public Option optionInstance() {
         return option;
     }
 

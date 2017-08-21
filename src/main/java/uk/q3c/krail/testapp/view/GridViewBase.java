@@ -16,9 +16,9 @@ package uk.q3c.krail.testapp.view;
 import com.google.inject.Inject;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
-import uk.q3c.krail.core.i18n.Translate;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
+import uk.q3c.krail.i18n.Translate;
 
 public class GridViewBase extends ViewBase {
 

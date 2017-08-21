@@ -19,14 +19,14 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import uk.q3c.krail.core.config.ApplicationConfiguration;
-import uk.q3c.krail.core.config.ConfigKeys;
-import uk.q3c.krail.core.i18n.Translate;
+import uk.q3c.krail.config.ApplicationConfiguration;
+import uk.q3c.krail.config.config.ConfigKeys;
 import uk.q3c.krail.core.push.Broadcaster;
+import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.component.BroadcastMessageLog;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
+import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.LabelKey;
-import uk.q3c.util.ID;
 
 import java.util.Optional;
 

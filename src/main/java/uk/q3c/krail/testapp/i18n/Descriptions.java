@@ -14,7 +14,7 @@ package uk.q3c.krail.testapp.i18n;
 
 import uk.q3c.krail.core.i18n.Labels;
 import uk.q3c.krail.core.i18n.Messages;
-import uk.q3c.krail.core.persist.clazz.i18n.EnumResourceBundle;
+import uk.q3c.krail.i18n.EnumResourceBundle;
 
 /**
  * The base for the resource bundle of {@link Descriptions}. The separation between them is arbitrary, but helps break

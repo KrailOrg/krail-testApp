@@ -14,7 +14,7 @@
 package uk.q3c.krail.testapp.view;
 
 import com.google.inject.Inject;
-import uk.q3c.krail.core.i18n.Translate;
+import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 
 public class FinanceView extends GridViewBase {

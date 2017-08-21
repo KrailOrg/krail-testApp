@@ -12,7 +12,8 @@
  */
 package uk.q3c.krail.testapp.i18n;
 
-import uk.q3c.krail.core.i18n.I18NKey;
+
+import uk.q3c.krail.i18n.I18NKey;
 
 public enum DescriptionKey implements I18NKey {
     HSQLDB_volatile_in_memory_database, Derby_database_on_temporary_local_disk, Notifications

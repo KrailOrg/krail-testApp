@@ -14,7 +14,7 @@
 package uk.q3c.krail.testapp.persist;
 
 
-import uk.q3c.krail.core.data.KrailEntity;
+import uk.q3c.krail.persist.KrailEntity;
 
 import javax.persistence.*;
 

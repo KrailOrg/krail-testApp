@@ -19,20 +19,19 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.TextArea;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.onami.persist.Transactional;
-import uk.q3c.krail.core.i18n.Translate;
-import uk.q3c.krail.core.option.Option;
-import uk.q3c.krail.core.option.OptionContext;
-import uk.q3c.krail.core.option.OptionKey;
-import uk.q3c.krail.core.persist.cache.option.OptionCache;
-import uk.q3c.krail.core.user.profile.DefaultUserHierarchy;
-import uk.q3c.krail.core.user.profile.UserHierarchy;
+import uk.q3c.krail.core.option.VaadinOptionContext;
+import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.Grid3x3ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
+import uk.q3c.krail.i18n.Translate;
+import uk.q3c.krail.option.Option;
+import uk.q3c.krail.option.OptionKey;
+import uk.q3c.krail.option.UserHierarchy;
+import uk.q3c.krail.option.UserHierarchyDefault;
+import uk.q3c.krail.option.persist.OptionCache;
 import uk.q3c.krail.testapp.i18n.Caption;
 import uk.q3c.krail.testapp.i18n.LabelKey;
-import uk.q3c.util.ID;
 
-import javax.annotation.Nonnull;
 import java.util.Optional;
 
 /**
@@ -40,7 +39,7 @@ import java.util.Optional;
  */
 @SuppressFBWarnings({"LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON",
         "LSC_LITERAL_STRING_COMPARISON"})
-public class PayrollView extends Grid3x3ViewBase implements OptionContext {
+public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext {
     public static final OptionKey<Integer> payrollOption = new OptionKey<>(5, PayrollView.class, LabelKey.Payroll);
     private Option option;
     private UserHierarchy userHierarchy;
@@ -54,7 +53,7 @@ public class PayrollView extends Grid3x3ViewBase implements OptionContext {
     private Button clearCacheButton;
 
     @Inject
-    public PayrollView(Option option, @DefaultUserHierarchy UserHierarchy userHierarchy, OptionCache optionCache, Translate translate) {
+    public PayrollView(Option option, @UserHierarchyDefault UserHierarchy userHierarchy, OptionCache optionCache, Translate translate) {
         super(translate);
         this.option = option;
         this.userHierarchy = userHierarchy;
@@ -62,9 +61,10 @@ public class PayrollView extends Grid3x3ViewBase implements OptionContext {
         nameKey = LabelKey.Payroll;
     }
 
-    @Nonnull
+
+
     @Override
-    public Option getOption() {
+    public Option optionInstance() {
         return option;
     }
 
