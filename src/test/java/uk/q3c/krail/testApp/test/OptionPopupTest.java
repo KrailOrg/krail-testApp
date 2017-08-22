@@ -16,15 +16,12 @@ import com.vaadin.testbench.ScreenshotOnFailureRule;
 import com.vaadin.testbench.elements.ButtonElement;
 import com.vaadin.testbench.elements.CheckBoxElement;
 import com.vaadin.testbench.elements.WindowElement;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.NoSuchElementException;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.MessageBarPageObject;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class OptionPopupTest extends KrailTestBenchTestCase {
 
@@ -165,24 +162,27 @@ public class OptionPopupTest extends KrailTestBenchTestCase {
         checkBoxElement.sendKeys(" ");
     }
 
+    @Ignore("Clicking UI button works manually but not in this test, see https://github.com/davidsowerby/krail-testApp/issues/22")
     @Test
     public void openUIOptionsWithViewOptionsOpen() {
         //given
         navigateTo(testPage);
         ensureInfoButtonVisible();
         notificationsView.clearStoreButton()
-                         .click(); // previous tests debris
+                .click(); // previous tests debris
         login();
         notificationsView.viewOptionsButton()
-                         .click();  // open view options
+                .click();  // open view options
+
         //when
         notificationsView.uiOptionsButton()
-                         .click(); // open ui options
+                .click(); // open ui options
+
         //then ui options displayed
         //then make sure popup is there
         final WindowElement windowElement = optionsPopup.windowForUIOptions();
         assertThat(notificationsView.uiOptionsPopupMessageBarCheckbox()
-                                    .isDisplayed()).isTrue();
+                .isDisplayed()).isTrue();
         assertThat(windowElement.getCaption()).isEqualTo("Application Options");
 
     }

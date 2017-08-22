@@ -21,7 +21,7 @@ import org.openqa.selenium.WebDriver;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.NavTreePageObject;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class LoginTest extends KrailTestBenchTestCase {
 
@@ -47,12 +47,12 @@ public class LoginTest extends KrailTestBenchTestCase {
         // when
         // then initial state
         assertThat(loginStatus.loginButton()
-                              .getText()).isEqualTo("log in");
+                .getText()).isEqualTo("log in");
         assertThat(loginStatus.username()).isEqualTo("Guest");
 
         // when LoginStatusPanel button clicked
         loginStatus.loginButton()
-                   .click();
+                .click();
         // then
         verifyUrl("login");
 
@@ -61,19 +61,19 @@ public class LoginTest extends KrailTestBenchTestCase {
         // then correct url and status panel updated
         verifyUrl(startFragment);
         assertThat(loginStatus.loginButton()
-                              .getText()).isEqualTo("log out");
+                .getText()).isEqualTo("log out");
         assertThat(loginStatus.username()).isEqualTo("ds");
 
         //when
-        navTree.select("Private/System Administration");
+        navigateTo("private/sysadmin");
 
         //then
         verifyUrl("private/sysadmin");
 
         // when
-        navTree.expandCollapse(3); // TODO must be a better way to identify the "Private" branch (preload pageObject?)
-        navTree.select("Private/Finance/Accounts");
-
+//        navTree.expandCollapse(3); // TODO must be a better way to identify the "Private" branch (preload pageObject?)
+//        navTree.select("Private/Finance/Accounts");
+        navigateTo(("private/finance/accounts"));
         //then making sure page is visible
         verifyUrl("private/finance/accounts");
 
@@ -81,12 +81,12 @@ public class LoginTest extends KrailTestBenchTestCase {
         //when
         // when LoginStatusPanel button clicked (logout)
         loginStatus.loginButton()
-                   .click();
+                .click();
 
         //then
         verifyUrl("logout");
         assertThat(loginStatus.loginButton()
-                              .getText()).isEqualTo("log in");
+                .getText()).isEqualTo("log in");
         assertThat(loginStatus.username()).isEqualTo("Guest");
     }
 
@@ -103,10 +103,10 @@ public class LoginTest extends KrailTestBenchTestCase {
         login();
         //logout
         loginStatus.loginButton()
-                   .click();
+                .click();
         // when
         loginStatus.loginButton()
-                   .click();
+                .click();
         loginForm.login("ds", "rubbish");
 
         // // then
