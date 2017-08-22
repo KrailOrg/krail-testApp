@@ -70,9 +70,9 @@ public class MultiUserOptions extends KrailTestBenchTestCase {
         String result2 = refresh(2);
 
 //        then
-        assertThat(result0).isEqualTo("ds = 5\nsystem = 5\n"); // why is this 'me'??
-        assertThat(result1).isEqualTo("eq = 5\nsystem = 5\n");
-        assertThat(result2).isEqualTo("admin = 5\nsystem = 5\n");
+        assertThat(result0.trim()).isEqualTo("ds = 5\nsystem = 5");
+        assertThat(result1.trim()).isEqualTo("eq = 5\nsystem = 5");
+        assertThat(result2.trim()).isEqualTo("admin = 5\nsystem = 5");
 
         //when
         selectDriver(0);
