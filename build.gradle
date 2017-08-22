@@ -38,7 +38,7 @@ apply plugin: "kotlin"
 description = 'Functional test application for Krail and its additional modules'
 
 group = 'uk.q3c.krail'
-ext.vaadinVersion = '7.6.3'
+ext.vaadinVersion = '7.7.10'
 
 
 repositories {
@@ -51,7 +51,7 @@ dependencies {
 
     //Krail
     compile 'uk.q3c.krail:krail-jpa:0.10.0.0'
-    compile 'uk.q3c.krail:krail:0.9.10.26'
+    compile 'uk.q3c.krail:krail:0.9.10.27'
 
     //UI components
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'
