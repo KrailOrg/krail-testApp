@@ -95,42 +95,6 @@ public class NavigationTest extends KrailTestBenchTestCase {
         verifyUrl("system-account/enable-account");
     }
 
-    /**
-     * Originally this would have reported an unauthorised action. The introduction of the UserSitemap means that an
-     * authorised page will apparently not exist, so an "invalid page" will be reported instead. In some ways that is
-     * actually better as even the existence of the page is masked.
-     */
-    @Test
-    public void navigateToUnauthorisedPage() {
-
-        // given
-        startDriver();
-        // when
-
-        navigateTo("private/home");
-
-        // then
-        assertThat(notification()).isNotNull();
-        assertThat(notification().getText()).isEqualTo("private/home is not a valid page");
-        //        assertThat(notification().getText()).isEqualTo("Info: private/home is not a valid page");
-        assertThat(notification().getAttribute("class")).isEqualTo("v-Notification humanized v-Notification-humanized");
-
-        closeNotification();
-
-        verifyNotUrl("private/home"); // not a valid test, but maybe it should be
-        navigateTo("system-account");
-        // when
-        login();
-
-        // then
-        verifyUrl("system-account");
-        // when
-        navigateTo("private/home");
-        // then
-        verifyUrl("private/home");
-
-    }
-
 
     @Test
 //    @Ignore("https://github.com/davidsowerby/krail-testApp/issues/11")
@@ -210,6 +174,43 @@ public class NavigationTest extends KrailTestBenchTestCase {
         verifyUrl("system-account/enable-account");
         assertThat(navTree.currentSelection()).isEqualTo("Enable Account");
     }
+
+    /**
+     * Originally this would have reported an unauthorised action. The introduction of the UserSitemap means that an
+     * authorised page will apparently not exist, so an "invalid page" will be reported instead. In some ways that is
+     * actually better as even the existence of the page is masked.
+     */
+    @Test
+    public void navigateToUnauthorisedPage() {
+
+        // given
+        startDriver();
+        // when
+
+        navigateTo("private/home");
+
+        // then
+        assertThat(notification()).isNotNull();
+        assertThat(notification().getText()).isEqualTo("private/home is not a valid page");
+        pause(500);
+
+        closeNotification();
+
+        verifyNotUrl("private/home"); // not a valid test, but maybe it should be
+        navigateTo("system-account");
+        // when
+        login();
+
+        // then
+        verifyUrl("system-account");
+        // when
+        navigateTo("private/home");
+        // then
+        verifyUrl("private/home");
+
+    }
+
+
 
     @Test
     public void breadcrumb_navigate() {
