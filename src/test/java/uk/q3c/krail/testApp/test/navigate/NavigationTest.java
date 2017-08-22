@@ -25,8 +25,7 @@ import uk.q3c.krail.testbench.page.object.SubPagePanelPageObject;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 @SuppressWarnings("Duplicates")
 public class NavigationTest extends KrailTestBenchTestCase {
@@ -58,7 +57,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void navigateFromTree() throws InterruptedException {
 
         // given
-         startDriver();
+        startDriver();
         // when
 
         // then
@@ -77,11 +76,23 @@ public class NavigationTest extends KrailTestBenchTestCase {
         // // then
         verifyUrl("login");
 
+
+    }
+
+    @Ignore("NavTree does not work as expected, see https://github.com/davidsowerby/krail-testApp/issues/21")
+    @Test
+    public void expandTreeEntry() throws Exception {
+
+        // given
+        startDriver();
+        // when
+
+        // then
+        verifyUrl("home");
         // when
         navTree.select("System Account/Enable Account");
         // then
         verifyUrl("system-account/enable-account");
-
     }
 
     /**
@@ -93,7 +104,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void navigateToUnauthorisedPage() {
 
         // given
-         startDriver();
+        startDriver();
         // when
 
         navigateTo("private/home");
@@ -122,15 +133,16 @@ public class NavigationTest extends KrailTestBenchTestCase {
 
 
     @Test
-    @Ignore("https://github.com/davidsowerby/krail-testApp/issues/11")
+//    @Ignore("https://github.com/davidsowerby/krail-testApp/issues/11")
     public void navigateToInvalidPage() {
         // given
-         startDriver();
+        startDriver();
         // when
 
         navigateTo("rubbish");
 
         // then
+        pause(500);
         assertThat(notification()).isNotNull();
         assertThat(notification().getText()).isEqualTo("rubbish is not a valid page");
         //        assertThat(notification().getText()).isEqualTo("Info: rubbish is not a valid page");
@@ -144,7 +156,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void redirectFromPrivate() {
 
         // given
-         startDriver();
+        startDriver();
         login();
         // when
         navigateTo("widgetset");
@@ -207,7 +219,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
         navigateTo("system-account/reset-account");
         assertThat(breadcrumb.button(0)).isNotNull();
         breadcrumb.button(0)
-                  .click();
+                .click();
         // then
         verifyUrl("system-account");
     }
@@ -223,7 +235,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
                 "Request Account", "Reset Account", "Unlock Account");
 
         subPagePanel.button(0)
-                    .click();
+                .click();
         // then
         verifyUrl("system-account/enable-account");
         assertThat(subPagePanel.buttonLabels()).isEmpty();
@@ -235,7 +247,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     public void menuNavigate() {
 
         // given
-       startDriver();
+        startDriver();
         // when
 
         //        testBenchElement(driver.findElement(By.vaadin("testapp::PID_SDefaultUserNavigationMenu#item4")))
@@ -244,7 +256,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
         // .click(44, 8);
 
         menu.menuBar()
-            .clickItem("System Account");
+                .clickItem("System Account");
         assertThat(isItemVisible("Notifications")).isTrue();
         menu.clickItem("System Account", "Enable Account");
         //then
@@ -255,7 +267,7 @@ public class NavigationTest extends KrailTestBenchTestCase {
     private boolean isItemVisible(String item) {
         for (WebElement webElement : getItemCaptions()) {
             if (webElement.getText()
-                          .equals(item)) {
+                    .equals(item)) {
                 return true;
             }
         }
@@ -266,16 +278,6 @@ public class NavigationTest extends KrailTestBenchTestCase {
         return findElements(By.className("v-menubar-menuitem-caption"));
     }
 
-    @Test
-    public void selectPath() {
-        //given
-         startDriver();
-        pause(2000);
-        //when
-        navTree.select("System Account/Enable Account");
-        //then
-        assertThat(navTree.currentSelection()).isEqualTo("Enable Account");
-    }
 
     @After
     public void tearDown2() throws Exception {
