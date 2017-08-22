@@ -109,7 +109,7 @@ vaadinRun {
 }
 
 kaytee {
-    baseVersion = "0.10.0.0"
+    baseVersion = "0.10.0.1"
     release{
         toBintray = false
     }
