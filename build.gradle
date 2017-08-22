@@ -42,16 +42,16 @@ ext.vaadinVersion = '7.6.3'
 
 
 repositories {
+    mavenLocal()
     jcenter()
     mavenCentral()
-    mavenLocal()
 }
 
 dependencies {
 
     //Krail
     compile 'uk.q3c.krail:krail-jpa:0.10.0.0'
-    compile 'uk.q3c.krail:krail:0.9.10.23'
+    compile 'uk.q3c.krail:krail:0.9.10.24'
 
     //UI components
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'
@@ -62,7 +62,7 @@ dependencies {
 //    compile 'com.vaadin:vaadin-push:' + vaadinVersion
 
     testCompile 'junit:junit:4.12'
-    testCompile 'uk.q3c.krail:krail-bench:0.9.0.0.23599ef'
+    testCompile 'uk.q3c.krail:krail-bench:0.10.0.0.4a79200'
 //    testCompile project(':krail-orient')
 
 
@@ -109,7 +109,7 @@ vaadinRun {
 }
 
 kaytee {
-    baseVersion = "0.9.0.0"
+    baseVersion = "0.10.0.0"
     release{
         toBintray = false
     }

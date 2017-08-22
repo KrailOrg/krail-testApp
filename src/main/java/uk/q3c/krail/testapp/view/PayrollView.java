@@ -19,6 +19,8 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.TextArea;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.onami.persist.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.option.VaadinOptionContext;
 import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.Grid3x3ViewBase;
@@ -40,6 +42,7 @@ import java.util.Optional;
 @SuppressFBWarnings({"LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON",
         "LSC_LITERAL_STRING_COMPARISON"})
 public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext {
+    private static Logger log = LoggerFactory.getLogger(PayrollView.class);
     public static final OptionKey<Integer> payrollOption = new OptionKey<>(5, PayrollView.class, LabelKey.Payroll);
     private Option option;
     private UserHierarchy userHierarchy;
@@ -57,6 +60,7 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
         super(translate);
         this.option = option;
         this.userHierarchy = userHierarchy;
+        log.debug("UserHierarchy is instance of {}", userHierarchy.getClass().getName());
         this.optionCache = optionCache;
         nameKey = LabelKey.Payroll;
     }

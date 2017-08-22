@@ -23,7 +23,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.LoginFormPageObject;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class MultiUserOptions extends KrailTestBenchTestCase {
 
@@ -70,9 +70,9 @@ public class MultiUserOptions extends KrailTestBenchTestCase {
         String result2 = refresh(2);
 
 //        then
-        assertThat(result0 = "ds = 5\nsystem = 5\n");
-        assertThat(result1 = "eq = 5\nsystem = 5\n");
-        assertThat(result2 = "admin = 5\nsystem = 5\n");
+        assertThat(result0).isEqualTo("ds = 5\nsystem = 5\n"); // why is this 'me'??
+        assertThat(result1).isEqualTo("eq = 5\nsystem = 5\n");
+        assertThat(result2).isEqualTo("admin = 5\nsystem = 5\n");
 
         //when
         selectDriver(0);

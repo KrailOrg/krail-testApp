@@ -14,13 +14,16 @@
 package uk.q3c.krail.testapp;
 
 import com.google.inject.Module;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.guice.DefaultBindingManager;
+import uk.q3c.krail.core.i18n.VaadinI18NModule;
 import uk.q3c.krail.core.navigate.sitemap.SystemAccountManagementPages;
+import uk.q3c.krail.core.option.KrailOptionModule;
 import uk.q3c.krail.core.shiro.DefaultShiroModule;
 import uk.q3c.krail.core.shiro.aop.KrailShiroAopModule;
 import uk.q3c.krail.core.sysadmin.SystemAdminPages;
 import uk.q3c.krail.core.ui.DefaultUIModule;
-import uk.q3c.krail.i18n.bind.I18NModule;
 import uk.q3c.krail.option.bind.OptionModule;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.krail.testapp.persist.Jpa1;
@@ -36,6 +39,7 @@ import java.util.Locale;
 
 //@WebListener
 public class TestAppBindingManager extends DefaultBindingManager {
+    private static Logger log = LoggerFactory.getLogger(TestAppBindingManager.class);
 
     @Override
     protected void addAppModules(List<Module> modules) {
@@ -64,7 +68,8 @@ public class TestAppBindingManager extends DefaultBindingManager {
 
     @Override
     protected Module i18NModule() {
-        return new I18NModule().supportedLocales(Locale.UK, Locale.ITALY, Locale.GERMANY);
+        log.debug("Binding VaadinI18NModule");
+        return new VaadinI18NModule().supportedLocales(Locale.UK, Locale.ITALY, Locale.GERMANY);
     }
 
     @Override
@@ -94,6 +99,7 @@ public class TestAppBindingManager extends DefaultBindingManager {
      */
     @Override
     protected Module optionModule() {
-        return new OptionModule().activeSource(Jpa1.class);
+        log.debug("Binding KrailOptionModule");
+        return new KrailOptionModule().activeSource(Jpa1.class);
     }
 }
