@@ -17,7 +17,7 @@ import com.google.inject.Module;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.guice.DefaultBindingManager;
-import uk.q3c.krail.core.i18n.VaadinI18NModule;
+import uk.q3c.krail.core.i18n.KrailI18NModule;
 import uk.q3c.krail.core.navigate.sitemap.SystemAccountManagementPages;
 import uk.q3c.krail.core.option.KrailOptionModule;
 import uk.q3c.krail.core.shiro.DefaultShiroModule;
@@ -69,7 +69,7 @@ public class TestAppBindingManager extends DefaultBindingManager {
     @Override
     protected Module i18NModule() {
         log.debug("Binding VaadinI18NModule");
-        return new VaadinI18NModule().supportedLocales(Locale.UK, Locale.ITALY, Locale.GERMANY);
+        return new KrailI18NModule().supportedLocales(Locale.UK, Locale.ITALY, Locale.GERMANY);
     }
 
     @Override
