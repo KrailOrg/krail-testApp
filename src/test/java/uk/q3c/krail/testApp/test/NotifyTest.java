@@ -22,7 +22,7 @@ import org.openqa.selenium.NoSuchElementException;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.MessageBarPageObject;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class NotifyTest extends KrailTestBenchTestCase {
 
@@ -90,7 +90,7 @@ public class NotifyTest extends KrailTestBenchTestCase {
         assertThat(notification().getText()).isEqualTo("You cannot use service Fake Service until it has been started");
         //        assertThat(notification().getText()).isEqualTo("Warning: You cannot use service Fake Service until it has been started");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification warning v-Notification-warning");
-        closeNotification();
+//        closeNotification();
     }
 
     @Test
@@ -108,7 +108,7 @@ public class NotifyTest extends KrailTestBenchTestCase {
         assertThat(notification().getText()).isEqualTo("You cannot use service Fake Service until it has been started");
         //        assertThat(notification().getText()).isEqualTo("Info: You cannot use service Fake Service until it has been started");
         assertThat(notification().getAttribute("class")).isEqualTo("v-Notification humanized v-Notification-humanized");
-        closeNotification();
+//        closeNotification();
     }
 
     private void ensureInfoButtonVisible() {
