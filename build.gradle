@@ -1,6 +1,6 @@
 buildscript {
     ext.kotlin_version = '1.1.4-3'
-    ext.kaytee_plugin_version = "0.18.4.1"
+    ext.kaytee_plugin_version = "0.18.5.0"
     repositories {
         jcenter()
         mavenCentral()
@@ -34,6 +34,10 @@ plugins {
 apply plugin: 'uk.q3c.kaytee'
 apply plugin: "kotlin"
 
+description = 'Functional test application for Krail and its additional modules'
+
+group = 'uk.q3c.krail'
+
 kaytee {
     version {
         number = "0.10.4.0"
@@ -42,11 +46,6 @@ kaytee {
         toBintray = false
     }
 }
-
-description = 'Functional test application for Krail and its additional modules'
-
-group = 'uk.q3c.krail'
-
 
 repositories {
     mavenLocal()
@@ -113,16 +112,4 @@ vaadinRun {
     debug false
 }
 
-
-
-
-
-//bintray {
-//    user = 'dsowerby'
-//}
-
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.1'
-}
 
