@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.1.4-2'
+    ext.kotlin_version = '1.1.4-3'
     //kaytee disabled, see https://github.com/davidsowerby/kaytee-plugin/issues/71
 //    ext.kaytee_plugin_version = "0.18.2.0"
     repositories {
