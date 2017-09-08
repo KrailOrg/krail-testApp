@@ -1,7 +1,6 @@
 buildscript {
     ext.kotlin_version = '1.1.4-3'
-    //kaytee disabled, see https://github.com/davidsowerby/kaytee-plugin/issues/71
-//    ext.kaytee_plugin_version = "0.18.2.0"
+    ext.kaytee_plugin_version = "0.18.4.1"
     repositories {
         jcenter()
         mavenCentral()
@@ -9,7 +8,7 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-//        classpath "uk.q3c.kaytee:kaytee-plugin:$kaytee_plugin_version"
+        classpath "uk.q3c.kaytee:kaytee-plugin:$kaytee_plugin_version"
     }
 }
 
@@ -30,21 +29,19 @@ class Pause extends DefaultTask {
 
 plugins {
     id "com.devsoap.plugin.vaadin" version "1.2.0"
-    id 'java'
-    id 'groovy'
 }
 
-//apply plugin: 'uk.q3c.kaytee'
+apply plugin: 'uk.q3c.kaytee'
 apply plugin: "kotlin"
 
-//kaytee {
-//    version {
-//        number = "0.10.4.0"
-//    }
-//    release {
-//        toBintray = false
-//    }
-//}
+kaytee {
+    version {
+        number = "0.10.4.0"
+    }
+    release {
+        toBintray = false
+    }
+}
 
 description = 'Functional test application for Krail and its additional modules'
 
