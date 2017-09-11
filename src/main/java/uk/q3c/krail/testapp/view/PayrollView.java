@@ -31,6 +31,7 @@ import uk.q3c.krail.option.OptionKey;
 import uk.q3c.krail.option.UserHierarchy;
 import uk.q3c.krail.option.UserHierarchyDefault;
 import uk.q3c.krail.option.persist.OptionCache;
+import uk.q3c.krail.option.persist.OptionDao;
 import uk.q3c.krail.testapp.i18n.Caption;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 
@@ -46,6 +47,7 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
     public static final OptionKey<Integer> payrollOption = new OptionKey<>(5, PayrollView.class, LabelKey.Payroll);
     private Option option;
     private UserHierarchy userHierarchy;
+    private final OptionDao optionDao;
     private OptionCache optionCache;
     @Caption(caption = LabelKey.Set_System_Level, description = LabelKey.Set_System_Level)
     private Button adminButton;
@@ -54,12 +56,14 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
     private TextArea textArea;
     private Button refreshButton;
     private Button clearCacheButton;
+    private Button clearOptionDatabaseButton;
 
     @Inject
-    public PayrollView(Option option, @UserHierarchyDefault UserHierarchy userHierarchy, OptionCache optionCache, Translate translate) {
+    public PayrollView(Option option, @UserHierarchyDefault UserHierarchy userHierarchy, OptionCache optionCache, Translate translate, OptionDao optionDao) {
         super(translate);
         this.option = option;
         this.userHierarchy = userHierarchy;
+        this.optionDao = optionDao;
         log.debug("UserHierarchy is instance of {}", userHierarchy.getClass().getName());
         this.optionCache = optionCache;
         nameKey = LabelKey.Payroll;
@@ -84,11 +88,11 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
         adminButton.addClickListener(click -> setSystemLevel());
         setTopLeft(adminButton);
 
-        setValue1Button = new Button("Set value 433");
+        setValue1Button = new Button("Set user value 433");
         setValue1Button.addClickListener(click -> setUserValue(433));
         setTopCentre(setValue1Button);
 
-        setValue2Button = new Button("Set value 22");
+        setValue2Button = new Button("Set user value 22");
         setValue2Button.addClickListener(click -> setUserValue(22));
         setTopRight(setValue2Button);
 
@@ -104,6 +108,10 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
         textArea = new TextArea();
         textArea.setSizeFull();
         setMiddleCentre(textArea);
+
+        clearOptionDatabaseButton = new Button("clear database");
+        clearOptionDatabaseButton.addClickListener(click -> optionDao.clear());
+        setMiddleRight(clearOptionDatabaseButton);
     }
 
     @Transactional
@@ -138,5 +146,6 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
         refreshButton.setId(ID.getId(Optional.of("refresh"), this, refreshButton));
         clearCacheButton.setId(ID.getId(Optional.of("cache"), this, clearCacheButton));
         textArea.setId(ID.getId(Optional.of("text area"), this, textArea));
+        clearOptionDatabaseButton.setId(ID.getId(Optional.of("clear-database"), this, clearOptionDatabaseButton));
     }
 }

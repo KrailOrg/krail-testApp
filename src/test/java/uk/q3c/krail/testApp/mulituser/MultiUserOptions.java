@@ -23,7 +23,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.LoginFormPageObject;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MultiUserOptions extends KrailTestBenchTestCase {
 
@@ -54,16 +54,15 @@ public class MultiUserOptions extends KrailTestBenchTestCase {
     }
 
 
-    /**
-     * Passes messages between 2 browser instances, in both directions, then disables push
-     */
+
     @Test
-    public void navigate() {
+    public void optionsAtDifferentLevels() {
         //given all logged in and on right page
         loginUser(0, "ds", "password");
         loginUser(1, "eq", "eq");
         loginUser(2, "admin", "password");
         navigateToPage();
+        payrollView.clearDatabaseButton().click();
 //        when
         String result0 = refresh(0);
         String result1 = refresh(1);

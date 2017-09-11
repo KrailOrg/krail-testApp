@@ -36,6 +36,9 @@ public class PayrollViewPageObject extends PageObject {
         super(parentCase);
     }
 
+    public ButtonElement clearDatabaseButton() {
+        return element(ButtonElement.class, Optional.of("clear-database"), PayrollView.class, Button.class);
+    }
 
     public ButtonElement adminButton() {
         return element(ButtonElement.class, Optional.of("admin"), PayrollView.class, Button.class);
