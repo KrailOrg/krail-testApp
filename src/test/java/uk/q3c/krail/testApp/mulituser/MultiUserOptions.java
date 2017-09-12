@@ -13,13 +13,11 @@
 package uk.q3c.krail.testApp.mulituser;
 
 
-import com.vaadin.testbench.TestBench;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.LoginFormPageObject;
 
@@ -30,27 +28,30 @@ public class MultiUserOptions extends KrailTestBenchTestCase {
     final String page = "private/finance/payroll";
     protected LoginFormPageObject loginForm = new LoginFormPageObject(this);
     private PayrollViewPageObject payrollView = new PayrollViewPageObject(this);
+    WebDriver driver1;
+    WebDriver driver2;
+    WebDriver driver3;
 
     @Before
     public void setup() {
         appContext = "krail-testapp";
+//        defaultDriverType= HEADLESS;
+        driver1 = getDriver();
         selectDriver(0);
-        WebDriver driver2 = TestBench.createDriver(new FirefoxDriver());
+        driver2 = addDefaultDriver();
         driver2.manage()
                .window()
                .setPosition(new Point(1026, 0));
         driver2.manage()
                .window()
                .setSize(new Dimension(1024, 768));
-        addDriver(driver2);
-        WebDriver driver3 = TestBench.createDriver(new FirefoxDriver());
+        driver3 = addDefaultDriver();
         driver3.manage()
                .window()
                .setPosition(new Point(536, 400));
         driver3.manage()
                .window()
                .setSize(new Dimension(1024, 768));
-        addDriver(driver3);
     }
 
 

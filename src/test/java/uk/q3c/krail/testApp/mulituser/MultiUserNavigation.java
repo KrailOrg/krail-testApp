@@ -12,13 +12,11 @@
  */
 package uk.q3c.krail.testApp.mulituser;
 
-import com.vaadin.testbench.TestBench;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import uk.q3c.krail.testApp.push.PushViewPageObject;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.MessageBarPageObject;
@@ -32,14 +30,13 @@ public class MultiUserNavigation extends KrailTestBenchTestCase {
     public void setup() {
         appContext = "krail-testapp";
         selectDriver(0);
-        WebDriver driver2 = TestBench.createDriver(new FirefoxDriver());
+        WebDriver driver2 = addDefaultDriver();
         driver2.manage()
                .window()
                .setPosition(new Point(1026, 0));
         driver2.manage()
                .window()
                .setSize(new Dimension(1024, 768));
-        addDriver(driver2);
     }
 
     /**

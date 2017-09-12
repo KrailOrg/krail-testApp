@@ -34,7 +34,7 @@ public class StartupTest_UnsupportedBrowserLocale extends KrailTestBenchTestCase
     private LocaleSelectorPageObject localeSelector = new LocaleSelectorPageObject(this);
 
     public StartupTest_UnsupportedBrowserLocale() {
-        firefoxLocale = Locale.CHINA;
+        browserLocale = Locale.CHINA;
     }
 
     @Before
