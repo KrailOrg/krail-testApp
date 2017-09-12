@@ -12,6 +12,7 @@
 package uk.q3c.krail.testApp.test;
 
 import com.vaadin.testbench.ScreenshotOnFailureRule;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,12 +35,15 @@ public class StartupTest_GermanBrowser extends KrailTestBenchTestCase {
     private LocaleSelectorPageObject localeSelector = new LocaleSelectorPageObject(this);
 
     public StartupTest_GermanBrowser() {
-        firefoxLocale = Locale.GERMANY;
+        browserLocale = Locale.GERMANY;
+//        defaultDriverType = FIREFOX;
     }
 
     @Before
     public void setUp() throws Exception {
         appContext = "krail-testapp";
+        // cannot run this test on PhantomJS, the language settings do not work
+        Assume.assumeFalse(defaultDriverType == DRIVER_TYPE.HEADLESS);
         startDriver();
     }
 
