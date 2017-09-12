@@ -8,6 +8,10 @@ The [documentation](http://krail.readthedocs.io/en/master/) provides more inform
 
 You won't be able to run the tests themselves unless you have a licence for Vaadin Testbench
 
+## Test Environment and execution
+
+The host requires some preparation. See [notes](https://github.com/davidsowerby/krail-testApp/wiki/Test-Environment) for what is required
+
 
 
 # Download
