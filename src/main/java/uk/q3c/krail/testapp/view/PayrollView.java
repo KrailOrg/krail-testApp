@@ -14,9 +14,9 @@
 package uk.q3c.krail.testapp.view;
 
 import com.google.inject.Inject;
-import com.vaadin.data.Property;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextArea;
+import com.vaadin.v7.data.Property;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.onami.persist.Transactional;
 import org.slf4j.Logger;

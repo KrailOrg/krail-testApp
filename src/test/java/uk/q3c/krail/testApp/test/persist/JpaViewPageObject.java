@@ -16,7 +16,7 @@ import com.vaadin.testbench.elements.LabelElement;
 import com.vaadin.testbench.elements.TableElement;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
+import com.vaadin.v7.ui.Table;
 import uk.q3c.krail.testapp.view.JpaView;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.PageObject;
