@@ -1,13 +1,11 @@
 buildscript {
-    ext.kotlin_version = '1.1.4-3'
-    ext.kaytee_plugin_version = "0.18.8.0"
+    ext.kaytee_plugin_version = "0.18.10.0"
     repositories {
         jcenter()
         mavenCentral()
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "uk.q3c.kaytee:kaytee-plugin:$kaytee_plugin_version"
     }
 }
@@ -32,7 +30,6 @@ plugins {
 }
 
 apply plugin: 'uk.q3c.kaytee'
-apply plugin: "kotlin"
 
 description = 'Functional test application for Krail and its additional modules'
 
@@ -40,7 +37,7 @@ group = 'uk.q3c.krail'
 
 kaytee {
     version {
-        number = "0.11.0.0"
+        number = "0.13.0.0"
         qualifier = "v7compat"
         buildMetaData = "1"
     }
@@ -50,6 +47,7 @@ kaytee {
 }
 
 repositories {
+    mavenLocal()
     jcenter()
     mavenCentral()
 }
@@ -65,8 +63,8 @@ configurations.all {
 dependencies {
 
     //Krail
-    compile 'uk.q3c.krail:krail-jpa:0.11.0.0-v7compat+1'
-    compile 'uk.q3c.krail:krail:0.11.0.0-v7compat+1'
+    compile 'uk.q3c.krail:krail-jpa:0.13.0.0-v7compat+1'
+    compile 'uk.q3c.krail:krail:0.13.0.0-v7compat+1'
 
     //UI components
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'
@@ -77,7 +75,7 @@ dependencies {
 //    compile 'com.vaadin:vaadin-push:' + vaadinVersion
 
     testCompile 'junit:junit:4.12'
-    testCompile('uk.q3c.krail:krail-bench:0.11.0.0') {
+    testCompile('uk.q3c.krail:krail-bench:0.13.0.0-v7compat+1') {
         exclude group: 'uk.q3c.krail', module: 'krail'
     }
 }
