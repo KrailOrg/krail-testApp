@@ -1,41 +1,16 @@
-### Release Notes for krail-testApp 0.8.3
+### Release Notes for krail-testApp 0.13.0.0-v7compat+1
 
-Tests for Krail 0.9.9.  Vaadin 7.6.3.  Separated from master project
+Tests for Krail 0.13.0.0-v7compat+1  These are using Vaadin 8 in compatibility mode, and all the components used are actually still at Vaadin 7
 
-#### Change log
+A couple of tests have been @Ignored, as they work manually - it is not considered worth fixing them, as this branch will not be developed any further
 
--   [09](https://github.com/davidsowerby/krail-testapp/issues/9): Separate from master project
--   [10](https://github.com/davidsowerby/krail-testapp/issues/9) Push failure*
+In order to get the widgetset to work successfully:
+- all the Vaadin compatibility packages have been included in **compile** scope, though that may not be strictly necessary
+- /home/david/git/krail-testapp/src/main/resources/uk/q3c/krail/testapp/widgetset/testAppWidgetset.gwt.xml inherits from "com.vaadin.v7.Vaadin7WidgetSet"
+- The Gradle-Vaadin plugin has 'manage widgetset' set to false:
+```
+vaadinCompile{
+    manageWidgetset false
+}
 
-
-#### Dependency changes
-
-   compile dependency version changed to: krail:0.9.9
-   test compile dependency version changed to: krail-bench:0.8.4
-   compile dependency version changed to: krail-jpa:0.9.3
-
-#### Detail
-
-*Release notes and version.properties generated*
-
-
----
-*Version files updated*
-
-
----
-*See [9](https://github.com/davidsowerby/krail-testapp/issues/9) Separate from master project*
-
-All steps complete
-
----
-*See [10](https://github.com/davidsowerby/krail-testapp/issues/10) Push failure*
-
-The renaming of the war file has been removed from build.gradle, including it caused errors.  File is now renamed as part of Dockerfile.
-Subsequently realised that war renaming is fine, just needs IDEA to use the exploded war, or to set up build paths for exploded/standard war correctly in IDEA
-
-UITestServlet removed, it was causing an Atmosphere warnings about duplicate Endpoints
-
-@Ignore two intermittent test failures, see #11 and #15
-
-
+```

@@ -1,1 +1,0 @@
-Tests for Krail 0.9.9.  Vaadin 7.6.3.  Separated from master project
