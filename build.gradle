@@ -42,6 +42,7 @@ kaytee {
         buildMetaData = "1"
     }
     release {
+        mergeToMaster = false
         toBintray = false
     }
 }
