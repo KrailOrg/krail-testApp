@@ -35,6 +35,7 @@ public class ShiroAnnotationsTest extends KrailTestBenchTestCase {
         //given
         login();
         navigateTo("private/finance/accounts");
+        pause(200);
         accountsView.permissionsFailButton()
                     .click();
         //then
