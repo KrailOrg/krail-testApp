@@ -15,23 +15,20 @@ package uk.q3c.krail.testapp.view;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.vaadin.v7.ui.HorizontalLayout;
-import com.vaadin.v7.ui.Label;
-import com.vaadin.v7.ui.Table;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.VerticalLayout;
 import org.apache.onami.persist.EntityManagerProvider;
 import org.apache.onami.persist.Transactional;
 import org.apache.onami.persist.UnitOfWork;
-import uk.q3c.krail.core.option.jpa.JpaContainerProvider;
 import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
-import uk.q3c.krail.persist.ContainerType;
 import uk.q3c.krail.persist.jpa.common.JpaDao_LongInt;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.krail.testapp.persist.Jpa1;
@@ -48,8 +45,6 @@ import java.util.Optional;
  */
 
 public class JpaView extends ViewBase implements Button.ClickListener {
-    private final JpaContainerProvider containerProvider1;
-    private JpaContainerProvider containerProvider2;
     private int count1;
     private int count2;
     private Label countLabelFromContainer1;
@@ -59,24 +54,19 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     private Provider<JpaDao_LongInt> daoProvider1;
     private Provider<JpaDao_LongInt> daoProvider2;
     private EntityManagerProvider entityManagerProvider1;
-    private JPAContainer<Widget> jpa1Container;
-    private JPAContainer<Widget> jpa2Container;
     private Button saveBtn1;
     private Button saveBtn2;
     private Button saveBtn3;
-    private Table table1;
-    private Table table2;
+    private Grid table1;
+    private Grid table2;
     private UnitOfWork unitOfWork1;
 
     @Inject
-    protected JpaView(@Jpa1 Provider<JpaDao_LongInt> daoProvider1, @Jpa2 Provider<JpaDao_LongInt> daoProvider2, @Jpa1 JpaContainerProvider
-            containerProvider1, @Jpa2 JpaContainerProvider containerProvider2, @Jpa1
-                      EntityManagerProvider entityManagerProvider1, @Jpa1 UnitOfWork unitOfWork1, Translate translate) {
+    protected JpaView(@Jpa1 Provider<JpaDao_LongInt> daoProvider1, @Jpa2 Provider<JpaDao_LongInt> daoProvider2, @Jpa1
+            EntityManagerProvider entityManagerProvider1, @Jpa1 UnitOfWork unitOfWork1, Translate translate) {
         super(translate);
         this.daoProvider1 = daoProvider1;
         this.daoProvider2 = daoProvider2;
-        this.containerProvider1 = containerProvider1;
-        this.containerProvider2 = containerProvider2;
         this.entityManagerProvider1 = entityManagerProvider1;
         this.unitOfWork1 = unitOfWork1;
         nameKey = LabelKey.Jpa;
@@ -98,10 +88,8 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         saveBtn3 = new Button("common 3");
         saveBtn3.addClickListener(this);
 
-        jpa1Container = containerProvider1.get(Widget.class, ContainerType.CACHED);
-        jpa2Container = containerProvider2.get(Widget.class, ContainerType.CACHED);
-        table1 = new Table("Table 1", jpa1Container);
-        table2 = new Table("Table 2", jpa2Container);
+        table1 = new Grid("Table 1");
+        table2 = new Grid("Table 2");
 
 
         countLabelFromContainer1 = new Label();
@@ -136,18 +124,15 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     private void refresh(int index) {
         switch (index) {
             case 1:
-                jpa1Container.refresh();
-                countLabelFromContainer1.setValue(Integer.toString(jpa1Container.getItemIds()
-                                                                                .size()));
-                countLabelFromDao1.setValue(Long.toString(daoProvider1.get()
-                                                                      .count(Widget.class)));
+
+                String itemCountLabel = Long.toString(daoProvider1.get().count(Widget.class));
+                countLabelFromContainer1.setValue(itemCountLabel);
+                countLabelFromDao1.setValue(itemCountLabel);
                 break;
             case 2:
-                jpa2Container.refresh();
-                countLabelFromContainer2.setValue(Integer.toString(jpa2Container.getItemIds()
-                                                                                .size()));
-                countLabelFromDao2.setValue(Long.toString(daoProvider2.get()
-                                                                      .count(Widget.class)));
+                String itemCountLabel2 = Long.toString(daoProvider2.get().count(Widget.class));
+                countLabelFromContainer2.setValue(itemCountLabel2);
+                countLabelFromDao2.setValue(itemCountLabel2);
                 break;
             default:
                 throw new RuntimeException("Invalid index");
@@ -158,8 +143,7 @@ public class JpaView extends ViewBase implements Button.ClickListener {
      * Called when a {@link Button} has been clicked. A reference to the
      * button is given by {@link Button.ClickEvent#getButton()}.
      *
-     * @param event
-     *         An event containing information about the click.
+     * @param event An event containing information about the click.
      */
     @Override
     public void buttonClick(Button.ClickEvent event) {
@@ -181,11 +165,11 @@ public class JpaView extends ViewBase implements Button.ClickListener {
             try {
                 EntityManager entityManager = entityManagerProvider1.get();
                 entityManager.getTransaction()
-                             .begin();
+                        .begin();
                 entityManager.persist(widget);
                 entityManager.persist(widget1);
                 entityManager.getTransaction()
-                             .commit();
+                        .commit();
             } finally {
                 if (unitOfWorkWasInactive) {
                     unitOfWork1.end();
@@ -223,7 +207,7 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         widget.setName('b' + Integer.toString(count2++));
         widget.setDescription("b");
         daoProvider2.get()
-                    .save(widget);
+                .save(widget);
 
     }
 

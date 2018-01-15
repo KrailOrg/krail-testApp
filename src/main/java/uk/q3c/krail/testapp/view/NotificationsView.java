@@ -13,14 +13,15 @@
 package uk.q3c.krail.testapp.view;
 
 import com.google.inject.Inject;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.vaadin.v7.data.Property;
-import com.vaadin.v7.shared.ui.label.ContentMode;
-import com.vaadin.v7.ui.Label;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.VerticalLayout;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import net.engio.mbassy.listener.Handler;
+import net.engio.mbassy.listener.Listener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.i18n.LabelKey;
@@ -31,8 +32,11 @@ import uk.q3c.krail.core.user.notify.UserNotifier;
 import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
+import uk.q3c.krail.eventbus.GlobalMessageBus;
+import uk.q3c.krail.eventbus.SubscribeTo;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.option.Option;
+import uk.q3c.krail.option.OptionChangeMessage;
 import uk.q3c.krail.option.OptionKey;
 import uk.q3c.krail.option.persist.OptionCache;
 import uk.q3c.krail.option.persist.OptionSource;
@@ -43,6 +47,8 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 
 @SuppressFBWarnings({"LSC_LITERAL_STRING_COMPARISON", "FCBL_FIELD_COULD_BE_LOCAL"})
+@Listener
+@SubscribeTo(GlobalMessageBus.class)
 public class NotificationsView extends ViewBase implements VaadinOptionContext {
     private static final OptionKey<Boolean> errorButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, LabelKey.Error, MessageKey
             .Button_is_Visible);
@@ -132,7 +138,7 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
         systemLevelOptionButton = new Button("Set system level option - info button not visible");
         systemLevelOptionButton.addClickListener(event -> {
             option.set(infoButtonVisible, 1, Boolean.FALSE);
-            optionValueChanged(null);
+            refreshFromOptions();
         });
         systemLevelOptionButton.setWidth("100%");
         verticalLayout.addComponent(systemLevelOptionButton);
@@ -141,9 +147,9 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
         clearOptionStoreButton.setWidth("100%");
         clearOptionStoreButton.addClickListener(event -> {
             optionDaoProvider.getActiveDao()
-                             .clear();
+                    .clear();
             optionCache.clear();
-            optionValueChanged(null);
+            refreshFromOptions();
         });
         verticalLayout.addComponent(clearOptionStoreButton);
 
@@ -153,19 +159,28 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
         infoArea.setValue(translate.from(DescriptionKey.Notifications));
         grid.addComponent(infoArea, 0, 1, 1, 1);
         setRootComponent(grid);
-        optionValueChanged(null);
+        refreshFromOptions();
 
     }
 
 
-    @Override
-    public void optionValueChanged(Property.ValueChangeEvent event) {
+    @Handler
+    public void optionValueChanged(OptionChangeMessage<?> msg) {
+
+        if (msg.getOptionKey().getContext().equals(this.getClass())) {
+            log.info("Option value changed - refreshing from options, new value is: {}", msg.getNewValue());
+            refreshFromOptions();
+        } else {
+            log.info("Option value changed - not relevant to this view");
+        }
+    }
+
+    private void refreshFromOptions() {
+        boolean infoVis = option.get(infoButtonVisible);
+        log.info("refreshing - info button is visible = {}, option key is: {}", infoVis, infoButtonVisible.compositeKey());
         infoButton.setVisible(option.get(infoButtonVisible));
         warnButton.setVisible(option.get(warningButtonVisible));
         errorButton.setVisible(option.get(errorButtonVisible));
-
-
-
     }
 
     @Override

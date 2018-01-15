@@ -16,12 +16,16 @@ import com.vaadin.testbench.ScreenshotOnFailureRule;
 import com.vaadin.testbench.elements.ButtonElement;
 import com.vaadin.testbench.elements.CheckBoxElement;
 import com.vaadin.testbench.elements.WindowElement;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.MessageBarPageObject;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OptionPopupTest extends KrailTestBenchTestCase {
 
@@ -35,6 +39,7 @@ public class OptionPopupTest extends KrailTestBenchTestCase {
     @Before
     public void setUp() throws Exception {
         appContext = "krail-testapp";
+
     }
 
     @After

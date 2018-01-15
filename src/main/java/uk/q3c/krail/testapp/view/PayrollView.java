@@ -16,8 +16,9 @@ package uk.q3c.krail.testapp.view;
 import com.google.inject.Inject;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextArea;
-import com.vaadin.v7.data.Property;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import net.engio.mbassy.listener.Handler;
+import net.engio.mbassy.listener.Listener;
 import org.apache.onami.persist.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +26,11 @@ import uk.q3c.krail.core.option.VaadinOptionContext;
 import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.Grid3x3ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
+import uk.q3c.krail.eventbus.GlobalMessageBus;
+import uk.q3c.krail.eventbus.SubscribeTo;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.option.Option;
+import uk.q3c.krail.option.OptionChangeMessage;
 import uk.q3c.krail.option.OptionKey;
 import uk.q3c.krail.option.UserHierarchy;
 import uk.q3c.krail.option.UserHierarchyDefault;
@@ -42,12 +46,14 @@ import java.util.Optional;
  */
 @SuppressFBWarnings({"LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON", "LSC_LITERAL_STRING_COMPARISON",
         "LSC_LITERAL_STRING_COMPARISON"})
+@Listener
+@SubscribeTo(GlobalMessageBus.class)
 public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext {
-    private static Logger log = LoggerFactory.getLogger(PayrollView.class);
     public static final OptionKey<Integer> payrollOption = new OptionKey<>(5, PayrollView.class, LabelKey.Payroll);
+    private static Logger log = LoggerFactory.getLogger(PayrollView.class);
+    private final OptionDao optionDao;
     private Option option;
     private UserHierarchy userHierarchy;
-    private final OptionDao optionDao;
     private OptionCache optionCache;
     @Caption(caption = LabelKey.Set_System_Level, description = LabelKey.Set_System_Level)
     private Button adminButton;
@@ -70,15 +76,16 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
     }
 
 
-
     @Override
     public Option optionInstance() {
         return option;
     }
 
-    @Override
-    public void optionValueChanged(Property.ValueChangeEvent event) {
-        updateText();
+    @Handler
+    public void optionValueChanged(OptionChangeMessage<?> msg) {
+        if (msg.getOptionKey().getContext().equals(this.getClass())) {
+            updateText();
+        }
     }
 
     @Override

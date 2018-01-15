@@ -11,8 +11,8 @@
 
 package uk.q3c.krail.testApp.test.persist;
 
+import com.vaadin.testbench.elements.GridElement;
 import com.vaadin.testbench.elements.LabelElement;
-import com.vaadin.testbench.elements.TableElement;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,8 +57,8 @@ public class JpaViewTest extends KrailTestBenchTestCase {
         int newCount1 = countFor("container 1");
         int newCount2 = countFor("container 2");
         //then
-        TableElement t1 = pageObject.table(1);
-        TableElement t2 = pageObject.table(2);
+        GridElement t1 = pageObject.table(1);
+        GridElement t2 = pageObject.table(2);
         assertThat(t1.getRow(0)).isNotNull();
         assertThat(t2.getRow(0)).isNotNull();
         assertThat(newCount1).isEqualTo(startCount1 + 3);

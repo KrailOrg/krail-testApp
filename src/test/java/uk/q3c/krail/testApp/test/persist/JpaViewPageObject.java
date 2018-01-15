@@ -12,11 +12,11 @@
 package uk.q3c.krail.testApp.test.persist;
 
 import com.vaadin.testbench.elements.ButtonElement;
+import com.vaadin.testbench.elements.GridElement;
 import com.vaadin.testbench.elements.LabelElement;
-import com.vaadin.testbench.elements.TableElement;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
-import com.vaadin.v7.ui.Table;
 import uk.q3c.krail.testapp.view.JpaView;
 import uk.q3c.krail.testbench.KrailTestBenchTestCase;
 import uk.q3c.krail.testbench.page.object.PageObject;
@@ -36,8 +36,8 @@ public class JpaViewPageObject extends PageObject {
         return element(ButtonElement.class, Optional.of(index), JpaView.class, Button.class);
     }
 
-    public TableElement table(int index) {
-        return element(TableElement.class, Optional.of(index), JpaView.class, Table.class);
+    public GridElement table(int index) {
+        return element(GridElement.class, Optional.of(index), JpaView.class, Grid.class);
     }
 
     public LabelElement countLabel(String qualifier) {

@@ -17,7 +17,6 @@ import com.google.inject.Inject;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.ErrorHandler;
-import com.vaadin.v7.data.util.converter.ConverterFactory;
 import uk.q3c.krail.core.guice.uiscope.UIKey;
 import uk.q3c.krail.core.i18n.I18NProcessor;
 import uk.q3c.krail.core.navigate.Navigator;
@@ -51,13 +50,13 @@ import uk.q3c.krail.testapp.view.SessionObject;
 public class TestAppUI extends DefaultApplicationUI {
 
     @Inject
-    protected TestAppUI(Navigator navigator, ErrorHandler errorHandler, ConverterFactory converterFactory,
+    protected TestAppUI(Navigator navigator, ErrorHandler errorHandler,
                         ApplicationLogo logo, ApplicationHeader header, UserStatusPanel userStatus,
                         UserNavigationMenu menu, UserNavigationTree navTree, Breadcrumb breadcrumb,
                         SubPagePanel subpage, MessageBar messageBar, Broadcaster broadcaster,
                         PushMessageRouter pushMessageRouter, SessionObject sessionObject,
                         ApplicationTitle applicationTitle, Translate translate, CurrentLocale currentLocale, I18NProcessor translator, LocaleSelector localeSelector, VaadinNotification vaadinNotification, Option option) {
-        super(navigator, errorHandler, converterFactory, logo, header, userStatus, menu, navTree, breadcrumb, subpage, messageBar, broadcaster,
+        super(navigator, errorHandler, logo, header, userStatus, menu, navTree, breadcrumb, subpage, messageBar, broadcaster,
                 pushMessageRouter, applicationTitle, translate, currentLocale, translator, localeSelector, vaadinNotification, option);
 
     }
