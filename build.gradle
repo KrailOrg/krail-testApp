@@ -35,6 +35,11 @@ description = 'Functional test application for Krail and its additional modules'
 
 group = 'uk.q3c.krail'
 
+ext.assertjVersion = '3.8.0'
+ext.vaadinTestbenchVersion = '5.0.0'
+ext.vaadinVersion='8.2.0'
+ext.gsonVersion = '2.3.1'
+
 kaytee {
     version {
         number = "0.14.0.0"
@@ -71,7 +76,21 @@ dependencies {
 //   compile group: 'com.vaadin', name: 'vaadin-compatibility-themes', version: '8.1.3'
 
 //    vaadin-compatibility-client-compiled
+    //Testbench
 
+    //assert
+    compile 'org.assertj:assertj-core:' + assertjVersion
+
+    // html parser
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.10.3'
+
+
+
+    compile 'uk.q3c.krail:krail:0.14.0.0' // needed for ID class
+
+    //Testbench
+    compile "com.vaadin:vaadin-testbench:$vaadinTestbenchVersion"
+    compile "com.vaadin:vaadin-testbench-api:$vaadinVersion"  // get an out of date API without this
 
     //UI components
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'
