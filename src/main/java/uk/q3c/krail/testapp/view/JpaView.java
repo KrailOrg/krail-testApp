@@ -57,8 +57,8 @@ public class JpaView extends ViewBase implements Button.ClickListener {
     private Button saveBtn1;
     private Button saveBtn2;
     private Button saveBtn3;
-    private Grid table1;
-    private Grid table2;
+    private Grid<Widget> table1;
+    private Grid<Widget> table2;
     private UnitOfWork unitOfWork1;
 
     @Inject
@@ -88,8 +88,12 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         saveBtn3 = new Button("common 3");
         saveBtn3.addClickListener(this);
 
-        table1 = new Grid("Table 1");
-        table2 = new Grid("Table 2");
+        table1 = new Grid<>("Table 1");
+        table2 = new Grid<>("Table 2");
+        table1.addColumn(Widget::getName).setCaption("Name");
+        table1.addColumn(Widget::getDescription).setCaption("Description");
+        table2.addColumn(Widget::getName).setCaption("Name");
+        table2.addColumn(Widget::getDescription).setCaption("Description");
 
 
         countLabelFromContainer1 = new Label();
@@ -119,17 +123,19 @@ public class JpaView extends ViewBase implements Button.ClickListener {
         refresh(1);
         refresh(2);
         setRootComponent(new Panel(rootLayout));
+
     }
 
     private void refresh(int index) {
         switch (index) {
             case 1:
-
+                table1.setItems(daoProvider1.get().findAll(Widget.class));
                 String itemCountLabel = Long.toString(daoProvider1.get().count(Widget.class));
                 countLabelFromContainer1.setValue(itemCountLabel);
                 countLabelFromDao1.setValue(itemCountLabel);
                 break;
             case 2:
+                table2.setItems(daoProvider2.get().findAll(Widget.class));
                 String itemCountLabel2 = Long.toString(daoProvider2.get().count(Widget.class));
                 countLabelFromContainer2.setValue(itemCountLabel2);
                 countLabelFromDao2.setValue(itemCountLabel2);
