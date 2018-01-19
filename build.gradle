@@ -103,7 +103,6 @@ dependencies {
     //vaadin push
 //    compile 'com.vaadin:vaadin-push:' + vaadinVersion
 
-    testCompile 'io.kotlintest:kotlintest:2.0.7'
     testCompile 'com.codeborne:selenide:4.9.1'
     testCompile 'junit:junit:4.12'
 //    testCompile('uk.q3c.krail:krail-bench:0.14.0.0') {
