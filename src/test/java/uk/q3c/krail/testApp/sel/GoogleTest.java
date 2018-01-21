@@ -18,11 +18,13 @@ public class GoogleTest {
     String treeItem = "#gwt-uid-118";
 
     @Test
-    public void testIt() {
+    public void testIt() throws InterruptedException {
         System.setProperty("selenide.browser", "chrome");
 //        open("https://www.google.co.uk/");
 
         open("http://localhost:8080/krail-testapp/#notifications");
+        open("http://localhost:8080/krail-testapp/#notifications");
+        Thread.sleep(20000);
         $("#NotificationsView-Button-error").click();
         $(byText("You cannot use service Fake Service until it has been started")).shouldBe(visible);
         $(byClassName("v-Notification")).shouldBe(visible);
