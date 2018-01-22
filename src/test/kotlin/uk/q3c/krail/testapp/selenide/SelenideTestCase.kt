@@ -7,7 +7,6 @@ import com.codeborne.selenide.Selenide.*
 import com.codeborne.selenide.SelenideElement
 import com.codeborne.selenide.WebDriverRunner
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.After
 import org.junit.Before
 import org.slf4j.LoggerFactory
 import uk.q3c.krail.core.view.component.DefaultUserStatusPanel
@@ -54,59 +53,26 @@ open class SelenideTestCase {
 //        open(url)
 //    }
 
-    @After
-    fun cleanup() {
-        OuterPage().logoutIfLoggedIn()
-    }
+
 }
 
 
 interface PageObj {
-    fun open()
+    fun open(): Page
     fun shouldBeOpen()
 }
 
-class OuterPage {
-    private val loginOutButton: ButtonElement
-        get() {
-            val qualifier: Optional<String> = Optional.empty()
-            return ButtonElement(`$`(idc(qualifier, DefaultUserStatusPanel::class.java)))
-        }
-    val loggedIn: Boolean
-        get () {
-            return loginOutButton.caption.endsWith("log out") // selenideElement.innerText() contains the login name as well eg 'dslog out'
-        }
 
-    fun logoutIfLoggedIn() {
-        if (loggedIn) {
-            loginOutButton.click()
-            LogoutPage().shouldBeOpen()
-        }
-
-    }
-
-    fun loginIfLoggedOut() {
-        if (!loggedIn) {
-            val loginPage = LoginPage()
-            with(loginPage) {
-                open()
-                username.value = "ds"
-                password.setValue("password").pressEnter()
-            }
-
-        }
-    }
-}
-
-class Page(val relativeUrl: String, val verificationText: String) : PageObj {
+abstract class Page(val relativeUrl: String, val verificationText: String) : PageObj {
 
     /**
      * Opens the relativeUrl, and waits for the [verificationText] to be visible - or times out
      * @param verificationText the text to look for to confirm that the page has opened.  No verification takes place if this is blank
      */
-    override fun open() {
+    override fun open(): Page {
         open(relativeUrl)
         shouldBeOpen()
+        return this
     }
 
     fun gridById(id: String): GridElement {
@@ -134,6 +100,36 @@ class Page(val relativeUrl: String, val verificationText: String) : PageObj {
             return ""
         } else {
             return fullUrl.removePrefix(baseUrl)
+        }
+    }
+
+    private val loginOutButton: ButtonElement
+        get() {
+            val qualifier: Optional<String> = Optional.empty()
+            return ButtonElement(`$`(idc(qualifier, DefaultUserStatusPanel::class.java)))
+        }
+    val loggedIn: Boolean
+        get () {
+            return loginOutButton.caption.endsWith("log out") // selenideElement.innerText() contains the login name as well eg 'dslog out'
+        }
+
+    fun logoutIfLoggedIn() {
+        if (loggedIn) {
+            loginOutButton.click()
+            LogoutPage().shouldBeOpen()
+        }
+
+    }
+
+    fun loginIfLoggedOut() {
+        if (!loggedIn) {
+            val loginPage = LoginPage()
+            with(loginPage) {
+                open()
+                username.value = "ds"
+                password.setValue("password").pressEnter()
+            }
+
         }
     }
 

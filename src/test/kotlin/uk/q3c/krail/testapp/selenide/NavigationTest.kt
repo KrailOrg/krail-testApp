@@ -50,9 +50,7 @@ class NavigationTest : SelenideTestCase() {
     @Test
     fun navigateToPageWithoutPermission() {
         // given
-        HomePage().open()
-        SystemAccountPage().open()
-        OuterPage().logoutIfLoggedIn()
+        SystemAccountPage().open().logoutIfLoggedIn()
 
         // when
         FinancePage().open()
@@ -62,7 +60,7 @@ class NavigationTest : SelenideTestCase() {
         `$`(byClassName("v-Notification")).shouldBe(visible)
 
         // we now have difference between url and page
-        SystemAccountPage().page.currentUrl().shouldBeEqualTo("private/finance")
+        SystemAccountPage().currentUrl().shouldBeEqualTo("private/finance")
 
     }
 }

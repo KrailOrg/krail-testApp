@@ -19,7 +19,7 @@ class LoginTest : SelenideTestCase() {
         page.open()
 
         // then page is shown
-        LoginPage().shouldBeOpen()
+        page.shouldBeOpen()
 
         // when
         page.username.value = "ds"
