@@ -107,7 +107,7 @@ abstract class Page(val relativeUrl: String, val verificationText: String) : Pag
             `$`(Selectors.ByText(verificationText)).`is`(Condition.visible)
         }
         // ignore any params
-        currentUrl().shouldStartWith(relativeUrl)
+        println("===========>" + currentUrl().shouldStartWith(relativeUrl))
     }
 
     override fun shouldBeOpenWithUrl(url: String) {
