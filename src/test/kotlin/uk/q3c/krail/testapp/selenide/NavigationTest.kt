@@ -1,4 +1,4 @@
-package uk.q3c.krail.testapp
+package uk.q3c.krail.testapp.selenide
 
 import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selectors.byClassName
@@ -6,7 +6,6 @@ import com.codeborne.selenide.Selectors.byText
 import com.codeborne.selenide.Selenide.`$`
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
-import uk.q3c.krail.testapp.selenide.*
 
 
 class NavigationTest : SelenideTestCase() {
@@ -21,37 +20,39 @@ class NavigationTest : SelenideTestCase() {
         browserBack()
 
         // then we are back to the right page
-        currentUrl().shouldBeEqualTo("widgetset")
+        MessageBoxPage().shouldBeOpen()
 
         // when
         browserBack()
 
         //then
-        currentUrl().shouldBeEqualTo("system-account")
+        SystemAccountPage().shouldBeOpen()
 
         // when
         browserForward()
 
         //then
-        currentUrl().shouldBeEqualTo("widgetset")
+        MessageBoxPage().shouldBeOpen()
     }
 
+
+    /**
+     * Because each page object verifies itself there are no checks needed
+     */
     @Test
     fun pageSelection() {
         SystemAccountPage().open()
-        currentUrl().shouldBeEqualTo("system-account")
         MessageBoxPage().open()
-        currentUrl().shouldBeEqualTo("widgetset")
         NotificationsPage().open()
-        currentUrl().shouldBeEqualTo("notifications")
         SystemAccountPage().open()
-        currentUrl().shouldBeEqualTo("system-account")
     }
 
     @Test
     fun navigateToPageWithoutPermission() {
         // given
+        HomePage().open()
         SystemAccountPage().open()
+        OuterPage().logoutIfLoggedIn()
 
         // when
         FinancePage().open()
@@ -60,8 +61,8 @@ class NavigationTest : SelenideTestCase() {
         `$`(byText("private/finance is not a valid page")).shouldBe(visible)
         `$`(byClassName("v-Notification")).shouldBe(visible)
 
-        // and page has not moved
-        currentUrl().shouldBeEqualTo("private/finance")
+        // we now have difference between url and page
+        SystemAccountPage().page.currentUrl().shouldBeEqualTo("private/finance")
 
     }
 }
