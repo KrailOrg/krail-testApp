@@ -1,8 +1,10 @@
 package uk.q3c.krail.testapp.selenide
 
+import com.vaadin.ui.Label
 import com.vaadin.ui.PasswordField
 import com.vaadin.ui.TextField
 import uk.q3c.krail.core.view.DefaultLoginView
+import uk.q3c.krail.testapp.view.WidgetsetView
 import java.util.*
 
 
@@ -27,7 +29,17 @@ class SystemAccountPage : Page("system-account", "DefaultSystemAccountView")
 class HomePage : Page("home", "TestAppPublicHomeView")
 class PrivateHomePage : Page("private/home", "DefaultPrivateHomeView")
 
-class MessageBoxPage : Page("widgetset", "used purely")
+class MessageBoxPage : Page("widgetset", "used purely") {
+    val id: LabelElement
+        get() {
+            return labelById(Optional.of("id"), WidgetsetView::class.java, Label::class.java)
+        }
+
+    val age: LabelElement
+        get() {
+            return labelById(Optional.of("age"), WidgetsetView::class.java, Label::class.java)
+        }
+}
 
 class NotificationsPage : Page("notifications", "Vaadin provides")
 

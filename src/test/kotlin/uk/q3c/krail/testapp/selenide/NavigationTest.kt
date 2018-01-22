@@ -63,4 +63,20 @@ class NavigationTest : SelenideTestCase() {
         SystemAccountPage().currentUrl().shouldBeEqualTo("private/finance")
 
     }
+
+    @Test
+    fun pageWithParams() {
+        // given
+        val page = MessageBoxPage()
+
+        // when
+        page.openWithParams("id=4/age=12")
+
+        // then
+        page.id.content.shouldBeEqualTo("4")
+        page.age.content.shouldBeEqualTo("12")
+
+    }
 }
+
+

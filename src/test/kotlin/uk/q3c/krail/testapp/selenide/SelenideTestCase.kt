@@ -7,6 +7,8 @@ import com.codeborne.selenide.Selenide.*
 import com.codeborne.selenide.SelenideElement
 import com.codeborne.selenide.WebDriverRunner
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldNotBeEqualTo
+import org.amshove.kluent.shouldStartWith
 import org.junit.Before
 import org.slf4j.LoggerFactory
 import uk.q3c.krail.core.view.component.DefaultUserStatusPanel
@@ -31,10 +33,6 @@ open class SelenideTestCase {
         back()
     }
 
-    // Logs out if already logged in, otherwise does nothing
-    fun logout() {
-
-    }
 
     fun browserForward() {
         forward()
@@ -59,7 +57,14 @@ open class SelenideTestCase {
 
 interface PageObj {
     fun open(): Page
+    fun openWithParams(params: String = ""): Page
     fun shouldBeOpen()
+    fun shouldNotBeOpen()
+
+    /**
+     * The page is open but with a different url to normal - this happens with failed navigation (where a user does not have permission)
+     */
+    fun shouldBeOpenWithUrl(url: String)
 }
 
 
@@ -71,6 +76,12 @@ abstract class Page(val relativeUrl: String, val verificationText: String) : Pag
      */
     override fun open(): Page {
         open(relativeUrl)
+        shouldBeOpen()
+        return this
+    }
+
+    override fun openWithParams(params: String): Page {
+        open("$relativeUrl/$params")
         shouldBeOpen()
         return this
     }
@@ -87,11 +98,30 @@ abstract class Page(val relativeUrl: String, val verificationText: String) : Pag
         return ButtonElement(`$`(idc(qualifier, *componentClasses)))
     }
 
+    fun labelById(qualifier: Optional<*>, vararg componentClasses: Class<*>): LabelElement {
+        return LabelElement(`$`(idc(qualifier, *componentClasses)))
+    }
+
     override fun shouldBeOpen() {
         if (verificationText.isNotBlank()) {
             `$`(Selectors.ByText(verificationText)).`is`(Condition.visible)
         }
-        currentUrl().shouldBeEqualTo(relativeUrl)
+        // ignore any params
+        currentUrl().shouldStartWith(relativeUrl)
+    }
+
+    override fun shouldBeOpenWithUrl(url: String) {
+        if (verificationText.isNotBlank()) {
+            `$`(Selectors.ByText(verificationText)).`is`(Condition.visible)
+        }
+        currentUrl().shouldBeEqualTo(url)
+    }
+
+    override fun shouldNotBeOpen() {
+        if (verificationText.isNotBlank()) {
+            `$`(Selectors.ByText(verificationText)).`is`(Condition.hidden)
+        }
+        currentUrl().shouldNotBeEqualTo(relativeUrl)
     }
 
     fun currentUrl(): String {
@@ -129,8 +159,9 @@ abstract class Page(val relativeUrl: String, val verificationText: String) : Pag
                 username.value = "ds"
                 password.setValue("password").pressEnter()
             }
-
+            loginPage.shouldNotBeOpen()
         }
+
     }
 
 
@@ -144,6 +175,22 @@ class ButtonElement(val selenideElement: SelenideElement) : SelenideElement by s
         }
 
 }
+
+class LabelElement(val selenideElement: SelenideElement) : SelenideElement by selenideElement {
+
+    val caption: String
+        get() {
+            return selenideElement.innerText()
+        }
+
+    // use this for the
+    val content: String
+        get() {
+            return caption
+        }
+
+}
+
 
 class GridElement(val selenideElement: SelenideElement) : SelenideElement by selenideElement {
 

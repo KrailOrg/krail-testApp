@@ -30,8 +30,10 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.risto.stepper.IntStepper;
 import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.ViewBase;
+import uk.q3c.krail.core.view.component.AfterViewChangeBusMessage;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
+import uk.q3c.krail.testapp.i18n.Caption;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 
 import java.util.Optional;
@@ -43,6 +45,10 @@ public class WidgetsetView extends ViewBase {
     private Label infoArea;
     private Button popupButton;
     private IntStepper stepper;
+    @Caption(caption = LabelKey.id, description = LabelKey.id)
+    private Label param1;
+    @Caption(caption = LabelKey.age, description = LabelKey.age)
+    private Label param2;
 
     @Inject
     protected WidgetsetView(SessionObject sessionObject, Translate translate) {
@@ -96,6 +102,11 @@ public class WidgetsetView extends ViewBase {
         infoArea.setValue("These components are used purely to ensure that the Widgetset has compiled and included "
                 + "add-ons");
         grid.addComponent(infoArea, 0, 1, 1, 1);
+
+        param1 = new Label();
+        param2 = new Label();
+        VerticalLayout parameters = new VerticalLayout(param1, param2);
+        grid.addComponent(parameters, 0, 2, 0, 2);
     }
 
     public GridLayout getGrid() {
@@ -108,5 +119,14 @@ public class WidgetsetView extends ViewBase {
         getGrid().setId(ID.getId(Optional.empty(), this, getGrid()));
         popupButton.setId(ID.getId(Optional.of("popup"), this, popupButton));
         stepper.setId(ID.getId(Optional.empty(), this, stepper));
+        param1.setId(ID.getId(Optional.of("id"), this, param1));
+        param2.setId(ID.getId(Optional.of("age"), this, param2));
+    }
+
+    @Override
+    protected void loadData(AfterViewChangeBusMessage busMessage) {
+        super.loadData(busMessage);
+        param1.setValue(busMessage.getToState().getParameters().get("id"));
+        param2.setValue(busMessage.getToState().getParameters().get("age"));
     }
 }
