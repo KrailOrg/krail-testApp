@@ -2,13 +2,9 @@ package uk.q3c.krail.testapp.selenide
 
 import com.codeborne.selenide.Condition
 import com.codeborne.selenide.Configuration.baseUrl
-import com.codeborne.selenide.Selectors
 import com.codeborne.selenide.Selenide.*
 import com.codeborne.selenide.SelenideElement
 import com.codeborne.selenide.WebDriverRunner
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldNotBeEqualTo
-import org.amshove.kluent.shouldStartWith
 import org.junit.Before
 import org.slf4j.LoggerFactory
 import uk.q3c.krail.core.view.component.DefaultUserStatusPanel
@@ -54,34 +50,36 @@ open class SelenideTestCase {
 
 }
 
+var browser: Browser = SelenideBrowser()
 
 interface PageObj {
     fun open(): Page
     fun openWithParams(params: String = ""): Page
     fun shouldBeOpen()
-    fun shouldNotBeOpen()
+//    fun shouldNotBeOpen()
 
     /**
-     * The page is open but with a different url to normal - this happens with failed navigation (where a user does not have permission)
+     * The page is open but with a different fragment to normal - this happens with failed navigation (where a user does not have permission)
      */
-    fun shouldBeOpenWithUrl(url: String)
+    fun shouldBeOpenWithUrl(otherFragment: String)
 }
 
 
-abstract class Page(val relativeUrl: String, val verificationText: String) : PageObj {
+abstract class Page(val urlFragment: String, val verificationId: Class<*>) : PageObj {
 
     /**
-     * Opens the relativeUrl, and waits for the [verificationText] to be visible - or times out
-     * @param verificationText the text to look for to confirm that the page has opened.  No verification takes place if this is blank
+     * Opens the [urlFragment], and waits for the [verificationId] to be visible - or times out
+     * @param verificationId is the class used to form the component id.  By convention that is a [KrailView].  It is used
+     * to confirm that the view has opened.
      */
     override fun open(): Page {
-        open(relativeUrl)
+        open(urlFragment)
         shouldBeOpen()
         return this
     }
 
     override fun openWithParams(params: String): Page {
-        open("$relativeUrl/$params")
+        open("$urlFragment/$params")
         shouldBeOpen()
         return this
     }
@@ -103,26 +101,16 @@ abstract class Page(val relativeUrl: String, val verificationText: String) : Pag
     }
 
     override fun shouldBeOpen() {
-        if (verificationText.isNotBlank()) {
-            `$`(Selectors.ByText(verificationText)).`is`(Condition.visible)
-        }
+        `$`(verificationId.simpleName).`is`(Condition.visible)
         // ignore any params
-        println("===========>" + currentUrl().shouldStartWith(relativeUrl))
+        browser.currentFragmentShouldBe(urlFragment)
     }
 
-    override fun shouldBeOpenWithUrl(url: String) {
-        if (verificationText.isNotBlank()) {
-            `$`(Selectors.ByText(verificationText)).`is`(Condition.visible)
-        }
-        currentUrl().shouldBeEqualTo(url)
+    override fun shouldBeOpenWithUrl(otherFragment: String) {
+        `$`(verificationId.simpleName).`is`(Condition.visible)
+        browser.currentFragmentShouldBe(otherFragment)
     }
 
-    override fun shouldNotBeOpen() {
-        if (verificationText.isNotBlank()) {
-            `$`(Selectors.ByText(verificationText)).`is`(Condition.hidden)
-        }
-        currentUrl().shouldNotBeEqualTo(relativeUrl)
-    }
 
     fun currentUrl(): String {
         val fullUrl = WebDriverRunner.getWebDriver().currentUrl
@@ -159,7 +147,7 @@ abstract class Page(val relativeUrl: String, val verificationText: String) : Pag
                 username.value = "ds"
                 password.setValue("password").pressEnter()
             }
-            loginPage.shouldNotBeOpen()
+            browser.currentFragmentShouldNotBe("login")
         }
 
     }
@@ -222,3 +210,5 @@ fun idc(qualifier: Optional<*>, vararg componentClasses: Class<*>): String {
     }
     return buf.toString()
 }
+
+

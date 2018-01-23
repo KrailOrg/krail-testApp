@@ -4,7 +4,10 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.PasswordField
 import com.vaadin.ui.TextField
 import uk.q3c.krail.core.view.DefaultLoginView
-import uk.q3c.krail.testapp.view.WidgetsetView
+import uk.q3c.krail.core.view.DefaultLogoutView
+import uk.q3c.krail.core.view.DefaultPrivateHomeView
+import uk.q3c.krail.core.view.DefaultSystemAccountView
+import uk.q3c.krail.testapp.view.*
 import java.util.*
 
 
@@ -12,7 +15,7 @@ import java.util.*
  * Created by David Sowerby on 18 Jan 2018
  */
 
-class JPAPage : Page("jpa", "Table 1") {
+class JPAPage : Page("jpa", JpaView::class.java) {
 
 
     fun common1Button(): ButtonElement {
@@ -25,11 +28,11 @@ class JPAPage : Page("jpa", "Table 1") {
 }
 
 
-class SystemAccountPage : Page("system-account", "DefaultSystemAccountView")
-class HomePage : Page("home", "TestAppPublicHomeView")
-class PrivateHomePage : Page("private/home", "DefaultPrivateHomeView")
+class SystemAccountPage : Page("system-account", DefaultSystemAccountView::class.java)
+class HomePage : Page("home", TestAppPublicHomeView::class.java)
+class PrivateHomePage : Page("private/home", DefaultPrivateHomeView::class.java)
 
-class MessageBoxPage : Page("widgetset", "used purely") {
+class MessageBoxPage : Page("widgetset", WidgetsetView::class.java) {
     val id: LabelElement
         get() {
             return labelById(Optional.of("id"), WidgetsetView::class.java, Label::class.java)
@@ -41,11 +44,11 @@ class MessageBoxPage : Page("widgetset", "used purely") {
         }
 }
 
-class NotificationsPage : Page("notifications", "Vaadin provides")
+class NotificationsPage : Page("notifications", NotificationsView::class.java)
 
-class FinancePage : Page("private/finance", "FinanceView")
+class FinancePage : Page("private/finance", FinanceView::class.java)
 
-class LoginPage : Page("login", "Please enter your username and password") {
+class LoginPage : Page("login", DefaultLoginView::class.java) {
     val username: ButtonElement
         get() {
             return buttonById(Optional.of("username"), DefaultLoginView::class.java, TextField::class.java)
@@ -56,6 +59,6 @@ class LoginPage : Page("login", "Please enter your username and password") {
         }
 }
 
-class LogoutPage : Page("logout", "Logged out")
+class LogoutPage : Page("logout", DefaultLogoutView::class.java)
 
 
