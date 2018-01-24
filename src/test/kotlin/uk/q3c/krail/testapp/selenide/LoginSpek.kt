@@ -1,8 +1,5 @@
 package uk.q3c.krail.testapp.selenide
 
-import com.codeborne.selenide.Condition
-import com.codeborne.selenide.Selectors
-import com.codeborne.selenide.Selenide
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.given
@@ -62,7 +59,7 @@ object LoginSpek : Spek({
                 }
 
                 it("login form should display 'login failed' banner'") {
-                    Selenide.`$`(Selectors.byText("That username or password was not recognised")).shouldBe(Condition.visible)
+                    loginPage.failedLoginBannerShouldBeVisible()
                 }
             }
 

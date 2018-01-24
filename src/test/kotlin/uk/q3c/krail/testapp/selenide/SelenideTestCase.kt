@@ -8,6 +8,8 @@ import com.codeborne.selenide.WebDriverRunner
 import org.junit.Before
 import org.slf4j.LoggerFactory
 import uk.q3c.krail.core.view.component.DefaultUserStatusPanel
+import uk.q3c.krail.testapp.functest.Browser
+import uk.q3c.krail.testapp.functest.SelenideBrowser
 import uk.q3c.util.clazz.DefaultClassNameUtils
 import java.util.*
 

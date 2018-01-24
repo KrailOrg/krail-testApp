@@ -1,4 +1,4 @@
-package uk.q3c.krail.testapp.selenide
+package uk.q3c.krail.testapp.functest
 
 import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.WebDriverRunner
