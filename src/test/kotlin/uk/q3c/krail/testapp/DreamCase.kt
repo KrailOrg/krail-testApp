@@ -13,17 +13,19 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.TextField
 import com.vaadin.ui.UI
 import org.amshove.kluent.mock
+import org.amshove.kluent.shouldBeInstanceOf
 import org.apache.onami.persist.PersistenceService
 import org.junit.Test
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.LoginView
-import uk.q3c.krail.functest.CodedBrowser
 import uk.q3c.krail.functest.LabelElement
 import uk.q3c.krail.functest.TextFieldElement
 import uk.q3c.krail.functest.browser
+import uk.q3c.krail.functest.coded.CodedBrowser
 import uk.q3c.krail.testapp.persist.Jpa1
 import uk.q3c.krail.testapp.persist.Jpa2
 import uk.q3c.krail.testapp.ui.TestAppUIProvider
+import uk.q3c.krail.testapp.view.WidgetsetView
 import java.net.URI
 import java.util.*
 import java.util.concurrent.locks.Lock
@@ -46,6 +48,7 @@ class DreamCase {
     @Test
     fun doit() {
         browser = CodedBrowser()
+        browser.setup()
         val lock = ReentrantLock()
         lock.lock()
         val vaadinService: VaadinService = TestVaadinService(vaadinServlet, deploymentConfiguration)
@@ -74,11 +77,11 @@ class DreamCase {
 
         navigator.navigateTo("login")
         var currentView = ui.view
-        println(currentView.javaClass)
+        currentView.shouldBeInstanceOf<LoginView>()
 
         navigator.navigateTo("widgetset")
         currentView = ui.view
-        println(currentView.javaClass)
+        currentView.shouldBeInstanceOf<WidgetsetView>()
 
 //        page.ui.statusPanel.label.valueShouldBe("ds")
 

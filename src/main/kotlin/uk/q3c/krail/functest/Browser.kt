@@ -6,8 +6,6 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.TextField
 import uk.q3c.krail.core.navigate.NavigationState
 import uk.q3c.krail.core.navigate.StrictURIFragmentHandler
-import uk.q3c.krail.functest.coded.CodedLabelElement
-import uk.q3c.krail.functest.coded.CodedTextFieldElement
 import uk.q3c.krail.functest.selenide.SelenideLabelElement
 import uk.q3c.krail.functest.selenide.SelenideTextFieldElement
 import uk.q3c.util.clazz.DefaultClassNameUtils
@@ -29,9 +27,14 @@ interface Browser {
     fun currentFragmentShouldBe(desiredFragment: String)
 
     fun currentFragmentShouldNotBe(desiredFragment: String)
+    fun setup()
 }
 
 class SelenideBrowser : Browser {
+    override fun setup() {
+        TODO()
+    }
+
     override fun element(label: Label): LabelElement {
         return SelenideLabelElement(label)
     }
@@ -87,32 +90,7 @@ class SelenideBrowser : Browser {
 
 var browser: Browser = SelenideBrowser()
 
-class CodedBrowser : Browser {
-    override fun element(label: Label): LabelElement {
-        return CodedLabelElement(label)
-    }
 
-    override fun element(textField: TextField): TextFieldElement {
-        return CodedTextFieldElement(textField)
-    }
-
-    override fun currentFragmentShouldBe(desiredFragment: String) {
-        TODO()
-    }
-
-    override fun currentFragmentShouldNotBe(desiredFragment: String) {
-        TODO()
-    }
-
-    override fun back() {
-        TODO()
-    }
-
-    fun navigateTo(fragment: String) {
-
-    }
-
-}
 
 fun idc(qualifier: Optional<*>, vararg componentClasses: Class<*>): String {
     checkNotNull(qualifier)
