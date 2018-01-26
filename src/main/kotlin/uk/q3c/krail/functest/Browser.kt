@@ -28,9 +28,14 @@ interface Browser {
 
     fun currentFragmentShouldNotBe(desiredFragment: String)
     fun setup()
+    fun navigateTo(fragment: String)
 }
 
 class SelenideBrowser : Browser {
+    override fun navigateTo(fragment: String) {
+        TODO()
+    }
+
     override fun setup() {
         TODO()
     }
