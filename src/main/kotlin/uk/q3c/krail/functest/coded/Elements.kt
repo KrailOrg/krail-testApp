@@ -4,6 +4,7 @@ import com.vaadin.data.HasValue
 import com.vaadin.ui.*
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeNull
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.functest.*
 import java.util.*
@@ -45,8 +46,12 @@ abstract class CodedValueStringElement(private val hasValue: HasValue<String>) :
 }
 
 abstract class AbstractCodedElement(val component: Component) : BaseElement {
-    override fun captionShouldBe(expectedCaption: String) {
-        component.caption.shouldBe(expectedCaption)
+    override fun captionShouldBe(expectedCaption: String?) {
+        if (expectedCaption == null) {
+            component.caption.shouldBeNull()
+        } else {
+            component.caption.shouldBe(expectedCaption)
+        }
     }
 
     override fun descriptionShouldBe(expectedDescription: String) {
@@ -96,7 +101,6 @@ inline fun <reified T> locateComponent(view: KrailView, id: String): T {
         }
     }
 }
-
 
 
 class ComponentUnexpectedTypeException(id: String, actualClass: Class<Component>) : RuntimeException("Component with id=$id was not expected to be a $actualClass")

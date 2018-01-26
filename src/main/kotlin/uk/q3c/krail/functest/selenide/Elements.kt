@@ -53,7 +53,7 @@ abstract class AbstractSelenideElement(val component: Component) : BaseElement {
         element.shouldNotBe(Condition.visible)
     }
 
-    override fun captionShouldBe(expectedCaption: String) {
+    override fun captionShouldBe(expectedCaption: String?) {
         // TODO how to find the caption
         element.shouldBe(Condition.exactTextCaseSensitive(expectedCaption))
     }

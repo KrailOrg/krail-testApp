@@ -108,6 +108,10 @@ class CodedBrowser : Browser {
         TODO()
     }
 
+    fun navigateTo(fragment: String) {
+
+    }
+
 }
 
 fun idc(qualifier: Optional<*>, vararg componentClasses: Class<*>): String {

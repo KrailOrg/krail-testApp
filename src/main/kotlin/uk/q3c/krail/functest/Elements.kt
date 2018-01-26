@@ -9,7 +9,7 @@ import java.util.*
 
 interface BaseElement {
     //    val icon: Resource?
-    fun captionShouldBe(expectedCaption: String)
+    fun captionShouldBe(expectedCaption: String?)
 
     fun descriptionShouldBe(expectedDescription: String)
     fun localeShouldBe(expectedLocale: Locale)

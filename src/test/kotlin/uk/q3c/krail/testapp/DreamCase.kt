@@ -4,37 +4,99 @@ import com.codeborne.selenide.Condition
 import com.codeborne.selenide.Configuration
 import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.WebDriverRunner
-import com.google.inject.AbstractModule
-import com.google.inject.Inject
-import com.google.inject.Injector
-import com.google.inject.Module
+import com.google.inject.*
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.whenever
+import com.vaadin.server.*
+import com.vaadin.shared.ApplicationConstants
 import com.vaadin.ui.Label
 import com.vaadin.ui.TextField
+import com.vaadin.ui.UI
+import org.amshove.kluent.mock
+import org.apache.onami.persist.PersistenceService
 import org.junit.Test
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.LoginView
+import uk.q3c.krail.functest.CodedBrowser
 import uk.q3c.krail.functest.LabelElement
 import uk.q3c.krail.functest.TextFieldElement
 import uk.q3c.krail.functest.browser
+import uk.q3c.krail.testapp.persist.Jpa1
+import uk.q3c.krail.testapp.persist.Jpa2
+import uk.q3c.krail.testapp.ui.TestAppUIProvider
+import java.net.URI
+import java.util.*
+import java.util.concurrent.locks.Lock
+import java.util.concurrent.locks.ReentrantLock
+
 
 /**
  * Created by David Sowerby on 25 Jan 2018
  */
 class DreamCase {
     val injector: Injector = FunctionalTestBindingManager().injector
-
+    val vaadinServlet: VaadinServlet = mock()
+    val deploymentConfiguration: DeploymentConfiguration = mock()
+    val wrappedSession: WrappedSession = mock()
+    val vaadinRequest: VaadinRequest = mock()
+    //    val mockSession : VaadinSession = mock()
+    lateinit var persistenceService1: PersistenceService
+    lateinit var persistenceService2: PersistenceService
 
     @Test
     fun doit() {
-        val page = injector.getInstance(LoginPage2::class.java)
-        page.view.username.e().captionShouldBe("username")
-        page.view.username.e().valueShouldBe("")
-        page.view.submit.click()
+        browser = CodedBrowser()
+        val lock = ReentrantLock()
+        lock.lock()
+        val vaadinService: VaadinService = TestVaadinService(vaadinServlet, deploymentConfiguration)
+        whenever(wrappedSession.getAttribute(any())).thenReturn(lock)
+        val session = TestVaadinSession(vaadinService)
+        session.testLock = lock
+        session.refreshTransients(wrappedSession, vaadinService)
+        VaadinSession.setCurrent(session)
+        persistenceService1 = injector.getInstance(Key.get(PersistenceService::class.java, Jpa1::class.java))
+        persistenceService2 = injector.getInstance(Key.get(PersistenceService::class.java, Jpa2::class.java))
+        persistenceService1.start()
+        persistenceService2.start()
+        val uiProvider = injector.getInstance(TestAppUIProvider::class.java)
+        whenever(vaadinRequest.service).thenReturn(vaadinService)
+        whenever(vaadinRequest.getParameter("v-loc")).thenReturn("http://localhost:8080/krail-testapp/#home")
+        whenever(vaadinRequest.getAttribute(ApplicationConstants.UI_ROOT_PATH)).thenReturn("http://localhost:8080/krail-testapp")
+        val event = UICreateEvent(vaadinRequest, TestAppUI::class.java)
+        val ui = uiProvider.createInstance(event) as TestAppUI
+        UI.setCurrent(ui)
+        ui.session = session
+        ui.doInit(vaadinRequest, 1, null)
+        val navigator = ui.krailNavigator
+        ui.page.location = URI.create("http://localhost:8080/krail-testapp/#login")
+
+
+
+        navigator.navigateTo("login")
+        var currentView = ui.view
+        println(currentView.javaClass)
+
+        navigator.navigateTo("widgetset")
+        currentView = ui.view
+        println(currentView.javaClass)
 
 //        page.ui.statusPanel.label.valueShouldBe("ds")
 
-        page.view.username.value = "ds"
+//        page.view.username.value = "ds"
 
+    }
+}
+
+class TestVaadinSession(service: VaadinService) : VaadinSession(service) {
+    lateinit var testLock: ReentrantLock
+    override fun getLockInstance(): Lock {
+        return testLock
+    }
+}
+
+class TestVaadinService(servlet: VaadinServlet, deploymentConfiguration: DeploymentConfiguration?) : VaadinServletService(servlet, deploymentConfiguration) {
+    override fun generateConnectorId(session: VaadinSession?, connector: ClientConnector?): String {
+        return UUID.randomUUID().toString()
     }
 }
 
