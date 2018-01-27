@@ -23,12 +23,21 @@ class DreamCase {
         browser = CodedBrowser()
         browser.setup()
         browser.navigateTo("login")
-        var currentView = (browser as CodedBrowser).view
-        currentView.shouldBeInstanceOf<LoginView>()
 
+        browser.view.shouldBeInstanceOf<LoginView>()
+
+        with(browser.view as LoginView) {
+            password.e().captionShouldBe("Password")
+        }
         browser.navigateTo("widgetset")
-        currentView = (browser as CodedBrowser).view
-        currentView.shouldBeInstanceOf<WidgetsetView>()
+        browser.fragmentShouldBe("widgetset")
+
+        println("=================>> ${browser.currentUrl()}")
+
+
+        browser.view.shouldBeInstanceOf<WidgetsetView>()
+
+        println("=================>> ${browser.currentUrl()}")
 
 //        page.ui.statusPanel.label.valueShouldBe("ds")
 

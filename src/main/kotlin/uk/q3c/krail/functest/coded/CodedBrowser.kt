@@ -18,10 +18,7 @@ import uk.q3c.krail.core.navigate.Navigator
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.LoginView
-import uk.q3c.krail.functest.Browser
-import uk.q3c.krail.functest.LabelElement
-import uk.q3c.krail.functest.TextFieldElement
-import uk.q3c.krail.functest.browser
+import uk.q3c.krail.functest.*
 import uk.q3c.krail.testapp.TestAppBindingManager
 import uk.q3c.krail.testapp.TestAppUI
 import uk.q3c.krail.testapp.persist.Jpa1
@@ -33,9 +30,13 @@ import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 
 class CodedBrowser : Browser {
+    override fun currentUrl(): String {
+        return ui.page.location.toString()
+    }
+
     private lateinit var navigator: Navigator
-    lateinit var view: KrailView
-    lateinit var ui: ScopedUI
+    override lateinit var view: KrailView
+    private lateinit var ui: ScopedUI
 
     override fun setup() {
         val injector: Injector = FunctionalTestBindingManager().injector
@@ -82,12 +83,12 @@ class CodedBrowser : Browser {
         return CodedTextFieldElement(textField)
     }
 
-    override fun currentFragmentShouldBe(desiredFragment: String) {
-        TODO()
+    override fun fragmentShouldBe(desiredFragment: String) {
+        waitForNavigationState({ currentUrl() }, { navState -> desiredFragment == navState.fragment })
     }
 
-    override fun currentFragmentShouldNotBe(desiredFragment: String) {
-        TODO()
+    override fun fragmentShouldNotBe(desiredFragment: String) {
+        waitForNavigationState({ currentUrl() }, { navState -> desiredFragment != navState.fragment })
     }
 
     override fun back() {
@@ -97,6 +98,7 @@ class CodedBrowser : Browser {
     override fun navigateTo(fragment: String) {
         navigator.navigateTo(fragment)
         view = ui.view
+        fragmentShouldBe(fragment)
     }
 
 }
@@ -136,12 +138,12 @@ abstract class Page2<out T : KrailView>(val urlFragment: String, val view: T) : 
     override fun shouldBeOpen() {
         Selenide.`$`(view.javaClass.simpleName).`is`(Condition.visible)
         // ignore any params
-        browser.currentFragmentShouldBe(urlFragment)
+        browser.fragmentShouldBe(urlFragment)
     }
 
     override fun shouldBeOpenWithUrl(otherFragment: String) {
         Selenide.`$`(view.javaClass.simpleName).`is`(Condition.visible)
-        browser.currentFragmentShouldBe(otherFragment)
+        browser.fragmentShouldBe(otherFragment)
     }
 
 
