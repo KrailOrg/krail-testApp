@@ -13,6 +13,7 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.TextField
 import com.vaadin.ui.UI
 import org.amshove.kluent.mock
+import org.amshove.kluent.shouldBe
 import org.apache.onami.persist.PersistenceService
 import uk.q3c.krail.core.navigate.Navigator
 import uk.q3c.krail.core.ui.ScopedUI
@@ -30,6 +31,10 @@ import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 
 class CodedBrowser : Browser {
+    override fun viewShouldBe(viewClass: Class<*>) {
+        view.javaClass.shouldBe(viewClass)
+    }
+
     override fun currentUrl(): String {
         return ui.page.location.toString()
     }

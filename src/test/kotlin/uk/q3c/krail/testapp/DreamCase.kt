@@ -4,11 +4,12 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.TextField
 import org.amshove.kluent.shouldBeInstanceOf
 import org.junit.Test
+import uk.q3c.krail.core.view.DefaultLoginView
 import uk.q3c.krail.core.view.LoginView
 import uk.q3c.krail.functest.LabelElement
 import uk.q3c.krail.functest.TextFieldElement
 import uk.q3c.krail.functest.browser
-import uk.q3c.krail.functest.coded.CodedBrowser
+import uk.q3c.krail.functest.selenide.SelenideBrowser
 import uk.q3c.krail.testapp.view.WidgetsetView
 
 
@@ -20,11 +21,11 @@ class DreamCase {
 
     @Test
     fun doit() {
-        browser = CodedBrowser()
+//        browser = CodedBrowser()
+        browser = SelenideBrowser()
         browser.setup()
         browser.navigateTo("login")
-
-        browser.view.shouldBeInstanceOf<LoginView>()
+        browser.viewShouldBe(DefaultLoginView::class.java)
 
         with(browser.view as LoginView) {
             password.e().captionShouldBe("Password")
