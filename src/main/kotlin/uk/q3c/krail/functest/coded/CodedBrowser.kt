@@ -16,6 +16,9 @@ import org.amshove.kluent.mock
 import org.amshove.kluent.shouldBe
 import org.apache.onami.persist.PersistenceService
 import uk.q3c.krail.core.navigate.Navigator
+import uk.q3c.krail.core.navigate.sitemap.DefaultMasterSitemap
+import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
+import uk.q3c.krail.core.navigate.sitemap.SitemapModule
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.LoginView
@@ -115,11 +118,21 @@ class FunctionalTestBindingManager : TestAppBindingManager() {
             coreModules.add(PageObjectModule())
         }
     }
+
+    override fun sitemapModule(): Module {
+        return FunctionalTestSitemapModule()
+    }
 }
 
 class PageObjectModule : AbstractModule() {
     override fun configure() {
         bind(LoginPage2::class.java)
+    }
+}
+
+class FunctionalTestSitemapModule : SitemapModule() {
+    override fun bindMasterSitemap() {
+        bind(MasterSitemap::class.java).to(DefaultMasterSitemap::class.java).`in`(Singleton::class.java)
     }
 }
 

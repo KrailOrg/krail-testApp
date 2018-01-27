@@ -12,11 +12,15 @@ import com.vaadin.server.*
 import com.vaadin.shared.ApplicationConstants
 import com.vaadin.ui.Label
 import com.vaadin.ui.TextField
+import com.vaadin.ui.UI
 import org.amshove.kluent.mock
 import org.apache.onami.persist.PersistenceService
 import uk.q3c.krail.core.navigate.Navigator
+import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.KrailView
+import uk.q3c.krail.core.view.ViewFactory
+import uk.q3c.krail.core.view.component.ViewChangeBusMessage
 import uk.q3c.krail.functest.Browser
 import uk.q3c.krail.functest.LabelElement
 import uk.q3c.krail.functest.TextFieldElement
@@ -33,16 +37,23 @@ import java.util.concurrent.locks.ReentrantLock
 
 class SelenideBrowser : Browser {
     override fun viewShouldBe(viewClass: Class<*>) {
-        `$`("#${viewClass.simpleName}").shouldBe(visible)
+        `$`("#${viewClass.simpleName}").`is`(visible)
     }
 
     override lateinit var view: KrailView
     private lateinit var ui: ScopedUI
     private lateinit var navigator: Navigator
+    private lateinit var masterSitemap: MasterSitemap
+    private lateinit var viewFactory: ViewFactory
+    private val viewChangeBusMessage: ViewChangeBusMessage = mock()
 
     override fun navigateTo(fragment: String) {
         Selenide.open(fragment)
+        val node = masterSitemap.nodeFor(fragment)
+        view = viewFactory.get(node.viewClass)
+        view.buildView(mock())
     }
+
 
     override fun setup() {
         System.setProperty("selenide.browser", "chrome")
@@ -75,11 +86,13 @@ class SelenideBrowser : Browser {
         whenever(vaadinRequest.getAttribute(ApplicationConstants.UI_ROOT_PATH)).thenReturn("http://localhost:8080/krail-testapp")
         val event = UICreateEvent(vaadinRequest, TestAppUI::class.java)
         ui = uiProvider.createInstance(event) as TestAppUI
-//        UI.setCurrent(ui)
-//        ui.session = session
-//        ui.doInit(vaadinRequest, 1, null)
+        UI.setCurrent(ui)
+        ui.session = session
+        ui.doInit(vaadinRequest, 1, null)
 //        navigator = ui.krailNavigator
 //        ui.page.location = URI.create("http://localhost:8080/krail-testapp/#login")
+        masterSitemap = injector.getInstance(MasterSitemap::class.java)
+        viewFactory = injector.getInstance(ViewFactory::class.java)
     }
 
     override fun element(label: Label): LabelElement {

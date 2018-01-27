@@ -27,6 +27,8 @@ class DreamCase {
         browser.navigateTo("login")
         browser.viewShouldBe(DefaultLoginView::class.java)
 
+        browser.view.e["password"].captionShouldBe("padsword")
+
         with(browser.view as LoginView) {
             password.e().captionShouldBe("Password")
         }
