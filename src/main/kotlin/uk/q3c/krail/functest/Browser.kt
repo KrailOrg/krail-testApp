@@ -4,7 +4,7 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.TextField
 import uk.q3c.krail.core.navigate.NavigationState
 import uk.q3c.krail.core.navigate.StrictURIFragmentHandler
-import uk.q3c.krail.core.view.KrailView
+import uk.q3c.krail.functest.coded.CodedBrowser
 import uk.q3c.krail.functest.selenide.SelenideBrowser
 import uk.q3c.util.clazz.DefaultClassNameUtils
 import java.net.URI
@@ -15,7 +15,8 @@ import java.util.*
  * Created by David Sowerby on 23 Jan 2018
  */
 interface Browser {
-    var view: KrailView
+
+    var view: ViewElement
     fun back()
     fun element(textField: TextField): TextFieldElement
     fun element(label: Label): LabelElement
@@ -34,6 +35,17 @@ interface Browser {
 
 
 var browser: Browser = SelenideBrowser()
+var executionMode = ExecutionMode.SELENIDE
+
+enum class ExecutionMode { CODED, SELENIDE }
+
+
+fun createBrowser() {
+    when (executionMode) {
+        ExecutionMode.SELENIDE -> browser = SelenideBrowser()
+        ExecutionMode.CODED -> browser = CodedBrowser()
+    }
+}
 
 /**
  * Waits for source to provide a url which contains the fragment [condition], or times out

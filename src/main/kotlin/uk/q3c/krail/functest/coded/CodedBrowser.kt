@@ -43,7 +43,7 @@ class CodedBrowser : Browser {
     }
 
     private lateinit var navigator: Navigator
-    override lateinit var view: KrailView
+    override lateinit var view: ViewElement
     private lateinit var ui: ScopedUI
 
     override fun setup() {
@@ -105,11 +105,13 @@ class CodedBrowser : Browser {
 
     override fun navigateTo(fragment: String) {
         navigator.navigateTo(fragment)
-        view = ui.view
+        view = CodedViewElement(ui.view, view.javaClass.simpleName)
         fragmentShouldBe(fragment)
     }
 
 }
+
+class CodedViewElement(private val view: KrailView, override val id: String) : ViewElement
 
 class FunctionalTestBindingManager : TestAppBindingManager() {
     override fun addUtilModules(coreModules: MutableList<Module>?) {

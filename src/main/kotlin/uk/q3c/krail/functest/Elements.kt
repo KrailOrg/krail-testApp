@@ -1,7 +1,5 @@
 package uk.q3c.krail.functest
 
-import java.util.*
-
 /**
  * Created by David Sowerby on 23 Jan 2018
  */
@@ -10,11 +8,10 @@ import java.util.*
 interface BaseElement {
     //    val icon: Resource?
     fun captionShouldBe(expectedCaption: String?)
-
     fun descriptionShouldBe(expectedDescription: String)
-    fun localeShouldBe(expectedLocale: Locale)
-    fun primaryStyleNameShouldBe(expectedPrimaryStyleName: String)
-    fun styleNameShouldBe(expectedStyleName: String)
+    //    fun localeShouldBe(expectedLocale: Locale)
+//    fun primaryStyleNameShouldBe(expectedPrimaryStyleName: String)
+//    fun styleNameShouldBe(expectedStyleName: String)
     fun shouldBeEnabled()
     fun shouldNotBeEnabled()
     fun shouldBeVisible()
@@ -40,4 +37,15 @@ interface GridElement : BaseElement
 interface TextFieldElement : BaseElement, ValueElement<String>
 
 interface TextAreaElement : BaseElement, ValueElement<String>
+
+interface ViewElement {
+    val id: String
+}
+
+interface UIElement
+
+interface PageObject {
+    val view: ViewElement
+    val ui: UIElement
+}
 

@@ -6,7 +6,6 @@ import com.codeborne.selenide.SelenideElement
 import com.vaadin.data.HasValue
 import com.vaadin.ui.*
 import uk.q3c.krail.functest.*
-import java.util.*
 
 
 /**
@@ -62,17 +61,6 @@ abstract class AbstractSelenideElement(val component: Component) : BaseElement {
         TODO()
     }
 
-    override fun localeShouldBe(expectedLocale: Locale) {
-        TODO()
-    }
-
-    override fun primaryStyleNameShouldBe(expectedPrimaryStyleName: String) {
-        TODO()
-    }
-
-    override fun styleNameShouldBe(expectedStyleName: String) {
-        TODO()
-    }
 
     override fun shouldBeEnabled() {
         TODO()

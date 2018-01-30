@@ -18,16 +18,12 @@ import org.apache.onami.persist.PersistenceService
 import uk.q3c.krail.core.navigate.Navigator
 import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
 import uk.q3c.krail.core.ui.ScopedUI
-import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.ViewFactory
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage
-import uk.q3c.krail.functest.Browser
-import uk.q3c.krail.functest.LabelElement
-import uk.q3c.krail.functest.TextFieldElement
+import uk.q3c.krail.functest.*
 import uk.q3c.krail.functest.coded.FunctionalTestBindingManager
 import uk.q3c.krail.functest.coded.TestVaadinService
 import uk.q3c.krail.functest.coded.TestVaadinSession
-import uk.q3c.krail.functest.waitForNavigationState
 import uk.q3c.krail.testapp.TestAppUI
 import uk.q3c.krail.testapp.persist.Jpa1
 import uk.q3c.krail.testapp.persist.Jpa2
@@ -35,12 +31,14 @@ import uk.q3c.krail.testapp.ui.TestAppUIProvider
 import java.util.concurrent.locks.ReentrantLock
 
 
+class SelenideViewElement(override val id: String) : ViewElement
+
 class SelenideBrowser : Browser {
     override fun viewShouldBe(viewClass: Class<*>) {
         `$`("#${viewClass.simpleName}").`is`(visible)
     }
 
-    override lateinit var view: KrailView
+    override lateinit var view: ViewElement
     private lateinit var ui: ScopedUI
     private lateinit var navigator: Navigator
     private lateinit var masterSitemap: MasterSitemap
@@ -50,8 +48,7 @@ class SelenideBrowser : Browser {
     override fun navigateTo(fragment: String) {
         Selenide.open(fragment)
         val node = masterSitemap.nodeFor(fragment)
-        view = viewFactory.get(node.viewClass)
-        view.buildView(mock())
+        view = SelenideViewElement(node.viewClass.simpleName)
     }
 
 

@@ -58,17 +58,7 @@ abstract class AbstractCodedElement(val component: Component) : BaseElement {
         TODO()
     }
 
-    override fun localeShouldBe(expectedLocale: Locale) {
-        TODO()
-    }
 
-    override fun primaryStyleNameShouldBe(expectedPrimaryStyleName: String) {
-        TODO()
-    }
-
-    override fun styleNameShouldBe(expectedStyleName: String) {
-        TODO()
-    }
 
     override fun shouldBeEnabled() {
         TODO()
