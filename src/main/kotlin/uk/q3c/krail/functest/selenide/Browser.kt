@@ -10,8 +10,6 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
 import com.vaadin.server.*
 import com.vaadin.shared.ApplicationConstants
-import com.vaadin.ui.Label
-import com.vaadin.ui.TextField
 import com.vaadin.ui.UI
 import org.amshove.kluent.mock
 import org.apache.onami.persist.PersistenceService
@@ -20,10 +18,12 @@ import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.ViewFactory
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage
-import uk.q3c.krail.functest.*
+import uk.q3c.krail.functest.Browser
+import uk.q3c.krail.functest.ViewElement
 import uk.q3c.krail.functest.coded.FunctionalTestBindingManager
 import uk.q3c.krail.functest.coded.TestVaadinService
 import uk.q3c.krail.functest.coded.TestVaadinSession
+import uk.q3c.krail.functest.waitForNavigationState
 import uk.q3c.krail.testapp.TestAppUI
 import uk.q3c.krail.testapp.persist.Jpa1
 import uk.q3c.krail.testapp.persist.Jpa2
@@ -92,13 +92,6 @@ class SelenideBrowser : Browser {
         viewFactory = injector.getInstance(ViewFactory::class.java)
     }
 
-    override fun element(label: Label): LabelElement {
-        return SelenideLabelElement(label)
-    }
-
-    override fun element(textField: TextField): TextFieldElement {
-        return SelenideTextFieldElement(textField)
-    }
 
 
     override fun back() {

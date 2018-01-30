@@ -1,5 +1,11 @@
 package uk.q3c.krail.functest
 
+import uk.q3c.krail.functest.coded.CodedTextFieldElement2
+import uk.q3c.krail.functest.coded.CodedViewElement
+import uk.q3c.krail.functest.selenide.SelenideTextFieldElement2
+import uk.q3c.krail.functest.selenide.SelenideViewElement
+import kotlin.reflect.KProperty
+
 /**
  * Created by David Sowerby on 23 Jan 2018
  */
@@ -36,6 +42,12 @@ interface GridElement : BaseElement
 
 interface TextFieldElement : BaseElement, ValueElement<String>
 
+interface TextFieldElement2 {
+    val id: String
+    fun captionShouldBe(expectedValue: String)
+
+}
+
 interface TextAreaElement : BaseElement, ValueElement<String>
 
 interface ViewElement {
@@ -47,5 +59,15 @@ interface UIElement
 interface PageObject {
     val view: ViewElement
     val ui: UIElement
+}
+
+
+class TextField {
+    operator fun getValue(thisRef: ViewElement, property: KProperty<*>): TextFieldElement2 {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideTextFieldElement2(thisRef as SelenideViewElement, property.name)
+            ExecutionMode.CODED -> CodedTextFieldElement2(thisRef as CodedViewElement, property.name)
+        }
+    }
 }
 

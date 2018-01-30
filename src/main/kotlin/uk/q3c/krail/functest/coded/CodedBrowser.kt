@@ -9,8 +9,6 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
 import com.vaadin.server.*
 import com.vaadin.shared.ApplicationConstants
-import com.vaadin.ui.Label
-import com.vaadin.ui.TextField
 import com.vaadin.ui.UI
 import org.amshove.kluent.mock
 import org.amshove.kluent.shouldBe
@@ -22,7 +20,10 @@ import uk.q3c.krail.core.navigate.sitemap.SitemapModule
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.LoginView
-import uk.q3c.krail.functest.*
+import uk.q3c.krail.functest.Browser
+import uk.q3c.krail.functest.ViewElement
+import uk.q3c.krail.functest.browser
+import uk.q3c.krail.functest.waitForNavigationState
 import uk.q3c.krail.testapp.TestAppBindingManager
 import uk.q3c.krail.testapp.TestAppUI
 import uk.q3c.krail.testapp.persist.Jpa1
@@ -82,14 +83,6 @@ class CodedBrowser : Browser {
         ui.page.location = URI.create("http://localhost:8080/krail-testapp/#login")
     }
 
-
-    override fun element(label: Label): LabelElement {
-        return CodedLabelElement(label)
-    }
-
-    override fun element(textField: TextField): TextFieldElement {
-        return CodedTextFieldElement(textField)
-    }
 
     override fun fragmentShouldBe(desiredFragment: String) {
         waitForNavigationState({ currentUrl() }, { navState -> desiredFragment == navState.fragment })

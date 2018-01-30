@@ -1,7 +1,5 @@
 package uk.q3c.krail.functest
 
-import com.vaadin.ui.Label
-import com.vaadin.ui.TextField
 import uk.q3c.krail.core.navigate.NavigationState
 import uk.q3c.krail.core.navigate.StrictURIFragmentHandler
 import uk.q3c.krail.functest.coded.CodedBrowser
@@ -18,8 +16,6 @@ interface Browser {
 
     var view: ViewElement
     fun back()
-    fun element(textField: TextField): TextFieldElement
-    fun element(label: Label): LabelElement
 
     /**
      * Returns when the [desiredFragment] appears in the browser url, or throws an [AssertionError] on timeout
