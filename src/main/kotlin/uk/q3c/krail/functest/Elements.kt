@@ -30,6 +30,8 @@ interface ValueElement<in T> {
     //    fun requiredIndicatorShouldBeVisible()
 //    fun requiredIndicatorShouldNotBeVisible()
     fun valueShouldBe(expectedValue: T)
+
+    fun setValue(value: T)
 }
 
 interface LabelElement : BaseElement

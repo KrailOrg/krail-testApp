@@ -28,6 +28,8 @@ class DreamCase {
         val view = LoginViewObject()
 
         view.password.captionShouldBe("Password")
+        view.password.setValue("password")
+        view.password.valueShouldBe("password")
 
 
     }

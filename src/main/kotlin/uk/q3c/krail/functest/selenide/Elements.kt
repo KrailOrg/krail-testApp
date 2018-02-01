@@ -2,6 +2,7 @@ package uk.q3c.krail.functest.selenide
 
 import com.codeborne.selenide.Condition.exactText
 import com.codeborne.selenide.Selenide.`$`
+import org.amshove.kluent.shouldBeEqualTo
 import org.openqa.selenium.By
 import uk.q3c.krail.functest.BaseElement
 import uk.q3c.krail.functest.TextFieldElement
@@ -12,10 +13,13 @@ import uk.q3c.krail.functest.browser
  */
 
 class SelenideTextFieldElement(id: String) : TextFieldElement, BaseSelenideElement(id) {
+    override fun setValue(value: String) {
+        `$`(fullId).value = value
+    }
 
 
     override fun valueShouldBe(expectedValue: String) {
-        TODO()
+        `$`(fullId).value.shouldBeEqualTo(expectedValue)
     }
 }
 
