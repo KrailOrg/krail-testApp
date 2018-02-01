@@ -25,7 +25,6 @@ import com.vaadin.ui.VerticalLayout;
 import org.apache.onami.persist.EntityManagerProvider;
 import org.apache.onami.persist.Transactional;
 import org.apache.onami.persist.UnitOfWork;
-import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
@@ -36,7 +35,6 @@ import uk.q3c.krail.testapp.persist.Jpa2;
 import uk.q3c.krail.testapp.persist.Widget;
 
 import javax.persistence.EntityManager;
-import java.util.Optional;
 
 /**
  * A view for testing JPA
@@ -217,22 +215,5 @@ public class JpaView extends ViewBase implements Button.ClickListener {
 
     }
 
-    /**
-     * You only need to override / implement this method if you are using TestBench, or another testing tool which
-     * looks for debug ids. If you do override it to add your own subclass ids, make sure you call super
-     */
-    @Override
-    protected void setIds() {
-        super.setIds();
-        saveBtn1.setId(ID.getId(Optional.of(1), this, saveBtn1));
-        saveBtn2.setId(ID.getId(Optional.of(2), this, saveBtn2));
-        saveBtn3.setId(ID.getId(Optional.of(3), this, saveBtn3));
-        table1.setId(ID.getId(Optional.of(1), this, table1));
-        table2.setId(ID.getId(Optional.of(2), this, table2));
-        countLabelFromContainer1.setId(ID.getId(Optional.of("container 1"), this, countLabelFromContainer1));
-        countLabelFromContainer2.setId(ID.getId(Optional.of("container 2"), this, countLabelFromContainer2));
-        countLabelFromDao1.setId(ID.getId(Optional.of("dao 1"), this, countLabelFromDao1));
-        countLabelFromDao2.setId(ID.getId(Optional.of("dao 2"), this, countLabelFromDao2));
-    }
 
 }

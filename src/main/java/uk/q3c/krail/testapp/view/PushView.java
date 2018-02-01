@@ -26,13 +26,10 @@ import com.vaadin.ui.TextField;
 import uk.q3c.krail.config.ApplicationConfiguration;
 import uk.q3c.krail.config.config.ConfigKeys;
 import uk.q3c.krail.core.push.Broadcaster;
-import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.component.BroadcastMessageLog;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.LabelKey;
-
-import java.util.Optional;
 
 public class PushView extends ViewBaseGrid {
 
@@ -100,17 +97,6 @@ public class PushView extends ViewBaseGrid {
         getGrid().setComponentAlignment(inputLayout, Alignment.MIDDLE_CENTER);
     }
 
-
-    @Override
-    public void setIds() {
-        super.setIds();
-        getGrid().setId(ID.getId(Optional.empty(), this, getGrid()));
-        sendButton.setId(ID.getId(Optional.of("send"), this, sendButton));
-        groupInput.setId(ID.getId(Optional.of("group"), this, groupInput));
-        messageInput.setId(ID.getId(Optional.of("message"), this, messageInput));
-        messageLog.setId(ID.getId(Optional.empty(), this, messageLog));
-        pushEnabled.setId(ID.getId(Optional.empty(), this, pushEnabled));
-    }
 
 
 }

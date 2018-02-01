@@ -23,7 +23,6 @@ import org.apache.onami.persist.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.option.VaadinOptionContext;
-import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.Grid3x3ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.eventbus.GlobalMessageBus;
@@ -38,8 +37,6 @@ import uk.q3c.krail.option.persist.OptionCache;
 import uk.q3c.krail.option.persist.OptionDao;
 import uk.q3c.krail.testapp.i18n.Caption;
 import uk.q3c.krail.testapp.i18n.LabelKey;
-
-import java.util.Optional;
 
 /**
  * Created by David Sowerby on 22/05/15.
@@ -144,15 +141,5 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
         textArea.setValue(buf.toString());
     }
 
-    @Override
-    protected void setIds() {
-        super.setIds();
-        adminButton.setId(ID.getId(Optional.of("admin"), this, adminButton));
-        setValue1Button.setId(ID.getId(Optional.of("setValue1Button"), this, setValue1Button));
-        setValue2Button.setId(ID.getId(Optional.of("setValue2Button"), this, setValue2Button));
-        refreshButton.setId(ID.getId(Optional.of("refresh"), this, refreshButton));
-        clearCacheButton.setId(ID.getId(Optional.of("cache"), this, clearCacheButton));
-        textArea.setId(ID.getId(Optional.of("text area"), this, textArea));
-        clearOptionDatabaseButton.setId(ID.getId(Optional.of("clear-database"), this, clearOptionDatabaseButton));
-    }
+
 }

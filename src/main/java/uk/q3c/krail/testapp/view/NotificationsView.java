@@ -29,7 +29,6 @@ import uk.q3c.krail.core.i18n.MessageKey;
 import uk.q3c.krail.core.option.OptionPopup;
 import uk.q3c.krail.core.option.VaadinOptionContext;
 import uk.q3c.krail.core.user.notify.UserNotifier;
-import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.eventbus.GlobalMessageBus;
@@ -44,7 +43,6 @@ import uk.q3c.krail.testapp.TestAppUI;
 import uk.q3c.krail.testapp.i18n.DescriptionKey;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
 
 @SuppressFBWarnings({"LSC_LITERAL_STRING_COMPARISON", "FCBL_FIELD_COULD_BE_LOCAL"})
 @Listener
@@ -183,19 +181,7 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
         errorButton.setVisible(option.get(errorButtonVisible));
     }
 
-    @Override
-    public void setIds() {
-        super.setIds();
-        grid.setId(ID.getId(Optional.empty(), this, grid));
-        infoButton.setId(ID.getId(Optional.of("information"), this, infoButton));
-        warnButton.setId(ID.getId(Optional.of("warning"), this, warnButton));
-        errorButton.setId(ID.getId(Optional.of("error"), this, errorButton));
-        viewOptionsButton.setId(ID.getId(Optional.of("view-options"), this, viewOptionsButton));
-        uiOptionsButton.setId(ID.getId(Optional.of("ui-options"), this, viewOptionsButton));
-        systemLevelOptionButton.setId(ID.getId(Optional.of("system-level-option"), this, viewOptionsButton));
-        clearOptionStoreButton.setId(ID.getId(Optional.of("clear-store"), this, clearOptionStoreButton));
 
-    }
 
     /**
      * Returns the {@link Option} instance being used by this context

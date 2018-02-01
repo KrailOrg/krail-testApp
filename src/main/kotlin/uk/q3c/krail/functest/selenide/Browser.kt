@@ -34,6 +34,8 @@ import java.util.concurrent.locks.ReentrantLock
 class SelenideViewElement(override val id: String) : ViewElement
 
 class SelenideBrowser : Browser {
+    val injector: Injector = FunctionalTestBindingManager().injector
+
     override fun viewShouldBe(viewClass: Class<*>) {
         `$`("#${viewClass.simpleName}").`is`(visible)
     }
@@ -48,14 +50,19 @@ class SelenideBrowser : Browser {
     override fun navigateTo(fragment: String) {
         Selenide.open(fragment)
         val node = masterSitemap.nodeFor(fragment)
-        view = SelenideViewElement(node.viewClass.simpleName)
+        val viewId = if (node.viewClass.isInterface) {
+            injector.getInstance(node.viewClass).javaClass.simpleName
+        } else {
+            node.viewClass.simpleName
+        }
+        view = SelenideViewElement(viewId)
     }
 
 
     override fun setup() {
         System.setProperty("selenide.browser", "chrome")
         System.setProperty("selenide.baseUrl", "http://localhost:8080/krail-testapp/#")
-        val injector: Injector = FunctionalTestBindingManager().injector
+
         val vaadinServlet: VaadinServlet = mock()
         val deploymentConfiguration: DeploymentConfiguration = mock()
         val wrappedSession: WrappedSession = mock()

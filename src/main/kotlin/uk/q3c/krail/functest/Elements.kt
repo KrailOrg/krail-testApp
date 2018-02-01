@@ -1,9 +1,8 @@
 package uk.q3c.krail.functest
 
-import uk.q3c.krail.functest.coded.CodedTextFieldElement2
-import uk.q3c.krail.functest.coded.CodedViewElement
-import uk.q3c.krail.functest.selenide.SelenideTextFieldElement2
-import uk.q3c.krail.functest.selenide.SelenideViewElement
+import uk.q3c.krail.functest.coded.CodedTextFieldElement
+import uk.q3c.krail.functest.objects.ViewObject
+import uk.q3c.krail.functest.selenide.SelenideTextFieldElement
 import kotlin.reflect.KProperty
 
 /**
@@ -12,23 +11,24 @@ import kotlin.reflect.KProperty
 
 
 interface BaseElement {
+    val id: String
     //    val icon: Resource?
-    fun captionShouldBe(expectedCaption: String?)
-    fun descriptionShouldBe(expectedDescription: String)
+    fun captionShouldBe(expectedCaption: String)
+//    fun descriptionShouldBe(expectedDescription: String)
     //    fun localeShouldBe(expectedLocale: Locale)
 //    fun primaryStyleNameShouldBe(expectedPrimaryStyleName: String)
 //    fun styleNameShouldBe(expectedStyleName: String)
-    fun shouldBeEnabled()
-    fun shouldNotBeEnabled()
-    fun shouldBeVisible()
-    fun shouldNotBeVisible()
+//    fun shouldBeEnabled()
+//    fun shouldNotBeEnabled()
+//    fun shouldBeVisible()
+//    fun shouldNotBeVisible()
 
     // may need others from Focusable
 }
 
 interface ValueElement<in T> {
-    fun requiredIndicatorShouldBeVisible()
-    fun requiredIndicatorShouldNotBeVisible()
+    //    fun requiredIndicatorShouldBeVisible()
+//    fun requiredIndicatorShouldNotBeVisible()
     fun valueShouldBe(expectedValue: T)
 }
 
@@ -40,13 +40,8 @@ interface ButtonElement : BaseElement {
 
 interface GridElement : BaseElement
 
+
 interface TextFieldElement : BaseElement, ValueElement<String>
-
-interface TextFieldElement2 {
-    val id: String
-    fun captionShouldBe(expectedValue: String)
-
-}
 
 interface TextAreaElement : BaseElement, ValueElement<String>
 
@@ -63,10 +58,10 @@ interface PageObject {
 
 
 class TextField {
-    operator fun getValue(thisRef: ViewElement, property: KProperty<*>): TextFieldElement2 {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): TextFieldElement {
         return when (executionMode) {
-            ExecutionMode.SELENIDE -> SelenideTextFieldElement2(thisRef as SelenideViewElement, property.name)
-            ExecutionMode.CODED -> CodedTextFieldElement2(thisRef as CodedViewElement, property.name)
+            ExecutionMode.SELENIDE -> SelenideTextFieldElement(property.name)
+            ExecutionMode.CODED -> CodedTextFieldElement(property.name)
         }
     }
 }

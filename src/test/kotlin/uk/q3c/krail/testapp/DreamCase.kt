@@ -2,7 +2,9 @@ package uk.q3c.krail.testapp
 
 import org.junit.Test
 import uk.q3c.krail.core.view.DefaultLoginView
+import uk.q3c.krail.functest.ExecutionMode
 import uk.q3c.krail.functest.browser
+import uk.q3c.krail.functest.executionMode
 import uk.q3c.krail.functest.objects.LoginViewObject
 import uk.q3c.krail.functest.selenide.SelenideBrowser
 
@@ -15,15 +17,17 @@ class DreamCase {
 
     @Test
     fun doit() {
+//        executionMode=ExecutionMode.CODED
+        executionMode = ExecutionMode.SELENIDE
 //        browser = CodedBrowser()
         browser = SelenideBrowser()
         browser.setup()
         browser.navigateTo("login")
         browser.viewShouldBe(DefaultLoginView::class.java)
 
-        val view = browser.view as LoginViewObject
+        val view = LoginViewObject()
 
-        view.password.captionShouldBe("wiggly")
+        view.password.captionShouldBe("Password")
 
 
     }

@@ -36,7 +36,7 @@ import java.util.concurrent.locks.ReentrantLock
 
 class CodedBrowser : Browser {
     override fun viewShouldBe(viewClass: Class<*>) {
-        view.javaClass.shouldBe(viewClass)
+        (view as CodedViewElement).view.javaClass.shouldBe(viewClass)
     }
 
     override fun currentUrl(): String {
@@ -98,13 +98,13 @@ class CodedBrowser : Browser {
 
     override fun navigateTo(fragment: String) {
         navigator.navigateTo(fragment)
-        view = CodedViewElement(ui.view, view.javaClass.simpleName)
+        view = CodedViewElement(ui.view, ui.view.javaClass.simpleName)
         fragmentShouldBe(fragment)
     }
 
 }
 
-class CodedViewElement(private val view: KrailView, override val id: String) : ViewElement
+class CodedViewElement(val view: KrailView, override val id: String) : ViewElement
 
 class FunctionalTestBindingManager : TestAppBindingManager() {
     override fun addUtilModules(coreModules: MutableList<Module>?) {

@@ -28,15 +28,12 @@ import de.steinwedel.messagebox.MessageBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.risto.stepper.IntStepper;
-import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.AfterViewChangeBusMessage;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.Caption;
 import uk.q3c.krail.testapp.i18n.LabelKey;
-
-import java.util.Optional;
 
 public class WidgetsetView extends ViewBase {
     private static Logger log = LoggerFactory.getLogger(WidgetsetView.class);
@@ -111,16 +108,6 @@ public class WidgetsetView extends ViewBase {
 
     public GridLayout getGrid() {
         return (GridLayout) getRootComponent();
-    }
-
-    @Override
-    public void setIds() {
-        super.setIds();
-        getGrid().setId(ID.getId(Optional.empty(), this, getGrid()));
-        popupButton.setId(ID.getId(Optional.of("popup"), this, popupButton));
-        stepper.setId(ID.getId(Optional.empty(), this, stepper));
-        param1.setId(ID.getId(Optional.of("id"), this, param1));
-        param2.setId(ID.getId(Optional.of("age"), this, param2));
     }
 
     @Override
