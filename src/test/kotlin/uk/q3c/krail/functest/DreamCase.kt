@@ -1,10 +1,7 @@
-package uk.q3c.krail.testapp
+package uk.q3c.krail.functest
 
 import org.junit.Test
 import uk.q3c.krail.core.view.DefaultLoginView
-import uk.q3c.krail.functest.ExecutionMode
-import uk.q3c.krail.functest.browser
-import uk.q3c.krail.functest.executionMode
 import uk.q3c.krail.functest.objects.LoginViewObject
 import uk.q3c.krail.functest.selenide.SelenideBrowser
 
@@ -30,6 +27,10 @@ class DreamCase {
         view.password.captionShouldBe("Password")
         view.password.setValue("password")
         view.password.valueShouldBe("password")
+        view.submit.click()
+
+
+
 
 
     }

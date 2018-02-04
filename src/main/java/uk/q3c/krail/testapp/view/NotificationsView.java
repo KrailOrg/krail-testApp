@@ -30,6 +30,7 @@ import uk.q3c.krail.core.option.OptionPopup;
 import uk.q3c.krail.core.option.VaadinOptionContext;
 import uk.q3c.krail.core.user.notify.UserNotifier;
 import uk.q3c.krail.core.view.ViewBase;
+import uk.q3c.krail.core.view.component.AssignComponentId;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.eventbus.GlobalMessageBus;
 import uk.q3c.krail.eventbus.SubscribeTo;
@@ -58,6 +59,7 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
     private final UserNotifier userNotifier;
     private final Translate translate;
     protected GridLayout grid;
+    @AssignComponentId(assign = false, drilldown = false)
     private Panel buttonPanel;
     private Button clearOptionStoreButton;
     private Button errorButton;
@@ -68,6 +70,7 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
     private OptionSource optionDaoProvider;
     private OptionPopup optionPopup;
     private Button systemLevelOptionButton;
+    @AssignComponentId(assign = false, drilldown = false)
     private TestAppUI ui;
     private Button uiOptionsButton;
     private Button viewOptionsButton;

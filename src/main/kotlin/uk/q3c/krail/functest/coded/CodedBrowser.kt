@@ -13,6 +13,7 @@ import com.vaadin.ui.UI
 import org.amshove.kluent.mock
 import org.amshove.kluent.shouldBe
 import org.apache.onami.persist.PersistenceService
+import org.slf4j.LoggerFactory
 import uk.q3c.krail.core.navigate.Navigator
 import uk.q3c.krail.core.navigate.sitemap.DefaultMasterSitemap
 import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
@@ -20,21 +21,23 @@ import uk.q3c.krail.core.navigate.sitemap.SitemapModule
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.LoginView
-import uk.q3c.krail.functest.Browser
-import uk.q3c.krail.functest.ViewElement
-import uk.q3c.krail.functest.browser
-import uk.q3c.krail.functest.waitForNavigationState
+import uk.q3c.krail.functest.*
 import uk.q3c.krail.testapp.TestAppBindingManager
 import uk.q3c.krail.testapp.TestAppUI
 import uk.q3c.krail.testapp.persist.Jpa1
 import uk.q3c.krail.testapp.persist.Jpa2
 import uk.q3c.krail.testapp.ui.TestAppUIProvider
+import java.io.File
 import java.net.URI
 import java.util.*
 import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 
 class CodedBrowser : Browser {
+    private val log = LoggerFactory.getLogger(this.javaClass.name)
+    private lateinit var injector: Injector
+    private var setup = false
+
     override fun viewShouldBe(viewClass: Class<*>) {
         (view as CodedViewElement).view.javaClass.shouldBe(viewClass)
     }
@@ -48,7 +51,8 @@ class CodedBrowser : Browser {
     private lateinit var ui: ScopedUI
 
     override fun setup() {
-        val injector: Injector = FunctionalTestBindingManager().injector
+        injector = FunctionalTestBindingManager().injector
+
         val vaadinServlet: VaadinServlet = mock()
         val deploymentConfiguration: DeploymentConfiguration = mock()
         val wrappedSession: WrappedSession = mock()
@@ -81,6 +85,27 @@ class CodedBrowser : Browser {
         ui.doInit(vaadinRequest, 1, null)
         navigator = ui.krailNavigator
         ui.page.location = URI.create("http://localhost:8080/krail-testapp/#login")
+        setup = true
+        log.debug("setup complete")
+    }
+
+    fun generatePageObjects() {
+        if (!setup) {
+            setup()
+        }
+
+        val functionalTestSupportBuilder = injector.getInstance(FunctionalTestSupportBuilder::class.java)
+        log.debug("creating functional test model")
+        val model = functionalTestSupportBuilder.generate()
+
+        val pageObjectGenerator = KotlinPageObjectGenerator()
+        val currentDir = File(".")
+        val kotlinPath = "/src/test/kotlin"
+        val packagePath = "uk/q3c/krail/testapp"
+        val targetDir = File(currentDir, "$kotlinPath/$packagePath")
+        val targetFile = File(targetDir, "PageObjects.kt")
+        log.debug("generating page objects to ${targetFile.absolutePath}")
+        pageObjectGenerator.generate(file = targetFile, model = model, packageName = packagePath.replace("/", "."))
     }
 
 
@@ -110,7 +135,7 @@ class FunctionalTestBindingManager : TestAppBindingManager() {
     override fun addUtilModules(coreModules: MutableList<Module>?) {
         super.addUtilModules(coreModules)
         if (coreModules != null) {
-            coreModules.add(PageObjectModule())
+            coreModules.add(FunctionalTestSupportModule())
         }
     }
 
@@ -119,11 +144,6 @@ class FunctionalTestBindingManager : TestAppBindingManager() {
     }
 }
 
-class PageObjectModule : AbstractModule() {
-    override fun configure() {
-        bind(LoginPage2::class.java)
-    }
-}
 
 class FunctionalTestSitemapModule : SitemapModule() {
     override fun bindMasterSitemap() {

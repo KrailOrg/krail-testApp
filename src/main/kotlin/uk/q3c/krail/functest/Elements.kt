@@ -1,7 +1,12 @@
 package uk.q3c.krail.functest
 
+import uk.q3c.krail.functest.coded.CodedButtonElement
+import uk.q3c.krail.functest.coded.CodedLabelElement
+import uk.q3c.krail.functest.coded.CodedTextAreaElement
 import uk.q3c.krail.functest.coded.CodedTextFieldElement
-import uk.q3c.krail.functest.objects.ViewObject
+import uk.q3c.krail.functest.selenide.SelenideButtonElement
+import uk.q3c.krail.functest.selenide.SelenideLabelElement
+import uk.q3c.krail.functest.selenide.SelenideTextAreaElement
 import uk.q3c.krail.functest.selenide.SelenideTextFieldElement
 import kotlin.reflect.KProperty
 
@@ -34,7 +39,10 @@ interface ValueElement<in T> {
     fun setValue(value: T)
 }
 
-interface LabelElement : BaseElement
+interface LabelElement : BaseElement {
+    fun setValue(value: String)
+    fun valueShouldBe(expectedValue: String)
+}
 
 interface ButtonElement : BaseElement {
     fun click()
@@ -53,13 +61,8 @@ interface ViewElement {
 
 interface UIElement
 
-interface PageObject {
-    val view: ViewElement
-    val ui: UIElement
-}
 
-
-class TextField {
+open class TextField {
     operator fun getValue(thisRef: ViewObject, property: KProperty<*>): TextFieldElement {
         return when (executionMode) {
             ExecutionMode.SELENIDE -> SelenideTextFieldElement(property.name)
@@ -68,3 +71,31 @@ class TextField {
     }
 }
 
+class TextArea {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): TextAreaElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideTextAreaElement(property.name)
+            ExecutionMode.CODED -> CodedTextAreaElement(property.name)
+        }
+    }
+}
+
+class PasswordField : TextField()
+
+class Button {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): ButtonElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideButtonElement(property.name)
+            ExecutionMode.CODED -> CodedButtonElement(property.name)
+        }
+    }
+}
+
+class Label {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): LabelElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideLabelElement(property.name)
+            ExecutionMode.CODED -> CodedLabelElement(property.name)
+        }
+    }
+}
