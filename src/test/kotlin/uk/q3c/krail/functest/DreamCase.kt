@@ -2,8 +2,8 @@ package uk.q3c.krail.functest
 
 import org.junit.Test
 import uk.q3c.krail.core.view.DefaultLoginView
-import uk.q3c.krail.functest.objects.LoginViewObject
 import uk.q3c.krail.functest.selenide.SelenideBrowser
+import uk.q3c.krail.testapp.DefaultLoginViewObject
 
 
 /**
@@ -22,7 +22,7 @@ class DreamCase {
         browser.navigateTo("login")
         browser.viewShouldBe(DefaultLoginView::class.java)
 
-        val view = LoginViewObject()
+        val view = DefaultLoginViewObject()
 
         view.password.captionShouldBe("Password")
         view.password.setValue("password")

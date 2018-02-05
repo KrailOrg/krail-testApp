@@ -1,0 +1,181 @@
+package uk.q3c.krail.testapp
+
+import uk.q3c.krail.functest.*
+
+class TestAppPublicHomeViewObject : AbstractViewObject() {
+
+    val label by Label()
+}
+
+class DefaultLoginViewObject : AbstractViewObject() {
+
+    val label by Label()
+    val username by TextField()
+    val statusMsgLabel by Label()
+    val submit by Button()
+    val password by PasswordField()
+}
+
+class DefaultLogoutViewObject : AbstractViewObject()
+
+class DefaultSystemAccountViewObject : AbstractViewObject() {
+
+    val label by Label()
+}
+
+class DefaultRequestSystemAccountCreateViewObject : AbstractViewObject() {
+
+    val label by Label()
+}
+
+class DefaultRequestSystemAccountEnableViewObject : AbstractViewObject() {
+
+    val label by Label()
+}
+
+class DefaultRequestSystemAccountRefreshViewObject : AbstractViewObject() {
+
+    val label by Label()
+}
+
+class DefaultRequestSystemAccountResetViewObject : AbstractViewObject() {
+
+    val label by Label()
+}
+
+class DefaultRequestSystemAccountUnlockViewObject : AbstractViewObject() {
+
+    val label by Label()
+}
+
+class NotificationsViewObject : AbstractViewObject() {
+
+    val systemLevelOptionButton by Button()
+    val errorButton by Button()
+    val infoArea by Label()
+    val warnButton by Button()
+    val clearOptionStoreButton by Button()
+    val infoButton by Button()
+    val uiOptionsButton by Button()
+    val viewOptionsButton by Button()
+}
+
+class IntStepperObject(override val id: String) : AbstractCustomObject(id)
+
+class WidgetsetViewObject : AbstractViewObject() {
+
+    val stepper = IntStepperObject("WidgetsetView-stepper")
+    val infoArea by Label()
+    val param2 by Label()
+    val popupButton by Button()
+    val param1 by Label()
+}
+
+class BroadcastMessageLogObject(override val id: String) : AbstractCustomObject(id)
+
+class PushViewObject : AbstractViewObject() {
+
+    val pushEnabled by CheckBox()
+    val sendButton by Button()
+    val groupInput by TextField()
+    val messageInput by TextField()
+    val infoArea by Label()
+    val messageLog = BroadcastMessageLogObject("PushView-messageLog")
+}
+
+class JpaViewObject : AbstractViewObject() {
+
+    val countLabelFromContainer1 by Label()
+    val countLabelFromContainer2 by Label()
+    val saveBtn1 by Button()
+    val saveBtn2 by Button()
+    val saveBtn3 by Button()
+    val table1 by Grid()
+    val table2 by Grid()
+    val countLabelFromDao1 by Label()
+    val countLabelFromDao2 by Label()
+}
+
+class DefaultPrivateHomeViewObject : AbstractViewObject() {
+
+    val label by Label()
+}
+
+class FinanceViewObject : AbstractViewObject()
+
+class AccountsViewObject : AbstractViewObject()
+
+class PayrollViewObject : AbstractViewObject() {
+
+    val setValue2Button by Button()
+    val refreshButton by Button()
+    val clearCacheButton by Button()
+    val setValue1Button by Button()
+    val textArea by TextArea()
+    val adminButton by Button()
+    val clearOptionDatabaseButton by Button()
+}
+
+class PurchasingViewObject : AbstractViewObject()
+
+class SystemAdminViewObject : AbstractViewObject() {
+
+    val buildReportBtn by Button()
+}
+
+class SitemapReportViewObject : AbstractViewObject() {
+
+    val reportArea by TextArea()
+}
+
+class I18NViewObject : AbstractViewObject() {
+
+    val exportButton by Button()
+    val localeList by TextArea()
+    val instructions1 by Label()
+    val instructions2 by Label()
+    val exportStatus by Label()
+}
+
+class DefaultApplicationLogoObject(override val id: String) : AbstractCustomObject(id)
+
+class DefaultUserNavigationMenuObject(override val id: String) : AbstractCustomObject(id)
+
+class DefaultMessageBarObject(override val id: String) : AbstractCustomObject(id) {
+
+    val display by Label()
+}
+
+class DefaultUserNavigationTreeObject(override val id: String) : AbstractCustomObject(id) {
+
+    val root by TreeGrid()
+    val treeGrid by TreeGrid()
+}
+
+class DefaultUserStatusPanelObject(override val id: String) : AbstractCustomObject(id) {
+
+    val login_logout_Button by Button()
+    val usernameLabel by Label()
+}
+
+class DefaultBreadcrumbObject(override val id: String) : AbstractCustomObject(id)
+
+class DefaultSubPagePanelObject(override val id: String) : AbstractCustomObject(id)
+
+class DefaultApplicationHeaderObject(override val id: String) : AbstractCustomObject(id) {
+
+    val label by Label()
+}
+
+class TestAppUIObject : AbstractPageObject() {
+
+    val logo = DefaultApplicationLogoObject("TestAppUI-logo")
+    val menu = DefaultUserNavigationMenuObject("TestAppUI-menu")
+    val messageBar = DefaultMessageBarObject("TestAppUI-messageBar")
+    val navTree = DefaultUserNavigationTreeObject("TestAppUI-navTree")
+    val userStatus = DefaultUserStatusPanelObject("TestAppUI-userStatus")
+    val breadcrumb = DefaultBreadcrumbObject("TestAppUI-breadcrumb")
+    val subpage = DefaultSubPagePanelObject("TestAppUI-subpage")
+    val header = DefaultApplicationHeaderObject("TestAppUI-header")
+}
+

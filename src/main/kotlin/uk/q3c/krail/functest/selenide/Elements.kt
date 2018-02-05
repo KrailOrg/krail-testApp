@@ -12,9 +12,8 @@ import uk.q3c.krail.functest.*
  * Created by David Sowerby on 30 Jan 2018
  */
 
-abstract class BaseSelenideElement(final override val id: String) : BaseElement {
-    private val viewElement: SelenideViewElement = browser.view as SelenideViewElement
-    val fullId = "#${viewElement.id}-$id"
+abstract class AbstractSelenideElement(final override val id: String) : BaseElement {
+    val fullId = "#$id"
 
     override fun captionShouldBe(expectedCaption: String) {
         `$`(fullId).`$x`("..").`$`(By.className("v-captiontext")).shouldHave(exactTextCaseSensitive(expectedCaption))
@@ -22,11 +21,11 @@ abstract class BaseSelenideElement(final override val id: String) : BaseElement 
     }
 }
 
-class SelenideGridElement(id: String) : GridElement, BaseSelenideElement(id)
+class SelenideGridElement(id: String) : GridElement, AbstractSelenideElement(id)
 
-class SelenideTreeGridElement(id: String) : TreeGridElement, BaseSelenideElement(id)
+class SelenideTreeGridElement(id: String) : TreeGridElement, AbstractSelenideElement(id)
 
-class SelenideTextFieldElement(id: String) : TextFieldElement, BaseSelenideElement(id) {
+class SelenideTextFieldElement(id: String) : TextFieldElement, AbstractSelenideElement(id) {
     override fun setValue(value: String) {
         `$`(fullId).value = value
     }
@@ -37,7 +36,7 @@ class SelenideTextFieldElement(id: String) : TextFieldElement, BaseSelenideEleme
     }
 }
 
-class SelenideCheckBoxElement(id: String) : CheckBoxElement, BaseSelenideElement(id) {
+class SelenideCheckBoxElement(id: String) : CheckBoxElement, AbstractSelenideElement(id) {
     override fun setValue(value: Boolean) {
         `$`(fullId).value = value.toString()
     }
@@ -48,7 +47,7 @@ class SelenideCheckBoxElement(id: String) : CheckBoxElement, BaseSelenideElement
     }
 }
 
-class SelenideTextAreaElement(id: String) : TextAreaElement, BaseSelenideElement(id) {
+class SelenideTextAreaElement(id: String) : TextAreaElement, AbstractSelenideElement(id) {
     override fun setValue(value: String) {
         `$`(fullId).value = value
     }
@@ -59,7 +58,7 @@ class SelenideTextAreaElement(id: String) : TextAreaElement, BaseSelenideElement
     }
 }
 
-class SelenideLabelElement(id: String) : LabelElement, BaseSelenideElement(id) {
+class SelenideLabelElement(id: String) : LabelElement, AbstractSelenideElement(id) {
     override fun setValue(value: String) {
         `$`(fullId).value = value
     }
@@ -71,7 +70,7 @@ class SelenideLabelElement(id: String) : LabelElement, BaseSelenideElement(id) {
 }
 
 
-class SelenideButtonElement(id: String) : ButtonElement, BaseSelenideElement(id) {
+class SelenideButtonElement(id: String) : ButtonElement, AbstractSelenideElement(id) {
     override fun click() {
         `$`(fullId).shouldBe(visible).click()
     }

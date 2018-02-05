@@ -19,6 +19,7 @@ import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.ViewFactory
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage
 import uk.q3c.krail.functest.Browser
+import uk.q3c.krail.functest.PageElement
 import uk.q3c.krail.functest.ViewElement
 import uk.q3c.krail.functest.coded.FunctionalTestBindingManager
 import uk.q3c.krail.functest.coded.TestVaadinService
@@ -28,12 +29,15 @@ import uk.q3c.krail.testapp.TestAppUI
 import uk.q3c.krail.testapp.persist.Jpa1
 import uk.q3c.krail.testapp.persist.Jpa2
 import uk.q3c.krail.testapp.ui.TestAppUIProvider
+import uk.q3c.util.clazz.UnenhancedClassIdentifier
 import java.util.concurrent.locks.ReentrantLock
 
 
 class SelenideViewElement(override val id: String) : ViewElement
+class SelenidePageElement(override val id: String) : PageElement
 
 class SelenideBrowser : Browser {
+
     val injector: Injector = FunctionalTestBindingManager().injector
 
     override fun viewShouldBe(viewClass: Class<*>) {
@@ -41,6 +45,7 @@ class SelenideBrowser : Browser {
     }
 
     override lateinit var view: ViewElement
+    override lateinit var page: PageElement
     private lateinit var ui: ScopedUI
     private lateinit var navigator: Navigator
     private lateinit var masterSitemap: MasterSitemap
@@ -50,12 +55,13 @@ class SelenideBrowser : Browser {
     override fun navigateTo(fragment: String) {
         Selenide.open(fragment)
         val node = masterSitemap.nodeFor(fragment)
-        val viewId = if (node.viewClass.isInterface) {
-            injector.getInstance(node.viewClass).javaClass.simpleName
-        } else {
-            node.viewClass.simpleName
-        }
+        val krailView = injector.getInstance(node.viewClass)
+
+        val realClass = injector.getInstance(UnenhancedClassIdentifier::class.java)
+        val viewId = realClass.getOriginalClassFor(krailView).simpleName
+        val pageId = realClass.getOriginalClassFor(ui).simpleName
         view = SelenideViewElement(viewId)
+        page = SelenidePageElement(pageId)
     }
 
 
@@ -98,7 +104,6 @@ class SelenideBrowser : Browser {
         masterSitemap = injector.getInstance(MasterSitemap::class.java)
         viewFactory = injector.getInstance(ViewFactory::class.java)
     }
-
 
 
     override fun back() {

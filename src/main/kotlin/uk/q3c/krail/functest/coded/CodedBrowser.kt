@@ -27,6 +27,7 @@ import uk.q3c.krail.testapp.TestAppUI
 import uk.q3c.krail.testapp.persist.Jpa1
 import uk.q3c.krail.testapp.persist.Jpa2
 import uk.q3c.krail.testapp.ui.TestAppUIProvider
+import uk.q3c.util.clazz.UnenhancedClassIdentifier
 import java.io.File
 import java.net.URI
 import java.util.*
@@ -34,6 +35,7 @@ import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 
 class CodedBrowser : Browser {
+    override lateinit var page: PageElement
     private val log = LoggerFactory.getLogger(this.javaClass.name)
     private lateinit var injector: Injector
     private var setup = false
@@ -123,13 +125,17 @@ class CodedBrowser : Browser {
 
     override fun navigateTo(fragment: String) {
         navigator.navigateTo(fragment)
-        view = CodedViewElement(ui.view, ui.view.javaClass.simpleName)
+        val real = injector.getInstance(UnenhancedClassIdentifier::class.java)
+        view = CodedViewElement(ui.view, real.getOriginalClassFor(view).simpleName)
+        page = CodedPageElement(ui, real.getOriginalClassFor(ui).simpleName)
         fragmentShouldBe(fragment)
     }
 
 }
 
 class CodedViewElement(val view: KrailView, override val id: String) : ViewElement
+
+class CodedPageElement(val ui: ScopedUI, override val id: String) : PageElement
 
 class FunctionalTestBindingManager : TestAppBindingManager() {
     override fun addUtilModules(coreModules: MutableList<Module>?) {

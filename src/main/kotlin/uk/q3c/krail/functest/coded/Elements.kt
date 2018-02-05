@@ -1,17 +1,12 @@
 package uk.q3c.krail.functest.coded
 
 import com.vaadin.ui.*
-import com.vaadin.ui.Button
-import com.vaadin.ui.CheckBox
-import com.vaadin.ui.Grid
-import com.vaadin.ui.TextField
-import com.vaadin.ui.TreeGrid
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import uk.q3c.krail.functest.*
 
-abstract class CodedBaseElement<out T : Component>(override val id: String) : BaseElement {
+abstract class AbstractCodedElement<out T : Component>(override val id: String) : BaseElement {
     private val viewElement: CodedViewElement = browser.view as CodedViewElement
     val view = viewElement.view
     protected val nativeField: T = nativeField()
@@ -31,10 +26,10 @@ abstract class CodedBaseElement<out T : Component>(override val id: String) : Ba
 
 }
 
-class CodedGridElement(id: String) : GridElement, CodedBaseElement<Grid<Any>>(id)
-class CodedTreeGridElement(id: String) : TreeGridElement, CodedBaseElement<TreeGrid<Any>>(id)
+class CodedGridElement(id: String) : GridElement, AbstractCodedElement<Grid<Any>>(id)
+class CodedTreeGridElement(id: String) : TreeGridElement, AbstractCodedElement<TreeGrid<Any>>(id)
 
-class CodedTextFieldElement(id: String) : TextFieldElement, CodedBaseElement<TextField>(id) {
+class CodedTextFieldElement(id: String) : TextFieldElement, AbstractCodedElement<TextField>(id) {
 
     override fun setValue(value: String) {
         nativeField.value = value
@@ -47,7 +42,7 @@ class CodedTextFieldElement(id: String) : TextFieldElement, CodedBaseElement<Tex
 
 }
 
-class CodedCheckBoxElement(id: String) : CheckBoxElement, CodedBaseElement<CheckBox>(id) {
+class CodedCheckBoxElement(id: String) : CheckBoxElement, AbstractCodedElement<CheckBox>(id) {
 
     override fun setValue(value: Boolean) {
         nativeField.value = value
@@ -60,7 +55,7 @@ class CodedCheckBoxElement(id: String) : CheckBoxElement, CodedBaseElement<Check
 
 }
 
-class CodedTextAreaElement(id: String) : TextAreaElement, CodedBaseElement<TextField>(id) {
+class CodedTextAreaElement(id: String) : TextAreaElement, AbstractCodedElement<TextField>(id) {
 
     override fun setValue(value: String) {
         nativeField.value = value
@@ -74,7 +69,7 @@ class CodedTextAreaElement(id: String) : TextAreaElement, CodedBaseElement<TextF
 }
 
 
-class CodedLabelElement(id: String) : LabelElement, CodedBaseElement<TextField>(id) {
+class CodedLabelElement(id: String) : LabelElement, AbstractCodedElement<TextField>(id) {
 
     override fun setValue(value: String) {
         nativeField.value = value
@@ -87,7 +82,7 @@ class CodedLabelElement(id: String) : LabelElement, CodedBaseElement<TextField>(
 
 }
 
-class CodedButtonElement(id: String) : ButtonElement, CodedBaseElement<Button>(id) {
+class CodedButtonElement(id: String) : ButtonElement, AbstractCodedElement<Button>(id) {
     override fun click() {
         nativeField.click()
     }
