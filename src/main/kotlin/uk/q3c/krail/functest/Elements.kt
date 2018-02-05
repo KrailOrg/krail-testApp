@@ -1,13 +1,7 @@
 package uk.q3c.krail.functest
 
-import uk.q3c.krail.functest.coded.CodedButtonElement
-import uk.q3c.krail.functest.coded.CodedLabelElement
-import uk.q3c.krail.functest.coded.CodedTextAreaElement
-import uk.q3c.krail.functest.coded.CodedTextFieldElement
-import uk.q3c.krail.functest.selenide.SelenideButtonElement
-import uk.q3c.krail.functest.selenide.SelenideLabelElement
-import uk.q3c.krail.functest.selenide.SelenideTextAreaElement
-import uk.q3c.krail.functest.selenide.SelenideTextFieldElement
+import uk.q3c.krail.functest.coded.*
+import uk.q3c.krail.functest.selenide.*
 import kotlin.reflect.KProperty
 
 /**
@@ -44,11 +38,14 @@ interface LabelElement : BaseElement {
     fun valueShouldBe(expectedValue: String)
 }
 
+interface CheckBoxElement : BaseElement, ValueElement<Boolean>
+
 interface ButtonElement : BaseElement {
     fun click()
 }
 
 interface GridElement : BaseElement
+interface TreeGridElement : BaseElement
 
 
 interface TextFieldElement : BaseElement, ValueElement<String>
@@ -96,6 +93,33 @@ class Label {
         return when (executionMode) {
             ExecutionMode.SELENIDE -> SelenideLabelElement(property.name)
             ExecutionMode.CODED -> CodedLabelElement(property.name)
+        }
+    }
+}
+
+class Grid {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): GridElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideGridElement(property.name)
+            ExecutionMode.CODED -> CodedGridElement(property.name)
+        }
+    }
+}
+
+class TreeGrid {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): TreeGridElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideTreeGridElement(property.name)
+            ExecutionMode.CODED -> CodedTreeGridElement(property.name)
+        }
+    }
+}
+
+class CheckBox {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): CheckBoxElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideCheckBoxElement(property.name)
+            ExecutionMode.CODED -> CodedCheckBoxElement(property.name)
         }
     }
 }

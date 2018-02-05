@@ -1,8 +1,12 @@
 package uk.q3c.krail.functest.coded
 
+import com.vaadin.ui.*
 import com.vaadin.ui.Button
-import com.vaadin.ui.Component
+import com.vaadin.ui.CheckBox
+import com.vaadin.ui.Grid
 import com.vaadin.ui.TextField
+import com.vaadin.ui.TreeGrid
+import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import uk.q3c.krail.functest.*
@@ -27,6 +31,9 @@ abstract class CodedBaseElement<out T : Component>(override val id: String) : Ba
 
 }
 
+class CodedGridElement(id: String) : GridElement, CodedBaseElement<Grid<Any>>(id)
+class CodedTreeGridElement(id: String) : TreeGridElement, CodedBaseElement<TreeGrid<Any>>(id)
+
 class CodedTextFieldElement(id: String) : TextFieldElement, CodedBaseElement<TextField>(id) {
 
     override fun setValue(value: String) {
@@ -36,6 +43,19 @@ class CodedTextFieldElement(id: String) : TextFieldElement, CodedBaseElement<Tex
 
     override fun valueShouldBe(expectedValue: String) {
         nativeField.value.shouldBeEqualTo(expectedValue)
+    }
+
+}
+
+class CodedCheckBoxElement(id: String) : CheckBoxElement, CodedBaseElement<CheckBox>(id) {
+
+    override fun setValue(value: Boolean) {
+        nativeField.value = value
+    }
+
+
+    override fun valueShouldBe(expectedValue: Boolean) {
+        nativeField.value.shouldBe(expectedValue)
     }
 
 }

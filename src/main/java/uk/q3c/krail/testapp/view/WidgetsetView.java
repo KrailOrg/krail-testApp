@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.risto.stepper.IntStepper;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.AfterViewChangeBusMessage;
+import uk.q3c.krail.core.view.component.AssignComponentId;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.Caption;
@@ -38,6 +39,7 @@ import uk.q3c.krail.testapp.i18n.LabelKey;
 public class WidgetsetView extends ViewBase {
     private static Logger log = LoggerFactory.getLogger(WidgetsetView.class);
     protected MessageBox messageBox;
+    @AssignComponentId(assign = false, drilldown = false)
     private Panel buttonPanel;
     private Label infoArea;
     private Button popupButton;
