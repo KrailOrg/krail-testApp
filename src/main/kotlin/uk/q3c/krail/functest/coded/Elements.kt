@@ -71,11 +71,6 @@ class CodedTextAreaElement(id: String) : TextAreaElement, AbstractCodedElement<T
 
 class CodedLabelElement(id: String) : LabelElement, AbstractCodedElement<TextField>(id) {
 
-    override fun setValue(value: String) {
-        nativeField.value = value
-    }
-
-
     override fun valueShouldBe(expectedValue: String) {
         nativeField.value.shouldBeEqualTo(expectedValue)
     }

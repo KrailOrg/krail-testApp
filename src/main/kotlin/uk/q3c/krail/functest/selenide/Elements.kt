@@ -26,11 +26,13 @@ class SelenideGridElement(id: String) : GridElement, AbstractSelenideElement(id)
 class SelenideTreeGridElement(id: String) : TreeGridElement, AbstractSelenideElement(id)
 
 class SelenideTextFieldElement(id: String) : TextFieldElement, AbstractSelenideElement(id) {
+
+    // ##checked
     override fun setValue(value: String) {
         `$`(fullId).value = value
     }
 
-
+    // ##checked
     override fun valueShouldBe(expectedValue: String) {
         `$`(fullId).value.shouldBeEqualTo(expectedValue)
     }
@@ -59,18 +61,21 @@ class SelenideTextAreaElement(id: String) : TextAreaElement, AbstractSelenideEle
 }
 
 class SelenideLabelElement(id: String) : LabelElement, AbstractSelenideElement(id) {
-    override fun setValue(value: String) {
-        `$`(fullId).value = value
-    }
-
-
+    // ##checked
     override fun valueShouldBe(expectedValue: String) {
-        `$`(fullId).value.shouldBeEqualTo(expectedValue)
+        `$`(fullId).text.shouldBeEqualTo(expectedValue)
     }
 }
 
 
 class SelenideButtonElement(id: String) : ButtonElement, AbstractSelenideElement(id) {
+    // ##checked
+    override fun captionShouldBe(expectedCaption: String) {
+        `$`(fullId).`$x`("..").`$`(By.className("v-button-caption")).shouldHave(exactTextCaseSensitive(expectedCaption))
+
+    }
+
+    // ##checked
     override fun click() {
         `$`(fullId).shouldBe(visible).click()
     }

@@ -32,7 +32,7 @@ class LogInOutFunctionalTest : Spek({
 
                 it("shows users status as guest, and Log In on button") {
                     page.userStatus.usernameLabel.valueShouldBe("Guest")
-                    page.userStatus.login_logout_Button.captionShouldBe("Log In")
+                    page.userStatus.login_logout_Button.captionShouldBe("log in")
                 }
             }
 
@@ -41,12 +41,18 @@ class LogInOutFunctionalTest : Spek({
                 view.password.setValue("password")
                 view.submit.click()
 
+
                 it("navigates to private home page") {
                     if (executionMode == ExecutionMode.SELENIDE) {
                         browser.fragmentShouldBe("private/home")
                     } else {
                         browser.fragmentShouldBe("home") // TODO https://github.com/davidsowerby/krail-functest/issues/2
                     }
+                }
+
+                it("shows users status as user name, and 'log out' on button") {
+                    page.userStatus.usernameLabel.valueShouldBe("ds")
+                    page.userStatus.login_logout_Button.captionShouldBe("log out")
                 }
 
             }
