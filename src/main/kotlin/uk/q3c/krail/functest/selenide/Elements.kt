@@ -2,10 +2,13 @@ package uk.q3c.krail.functest.selenide
 
 import com.codeborne.selenide.Condition.exactTextCaseSensitive
 import com.codeborne.selenide.Condition.visible
+import com.codeborne.selenide.Selectors
 import com.codeborne.selenide.Selenide.`$`
+import com.google.common.base.Splitter
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
 import org.openqa.selenium.By
+import org.openqa.selenium.InvalidArgumentException
 import uk.q3c.krail.functest.*
 
 /**
@@ -80,4 +83,27 @@ class SelenideButtonElement(id: String) : ButtonElement, AbstractSelenideElement
         `$`(fullId).shouldBe(visible).click()
     }
 
+}
+
+class SelenideMenuElement(id: String) : MenuElement, AbstractSelenideElement(id) {
+    override fun select(path: String) {
+        if (path.isBlank()) {
+            throw InvalidArgumentException("Menu path cannot be blank")
+        }
+        val segments = Splitter.on("/").split(path)
+        val menuBar = `$`(fullId)
+        menuBar.`is`(visible)
+        val iter = segments.iterator()
+        //no need for hasNext() path cannot be blank
+        // select the first level
+        val firstLevelItem = menuBar.`$`(Selectors.ByText(iter.next())).`$x`("..")
+        firstLevelItem.click()
+
+        // in browser html, the popup is separate from the first level element
+        while (iter.hasNext()) {
+            val popup = `$`(Selectors.byClassName("v-menubar-popup"))
+            popup.`$`(Selectors.ByText(iter.next()))
+        }
+        // TODO we should be able to confirm that the correct page / view is ready, from the FunctionalTestSupport model
+    }
 }

@@ -1,9 +1,11 @@
 package uk.q3c.krail.functest.coded
 
+import com.google.common.base.Splitter
 import com.vaadin.ui.*
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
+import org.openqa.selenium.InvalidArgumentException
 import uk.q3c.krail.functest.*
 
 abstract class AbstractCodedElement<out T : Component>(override val id: String) : BaseElement {
@@ -81,6 +83,26 @@ class CodedButtonElement(id: String) : ButtonElement, AbstractCodedElement<Butto
     override fun click() {
         nativeField.click()
     }
+}
+
+class CodedMenuElement(id: String) : MenuElement, AbstractCodedElement<MenuBar>(id) {
+    override fun select(path: String) {
+        if (path.isBlank()) {
+            throw InvalidArgumentException("Menu path cannot be blank")
+        }
+        val segments = Splitter.on("/").split(path)
+        val iter = segments.iterator()
+        val topLevelItem: MenuBar.MenuItem = nativeField.items.find({ item -> item.text == iter.next() })
+                ?: throw InvalidArgumentException("${segments.first()} is not a top level menu item")
+        topLevelItem.command.menuSelected(topLevelItem)
+
+        var currentItem = topLevelItem
+        while (iter.hasNext()) {
+            currentItem = currentItem.children.find({ item -> item.text == iter.next() }) ?: throw InvalidArgumentException("${segments.first()} is menu item at this level")
+            currentItem.command.menuSelected(currentItem)
+        }
+    }
+
 }
 
 

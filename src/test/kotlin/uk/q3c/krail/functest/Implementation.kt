@@ -80,3 +80,12 @@ class CheckBox {
         }
     }
 }
+
+class Menu {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): MenuElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideMenuElement("${thisRef.id}-${property.name}")
+            ExecutionMode.CODED -> CodedMenuElement("${thisRef.id}-${property.name}")
+        }
+    }
+}
