@@ -81,11 +81,29 @@ class CheckBox {
     }
 }
 
-class Menu {
-    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): MenuElement {
+class MenuBar {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): MenuBarElement {
         return when (executionMode) {
-            ExecutionMode.SELENIDE -> SelenideMenuElement("${thisRef.id}-${property.name}")
-            ExecutionMode.CODED -> CodedMenuElement("${thisRef.id}-${property.name}")
+            ExecutionMode.SELENIDE -> SelenideMenuBarElement("${thisRef.id}-${property.name}")
+            ExecutionMode.CODED -> CodedMenuBarElement("${thisRef.id}-${property.name}")
+        }
+    }
+}
+
+class Tree {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): TreeElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideTreeElement("${thisRef.id}-${property.name}")
+            ExecutionMode.CODED -> CodedTreeElement("${thisRef.id}-${property.name}")
+        }
+    }
+}
+
+class Image {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): ImageElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideImageElement("${thisRef.id}-${property.name}")
+            ExecutionMode.CODED -> CodedImageElement("${thisRef.id}-${property.name}")
         }
     }
 }

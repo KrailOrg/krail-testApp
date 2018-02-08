@@ -1,5 +1,8 @@
 package uk.q3c.krail.testapp
 
+import com.codeborne.selenide.Condition.visible
+import com.codeborne.selenide.Selectors
+import com.codeborne.selenide.Selenide.`$`
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
@@ -20,9 +23,11 @@ class LogInOutFunctionalTest : Spek({
         createBrowser()
 
         given("navigateTo login page") {
-            browser.navigateTo("login")
-            val view = DefaultLoginViewObject()
+
             val page = TestAppUIObject()
+            page.userStatus.login_logout_Button.click()
+            browser.fragmentShouldBe("login")
+            val view = DefaultLoginViewObject()
 
             on("page being opened") {
                 it("displays correct captions") {
@@ -44,7 +49,7 @@ class LogInOutFunctionalTest : Spek({
 
                 it("navigates to private home page") {
                     if (executionMode == ExecutionMode.SELENIDE) {
-                        browser.fragmentShouldBe("private/home")
+                        browser.fragmentShouldBe("home")
                     } else {
                         browser.fragmentShouldBe("home") // TODO https://github.com/davidsowerby/krail-functest/issues/2
                     }
@@ -57,7 +62,51 @@ class LogInOutFunctionalTest : Spek({
 
             }
 
+            on("logout") {
+
+                page.userStatus.login_logout_Button.click()
+
+
+                it("goes to logout page, and changes labels in user status") {
+                    browser.fragmentShouldBe("logout")
+                    page.userStatus.usernameLabel.valueShouldBe("Guest")
+                    page.userStatus.login_logout_Button.captionShouldBe("log in")
+                }
+            }
 
         }
     }
 })
+
+
+class LogoutBackSecurity : Spek({
+    given("Browser selection") {
+        executionMode = ExecutionMode.SELENIDE
+        createBrowser()
+        val page = TestAppUIObject()
+
+
+
+        on("login, move to private page, logout and try to navigate back to private page") {
+            login(page)
+            page.menu.select("Private/Finance/Accounts")
+            browser.fragmentShouldBe("private/finance/accounts")
+            page.userStatus.login_logout_Button.click()
+            browser.fragmentShouldBe("logout")
+            browser.back()
+
+            it("does not go to private page, notification is shown") {
+                browser.fragmentShouldBe("private/finance/accounts") // url stays the same
+                `$`(Selectors.ByText("Logged out")).shouldBe(visible)
+            }
+        }
+    }
+})
+
+//fun login() {
+//    val view = DefaultLoginViewObject()
+//    browser.navigateTo("login")
+//    view.username.setValue("ds")
+//    view.password.setValue("password")
+//    view.submit.click()
+//}

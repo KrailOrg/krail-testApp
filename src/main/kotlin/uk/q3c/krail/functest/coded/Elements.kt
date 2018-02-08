@@ -85,7 +85,7 @@ class CodedButtonElement(id: String) : ButtonElement, AbstractCodedElement<Butto
     }
 }
 
-class CodedMenuElement(id: String) : MenuElement, AbstractCodedElement<MenuBar>(id) {
+class CodedMenuBarElement(id: String) : MenuBarElement, AbstractCodedElement<MenuBar>(id) {
     override fun select(path: String) {
         if (path.isBlank()) {
             throw InvalidArgumentException("Menu path cannot be blank")
@@ -104,5 +104,9 @@ class CodedMenuElement(id: String) : MenuElement, AbstractCodedElement<MenuBar>(
     }
 
 }
+
+class CodedImageElement(id: String) : ImageElement, AbstractCodedElement<Image>(id)
+
+class CodedTreeElement(id: String) : TreeElement, AbstractCodedElement<com.vaadin.ui.Tree<Any>>(id)
 
 

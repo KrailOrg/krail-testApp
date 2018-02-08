@@ -3,12 +3,14 @@ package uk.q3c.krail.functest.selenide
 import com.codeborne.selenide.Condition.exactTextCaseSensitive
 import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selectors
+import com.codeborne.selenide.Selenide.`$$`
 import com.codeborne.selenide.Selenide.`$`
 import com.google.common.base.Splitter
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
 import org.openqa.selenium.By
 import org.openqa.selenium.InvalidArgumentException
+import org.openqa.selenium.NoSuchElementException
 import uk.q3c.krail.functest.*
 
 /**
@@ -85,7 +87,14 @@ class SelenideButtonElement(id: String) : ButtonElement, AbstractSelenideElement
 
 }
 
-class SelenideMenuElement(id: String) : MenuElement, AbstractSelenideElement(id) {
+/**
+ * Selects from the menu using a 'path' constructed from the menu item captions, for example:
+ *
+ * Private/Finance/Accounts
+ *
+ * Remember this uses the menu item caption, case must be correct
+ */
+class SelenideMenuBarElement(id: String) : MenuBarElement, AbstractSelenideElement(id) {
     override fun select(path: String) {
         if (path.isBlank()) {
             throw InvalidArgumentException("Menu path cannot be blank")
@@ -96,14 +105,32 @@ class SelenideMenuElement(id: String) : MenuElement, AbstractSelenideElement(id)
         val iter = segments.iterator()
         //no need for hasNext() path cannot be blank
         // select the first level
+
+        // try .. catch did not work????
+
+//        try {
         val firstLevelItem = menuBar.`$`(Selectors.ByText(iter.next())).`$x`("..")
         firstLevelItem.click()
+//        } catch (e: Exception) {
+//            throw NoSuchElementException("Could not find first level menu item '${segments.first()}'.  Remember this uses the menu item caption, case must be correct")
+//        }
 
         // in browser html, the popup is separate from the first level element
         while (iter.hasNext()) {
-            val popup = `$`(Selectors.byClassName("v-menubar-popup"))
-            popup.`$`(Selectors.ByText(iter.next()))
+            val segment = iter.next()
+            val menuItems = `$$`(Selectors.byClassName("v-menubar-menuitem-caption"))
+            val selectedItem = menuItems.find({ item -> item.text().equals(segment) })
+            if (selectedItem != null) {
+                selectedItem.click()
+                // TODO we should be able to confirm that the correct page / view is ready, from the FunctionalTestSupport model, except that the menu labels are not the same as the fragment
+                // it might be possible to extend the FTS though
+            } else {
+                throw NoSuchElementException("Wibbly BoO!")
+            }
         }
-        // TODO we should be able to confirm that the correct page / view is ready, from the FunctionalTestSupport model
     }
 }
+
+class SelenideImageElement(id: String) : ImageElement, AbstractSelenideElement(id)
+
+class SelenideTreeElement(id: String) : TreeElement, AbstractSelenideElement(id)

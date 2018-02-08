@@ -12,6 +12,7 @@ import com.vaadin.shared.ApplicationConstants
 import com.vaadin.ui.UI
 import org.amshove.kluent.mock
 import org.amshove.kluent.shouldBe
+import org.apache.commons.io.FileUtils
 import org.apache.onami.persist.PersistenceService
 import org.slf4j.LoggerFactory
 import uk.q3c.krail.core.navigate.Navigator
@@ -35,6 +36,8 @@ import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 
 class CodedBrowser : Browser {
+
+
     override lateinit var page: PageElement
     private val log = LoggerFactory.getLogger(this.javaClass.name)
     private lateinit var injector: Injector
@@ -91,23 +94,40 @@ class CodedBrowser : Browser {
         log.debug("setup complete")
     }
 
+    override fun forward() {
+        TODO()
+    }
+
+    /**
+     * Generates page objects for Functional Testing, plus the [RouteMap] to JSON
+     */
     fun generatePageObjects() {
         if (!setup) {
             setup()
         }
 
         val functionalTestSupportBuilder = injector.getInstance(FunctionalTestSupportBuilder::class.java)
-        log.debug("creating functional test model")
+        log.info("creating functional test model")
         val model = functionalTestSupportBuilder.generate()
 
         val pageObjectGenerator = KotlinPageObjectGenerator()
         val currentDir = File(".")
-        val kotlinPath = "/src/test/kotlin"
-        val packagePath = "uk/q3c/krail/testapp"
+        val kotlinPath = "src/test/kotlin"
+        val resourcesPath = "src/test/resources"
+        val packagePath = "uk/q3c/krail/testapp/"
         val targetDir = File(currentDir, "$kotlinPath/$packagePath")
         val targetFile = File(targetDir, "PageObjects.kt")
         log.debug("generating page objects to ${targetFile.absolutePath}")
-        pageObjectGenerator.generate(file = targetFile, model = model, packageName = packagePath.replace("/", "."))
+        pageObjectGenerator.generate(file = targetFile, model = model, packageName = packagePath.replace("/", ".").dropLast(1))
+
+        val resourcesDir = File(currentDir, "$resourcesPath/$packagePath")
+        if (!resourcesDir.exists()) {
+            FileUtils.forceMkdir(resourcesDir)
+        }
+        val routeMapFile = File(resourcesDir, "routeMap.json")
+        log.info("Writing RouteMap to ${routeMapFile.absolutePath}")
+        model.routeMap.toJson(routeMapFile)
+
     }
 
 
@@ -130,6 +150,11 @@ class CodedBrowser : Browser {
         page = CodedPageElement(ui, real.getOriginalClassFor(ui).simpleName)
         fragmentShouldBe(fragment)
     }
+
+    override fun currentFragment(): String {
+        return URI.create(currentUrl()).fragment
+    }
+
 
 }
 
@@ -196,6 +221,7 @@ abstract class Page2<out T : KrailView>(val urlFragment: String, val view: T) : 
     }
 
 
+
 }
 
 interface PageObj2<out T : KrailView> {
@@ -222,3 +248,5 @@ class TestVaadinService(servlet: VaadinServlet, deploymentConfiguration: Deploym
         return UUID.randomUUID().toString()
     }
 }
+
+

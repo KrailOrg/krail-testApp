@@ -71,16 +71,14 @@ class WidgetsetViewObject : AbstractViewObject() {
     val param1 by Label()
 }
 
-class BroadcastMessageLogObject(override val id: String) : AbstractCustomObject(id)
-
 class PushViewObject : AbstractViewObject() {
 
     val pushEnabled by CheckBox()
     val sendButton by Button()
+    val messageLog by TextArea()
     val groupInput by TextField()
     val messageInput by TextField()
     val infoArea by Label()
-    val messageLog = BroadcastMessageLogObject("PushView-messageLog")
 }
 
 class JpaViewObject : AbstractViewObject() {
@@ -137,19 +135,9 @@ class I18NViewObject : AbstractViewObject() {
     val exportStatus by Label()
 }
 
-class DefaultApplicationLogoObject(override val id: String) : AbstractCustomObject(id)
-
-class DefaultUserNavigationMenuObject(override val id: String) : AbstractCustomObject(id)
-
 class DefaultMessageBarObject(override val id: String) : AbstractCustomObject(id) {
 
     val display by Label()
-}
-
-class DefaultUserNavigationTreeObject(override val id: String) : AbstractCustomObject(id) {
-
-    val root by TreeGrid()
-    val treeGrid by TreeGrid()
 }
 
 class DefaultUserStatusPanelObject(override val id: String) : AbstractCustomObject(id) {
@@ -169,10 +157,10 @@ class DefaultApplicationHeaderObject(override val id: String) : AbstractCustomOb
 
 class TestAppUIObject : AbstractPageObject() {
 
-    val logo = DefaultApplicationLogoObject("TestAppUI-logo")
-    val menu = DefaultUserNavigationMenuObject("TestAppUI-menu")
+    val logo by Image()
     val messageBar = DefaultMessageBarObject("TestAppUI-messageBar")
-    val navTree = DefaultUserNavigationTreeObject("TestAppUI-navTree")
+    val menu by MenuBar()
+    val navTree by Tree()
     val userStatus = DefaultUserStatusPanelObject("TestAppUI-userStatus")
     val breadcrumb = DefaultBreadcrumbObject("TestAppUI-breadcrumb")
     val subpage = DefaultSubPagePanelObject("TestAppUI-subpage")
