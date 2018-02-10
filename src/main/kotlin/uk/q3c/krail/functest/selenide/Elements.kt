@@ -150,7 +150,7 @@ class SelenideNotificationElement : NotificationElement {
         notificationCaption.shouldNotBe(visible)
     }
 
-    override fun shouldBeVisible(level: NotificationLevel, text: String) {
+    override fun shouldBeVisibleThenClose(level: NotificationLevel, text: String) {
         val notificationCaption = `$`(Selectors.byClassName("v-Notification-caption"))
         notificationCaption.shouldBe(visible)
         notificationCaption.text().shouldBeEqualTo(text)

@@ -1,0 +1,404 @@
+{
+  "version": 1,
+  "map": {
+    "home": {
+      "route": "home",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "TestAppPublicHomeView",
+          "id": "TestAppPublicHomeView",
+          "type": "TestAppPublicHomeView",
+          "baseComponent": false
+        }
+      }
+    },
+    "login": {
+      "route": "login",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultLoginView",
+          "id": "DefaultLoginView",
+          "type": "DefaultLoginView",
+          "baseComponent": false
+        }
+      }
+    },
+    "logout": {
+      "route": "logout",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultLogoutView",
+          "id": "DefaultLogoutView",
+          "type": "DefaultLogoutView",
+          "baseComponent": false
+        }
+      }
+    },
+    "system-account": {
+      "route": "system-account",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultSystemAccountView",
+          "id": "DefaultSystemAccountView",
+          "type": "DefaultSystemAccountView",
+          "baseComponent": false
+        }
+      }
+    },
+    "system-account/request-account": {
+      "route": "system-account/request-account",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultRequestSystemAccountCreateView",
+          "id": "DefaultRequestSystemAccountCreateView",
+          "type": "DefaultRequestSystemAccountCreateView",
+          "baseComponent": false
+        }
+      }
+    },
+    "system-account/enable-account": {
+      "route": "system-account/enable-account",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultRequestSystemAccountEnableView",
+          "id": "DefaultRequestSystemAccountEnableView",
+          "type": "DefaultRequestSystemAccountEnableView",
+          "baseComponent": false
+        }
+      }
+    },
+    "system-account/refresh-account": {
+      "route": "system-account/refresh-account",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultRequestSystemAccountRefreshView",
+          "id": "DefaultRequestSystemAccountRefreshView",
+          "type": "DefaultRequestSystemAccountRefreshView",
+          "baseComponent": false
+        }
+      }
+    },
+    "system-account/reset-account": {
+      "route": "system-account/reset-account",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultRequestSystemAccountResetView",
+          "id": "DefaultRequestSystemAccountResetView",
+          "type": "DefaultRequestSystemAccountResetView",
+          "baseComponent": false
+        }
+      }
+    },
+    "system-account/unlock-account": {
+      "route": "system-account/unlock-account",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultRequestSystemAccountUnlockView",
+          "id": "DefaultRequestSystemAccountUnlockView",
+          "type": "DefaultRequestSystemAccountUnlockView",
+          "baseComponent": false
+        }
+      }
+    },
+    "notifications": {
+      "route": "notifications",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "NotificationsView",
+          "id": "NotificationsView",
+          "type": "NotificationsView",
+          "baseComponent": false
+        }
+      }
+    },
+    "widgetset": {
+      "route": "widgetset",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "WidgetsetView",
+          "id": "WidgetsetView",
+          "type": "WidgetsetView",
+          "baseComponent": false
+        }
+      }
+    },
+    "notifications/push": {
+      "route": "notifications/push",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "PushView",
+          "id": "PushView",
+          "type": "PushView",
+          "baseComponent": false
+        }
+      }
+    },
+    "jpa": {
+      "route": "jpa",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "JpaView",
+          "id": "JpaView",
+          "type": "JpaView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private/home": {
+      "route": "private/home",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultPrivateHomeView",
+          "id": "DefaultPrivateHomeView",
+          "type": "DefaultPrivateHomeView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private/finance": {
+      "route": "private/finance",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "FinanceView",
+          "id": "FinanceView",
+          "type": "FinanceView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private/finance/accounts": {
+      "route": "private/finance/accounts",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "AccountsView",
+          "id": "AccountsView",
+          "type": "AccountsView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private/finance/payroll": {
+      "route": "private/finance/payroll",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "PayrollView",
+          "id": "PayrollView",
+          "type": "PayrollView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private/finance/purchasing": {
+      "route": "private/finance/purchasing",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "PurchasingView",
+          "id": "PurchasingView",
+          "type": "PurchasingView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private/sysadmin": {
+      "route": "private/sysadmin",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "SystemAdminView",
+          "id": "SystemAdminView",
+          "type": "SystemAdminView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private/sysadmin/sitemap-build-report": {
+      "route": "private/sysadmin/sitemap-build-report",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "SitemapReportView",
+          "id": "SitemapReportView",
+          "type": "SitemapReportView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private/sysadmin/entity": {
+      "route": "private/sysadmin/entity",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "I18NView",
+          "id": "I18NView",
+          "type": "I18NView",
+          "baseComponent": false
+        }
+      }
+    }
+  }
+}

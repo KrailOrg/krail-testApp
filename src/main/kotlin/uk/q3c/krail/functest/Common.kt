@@ -16,7 +16,7 @@ fun notificationShouldBeVisible(level: NotificationLevel, text: String) {
         SELENIDE -> SelenideNotificationElement()
         CODED -> CodedNotificationElement()
     }
-    notificationElement.shouldBeVisible(level, text)
+    notificationElement.shouldBeVisibleThenClose(level, text)
 
 }
 

@@ -235,7 +235,7 @@ class CodedNotificationElement : NotificationElement {
     /**
      * Will always pass for coded see https://github.com/davidsowerby/krail-functest/issues/3
      */
-    override fun shouldBeVisible(level: NotificationLevel, text: String) {
+    override fun shouldBeVisibleThenClose(level: NotificationLevel, text: String) {
         // TODO
     }
 }

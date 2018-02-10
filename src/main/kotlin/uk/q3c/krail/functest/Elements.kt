@@ -63,7 +63,7 @@ interface PageElement : CompositeElement
 
 interface NotificationElement {
 
-    fun shouldBeVisible(level: NotificationLevel, text: String)
+    fun shouldBeVisibleThenClose(level: NotificationLevel, text: String)
     fun shouldNotBeVisible()
 }
 
