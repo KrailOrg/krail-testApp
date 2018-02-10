@@ -62,7 +62,7 @@ class SelenideBrowser : Browser {
         val routeMapFile = File(resourcesDir, "routeMap.json")
         log.info("Reading RouteMap from ${routeMapFile.absolutePath}")
         routeMap = routeMapFromJson(routeMapFile)
-        navigateTo("home")
+
     }
 
 
@@ -85,7 +85,7 @@ class SelenideBrowser : Browser {
     }
 
     override fun forward() {
-        TODO()
+        Selenide.forward()
     }
 
     override fun currentFragment(): String {

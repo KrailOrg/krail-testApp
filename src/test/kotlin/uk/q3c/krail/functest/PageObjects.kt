@@ -1,6 +1,4 @@
-package uk.q3c.krail.testapp
-
-import uk.q3c.krail.functest.*
+package uk.q3c.krail.functest
 
 class TestAppPublicHomeViewObject : AbstractViewObject() {
 
