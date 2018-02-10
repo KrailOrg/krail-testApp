@@ -18,6 +18,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import net.engio.mbassy.listener.Handler;
@@ -71,21 +72,18 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
     private OptionPopup optionPopup;
     private Button systemLevelOptionButton;
     @AssignComponentId(assign = false, drilldown = false)
-    private TestAppUI ui;
     private Button uiOptionsButton;
     private Button viewOptionsButton;
     private Button warnButton;
 
     @Inject
-    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup, OptionCache optionCache, TestAppUI
-            ui, OptionSource optionDaoProvider) {
+    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup, OptionCache optionCache, OptionSource optionDaoProvider) {
         super(translate);
         this.userNotifier = userNotifier;
         this.translate = translate;
         this.option = option;
         this.optionPopup = optionPopup;
         this.optionCache = optionCache;
-        this.ui = ui;
         this.optionDaoProvider = optionDaoProvider;
         nameKey = LabelKey.Notifications;
     }
@@ -132,7 +130,7 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
 
 
         uiOptionsButton = new Button("Show UI options");
-        uiOptionsButton.addClickListener(c -> optionPopup.popup(ui, LabelKey.Application_Options));
+        uiOptionsButton.addClickListener(c -> optionPopup.popup((TestAppUI) UI.getCurrent(), LabelKey.Application_Options));
         uiOptionsButton.setWidth("100%");
         verticalLayout.addComponent(uiOptionsButton);
 

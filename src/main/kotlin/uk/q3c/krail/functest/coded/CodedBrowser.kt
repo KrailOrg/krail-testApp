@@ -15,6 +15,7 @@ import org.amshove.kluent.shouldBe
 import org.apache.commons.io.FileUtils
 import org.apache.onami.persist.PersistenceService
 import org.slf4j.LoggerFactory
+import uk.q3c.krail.core.navigate.NavigationState
 import uk.q3c.krail.core.navigate.Navigator
 import uk.q3c.krail.core.navigate.sitemap.DefaultMasterSitemap
 import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
@@ -42,6 +43,9 @@ class CodedBrowser : Browser {
     private val log = LoggerFactory.getLogger(this.javaClass.name)
     private lateinit var injector: Injector
     private var setup = false
+    private val history: MutableList<NavigationState> = mutableListOf()
+    private var historyOffset = 0
+    private var updateHistory = true
 
     override fun viewShouldBe(viewClass: Class<*>) {
         (view as CodedViewElement).view.javaClass.shouldBe(viewClass)
@@ -89,13 +93,20 @@ class CodedBrowser : Browser {
         ui.session = session
         ui.doInit(vaadinRequest, 1, null)
         navigator = ui.krailNavigator
-        ui.page.location = URI.create("http://localhost:8080/krail-testapp/#login")
+        ui.page.location = URI.create("http://localhost:8080/krail-testapp/#home")
         setup = true
         log.debug("setup complete")
+        navigateTo("home")
     }
 
     override fun forward() {
-        TODO()
+        if (historyOffset - 1 > 0) {
+            historyOffset--
+            updateHistory = false
+            navigateTo(history[historyOffset].fragment)
+        } else {
+            throw CodedBrowserException("There is no history to browser forward to")
+        }
     }
 
     /**
@@ -132,7 +143,10 @@ class CodedBrowser : Browser {
 
 
     override fun fragmentShouldBe(desiredFragment: String) {
-        waitForNavigationState({ currentUrl() }, { navState -> desiredFragment == navState.fragment })
+        waitForNavigationState({ currentUrl() }, { navState ->
+            println("Test harness:  waiting for fragment $desiredFragment")
+            desiredFragment == navState.fragment
+        })
     }
 
     override fun fragmentShouldNotBe(desiredFragment: String) {
@@ -140,23 +154,39 @@ class CodedBrowser : Browser {
     }
 
     override fun back() {
-        TODO()
+        if (historyOffset + 1 < history.size) {
+            historyOffset++
+            updateHistory = false
+            navigateTo(history[historyOffset].fragment)
+        } else {
+            throw CodedBrowserException("There is no history to browser back to")
+        }
     }
 
     override fun navigateTo(fragment: String) {
         navigator.navigateTo(fragment)
-        val real = injector.getInstance(UnenhancedClassIdentifier::class.java)
-        view = CodedViewElement(ui.view, real.getOriginalClassFor(view).simpleName)
-        page = CodedPageElement(ui, real.getOriginalClassFor(ui).simpleName)
-        fragmentShouldBe(fragment)
+//        fragmentShouldBe(fragment) can't do this here, because there are circumstances where it is not true (eg, trying to go back to a private page after logout)
+        update()
     }
 
     override fun currentFragment(): String {
         return URI.create(currentUrl()).fragment
     }
 
-
+    fun update() {
+        val real = injector.getInstance(UnenhancedClassIdentifier::class.java)
+        view = CodedViewElement(ui.view, real.getOriginalClassFor(ui.view).simpleName)
+        page = CodedPageElement(ui, real.getOriginalClassFor(ui).simpleName)
+        if (updateHistory) {
+            history.add(0, navigator.currentNavigationState)
+        } else {
+            updateHistory = true  // one shot block on changing history
+        }
+    }
 }
+
+class CodedBrowserException(msg: String) : RuntimeException(msg)
+
 
 class CodedViewElement(val view: KrailView, override val id: String) : ViewElement
 
@@ -219,7 +249,6 @@ abstract class Page2<out T : KrailView>(val urlFragment: String, val view: T) : 
             return fullUrl.removePrefix(Configuration.baseUrl)
         }
     }
-
 
 
 }

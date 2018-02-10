@@ -56,11 +56,10 @@ class NotificationsViewObject : AbstractViewObject() {
     val warnButton by Button()
     val clearOptionStoreButton by Button()
     val infoButton by Button()
-    val uiOptionsButton by Button()
     val viewOptionsButton by Button()
 }
 
-class IntStepperObject(override val id: String) : AbstractCustomObject(id)
+class IntStepperObject(id: String) : AbstractCustomObject(id)
 
 class WidgetsetViewObject : AbstractViewObject() {
 
@@ -135,22 +134,20 @@ class I18NViewObject : AbstractViewObject() {
     val exportStatus by Label()
 }
 
-class DefaultMessageBarObject(override val id: String) : AbstractCustomObject(id) {
+class DefaultMessageBarObject(id: String) : AbstractCustomObject(id) {
 
     val display by Label()
 }
 
-class DefaultUserStatusPanelObject(override val id: String) : AbstractCustomObject(id) {
+class DefaultUserStatusPanelObject(id: String) : AbstractCustomObject(id) {
 
     val login_logout_Button by Button()
     val usernameLabel by Label()
 }
 
-class DefaultBreadcrumbObject(override val id: String) : AbstractCustomObject(id)
+class DefaultSubPagePanelObject(id: String) : AbstractCustomObject(id)
 
-class DefaultSubPagePanelObject(override val id: String) : AbstractCustomObject(id)
-
-class DefaultApplicationHeaderObject(override val id: String) : AbstractCustomObject(id) {
+class DefaultApplicationHeaderObject(id: String) : AbstractCustomObject(id) {
 
     val label by Label()
 }
@@ -162,7 +159,7 @@ class TestAppUIObject : AbstractPageObject() {
     val menu by MenuBar()
     val navTree by Tree()
     val userStatus = DefaultUserStatusPanelObject("TestAppUI-userStatus")
-    val breadcrumb = DefaultBreadcrumbObject("TestAppUI-breadcrumb")
+    val breadcrumb by Breadcrumb()
     val subpage = DefaultSubPagePanelObject("TestAppUI-subpage")
     val header = DefaultApplicationHeaderObject("TestAppUI-header")
 }

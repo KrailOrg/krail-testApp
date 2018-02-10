@@ -13,6 +13,7 @@ fun createBrowser() {
         ExecutionMode.CODED -> browser = CodedBrowser()
     }
     browser.setup()
+    println(" =============================== BROWSER SETUP FOR ${executionMode} =======================================")
 }
 
 
@@ -86,6 +87,15 @@ class MenuBar {
         return when (executionMode) {
             ExecutionMode.SELENIDE -> SelenideMenuBarElement("${thisRef.id}-${property.name}")
             ExecutionMode.CODED -> CodedMenuBarElement("${thisRef.id}-${property.name}")
+        }
+    }
+}
+
+class Breadcrumb {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): BreadcrumbElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideBreadcrumbElement("${thisRef.id}-${property.name}")
+            ExecutionMode.CODED -> CodedBreadcrumbElement("${thisRef.id}-${property.name}")
         }
     }
 }
