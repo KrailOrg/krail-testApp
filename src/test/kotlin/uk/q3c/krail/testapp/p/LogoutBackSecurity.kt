@@ -1,5 +1,6 @@
 package uk.q3c.krail.testapp.p
 
+import com.codeborne.selenide.Selenide
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -34,7 +35,7 @@ class LogoutBackSecurity {
     @After
     fun after() {
 //        println("Sleeping after")
-//        Selenide.close()
+        Selenide.close()
     }
 
     @Test

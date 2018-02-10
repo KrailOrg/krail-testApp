@@ -1,6 +1,8 @@
-package uk.q3c.krail.testapp
+package uk.q3c.krail.testapp.p
 
-import org.junit.BeforeClass
+import com.codeborne.selenide.Selenide
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import uk.q3c.krail.functest.*
 import uk.q3c.krail.functest.NotificationLevel.*
@@ -10,19 +12,21 @@ import uk.q3c.krail.testapp.view.NotificationsView
  * Created by David Sowerby on 10 Feb 2018
  */
 class NotificationTest {
-    //    given("Browser selection") {
-    companion object {
 
-        @BeforeClass
-        @JvmStatic
-        fun beforeClass() {
-
-            executionMode = ExecutionMode.SELENIDE
+    @Before
+    fun before() {
+        executionMode = ExecutionMode.SELENIDE
 //        executionMode = ExecutionMode.CODED
-            createBrowser()
-
-        }
+        createBrowser()
+        browser.navigateTo("home")
     }
+
+    @After
+    fun after() {
+//        println("Sleeping after")
+        Selenide.close()
+    }
+
 
     @Test
     fun notifications() {
