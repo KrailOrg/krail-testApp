@@ -130,6 +130,7 @@ dependencies {
         exclude group: 'org.junit.platform'
         exclude group: 'org.jetbrains.kotlin'
     }
+    testCompile 'uk.q3c.util:q3c-testutils:0.11.0.4'
 }
 //    testCompile project(':krail-orient')
 

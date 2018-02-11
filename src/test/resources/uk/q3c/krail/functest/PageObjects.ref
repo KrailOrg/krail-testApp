@@ -1,0 +1,26 @@
+package uk.q3c.krail.functest
+
+import uk.q3c.krail.functest.*
+
+class TestCustomComponentObject(id:String) : AbstractCustomObject (id) {
+
+    val butonnInCustom by Button()
+    val labelInCustom by Label()
+}
+
+class SimpleViewObject() : AbstractViewObject() {
+
+    val custom = TestCustomComponentObject ("SimpleView-custom")
+    val label by Label()
+}
+
+class AnotherSimpleViewObject() : AbstractViewObject() {
+
+    val button by Button()
+}
+
+class TestUIObject() : AbstractPageObject() {
+
+    val label by Label()
+}
+

@@ -8,6 +8,7 @@ import org.jetbrains.spek.api.dsl.on
 import uk.q3c.krail.functest.*
 import uk.q3c.krail.functest.NotificationLevel.*
 import uk.q3c.krail.testapp.view.NotificationsView
+import uk.q3c.krail.testapp.view.PushView
 
 /**
  * Created by David Sowerby on 10 Feb 2018
@@ -29,6 +30,7 @@ object NotificationTest : Spek({
         on("click the fake error button") {
             val page = TestAppUIObject()
             page.menu.select("Notifications/Push")
+            browser.viewShouldBe(PushView::class.java)
             page.breadcrumb.select(0)
             browser.viewShouldBe(NotificationsView::class.java)
             val view = NotificationsViewObject()

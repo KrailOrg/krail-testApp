@@ -24,7 +24,7 @@ abstract class AbstractCodedElement<T : Component>(final override val id: String
     private val log = LoggerFactory.getLogger(this.javaClass.name)
     private val viewElement: CompositeElement
     val view: Any
-    protected lateinit var nativeField: T
+    protected var nativeField: T
 
     init {
         val rootId = id.split("-").first()

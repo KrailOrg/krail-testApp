@@ -1,4 +1,4 @@
-package uk.q3c.krail.testapp.p
+package uk.q3c.krail.testapp
 
 import com.codeborne.selenide.Selenide
 import org.jetbrains.spek.api.Spek
