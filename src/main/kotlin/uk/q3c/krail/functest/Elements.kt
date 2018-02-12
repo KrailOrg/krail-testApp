@@ -34,6 +34,7 @@ interface LabelElement : BaseElement {
 }
 
 interface CheckBoxElement : BaseElement, ValueElement<Boolean>
+interface ComboBoxElement : BaseElement, ValueElement<String>
 
 interface ButtonElement : BaseElement {
     fun click()

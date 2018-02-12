@@ -248,6 +248,44 @@
         }
       }
     },
+    "form": {
+      "route": "form",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "AutoForm",
+          "id": "AutoForm",
+          "type": "AutoForm",
+          "baseComponent": false
+        }
+      }
+    },
+    "locale": {
+      "route": "locale",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppUI",
+          "id": "TestAppUI",
+          "type": "TestAppUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "LocaleChanger",
+          "id": "LocaleChanger",
+          "type": "LocaleChanger",
+          "baseComponent": false
+        }
+      }
+    },
     "private/home": {
       "route": "private/home",
       "uiId": {

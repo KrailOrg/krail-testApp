@@ -4,6 +4,7 @@ import com.google.common.base.Splitter
 import com.vaadin.ui.*
 import com.vaadin.ui.Button
 import com.vaadin.ui.CheckBox
+import com.vaadin.ui.ComboBox
 import com.vaadin.ui.Grid
 import com.vaadin.ui.Image
 import com.vaadin.ui.MenuBar
@@ -224,6 +225,18 @@ class CodedMenuBarElement(id: String) : MenuBarElement, AbstractCodedElement<Men
 
 
 class CodedImageElement(id: String) : ImageElement, AbstractCodedElement<Image>(id)
+
+class CodedComboBoxElement(id: String) : ComboBoxElement, AbstractCodedElement<ComboBox<*>>(id) {
+    override fun valueShouldBe(expectedValue: String) {
+        TODO()
+    }
+
+    override fun setValue(value: String) {
+        TODO()
+    }
+
+}
+
 
 class CodedTreeElement(id: String) : TreeElement, AbstractCodedElement<com.vaadin.ui.Tree<Any>>(id)
 

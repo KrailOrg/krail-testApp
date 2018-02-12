@@ -55,6 +55,18 @@ class SelenideCheckBoxElement(id: String) : CheckBoxElement, AbstractSelenideEle
     }
 }
 
+class SelenideComboBoxElement(id: String) : ComboBoxElement, AbstractSelenideElement(id) {
+
+    override fun setValue(value: String) {
+//        `$`(fullId).value = value.toString()
+        TODO()
+    }
+
+    override fun valueShouldBe(expectedValue: String) {
+        throw UnsupportedOperationException("We cannot do this without using Javascript")
+    }
+}
+
 class SelenideTextAreaElement(id: String) : TextAreaElement, AbstractSelenideElement(id) {
     override fun setValue(value: String) {
         `$`(fullId).value = value

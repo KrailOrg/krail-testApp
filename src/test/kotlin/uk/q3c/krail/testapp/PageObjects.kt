@@ -93,6 +93,22 @@ class JpaViewObject : AbstractViewObject() {
     val countLabelFromDao2 by Label()
 }
 
+class FormLayoutObject(id: String) : AbstractCustomObject(id)
+
+class AutoFormObject : AbstractViewObject() {
+
+    val validationMsg by Label()
+    val layout = FormLayoutObject("AutoForm-layout")
+}
+
+class LocaleChangerObject : AbstractViewObject() {
+
+    val changeToUK by Button()
+    val changeToGerman by Button()
+    val currentLocale by Label()
+    val layout = FormLayoutObject("LocaleChanger-layout")
+}
+
 class DefaultPrivateHomeViewObject : AbstractViewObject() {
 
     val label by Label()
@@ -134,33 +150,35 @@ class I18NViewObject : AbstractViewObject() {
     val exportStatus by Label()
 }
 
-class DefaultMessageBarObject(id: String) : AbstractCustomObject(id) {
-
-    val display by Label()
-}
-
 class DefaultUserStatusPanelObject(id: String) : AbstractCustomObject(id) {
 
     val login_logout_Button by Button()
     val usernameLabel by Label()
 }
 
-class DefaultSubPagePanelObject(id: String) : AbstractCustomObject(id)
-
 class DefaultApplicationHeaderObject(id: String) : AbstractCustomObject(id) {
 
     val label by Label()
 }
 
+class DefaultMessageBarObject(id: String) : AbstractCustomObject(id) {
+
+    val display by Label()
+}
+
+
+class DefaultSubPagePanelObject(id: String) : AbstractCustomObject(id)
+
 class TestAppUIObject : AbstractPageObject() {
 
     val logo by Image()
-    val messageBar = DefaultMessageBarObject("TestAppUI-messageBar")
-    val menu by MenuBar()
     val navTree by Tree()
     val userStatus = DefaultUserStatusPanelObject("TestAppUI-userStatus")
+    val header = DefaultApplicationHeaderObject("TestAppUI-header")
+    val messageBar = DefaultMessageBarObject("TestAppUI-messageBar")
+    val localeCombo by ComboBox()
+    val menu by MenuBar()
     val breadcrumb by Breadcrumb()
     val subpage = DefaultSubPagePanelObject("TestAppUI-subpage")
-    val header = DefaultApplicationHeaderObject("TestAppUI-header")
 }
 

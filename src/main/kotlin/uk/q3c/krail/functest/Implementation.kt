@@ -117,3 +117,13 @@ class Image {
         }
     }
 }
+
+
+class ComboBox {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): ComboBoxElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideComboBoxElement("${thisRef.id}-${property.name}")
+            ExecutionMode.CODED -> CodedComboBoxElement("${thisRef.id}-${property.name}")
+        }
+    }
+}

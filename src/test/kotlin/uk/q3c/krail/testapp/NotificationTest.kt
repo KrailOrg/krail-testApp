@@ -33,6 +33,7 @@ object NotificationTest : Spek({
             browser.viewShouldBe(PushView::class.java)
             page.breadcrumb.select(0)
             browser.viewShouldBe(NotificationsView::class.java)
+            browser.fragmentShouldBe("notifications")
             val view = NotificationsViewObject()
 
             view.errorButton.click()
