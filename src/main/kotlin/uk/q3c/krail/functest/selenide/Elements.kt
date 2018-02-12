@@ -74,6 +74,7 @@ class SelenideTextAreaElement(id: String) : TextAreaElement, AbstractSelenideEle
 
 
     override fun valueShouldBe(expectedValue: String) {
+        `$`(fullId).shouldBe(visible)
         `$`(fullId).shouldHave(exactValue(expectedValue))
     }
 }
@@ -81,6 +82,7 @@ class SelenideTextAreaElement(id: String) : TextAreaElement, AbstractSelenideEle
 class SelenideLabelElement(id: String) : LabelElement, AbstractSelenideElement(id) {
     // ##checked
     override fun valueShouldBe(expectedValue: String) {
+        `$`(fullId).shouldBe(visible)
         `$`(fullId).shouldHave(exactTextCaseSensitive(expectedValue))
     }
 }
@@ -89,6 +91,7 @@ class SelenideLabelElement(id: String) : LabelElement, AbstractSelenideElement(i
 class SelenideButtonElement(id: String) : ButtonElement, AbstractSelenideElement(id) {
     // ##checked
     override fun captionShouldBe(expectedCaption: String) {
+        `$`(fullId).shouldBe(visible)
         `$`(fullId).parent().`$`(By.className("v-button-caption")).shouldHave(exactTextCaseSensitive(expectedCaption))
 
     }
