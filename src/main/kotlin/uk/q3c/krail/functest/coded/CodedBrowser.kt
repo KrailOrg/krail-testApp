@@ -15,6 +15,7 @@ import org.amshove.kluent.shouldBe
 import org.apache.commons.io.FileUtils
 import org.apache.onami.persist.PersistenceService
 import org.slf4j.LoggerFactory
+import uk.q3c.krail.core.guice.BindingsCollator
 import uk.q3c.krail.core.navigate.NavigationState
 import uk.q3c.krail.core.navigate.Navigator
 import uk.q3c.krail.core.navigate.sitemap.DefaultMasterSitemap
@@ -24,11 +25,12 @@ import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.LoginView
 import uk.q3c.krail.functest.*
-import uk.q3c.krail.testapp.TestAppBindingManager
+import uk.q3c.krail.testapp.TestAppServletContextListener
 import uk.q3c.krail.testapp.TestAppUI
 import uk.q3c.krail.testapp.persist.Jpa1
 import uk.q3c.krail.testapp.persist.Jpa2
 import uk.q3c.krail.testapp.ui.TestAppUIProvider
+import uk.q3c.krail.testapp.view.TestAppBindingsCollator
 import uk.q3c.util.clazz.UnenhancedClassIdentifier
 import java.io.File
 import java.net.URI
@@ -60,7 +62,7 @@ class CodedBrowser : Browser {
     private lateinit var ui: ScopedUI
 
     override fun setup() {
-        injector = FunctionalTestBindingManager().injector
+        injector = FunctionalTestServletContextListener().injector
 
         val vaadinServlet: VaadinServlet = mock()
         val deploymentConfiguration: DeploymentConfiguration = mock()
@@ -192,16 +194,25 @@ class CodedViewElement(val view: KrailView, override val id: String) : ViewEleme
 
 class CodedPageElement(val ui: ScopedUI, override val id: String) : PageElement
 
-class FunctionalTestBindingManager : TestAppBindingManager() {
+
+class FunctionalTestBindingsCollator : TestAppBindingsCollator() {
+    override fun sitemapModule(): Module {
+        return FunctionalTestSitemapModule()
+    }
+
     override fun addUtilModules(coreModules: MutableList<Module>?) {
         super.addUtilModules(coreModules)
         if (coreModules != null) {
             coreModules.add(FunctionalTestSupportModule())
         }
     }
+}
 
-    override fun sitemapModule(): Module {
-        return FunctionalTestSitemapModule()
+class FunctionalTestServletContextListener : TestAppServletContextListener() {
+
+
+    override fun getBindingsCollator(): BindingsCollator {
+        return FunctionalTestBindingsCollator()
     }
 }
 

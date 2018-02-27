@@ -32,6 +32,7 @@ class LocaleAndValidationTest : Spek({
             it("default Locale should be UK") {
                 page.menu.select("Locale")
                 browser.viewShouldBe(LocaleChanger::class.java)
+                browser.fragmentShouldBe("locale")
                 val view = LocaleChangerObject()
                 view.currentLocale.valueShouldBe("en-GB")
                 page.userStatus.usernameLabel.valueShouldBe("Guest")

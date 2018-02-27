@@ -8,7 +8,7 @@ import com.google.inject.Injector
 import org.apache.commons.io.FileUtils
 import org.slf4j.LoggerFactory
 import uk.q3c.krail.functest.*
-import uk.q3c.krail.functest.coded.FunctionalTestBindingManager
+import uk.q3c.krail.functest.coded.FunctionalTestServletContextListener
 import java.io.File
 import java.net.URI
 
@@ -21,7 +21,7 @@ class SelenideBrowser : Browser {
 
     private val log = LoggerFactory.getLogger(this.javaClass.name)
 
-    val injector: Injector = FunctionalTestBindingManager().injector
+    val injector: Injector = FunctionalTestServletContextListener().injector
 
     override fun viewShouldBe(viewClass: Class<*>) {
         `$`("#${viewClass.simpleName}").`is`(visible)
