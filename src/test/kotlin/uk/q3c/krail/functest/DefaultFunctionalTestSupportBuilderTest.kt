@@ -10,10 +10,17 @@ import com.vaadin.server.ErrorHandler
 import com.vaadin.server.UICreateEvent
 import com.vaadin.server.VaadinRequest
 import com.vaadin.server.VaadinService
-import com.vaadin.ui.*
+import com.vaadin.ui.AbstractOrderedLayout
 import com.vaadin.ui.Button
 import com.vaadin.ui.Label
-import org.amshove.kluent.*
+import com.vaadin.ui.Panel
+import com.vaadin.ui.VerticalLayout
+import org.amshove.kluent.mock
+import org.amshove.kluent.shouldBe
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldEqual
+import org.amshove.kluent.shouldNotBeNull
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context
@@ -35,6 +42,7 @@ import uk.q3c.krail.core.ui.ApplicationTitle
 import uk.q3c.krail.core.ui.DefaultUIModule
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.ui.ScopedUIProvider
+import uk.q3c.krail.core.user.LoginLabelKey
 import uk.q3c.krail.core.view.DefaultViewFactory
 import uk.q3c.krail.core.view.ViewBase
 import uk.q3c.krail.core.view.ViewFactory
@@ -72,7 +80,7 @@ class DefaultFunctionalTestSupportBuilderTest : Spek({
             masterSitemap = injector.getInstance(MasterSitemapQueue::class.java).currentModel
             uiProvider = injector.getInstance(ScopedUIProvider::class.java)
             uiProvider.createInstance(UICreateEvent(mockRequest, TestUI::class.java))
-            masterSitemap.addNode(MasterSitemapNode(1, "simple", SimpleView::class.java, LabelKey.Log_In, -1, PageAccessControl.PUBLIC, ImmutableList.of()))
+            masterSitemap.addNode(MasterSitemapNode(1, "simple", SimpleView::class.java, LoginLabelKey.Log_In, -1, PageAccessControl.PUBLIC, ImmutableList.of()))
             masterSitemap.addNode(MasterSitemapNode(2, "simple/another", AnotherSimpleView::class.java, LabelKey.Active_Source, -1, PageAccessControl.PUBLIC, ImmutableList.of()))
 
         }

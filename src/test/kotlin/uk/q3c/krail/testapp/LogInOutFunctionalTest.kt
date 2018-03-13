@@ -53,7 +53,7 @@ object LogInOutFunctionalTest : Spek({
             view.password.setValue("rubbish")
             view.submit.click()
             it("shows failure message") {
-                view.statusMsgLabel.valueShouldBe("That username or password was not recognised")
+                view.statusMessage.valueShouldBe("That username or password was not recognised")
             }
         }
         on("entering valid credentials") {
