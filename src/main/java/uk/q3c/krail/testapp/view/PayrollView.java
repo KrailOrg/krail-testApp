@@ -19,7 +19,6 @@ import com.vaadin.ui.TextArea;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
-import org.apache.onami.persist.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.option.VaadinOptionContext;
@@ -37,6 +36,7 @@ import uk.q3c.krail.option.persist.OptionCache;
 import uk.q3c.krail.option.persist.OptionDao;
 import uk.q3c.krail.testapp.i18n.Caption;
 import uk.q3c.krail.testapp.i18n.LabelKey;
+import uk.q3c.util.guice.SerializationSupport;
 
 /**
  * Created by David Sowerby on 22/05/15.
@@ -62,8 +62,8 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
     private Button clearOptionDatabaseButton;
 
     @Inject
-    public PayrollView(Option option, @UserHierarchyDefault UserHierarchy userHierarchy, OptionCache optionCache, Translate translate, OptionDao optionDao) {
-        super(translate);
+    public PayrollView(Option option, SerializationSupport serializationSupport, @UserHierarchyDefault UserHierarchy userHierarchy, OptionCache optionCache, Translate translate, OptionDao optionDao) {
+        super(translate, serializationSupport);
         this.option = option;
         this.userHierarchy = userHierarchy;
         this.optionDao = optionDao;
@@ -118,12 +118,10 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
         setMiddleRight(clearOptionDatabaseButton);
     }
 
-    @Transactional
     protected void setSystemLevel() {
         option.set(payrollOption, 1, 999);
     }
 
-    @Transactional
     protected void setUserValue(int value) {
         option.set(payrollOption, value);
     }

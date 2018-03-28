@@ -18,6 +18,7 @@ import com.vaadin.ui.Panel;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
+import uk.q3c.util.guice.SerializationSupport;
 
 /**
  * Creates a grid, 4 rows x 3 cols. The top row is just a spacer.
@@ -28,8 +29,8 @@ public abstract class ViewBaseGrid extends ViewBase {
 
     private int topMargin = 5;
 
-    protected ViewBaseGrid(Translate translate) {
-        super(translate);
+    protected ViewBaseGrid(Translate translate, SerializationSupport serializationSupport) {
+        super(translate, serializationSupport);
     }
 
     @Override

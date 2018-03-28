@@ -19,12 +19,13 @@ import com.vaadin.ui.Label;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
+import uk.q3c.util.guice.SerializationSupport;
 
 public class GridViewBase extends ViewBase {
 
     @Inject
-    protected GridViewBase(Translate translate) {
-        super(translate);
+    protected GridViewBase(Translate translate, SerializationSupport serializationSupport) {
+        super(translate, serializationSupport);
     }
 
     @Override

@@ -43,6 +43,7 @@ import uk.q3c.krail.option.persist.OptionCache;
 import uk.q3c.krail.option.persist.OptionSource;
 import uk.q3c.krail.testapp.TestAppUI;
 import uk.q3c.krail.testapp.i18n.DescriptionKey;
+import uk.q3c.util.guice.SerializationSupport;
 
 import javax.annotation.Nonnull;
 
@@ -77,8 +78,8 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
     private Button warnButton;
 
     @Inject
-    protected NotificationsView(UserNotifier userNotifier, Translate translate, Option option, OptionPopup optionPopup, OptionCache optionCache, OptionSource optionDaoProvider) {
-        super(translate);
+    protected NotificationsView(UserNotifier userNotifier, SerializationSupport serializationSupport, Translate translate, Option option, OptionPopup optionPopup, OptionCache optionCache, OptionSource optionDaoProvider) {
+        super(translate, serializationSupport);
         this.userNotifier = userNotifier;
         this.translate = translate;
         this.option = option;

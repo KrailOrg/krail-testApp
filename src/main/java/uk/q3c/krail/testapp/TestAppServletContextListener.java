@@ -13,15 +13,10 @@
 
 package uk.q3c.krail.testapp;
 
-import uk.q3c.krail.core.guice.BindingsCollator;
 import uk.q3c.krail.core.guice.DefaultServletContextListener;
-import uk.q3c.krail.testapp.view.TestAppBindingsCollator;
 
 //@WebListener
 public class TestAppServletContextListener extends DefaultServletContextListener {
 
-    @Override
-    protected BindingsCollator getBindingsCollator() {
-        return new TestAppBindingsCollator();
-    }
+
 }

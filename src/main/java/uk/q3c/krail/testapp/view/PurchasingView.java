@@ -19,13 +19,14 @@ import uk.q3c.krail.core.navigate.sitemap.View;
 import uk.q3c.krail.core.shiro.PageAccessControl;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.LabelKey;
+import uk.q3c.util.guice.SerializationSupport;
 
 @View(uri = "private/finance/purchasing", pageAccessControl = PageAccessControl.PERMISSION, labelKeyName = "Purchasing")
 public class PurchasingView extends GridViewBase {
 
     @Inject
-    protected PurchasingView(Translate translate) {
-        super(translate);
+    protected PurchasingView(Translate translate, SerializationSupport serializationSupport) {
+        super(translate, serializationSupport);
         nameKey = LabelKey.Purchasing;
     }
 }

@@ -35,6 +35,7 @@ import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.Caption;
 import uk.q3c.krail.testapp.i18n.LabelKey;
+import uk.q3c.util.guice.SerializationSupport;
 
 public class WidgetsetView extends ViewBase {
     private static Logger log = LoggerFactory.getLogger(WidgetsetView.class);
@@ -50,8 +51,8 @@ public class WidgetsetView extends ViewBase {
     private Label param2;
 
     @Inject
-    protected WidgetsetView(SessionObject sessionObject, Translate translate) {
-        super(translate);
+    protected WidgetsetView(SessionObject sessionObject, Translate translate, SerializationSupport serializationSupport) {
+        super(translate, serializationSupport);
         nameKey = LabelKey.Widgetset;
         log.debug("Constructor injecting with session object");
     }

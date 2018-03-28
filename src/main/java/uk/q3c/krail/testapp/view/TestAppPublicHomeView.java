@@ -16,12 +16,13 @@ import com.google.inject.Inject;
 import uk.q3c.krail.core.view.PublicHomeView;
 import uk.q3c.krail.core.view.StandardPageViewBase;
 import uk.q3c.krail.i18n.Translate;
+import uk.q3c.util.guice.SerializationSupport;
 
 public class TestAppPublicHomeView extends StandardPageViewBase implements PublicHomeView {
 
     @Inject
-    public TestAppPublicHomeView(Translate translate) {
-        super(translate);
+    public TestAppPublicHomeView(Translate translate, SerializationSupport serializationSupport) {
+        super(translate, serializationSupport);
     }
 
 

@@ -26,6 +26,7 @@ import uk.q3c.krail.core.view.Grid3x3ViewBase;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.LabelKey;
+import uk.q3c.util.guice.SerializationSupport;
 
 import java.util.Optional;
 
@@ -40,8 +41,8 @@ public class AccountsView extends Grid3x3ViewBase {
     private UserNotifier userNotifier;
 
     @Inject
-    protected AccountsView(UserNotifier userNotifier, Translate translate) {
-        super(translate);
+    protected AccountsView(UserNotifier userNotifier, Translate translate, SerializationSupport serializationSupport) {
+        super(translate, serializationSupport);
         nameKey = LabelKey.Accounts;
         this.userNotifier = userNotifier;
     }

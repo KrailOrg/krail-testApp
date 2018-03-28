@@ -55,6 +55,7 @@ import uk.q3c.krail.i18n.Translate
 import uk.q3c.krail.option.Option
 import uk.q3c.krail.testutil.guice.uiscope.TestUIScopeModule
 import uk.q3c.util.UtilModule
+import uk.q3c.util.guice.SerializationSupport
 import uk.q3c.util.testutil.FileTestUtil
 import uk.q3c.util.testutil.TestResource
 import java.io.File
@@ -149,8 +150,15 @@ class DefaultFunctionalTestSupportBuilderTest : Spek({
 
 
 class TestUI @Inject
-protected constructor(navigator: Navigator, errorHandler: ErrorHandler,
-                      broadcaster: Broadcaster, pushMessageRouter: PushMessageRouter, applicationTitle: ApplicationTitle, translate: Translate, currentLocale: CurrentLocale, translator: I18NProcessor, option: Option) : ScopedUI(navigator, errorHandler, broadcaster, pushMessageRouter, applicationTitle, translate, currentLocale, translator) {
+protected constructor(navigator: Navigator,
+                      errorHandler: ErrorHandler,
+                      broadcaster: Broadcaster,
+                      pushMessageRouter: PushMessageRouter,
+                      applicationTitle: ApplicationTitle,
+                      translate: Translate,
+                      currentLocale: CurrentLocale,
+                      translator: I18NProcessor,
+                      serializationSupport: SerializationSupport) : ScopedUI(navigator, errorHandler, broadcaster, pushMessageRouter, applicationTitle, translate, currentLocale, translator, serializationSupport) {
 
     val label = Label("ui")
 
@@ -173,6 +181,7 @@ class IdGeneratorModule : AbstractModule() {
     val mockNavigator: Navigator = mock()
     val mockI18NProcessor: I18NProcessor = mock()
     val mockErrorHandler: ErrorHandler = mock()
+    val mockSerializationSupport: SerializationSupport = mock()
 
 
     init {
@@ -193,12 +202,13 @@ class IdGeneratorModule : AbstractModule() {
         bind(Navigator::class.java).toInstance(mockNavigator)
         bind(I18NProcessor::class.java).toInstance(mockI18NProcessor)
         bind(ErrorHandler::class.java).toInstance(mockErrorHandler)
+        bind(SerializationSupport::class.java).toInstance(mockSerializationSupport)
 
     }
 
 }
 
-class SimpleView @Inject constructor(translate: Translate) : ViewBase(translate) {
+class SimpleView @Inject constructor(translate: Translate, serializationSupport: SerializationSupport) : ViewBase(translate, serializationSupport) {
     lateinit var label: Label
     lateinit var custom: TestCustomComponent
     override fun doBuild(busMessage: ViewChangeBusMessage?) {
@@ -207,7 +217,7 @@ class SimpleView @Inject constructor(translate: Translate) : ViewBase(translate)
     }
 }
 
-class AnotherSimpleView @Inject constructor(translate: Translate) : ViewBase(translate) {
+class AnotherSimpleView @Inject constructor(translate: Translate, serializationSupport: SerializationSupport) : ViewBase(translate, serializationSupport) {
     lateinit var button: Button
     override fun doBuild(busMessage: ViewChangeBusMessage?) {
         button = Button("boo button")

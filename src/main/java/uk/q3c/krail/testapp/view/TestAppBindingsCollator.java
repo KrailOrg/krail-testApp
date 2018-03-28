@@ -3,20 +3,16 @@ package uk.q3c.krail.testapp.view;
 import com.google.inject.Module;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.q3c.krail.core.guice.BindingsCollator;
+import uk.q3c.krail.core.guice.CoreBindingsCollator;
 import uk.q3c.krail.core.i18n.KrailI18NModule;
 import uk.q3c.krail.core.navigate.sitemap.SystemAccountManagementPages;
-import uk.q3c.krail.core.option.KrailOptionModule;
 import uk.q3c.krail.core.shiro.DefaultShiroModule;
 import uk.q3c.krail.core.shiro.aop.KrailShiroAopModule;
 import uk.q3c.krail.core.sysadmin.SystemAdminPages;
 import uk.q3c.krail.core.ui.DefaultUIModule;
-import uk.q3c.krail.option.bind.OptionModule;
 import uk.q3c.krail.testapp.TestAppServletModule;
 import uk.q3c.krail.testapp.TestAppUI;
 import uk.q3c.krail.testapp.i18n.LabelKey;
-import uk.q3c.krail.testapp.persist.Jpa1;
-import uk.q3c.krail.testapp.persist.TestAppJpaModule;
 import uk.q3c.krail.testapp.uac.TestAppRealm;
 
 import java.util.List;
@@ -25,7 +21,7 @@ import java.util.Locale;
 /**
  * Created by David Sowerby on 27 Feb 2018
  */
-public class TestAppBindingsCollator extends BindingsCollator {
+public class TestAppBindingsCollator extends CoreBindingsCollator {
     private static Logger log = LoggerFactory.getLogger(TestAppBindingsCollator.class);
 
     public TestAppBindingsCollator() {
@@ -45,10 +41,6 @@ public class TestAppBindingsCollator extends BindingsCollator {
         modules.add(new SystemAdminPages().rootURI("private/sysadmin"));
     }
 
-    @Override
-    protected void addAppModules(List<Module> modules) {
-        modules.add(new TestAppJpaModule());
-    }
 
     @Override
     protected Module viewModule() {
@@ -86,14 +78,4 @@ public class TestAppBindingsCollator extends BindingsCollator {
                 .addRealm(TestAppRealm.class);
     }
 
-    /**
-     * Override this if you have provided your own {@link OptionModule}.
-     *
-     * @return module instance
-     */
-    @Override
-    protected Module optionModule() {
-        log.debug("Binding KrailOptionModule");
-        return new KrailOptionModule().activeSource(Jpa1.class);
-    }
 }

@@ -16,12 +16,13 @@ package uk.q3c.krail.testapp.view;
 import com.google.inject.Inject;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.LabelKey;
+import uk.q3c.util.guice.SerializationSupport;
 
 public class FinanceView extends GridViewBase {
 
     @Inject
-    protected FinanceView(Translate translate) {
-        super(translate);
+    protected FinanceView(Translate translate, SerializationSupport serializationSupport) {
+        super(translate, serializationSupport);
         nameKey = LabelKey.Finance;
     }
 }

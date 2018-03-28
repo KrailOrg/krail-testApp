@@ -6,7 +6,6 @@ import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.WebDriverRunner
 import com.google.inject.Inject
 import com.google.inject.Injector
-import com.google.inject.Key
 import com.google.inject.Module
 import com.google.inject.Singleton
 import com.nhaarman.mockito_kotlin.any
@@ -25,9 +24,7 @@ import com.vaadin.ui.UI
 import org.amshove.kluent.mock
 import org.amshove.kluent.shouldBe
 import org.apache.commons.io.FileUtils
-import org.apache.onami.persist.PersistenceService
 import org.slf4j.LoggerFactory
-import uk.q3c.krail.core.guice.BindingsCollator
 import uk.q3c.krail.core.navigate.NavigationState
 import uk.q3c.krail.core.navigate.Navigator
 import uk.q3c.krail.core.navigate.sitemap.DefaultMasterSitemap
@@ -48,8 +45,6 @@ import uk.q3c.krail.functest.toJson
 import uk.q3c.krail.functest.waitForNavigationState
 import uk.q3c.krail.testapp.TestAppServletContextListener
 import uk.q3c.krail.testapp.TestAppUI
-import uk.q3c.krail.testapp.persist.Jpa1
-import uk.q3c.krail.testapp.persist.Jpa2
 import uk.q3c.krail.testapp.ui.TestAppUIProvider
 import uk.q3c.krail.testapp.view.TestAppBindingsCollator
 import uk.q3c.util.clazz.UnenhancedClassIdentifier
@@ -90,8 +85,6 @@ class CodedBrowser : Browser {
         val wrappedSession: WrappedSession = mock()
         val vaadinRequest: VaadinRequest = mock()
         //    val mockSession : VaadinSession = mock()
-        lateinit var persistenceService1: PersistenceService
-        lateinit var persistenceService2: PersistenceService
 
 
         val lock = ReentrantLock()
@@ -102,10 +95,6 @@ class CodedBrowser : Browser {
         session.testLock = lock
         session.refreshTransients(wrappedSession, vaadinService)
         VaadinSession.setCurrent(session)
-        persistenceService1 = injector.getInstance(Key.get(PersistenceService::class.java, Jpa1::class.java))
-        persistenceService2 = injector.getInstance(Key.get(PersistenceService::class.java, Jpa2::class.java))
-        persistenceService1.start()
-        persistenceService2.start()
         val uiProvider = injector.getInstance(TestAppUIProvider::class.java)
         whenever(vaadinRequest.service).thenReturn(vaadinService)
         whenever(vaadinRequest.getParameter("v-loc")).thenReturn("http://localhost:8080/krail-testapp/#home")
@@ -229,13 +218,7 @@ class FunctionalTestBindingsCollator : TestAppBindingsCollator() {
     }
 }
 
-class FunctionalTestServletContextListener : TestAppServletContextListener() {
-
-
-    override fun getBindingsCollator(): BindingsCollator {
-        return FunctionalTestBindingsCollator()
-    }
-}
+class FunctionalTestServletContextListener : TestAppServletContextListener()
 
 
 class FunctionalTestSitemapModule : SitemapModule() {

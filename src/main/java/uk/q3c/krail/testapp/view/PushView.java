@@ -30,6 +30,7 @@ import uk.q3c.krail.core.view.component.BroadcastMessageLog;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.LabelKey;
+import uk.q3c.util.guice.SerializationSupport;
 
 public class PushView extends ViewBaseGrid {
 
@@ -44,8 +45,8 @@ public class PushView extends ViewBaseGrid {
     private Button sendButton;
 
     @Inject
-    protected PushView(Broadcaster broadcaster, BroadcastMessageLog messageLog, ApplicationConfiguration applicationConfiguration, Translate translate) {
-        super(translate);
+    protected PushView(Broadcaster broadcaster, SerializationSupport serializationSupport, BroadcastMessageLog messageLog, ApplicationConfiguration applicationConfiguration, Translate translate) {
+        super(translate, serializationSupport);
         this.broadcaster = broadcaster;
         this.messageLog = messageLog;
         this.applicationConfiguration = applicationConfiguration;

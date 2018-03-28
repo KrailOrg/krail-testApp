@@ -14,16 +14,10 @@ package uk.q3c.krail.testapp.persist;
 
 import uk.q3c.krail.persist.KrailEntity;
 
-import javax.persistence.*;
-
-@Entity
 public class Widget implements KrailEntity<Long, Integer> {
     private String description;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Version
     private Integer version;
 
     @Override

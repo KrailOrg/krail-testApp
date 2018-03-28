@@ -39,6 +39,7 @@ import uk.q3c.krail.i18n.CurrentLocale;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.option.Option;
 import uk.q3c.krail.testapp.view.SessionObject;
+import uk.q3c.util.guice.SerializationSupport;
 
 /**
  * The UI class used in this test application for Krail
@@ -55,9 +56,9 @@ public class TestAppUI extends DefaultApplicationUI {
                         UserNavigationMenu menu, UserNavigationTree navTree, Breadcrumb breadcrumb,
                         SubPagePanel subpage, MessageBar messageBar, Broadcaster broadcaster,
                         PushMessageRouter pushMessageRouter, SessionObject sessionObject,
-                        ApplicationTitle applicationTitle, Translate translate, CurrentLocale currentLocale, I18NProcessor translator, LocaleSelector localeSelector, VaadinNotification vaadinNotification, Option option) {
+                        ApplicationTitle applicationTitle, Translate translate, CurrentLocale currentLocale, I18NProcessor translator, LocaleSelector localeSelector, VaadinNotification vaadinNotification, Option option, SerializationSupport serializationSupport) {
         super(navigator, errorHandler, logo, header, userStatus, menu, navTree, breadcrumb, subpage, messageBar, broadcaster,
-                pushMessageRouter, applicationTitle, translate, currentLocale, translator, localeSelector, vaadinNotification, option);
+                pushMessageRouter, applicationTitle, translate, currentLocale, translator, localeSelector, vaadinNotification, option, serializationSupport);
 
     }
 
