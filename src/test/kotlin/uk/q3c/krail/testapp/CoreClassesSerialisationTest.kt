@@ -7,29 +7,12 @@ import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.reflections.Reflections
+import uk.q3c.krail.TestServiceSerial
 import uk.q3c.krail.core.guice.ServletEnvironmentModule
-import uk.q3c.krail.core.i18n.VaadinCurrentLocale
-import uk.q3c.krail.core.option.DefaultOptionPopup
-import uk.q3c.krail.core.shiro.DefaultJWTKeyProvider
-import uk.q3c.krail.core.shiro.DefaultJWTProvider
-import uk.q3c.krail.core.shiro.SubjectProvider
-import uk.q3c.krail.core.ui.BrowserProvider
 import uk.q3c.krail.core.ui.ScopedUIProvider
-import uk.q3c.krail.core.user.notify.DefaultUserNotifier
-import uk.q3c.krail.core.vaadin.DefaultConverterFactory
-import uk.q3c.krail.core.vaadin.DefaultOptionBinder
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.functest.coded.CodedBrowser
-import uk.q3c.krail.i18n.persist.source.DefaultPatternSource
-import uk.q3c.krail.i18n.translate.DefaultTranslate
-import uk.q3c.krail.option.option.DefaultOption
-import uk.q3c.krail.option.option.OptionKeyLocator
-import uk.q3c.krail.option.persist.cache.DefaultOptionCache
-import uk.q3c.krail.option.persist.cache.DefaultOptionCacheProvider
-import uk.q3c.krail.option.persist.dao.DefaultOptionDao
 import uk.q3c.krail.testapp.view.TestAppBindingsCollator
-import uk.q3c.util.data.DefaultDataConverter
-import uk.q3c.util.text.DefaultMessageFormat
 import java.io.Serializable
 import java.lang.reflect.Modifier
 
@@ -46,24 +29,68 @@ object CoreClassesSerialisationTest : Spek({
     given("we want core classes to be serializable") {
         val injector = Guice.createInjector(TestAppBindingsCollator(ServletEnvironmentModule()).allModules())
         val coreClasses: List<Class<out Serializable>> = listOf(
-                DefaultJWTKeyProvider::class.java,
-                DefaultJWTProvider::class.java,
-                BrowserProvider::class.java,
-                SubjectProvider::class.java,
-                VaadinCurrentLocale::class.java,
-                DefaultPatternSource::class.java,
-                DefaultMessageFormat::class.java,
-                DefaultTranslate::class.java,
-                DefaultUserNotifier::class.java,
-                OptionKeyLocator::class.java,
-                DefaultConverterFactory::class.java,
-                DefaultDataConverter::class.java,
-                DefaultOptionDao::class.java,
-                DefaultOptionCacheProvider::class.java,
-                DefaultOptionCache::class.java,
-                DefaultOption::class.java,
-                DefaultOptionBinder::class.java,
-                DefaultOptionPopup::class.java)
+//                DefaultJWTKeyProvider::class.java,
+//                DefaultJWTProvider::class.java,
+//                BrowserProvider::class.java,
+//                SubjectProvider::class.java,
+//                VaadinCurrentLocale::class.java,
+//                DefaultPatternSource::class.java,
+//                DefaultMessageFormat::class.java,
+//                DefaultTranslate::class.java,
+//                DefaultUserNotifier::class.java,
+//                OptionKeyLocator::class.java,
+//                DefaultConverterFactory::class.java,
+//                DefaultDataConverter::class.java,
+//                DefaultInMemoryOptionStore::class.java,
+//                DefaultOptionDao::class.java,
+//                DefaultOptionCacheProvider::class.java,
+//                DefaultOptionCache::class.java,
+//                KrailOptionPermissionVerifier::class.java,
+//                DefaultOption::class.java,
+//                DefaultOptionBinder::class.java,
+//                DefaultOptionPopup::class.java,
+//                EasyBinder::class.java,
+//
+//                DefaultOptionSource::class.java,
+//                DefaultPersistenceInfo::class.java,
+//                DefaultUserNotifier::class.java,
+//                DefaultBroadcaster::class.java,
+//                StrictURIFragmentHandler::class.java,
+//                MasterSitemapQueue::class.java,
+//
+//                DefaultServiceClassGraph::class.java,
+//                DefaultServiceInstanceGraph::class.java,
+//                DefaultServiceModel::class.java,
+//
+//                UserSitemapNodeModifier::class.java,
+//                DefaultUserSitemap::class.java,
+//                DefaultUserNavigationTreeBuilder::class.java,
+//
+//                DefaultSubjectProvider::class.java,
+//                PageAccessController::class.java,
+//                ScopedUIProvider::class.java,
+//                DefaultViewFactory::class.java,
+//                UserSitemapBuilder::class.java,
+//                DefaultLoginNavigationRule::class.java,
+//                DefaultLogoutNavigationRule::class.java,
+//                DefaultUIBusProvider::class.java,
+//                DefaultSessionBusProvider::class.java,
+//                DefaultUserSitemapSorters::class.java,
+//                DefaultViewChangeRule::class.java,
+//                DefaultInvalidURIHandler::class.java,
+//                DefaultComponentIdGenerator::class.java,
+
+//                DefaultRelatedServiceExecutor::class.java,
+//                DefaultResourceUtils::class.java,
+//                DefaultClassNameUtils::class.java,
+//                DefaultApplicationConfiguration::class.java,
+//                DefaultMasterSitemapQueue::class.java,
+//                DefaultSitemapFinisher::class.java,
+//                DefaultApplicationConfigurationService::class.java
+                TestServiceSerial::class.java
+//                DefaultSitemapService::class.java
+//                DefaultNavigator::class.java
+        )
 
         coreClasses.forEach { test ->
             given(test.simpleName) {
@@ -72,7 +99,7 @@ object CoreClassesSerialisationTest : Spek({
                     println(">>>>> ${test.simpleName}")
                     val instance = injector.getInstance(test)
                     val output = SerializationUtils.serialize(instance)
-//                    val result: Serializable = SerializationUtils.deserialize(output)
+                    val result: Serializable = SerializationUtils.deserialize(output)
 
                     it("does not throw exception") {
 
@@ -103,7 +130,7 @@ object ViewSerialisationTest : Spek({
                     println(">>>>> ${test.simpleName}")
                     val instance = injector.getInstance(test)
                     val output = SerializationUtils.serialize(instance)
-//                    val result: Serializable = SerializationUtils.deserialize(output)
+                    val result: Serializable = SerializationUtils.deserialize(output)
 
                     it("does not throw exception") {
 

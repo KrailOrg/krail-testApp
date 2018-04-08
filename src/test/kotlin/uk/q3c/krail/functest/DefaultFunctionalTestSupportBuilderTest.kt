@@ -5,6 +5,7 @@ import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Injector
+import com.google.inject.Provider
 import com.nhaarman.mockito_kotlin.whenever
 import com.vaadin.server.ErrorHandler
 import com.vaadin.server.UICreateEvent
@@ -34,7 +35,6 @@ import uk.q3c.krail.core.navigate.sitemap.DefaultMasterSitemap
 import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
 import uk.q3c.krail.core.navigate.sitemap.MasterSitemapNode
 import uk.q3c.krail.core.navigate.sitemap.SitemapService
-import uk.q3c.krail.core.navigate.sitemap.set.MasterSitemapQueue
 import uk.q3c.krail.core.push.Broadcaster
 import uk.q3c.krail.core.push.PushMessageRouter
 import uk.q3c.krail.core.shiro.PageAccessControl
@@ -78,7 +78,7 @@ class DefaultFunctionalTestSupportBuilderTest : Spek({
         beforeGroup {
             injector = Guice.createInjector(IdGeneratorModule(), UtilModule(), TestUIScopeModule(), DefaultUIModule().uiClass(TestUI::class.java))
             functionalTestSupportBuilder = injector.getInstance(FunctionalTestSupportBuilder::class.java)
-            masterSitemap = injector.getInstance(MasterSitemapQueue::class.java).currentModel
+            masterSitemap = injector.getInstance(MasterSitemap::class.java)
             uiProvider = injector.getInstance(ScopedUIProvider::class.java)
             uiProvider.createInstance(UICreateEvent(mockRequest, TestUI::class.java))
             masterSitemap.addNode(MasterSitemapNode(1, "simple", SimpleView::class.java, LoginLabelKey.Log_In, -1, PageAccessControl.PUBLIC, ImmutableList.of()))
@@ -170,7 +170,7 @@ protected constructor(navigator: Navigator,
 }
 
 class IdGeneratorModule : AbstractModule() {
-    val mockMasterSitemapQueue: MasterSitemapQueue = mock()
+    val mockMasterSitemapProvider: Provider<MasterSitemap> = mock()
     val mockSitemapService: SitemapService = mock()
     val translate: Translate = mock()
     val mockCurrentLocale: CurrentLocale = mock()
@@ -185,11 +185,11 @@ class IdGeneratorModule : AbstractModule() {
 
 
     init {
-        whenever(mockMasterSitemapQueue.currentModel).thenReturn(masterSitemap)
+        whenever(mockMasterSitemapProvider.get()).thenReturn(masterSitemap)
     }
 
     override fun configure() {
-        bind(MasterSitemapQueue::class.java).toInstance(mockMasterSitemapQueue)
+        bind(MasterSitemap::class.java).toInstance(masterSitemap)
         bind(ViewFactory::class.java).to(DefaultViewFactory::class.java)
         bind(Translate::class.java).toInstance(translate)
         bind(CurrentLocale::class.java).toInstance(mockCurrentLocale)

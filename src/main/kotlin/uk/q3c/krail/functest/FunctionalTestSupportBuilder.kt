@@ -4,12 +4,12 @@ import com.google.common.graph.MutableGraph
 import com.google.gson.GsonBuilder
 import com.google.inject.Inject
 import com.google.inject.Injector
+import com.google.inject.Provider
 import org.slf4j.LoggerFactory
 import uk.q3c.krail.config.ConfigurationException
 import uk.q3c.krail.core.navigate.NavigationState
 import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
 import uk.q3c.krail.core.navigate.sitemap.SitemapService
-import uk.q3c.krail.core.navigate.sitemap.set.MasterSitemapQueue
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.ViewFactory
 import uk.q3c.krail.core.view.component.AfterViewChangeBusMessage
@@ -27,8 +27,8 @@ interface FunctionalTestSupportBuilder {
 
 class DefaultFunctionalTestSupportBuilder @Inject constructor(
         sitemapService: SitemapService,
-        masterSitemapQueue: MasterSitemapQueue,
         val injector: Injector,
+        val masterSitemapProvider: Provider<MasterSitemap>,
         val componentIdGenerator: ComponentIdGenerator,
         val viewFactory: ViewFactory,
         val uiCreator: UICreator,
@@ -41,7 +41,7 @@ class DefaultFunctionalTestSupportBuilder @Inject constructor(
     init {
         sitemapService.start()
         //take a reference and keep it in case current model changes
-        masterSitemap = masterSitemapQueue.currentModel
+        masterSitemap = masterSitemapProvider.get()
     }
 
     private fun defaultUI(): ScopedUI {
