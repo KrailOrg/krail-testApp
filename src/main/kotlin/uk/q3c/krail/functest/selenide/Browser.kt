@@ -47,8 +47,9 @@ class SelenideBrowser : Browser {
 
 
     override fun setup() {
+        val serverPort = System.getProperty("krail.server.httpPort") ?: "8080"
         System.setProperty("selenide.browser", "chrome")
-        System.setProperty("selenide.baseUrl", "http://localhost:8080/krail-testapp/#")
+        System.setProperty("selenide.baseUrl", "http://localhost:${serverPort}/krail-testapp/#")
 
         val currentDir = File(".")
         val resourcesPath = "src/test/resources"

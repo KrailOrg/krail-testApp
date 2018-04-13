@@ -12,6 +12,7 @@ You won't be able to run the tests themselves unless you have a licence for Vaad
 
 The host requires some preparation. See [notes](https://github.com/davidsowerby/krail-testApp/wiki/Test-Environment) for what is required
 
+Tests could also run on top of docker containers with `integrationTestTomcat7` or `integrationTestTomcat8` gradle tasks.
 
 
 # Download
