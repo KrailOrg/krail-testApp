@@ -7,7 +7,9 @@ import com.vaadin.ui.CheckBox
 import com.vaadin.ui.ComboBox
 import com.vaadin.ui.Grid
 import com.vaadin.ui.Image
+import com.vaadin.ui.Label
 import com.vaadin.ui.MenuBar
+import com.vaadin.ui.TextArea
 import com.vaadin.ui.TextField
 import com.vaadin.ui.TreeGrid
 import org.amshove.kluent.shouldBe
@@ -162,7 +164,7 @@ class CodedCheckBoxElement(id: String) : CheckBoxElement, AbstractCodedElement<C
 
 }
 
-class CodedTextAreaElement(id: String) : TextAreaElement, AbstractCodedElement<TextField>(id) {
+class CodedTextAreaElement(id: String) : TextAreaElement, AbstractCodedElement<TextArea>(id) {
 
     override fun setValue(value: String) {
         nativeField.value = value
@@ -176,7 +178,7 @@ class CodedTextAreaElement(id: String) : TextAreaElement, AbstractCodedElement<T
 }
 
 
-class CodedLabelElement(id: String) : LabelElement, AbstractCodedElement<TextField>(id) {
+class CodedLabelElement(id: String) : LabelElement, AbstractCodedElement<Label>(id) {
 
     override fun valueShouldBe(expectedValue: String) {
         nativeField.value.shouldBeEqualTo(expectedValue)
