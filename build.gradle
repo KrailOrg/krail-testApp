@@ -1,3 +1,5 @@
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Copy
+
 buildscript {
     ext.kaytee_plugin_version = "0.20.1.0"
     ext.kotlin_version = '1.2.31'
@@ -77,6 +79,10 @@ configurations.all {
         force 'com.google.guava:guava:22.0'
         // GWT requires an old version of the validation API.  Changing to a newer version breaks widgetset compile but throws no errors
         force 'javax.validation:validation-api:1.0.0.GA'
+
+        dependencySubstitution {
+            substitute module ('commons-beanutils:commons-beanutils-core') with module ('commons-beanutils:commons-beanutils:1.9.3')
+        }
     }
 }
 
