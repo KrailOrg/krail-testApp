@@ -109,19 +109,23 @@ dependencies {
     compile 'uk.q3c.krail:krail:0.16.0.0' // needed for ID class
 
     //Testbench
-    compile "com.vaadin:vaadin-testbench:$vaadinTestbenchVersion"
-    compile "com.vaadin:vaadin-testbench-api:$vaadinVersion"  // get an out of date API without this
+    compileOnly "com.vaadin:vaadin-testbench:$vaadinTestbenchVersion"
+    compileOnly "com.vaadin:vaadin-testbench-api:$vaadinVersion"  // get an out of date API without this
 
     //UI components
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'
     compile 'org.vaadin.addons:stepper:2.4.0'
     // Missing from stepper
     compile 'org.json:json:20141113'
-    //vaadin push
-//    compile 'com.vaadin:vaadin-push:' + vaadinVersion
 
-    compile "org.amshove.kluent:kluent:1.34"
-    compile 'com.codeborne:selenide:4.9.1'
+    // compileOnly because sources requiring dependencies are in production sourceSet
+    // but they are not needed at runtime
+    compileOnly "org.amshove.kluent:kluent:1.34"
+    compileOnly 'com.codeborne:selenide:4.9.1'
+    // Dependencies are needed to compile also code in test sourceSet
+    testCompile "org.amshove.kluent:kluent:1.34"
+    testCompile 'com.codeborne:selenide:4.9.1'
+
     compile 'io.jsonwebtoken:jjwt:0.9.0'
 //    testCompile 'junit:junit:4.12'
 //    testCompile('uk.q3c.krail:krail-bench:0.14.0.0') {
@@ -143,6 +147,7 @@ dependencies {
 vaadin {
     version = '8.3.1'
     logToConsole = true
+    push = true
 }
 
 vaadinCompile{
