@@ -27,6 +27,7 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
+import uk.q3c.krail.core.guice.ServletEnvironmentModule
 import uk.q3c.krail.core.i18n.I18NProcessor
 import uk.q3c.krail.core.i18n.LabelKey
 import uk.q3c.krail.core.navigate.Navigator
@@ -76,7 +77,7 @@ class DefaultFunctionalTestSupportBuilderTest : Spek({
 
     context("building a model of routes to views and UIs, and their components") {
         beforeGroup {
-            injector = Guice.createInjector(IdGeneratorModule(), UtilModule(), TestUIScopeModule(), DefaultUIModule().uiClass(TestUI::class.java))
+            injector = Guice.createInjector(IdGeneratorModule(), UtilModule(), TestUIScopeModule(), DefaultUIModule().uiClass(TestUI::class.java), ServletEnvironmentModule())
             functionalTestSupportBuilder = injector.getInstance(FunctionalTestSupportBuilder::class.java)
             masterSitemap = injector.getInstance(MasterSitemap::class.java)
             uiProvider = injector.getInstance(ScopedUIProvider::class.java)

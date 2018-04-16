@@ -20,14 +20,13 @@ import uk.q3c.krail.core.navigate.DefaultLogoutNavigationRule
 import uk.q3c.krail.core.navigate.DefaultNavigator
 import uk.q3c.krail.core.navigate.DefaultViewChangeRule
 import uk.q3c.krail.core.navigate.StrictURIFragmentHandler
+import uk.q3c.krail.core.navigate.sitemap.DefaultMasterSitemap
 import uk.q3c.krail.core.navigate.sitemap.DefaultSitemapFinisher
 import uk.q3c.krail.core.navigate.sitemap.DefaultSitemapService
 import uk.q3c.krail.core.navigate.sitemap.DefaultUserSitemap
 import uk.q3c.krail.core.navigate.sitemap.UserSitemapBuilder
 import uk.q3c.krail.core.navigate.sitemap.UserSitemapNodeModifier
 import uk.q3c.krail.core.navigate.sitemap.comparator.DefaultUserSitemapSorters
-import uk.q3c.krail.core.navigate.sitemap.set.DefaultMasterSitemapQueue
-import uk.q3c.krail.core.navigate.sitemap.set.MasterSitemapQueue
 import uk.q3c.krail.core.option.DefaultOptionPopup
 import uk.q3c.krail.core.option.KrailOptionPermissionVerifier
 import uk.q3c.krail.core.push.DefaultBroadcaster
@@ -104,7 +103,6 @@ object CoreClassesSerialisationTest : Spek({
                 DefaultUserNotifier::class.java,
                 DefaultBroadcaster::class.java,
                 StrictURIFragmentHandler::class.java,
-                MasterSitemapQueue::class.java,
 
 
                 UserSitemapNodeModifier::class.java,
@@ -128,10 +126,10 @@ object CoreClassesSerialisationTest : Spek({
                 DefaultResourceUtils::class.java,
                 DefaultClassNameUtils::class.java,
                 DefaultApplicationConfiguration::class.java,
-                DefaultMasterSitemapQueue::class.java,
                 DefaultSitemapFinisher::class.java,
                 DefaultApplicationConfigurationService::class.java,
                 DefaultSitemapService::class.java,
+                DefaultMasterSitemap::class.java,
                 DefaultNavigator::class.java
         )
 
