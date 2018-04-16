@@ -16,10 +16,7 @@ package uk.q3c.krail.testapp.view;
 import com.google.inject.Inject;
 import com.vaadin.ui.Button;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.apache.shiro.authz.annotation.RequiresGuest;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
+import uk.q3c.krail.core.shiro.SubjectProvider;
 import uk.q3c.krail.core.user.notify.UserNotifier;
 import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.Grid3x3ViewBase;
@@ -32,17 +29,19 @@ import java.util.Optional;
 
 /**
  * Used to check some Shiro annotations as well
- *
+ * <p>
  * Created by David Sowerby on 22/05/15.
  */
 @SuppressFBWarnings("LSC_LITERAL_STRING_COMPARISON")
 public class AccountsView extends Grid3x3ViewBase {
 
+    private final SubjectProvider subjectProvider;
     private UserNotifier userNotifier;
 
     @Inject
-    protected AccountsView(UserNotifier userNotifier, Translate translate, SerializationSupport serializationSupport) {
+    protected AccountsView(UserNotifier userNotifier, Translate translate, SerializationSupport serializationSupport, SubjectProvider subjectProvider) {
         super(translate, serializationSupport);
+        this.subjectProvider = subjectProvider;
         nameKey = LabelKey.Accounts;
         this.userNotifier = userNotifier;
     }
@@ -87,34 +86,46 @@ public class AccountsView extends Grid3x3ViewBase {
         setBottomRight(shiroRoleFailButton);
     }
 
-    @RequiresRoles("hero")
+    //    @RequiresRoles("hero")
     protected void roleCheckPass() {
-        userNotifier.notifyInformation(LabelKey.Yes);
+        if (subjectProvider.get().hasRole("hero")) {
+            userNotifier.notifyInformation(LabelKey.Yes);
+        }
     }
 
-    @RequiresRoles("villain")
+    //    @RequiresRoles("villain")
     protected void roleCheckFail() {
-        userNotifier.notifyInformation(LabelKey.No);
+        if (subjectProvider.get().hasRole("villain")) {
+            userNotifier.notifyInformation(LabelKey.No);
+        }
     }
 
-    @RequiresGuest
+    //    @RequiresGuest
     protected void guestCheck() {
-        userNotifier.notifyInformation(LabelKey.Guest);
+        if (!(subjectProvider.get().isAuthenticated() || subjectProvider.get().isRemembered())) {
+            userNotifier.notifyInformation(LabelKey.Guest);
+        }
     }
 
-    @RequiresPermissions("counter:increment")
+    //    @RequiresPermissions("counter:increment")
     protected void permissionCheckFail() {
-        userNotifier.notifyWarning(LabelKey.Krail_Test);
+        if (subjectProvider.get().isPermitted("counter:increment")) {
+            userNotifier.notifyWarning(LabelKey.Krail_Test);
+        }
     }
 
-    @RequiresAuthentication
+    //    @RequiresAuthentication
     protected void authenticationCheck() {
-        userNotifier.notifyInformation(LabelKey.Authenticated);
+        if (subjectProvider.get().isAuthenticated()) {
+            userNotifier.notifyInformation(LabelKey.Authenticated);
+        }
     }
 
-    @RequiresPermissions("page:view:private")
+    //    @RequiresPermissions("page:view:private")
     protected void permissionCheckPass() {
-        userNotifier.notifyInformation(LabelKey.Yes);
+        if (subjectProvider.get().isPermitted("page:view:private")) {
+            userNotifier.notifyInformation(LabelKey.Yes);
+        }
     }
 
 
