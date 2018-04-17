@@ -1,6 +1,8 @@
 package uk.q3c.krail.testapp
 
 import com.google.inject.Guice
+import com.vaadin.server.VaadinSession
+import com.vaadin.ui.UI
 import org.apache.commons.lang3.SerializationUtils
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
@@ -69,6 +71,7 @@ import java.lang.reflect.Modifier
 object CoreClassesSerialisationTest : Spek({
 
     beforeGroup {
+        resetVaadin()
         val codedBrowser = CodedBrowser()
         codedBrowser.setup()
     }
@@ -157,6 +160,7 @@ object CoreClassesSerialisationTest : Spek({
 object ViewSerialisationTest : Spek({
 
     beforeGroup {
+        resetVaadin()
         val codedBrowser = CodedBrowser()
         codedBrowser.setup()
     }
@@ -192,4 +196,9 @@ fun listViews(): List<Class<out KrailView>> {
     val reflections = Reflections("uk.q3c")
     val classes = reflections.getSubTypesOf(KrailView::class.java).filter { clazz -> !Modifier.isAbstract(clazz.modifiers) }
     return classes
+}
+
+fun resetVaadin() {
+    VaadinSession.setCurrent(null)
+    UI.setCurrent(null)
 }
