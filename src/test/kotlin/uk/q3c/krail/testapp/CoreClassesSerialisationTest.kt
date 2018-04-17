@@ -189,7 +189,7 @@ fun listViews(): List<Class<out KrailView>> {
     val injector = Guice.createInjector(TestAppBindingsCollator(ServletEnvironmentModule()).allModules())
     val scopedUIProvider = injector.getInstance(ScopedUIProvider::class.java)
     scopedUIProvider.get()
-    val reflections = Reflections()
+    val reflections = Reflections("uk.q3c")
     val classes = reflections.getSubTypesOf(KrailView::class.java).filter { clazz -> !Modifier.isAbstract(clazz.modifiers) }
     return classes
 }
