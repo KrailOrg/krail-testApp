@@ -54,6 +54,10 @@ ext.vaadinTestbenchVersion = '5.0.0'
 ext.vaadinVersion='8.2.0'
 ext.gsonVersion = '2.3.1'
 
+ext.defaultTestContainer = project.hasProperty("defaultTestContainer") ? prject.getProperty("defaultTestContainer") : "tomcat8"
+ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ? project.getProperty("defaultTestContainerPort") : ""
+
+
 kaytee {
     version {
         number = "0.16.0.0"
@@ -191,7 +195,7 @@ dcompose.services.all { service ->
     service.baseDir = file("build/docker/${containerName}")
     service.dockerFilename = "Dockerfile.${containerName}"
     service.repository = "krail/testApp:${kaytee.version.number}-${containerName}"
-    service.portBindings = ["8080"]
+    service.portBindings = ["${project["defaultTestContainerPort"]}:8080"]
 
     // Build a specific task to copy files in container
     def copyFilesTaskName = "copyFilesTo${containerName.capitalize()}BuildDir"
@@ -206,7 +210,8 @@ dcompose.services.all { service ->
 
     // Build a task to prepares test environment
     def integrationTestTask = "IntegrationTest${containerName.capitalize()}"
-    task "pre${integrationTestTask}" (type: Test) {
+    task "pre${integrationTestTask}" {
+        dependsOn war
         dependsOn "${service.startTaskName}"
         doLast {
             // Pass in the configuration properties to the integration test so they can connect container port
@@ -215,7 +220,7 @@ dcompose.services.all { service ->
         }
     }
     // Create a task to clean up environment after integration tests
-    task "post${integrationTestTask}" (type: Test) {
+    task "post${integrationTestTask}" {
         mustRunAfter "${integrationTestTask}"
         finalizedBy "${service.removeContainerTaskName}"
         doLast {
@@ -233,12 +238,17 @@ dcompose.services.all { service ->
 
 }
 
-test.dependsOn pauseForApp
+// Aliases for default test container
+task startDefaultTestContainer(dependsOn: "preIntegrationTest${ext.defaultTestContainer.capitalize()}")
+task stopDefaultTestContainer(dependsOn: dcompose.services[ext.defaultTestContainer].stopTaskName)
+task removeDefaultTestContainer(dependsOn: dcompose.services[ext.defaultTestContainer].removeContainerTaskName)
+
+// Run default container before running tests
+//test.dependsOn startDefaultTestContainer
+//junitPlatformTest.mustRunAfter startDefaultTestContainer
 
 vaadinRun {
     serverPort = 8001
     server = 'jetty'
     debug false
 }
-
-
