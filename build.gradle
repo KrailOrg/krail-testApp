@@ -30,6 +30,7 @@ class Pause extends DefaultTask {
 
 plugins {
     id "com.devsoap.plugin.vaadin" version "1.3.0"
+    id "com.github.johnrengelman.shadow" version "2.0.3"
 }
 
 apply plugin: 'uk.q3c.kaytee'
@@ -50,12 +51,11 @@ group = 'uk.q3c.krail'
 
 ext.assertjVersion = '3.8.0'
 ext.vaadinTestbenchVersion = '5.0.0'
-ext.vaadinVersion='8.2.0'
 ext.gsonVersion = '2.3.1'
 
 kaytee {
     version {
-        number = "0.16.0.0"
+        number = "0.17.0.0"
     }
     release {
         mergeToMaster = false
@@ -95,8 +95,7 @@ dependencies {
 
     //Krail
     compile 'uk.q3c.krail:eventbus-mbassador:0.5.0.0' // for Handler / Listener annotations
-//   compile group: 'com.vaadin', name: 'vaadin-compatibility-client', version: '8.1.3'
-//   compile group: 'com.vaadin', name: 'vaadin-compatibility-themes', version: '8.1.3'
+
 
     //assert
     compile 'org.assertj:assertj-core:' + assertjVersion
@@ -106,11 +105,7 @@ dependencies {
 
 
 
-    compile 'uk.q3c.krail:krail:0.16.1.0' 
-
-    //Testbench
-    compileOnly "com.vaadin:vaadin-testbench:$vaadinTestbenchVersion"
-    compileOnly "com.vaadin:vaadin-testbench-api:$vaadinVersion"  // get an out of date API without this
+    compile 'uk.q3c.krail:krail:0.17.0.0'
 
     //UI components
     compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'
@@ -127,10 +122,6 @@ dependencies {
     testCompile 'com.codeborne:selenide:4.9.1'
 
     compile 'io.jsonwebtoken:jjwt:0.9.0'
-//    testCompile 'junit:junit:4.12'
-//    testCompile('uk.q3c.krail:krail-bench:0.14.0.0') {
-//        exclude group: 'uk.q3c.krail', module: 'krail'
-//    }
 
     testCompile ('org.jetbrains.spek:spek-api:1.1.5'){
         exclude group: 'org.jetbrains.kotlin'
@@ -141,7 +132,7 @@ dependencies {
     }
     testCompile 'uk.q3c.util:q3c-testutils:0.11.0.4'
 }
-//    testCompile project(':krail-orient')
+
 
 
 vaadin {
@@ -151,8 +142,9 @@ vaadin {
 }
 
 vaadinCompile{
-    manageWidgetset false
+    widgetset 'uk.q3c.krail.testapp.widgetset.testAppWidgetset'
 }
+
 
 ext.warName = (project.name.toLowerCase() + '.war')
 war {
@@ -187,3 +179,19 @@ vaadinRun {
 }
 
 
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Vaadin Vertx Experiment - Gradle build',
+                'Implementation-Version': kaytee.version.number,
+                'Main-Class': 'io.vertx.core.Launcher',
+                'Main-Verticle': 'uk.q3c.krail.TestAppVerticle'
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/webapp"
+        }
+    }
+}
