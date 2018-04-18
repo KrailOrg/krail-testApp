@@ -30,6 +30,7 @@ class Pause extends DefaultTask {
 
 plugins {
     id "com.devsoap.plugin.vaadin" version "1.3.0"
+    id "com.chrisgahlert.gradle-dcompose-plugin" version "0.9.3"
 }
 
 apply plugin: 'uk.q3c.kaytee'
@@ -52,6 +53,10 @@ ext.assertjVersion = '3.8.0'
 ext.vaadinTestbenchVersion = '5.0.0'
 ext.vaadinVersion='8.2.0'
 ext.gsonVersion = '2.3.1'
+
+ext.defaultTestContainer = project.hasProperty("defaultTestContainer") ? prject.getProperty("defaultTestContainer") : "tomcat8"
+ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ? project.getProperty("defaultTestContainerPort") : ""
+
 
 kaytee {
     version {
@@ -175,15 +180,79 @@ task pauseForApp(type: Pause) {
     dependsOn copyWar
 }
 
+dcompose {
+    tomcat7 {}
+    tomcat8 {}
+}
 
+// Configure docker images following conventions
+// Every service must have
+// - Dockerfile in src/main/docker named as `Dockerfile.<serviceName>`
+dcompose.services.all { service ->
+    def containerName = service.name
+    def taskGroup = "Container Tests"
 
-test.dependsOn pauseForApp
+    // Configure dcompose
+    service.baseDir = file("build/docker/${containerName}")
+    service.dockerFilename = "Dockerfile.${containerName}"
+    service.repository = "krail/testApp:${kaytee.version.number}-${containerName}"
+    service.portBindings = ["${project["defaultTestContainerPort"]}:8080"]
 
+    // Build a specific task to copy files in container
+    def copyFilesTaskName = "copyFilesTo${containerName.capitalize()}ContainerBuildDir"
+    task "${copyFilesTaskName}" (type: Sync, group: taskGroup) {
+        from war
+        from('src/main/docker/') {
+            include service.dockerFilename
+        }
+        into service.baseDir
+    }
+    project[service.buildImageTaskName].dependsOn "${copyFilesTaskName}"
+
+    // Build a task to prepares test environment
+    def containerTestTask = "ContainerTest${containerName.capitalize()}"
+    task "pre${containerTestTask}" {
+        group taskGroup
+        dependsOn war
+        dependsOn "${service.startTaskName}"
+        doLast {
+            // Pass in the configuration properties to the integration test so they can connect container port
+            def junitPlatformTestTask = tasks.getByName('junitPlatformTest')
+            junitPlatformTestTask.systemProperty 'krail.server.httpPort', service.findHostPort(8080)
+        }
+    }
+    // Create a task to clean up environment after integration tests
+    task "post${containerTestTask}" {
+        group taskGroup
+        mustRunAfter "${containerTestTask}"
+        finalizedBy "${service.removeContainerTaskName}"
+        doLast {
+            // Clean up the dynamic system properties in order to not mess up the UP-TO-DATE checks
+            def junitPlatformTestTask = tasks.getByName('junitPlatformTest')
+            junitPlatformTestTask.systemProperties.remove 'krail.server.httpPort'
+        }
+    }
+
+    // Build a task to run tests on the container
+    task "${containerTestTask.uncapitalize()}" {
+        group taskGroup
+        dependsOn "pre${containerTestTask}"
+        dependsOn test
+    }
+
+}
+
+// Aliases for default test container
+task startDefaultTestContainer(dependsOn: "preContainerTest${ext.defaultTestContainer.capitalize()}")
+task stopDefaultTestContainer(dependsOn: dcompose.services[ext.defaultTestContainer].stopTaskName)
+task removeDefaultTestContainer(dependsOn: dcompose.services[ext.defaultTestContainer].removeContainerTaskName)
+
+// Run default container before running tests
+//test.dependsOn startDefaultTestContainer
+//junitPlatformTest.mustRunAfter startDefaultTestContainer
 
 vaadinRun {
     serverPort = 8001
     server = 'jetty'
     debug false
 }
-
-
