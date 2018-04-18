@@ -190,6 +190,7 @@ dcompose {
 // - Dockerfile in src/main/docker named as `Dockerfile.<serviceName>`
 dcompose.services.all { service ->
     def containerName = service.name
+    def taskGroup = "Container Tests"
 
     // Configure dcompose
     service.baseDir = file("build/docker/${containerName}")
@@ -198,8 +199,8 @@ dcompose.services.all { service ->
     service.portBindings = ["${project["defaultTestContainerPort"]}:8080"]
 
     // Build a specific task to copy files in container
-    def copyFilesTaskName = "copyFilesTo${containerName.capitalize()}BuildDir"
-    task "${copyFilesTaskName}" (type: Sync) {
+    def copyFilesTaskName = "copyFilesTo${containerName.capitalize()}ContainerBuildDir"
+    task "${copyFilesTaskName}" (type: Sync, group: taskGroup) {
         from war
         from('src/main/docker/') {
             include service.dockerFilename
@@ -209,8 +210,9 @@ dcompose.services.all { service ->
     project[service.buildImageTaskName].dependsOn "${copyFilesTaskName}"
 
     // Build a task to prepares test environment
-    def integrationTestTask = "IntegrationTest${containerName.capitalize()}"
+    def integrationTestTask = "ContainerTest${containerName.capitalize()}"
     task "pre${integrationTestTask}" {
+        group taskGroup
         dependsOn war
         dependsOn "${service.startTaskName}"
         doLast {
@@ -221,6 +223,7 @@ dcompose.services.all { service ->
     }
     // Create a task to clean up environment after integration tests
     task "post${integrationTestTask}" {
+        group taskGroup
         mustRunAfter "${integrationTestTask}"
         finalizedBy "${service.removeContainerTaskName}"
         doLast {
@@ -232,6 +235,7 @@ dcompose.services.all { service ->
 
     // Build a task to run tests on the container
     task "${integrationTestTask.uncapitalize()}" {
+        group taskGroup
         dependsOn "pre${integrationTestTask}"
         dependsOn test
     }
@@ -239,7 +243,7 @@ dcompose.services.all { service ->
 }
 
 // Aliases for default test container
-task startDefaultTestContainer(dependsOn: "preIntegrationTest${ext.defaultTestContainer.capitalize()}")
+task startDefaultTestContainer(dependsOn: "preContainerTest${ext.defaultTestContainer.capitalize()}")
 task stopDefaultTestContainer(dependsOn: dcompose.services[ext.defaultTestContainer].stopTaskName)
 task removeDefaultTestContainer(dependsOn: dcompose.services[ext.defaultTestContainer].removeContainerTaskName)
 
