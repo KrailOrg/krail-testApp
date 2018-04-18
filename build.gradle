@@ -210,8 +210,8 @@ dcompose.services.all { service ->
     project[service.buildImageTaskName].dependsOn "${copyFilesTaskName}"
 
     // Build a task to prepares test environment
-    def integrationTestTask = "ContainerTest${containerName.capitalize()}"
-    task "pre${integrationTestTask}" {
+    def containerTestTask = "ContainerTest${containerName.capitalize()}"
+    task "pre${containerTestTask}" {
         group taskGroup
         dependsOn war
         dependsOn "${service.startTaskName}"
@@ -222,9 +222,9 @@ dcompose.services.all { service ->
         }
     }
     // Create a task to clean up environment after integration tests
-    task "post${integrationTestTask}" {
+    task "post${containerTestTask}" {
         group taskGroup
-        mustRunAfter "${integrationTestTask}"
+        mustRunAfter "${containerTestTask}"
         finalizedBy "${service.removeContainerTaskName}"
         doLast {
             // Clean up the dynamic system properties in order to not mess up the UP-TO-DATE checks
@@ -234,9 +234,9 @@ dcompose.services.all { service ->
     }
 
     // Build a task to run tests on the container
-    task "${integrationTestTask.uncapitalize()}" {
+    task "${containerTestTask.uncapitalize()}" {
         group taskGroup
-        dependsOn "pre${integrationTestTask}"
+        dependsOn "pre${containerTestTask}"
         dependsOn test
     }
 
