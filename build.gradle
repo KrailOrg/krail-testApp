@@ -106,7 +106,7 @@ dependencies {
 
 
 
-    compile 'uk.q3c.krail:krail:0.16.0.0' // needed for ID class
+    compile 'uk.q3c.krail:krail:0.16.1.0' 
 
     //Testbench
     compileOnly "com.vaadin:vaadin-testbench:$vaadinTestbenchVersion"
@@ -145,7 +145,7 @@ dependencies {
 
 
 vaadin {
-    version = '8.3.1'
+    version = '8.3.3'
     logToConsole = true
     push = true
 }
