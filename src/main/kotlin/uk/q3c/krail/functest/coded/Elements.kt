@@ -14,9 +14,12 @@ import com.vaadin.ui.TextField
 import com.vaadin.ui.TreeGrid
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldNotBeNull
 import org.openqa.selenium.InvalidArgumentException
 import org.slf4j.LoggerFactory
+import org.vaadin.spinkit.Spinner
+import org.vaadin.spinkit.shared.SpinnerType
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.component.Breadcrumb
@@ -260,4 +263,14 @@ class CodedBreadcrumbElement(id: String) : BreadcrumbElement, AbstractCodedEleme
         TODO()
     }
 
+}
+class CodedSpinnerElement(id: String): SpinnerElement, AbstractCodedElement<Spinner>(id) {
+
+    override fun shouldBeVisible() {
+        nativeField.isVisible.shouldBeTrue()
+    }
+
+    override fun shouldBeOfType(type: SpinnerType) {
+        nativeField.type.shouldBe(type)
+    }
 }

@@ -1,5 +1,7 @@
 package uk.q3c.krail.functest
 
+import org.vaadin.spinkit.shared.SpinnerType
+
 /**
  * Created by David Sowerby on 23 Jan 2018
  */
@@ -73,4 +75,8 @@ interface BreadcrumbElement : BaseElement {
 
 }
 
+interface SpinnerElement : BaseElement {
+    fun shouldBeVisible()
+    fun shouldBeOfType(type: SpinnerType)
+}
 
