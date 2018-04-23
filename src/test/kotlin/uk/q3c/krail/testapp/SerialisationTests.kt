@@ -8,7 +8,6 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
-import org.reflections.Reflections
 import uk.q3c.krail.config.config.DefaultApplicationConfiguration
 import uk.q3c.krail.config.service.DefaultApplicationConfigurationService
 import uk.q3c.krail.core.eventbus.DefaultSessionBusProvider
@@ -41,14 +40,12 @@ import uk.q3c.krail.core.shiro.PageAccessController
 import uk.q3c.krail.core.shiro.SubjectProvider
 import uk.q3c.krail.core.ui.ApplicationTitle
 import uk.q3c.krail.core.ui.BrowserProvider
-import uk.q3c.krail.core.ui.DefaultApplicationUI
 import uk.q3c.krail.core.ui.ScopedUIProvider
 import uk.q3c.krail.core.user.notify.DefaultUserNotifier
 import uk.q3c.krail.core.user.notify.DefaultVaadinNotification
 import uk.q3c.krail.core.vaadin.DefaultConverterFactory
 import uk.q3c.krail.core.vaadin.DefaultOptionBinder
 import uk.q3c.krail.core.view.DefaultViewFactory
-import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.component.DefaultApplicationHeader
 import uk.q3c.krail.core.view.component.DefaultApplicationLogo
 import uk.q3c.krail.core.view.component.DefaultBreadcrumb
@@ -71,14 +68,12 @@ import uk.q3c.krail.option.persist.dao.DefaultOptionDao
 import uk.q3c.krail.option.persist.source.DefaultOptionSource
 import uk.q3c.krail.persist.DefaultPersistenceInfo
 import uk.q3c.krail.persist.inmemory.store.DefaultInMemoryOptionStore
-import uk.q3c.krail.testapp.ui.PointlessUI
 import uk.q3c.krail.testapp.view.TestAppBindingsCollator
 import uk.q3c.krail.util.DefaultResourceUtils
 import uk.q3c.util.clazz.DefaultClassNameUtils
 import uk.q3c.util.data.DefaultDataConverter
 import uk.q3c.util.text.DefaultMessageFormat
 import java.io.Serializable
-import java.lang.reflect.Modifier
 
 /**
  * Created by David Sowerby on 13 Mar 2018
@@ -180,83 +175,6 @@ object CoreClassesSerialisationTest : Spek({
     }
 })
 
-object ViewSerialisationTest : Spek({
-
-    beforeGroup {
-        resetVaadin()
-        val codedBrowser = CodedBrowser()
-        codedBrowser.setup()
-    }
-
-    given("we want all views to be serializable") {
-        val injector = Guice.createInjector(TestAppBindingsCollator(ServletEnvironmentModule()).allModules())
-        val coreClasses: List<Class<out KrailView>> = listViews()
-        coreClasses.forEach { test ->
-            given(test.simpleName) {
-
-                on("doing it") {
-                    println(">>>>> ${test.simpleName}")
-                    val instance = injector.getInstance(test)
-                    val output = SerializationUtils.serialize(instance)
-                    val result: Serializable = SerializationUtils.deserialize(output)
-
-                    it("does not throw exception") {
-
-                    }
-
-                }
-
-
-            }
-        }
-    }
-})
-
-object UIClassesSerialisationTest : Spek({
-
-    beforeGroup {
-        resetVaadin()
-        val codedBrowser = CodedBrowser()
-        codedBrowser.setup()
-    }
-
-    given("we want core classes to be serializable") {
-        val injector = Guice.createInjector(TestAppBindingsCollator(ServletEnvironmentModule()).allModules())
-        val coreClasses: List<Class<out Serializable>> = listOf(
-                DefaultApplicationUI::class.java,
-                TestAppUI::class.java,
-                PointlessUI::class.java
-        )
-
-        coreClasses.forEach { test ->
-            given(test.simpleName) {
-
-                on("doing it") {
-                    println(">>>>> ${test.simpleName}")
-                    val instance = injector.getInstance(test)
-                    val output = SerializationUtils.serialize(instance)
-                    val result: Serializable = SerializationUtils.deserialize(output)
-
-                    it("does not throw exception") {
-
-                    }
-
-                }
-
-
-            }
-        }
-    }
-})
-
-fun listViews(): List<Class<out KrailView>> {
-    val injector = Guice.createInjector(TestAppBindingsCollator(ServletEnvironmentModule()).allModules())
-    val scopedUIProvider = injector.getInstance(ScopedUIProvider::class.java)
-    scopedUIProvider.get()
-    val reflections = Reflections("uk.q3c")
-    val classes = reflections.getSubTypesOf(KrailView::class.java).filter { clazz -> !Modifier.isAbstract(clazz.modifiers) }
-    return classes
-}
 
 fun resetVaadin() {
     VaadinSession.setCurrent(null)

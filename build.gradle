@@ -1,6 +1,6 @@
 buildscript {
     ext.kaytee_plugin_version = "0.20.1.0"
-    ext.kotlin_version = '1.2.31'
+    ext.kotlin_version = '1.2.40'
     repositories {
         jcenter()
         mavenCentral()
@@ -54,7 +54,7 @@ ext.assertjVersion = '3.8.0'
 ext.vaadinTestbenchVersion = '5.0.0'
 ext.gsonVersion = '2.3.1'
 
-ext.defaultTestContainer = project.hasProperty("defaultTestContainer") ? prject.getProperty("defaultTestContainer") : "tomcat8"
+ext.defaultTestContainer = project.hasProperty("defaultTestContainer") ? project.getProperty("defaultTestContainer") : "tomcat8"
 ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ? project.getProperty("defaultTestContainerPort") : ""
 
 
@@ -136,6 +136,7 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin'
     }
     testCompile 'uk.q3c.util:q3c-testutils:0.11.0.4'
+    testCompile 'uk.q3c.util:serialisation-tracer:0.1.0.0'
 }
 
 
