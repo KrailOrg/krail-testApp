@@ -13,21 +13,21 @@
 package uk.q3c.krail.testapp.view;
 
 
+import java.util.Arrays;
+
 import com.google.inject.Inject;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
-import de.steinwedel.messagebox.ButtonId;
-import de.steinwedel.messagebox.Icon;
-import de.steinwedel.messagebox.MessageBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.risto.stepper.IntStepper;
+import org.vaadin.spinkit.Spinner;
+import org.vaadin.spinkit.shared.SpinnerType;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.AfterViewChangeBusMessage;
 import uk.q3c.krail.core.view.component.AssignComponentId;
@@ -39,12 +39,12 @@ import uk.q3c.util.guice.SerializationSupport;
 
 public class WidgetsetView extends ViewBase {
     private static Logger log = LoggerFactory.getLogger(WidgetsetView.class);
-    protected MessageBox messageBox;
     @AssignComponentId(assign = false, drilldown = false)
     private Panel buttonPanel;
     private Label infoArea;
-    private Button popupButton;
     private IntStepper stepper;
+    private Spinner spinner;
+    private Button changeSpinnerType;
     @Caption(caption = LabelKey.id, description = LabelKey.id)
     private Label param1;
     @Caption(caption = LabelKey.age, description = LabelKey.age)
@@ -81,16 +81,13 @@ public class WidgetsetView extends ViewBase {
         grid.setRowExpandRatio(2, 0.4f);
         grid.setRowExpandRatio(3, 0.15f);
 
-        popupButton = new Button("Popup message box");
-        popupButton.setWidth("100%");
-        popupButton.addClickListener(new ClickListener() {
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                messageBox = MessageBox.showPlain(Icon.INFO, "Example 1", "Hello World!", ButtonId.OK);
-            }
-        });
-        verticalLayout.addComponent(popupButton);
+        spinner = new Spinner(SpinnerType.FOLDING_CUBE).large();
+        verticalLayout.addComponent(spinner);
+
+        changeSpinnerType = new Button("Change Spinner Type");
+        changeSpinnerType.addClickListener(e -> spinner.setType(SpinnerType.WAVE));
+        verticalLayout.addComponent(changeSpinnerType);
 
         stepper = new IntStepper("Stepper");
         stepper.setValue(5);

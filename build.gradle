@@ -113,8 +113,9 @@ dependencies {
     compile 'uk.q3c.krail:krail:0.17.0.0'
 
     //UI components
-    compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'
+    //compile 'de.steinwedel.vaadin.addon:messagebox:4.0.21'
     compile 'org.vaadin.addons:stepper:2.4.0'
+    compile 'org.vaadin:spinkit:1.0.0'
     // Missing from stepper
     compile 'org.json:json:20141113'
 
