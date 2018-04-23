@@ -127,3 +127,12 @@ class ComboBox {
         }
     }
 }
+
+class Spinner {
+    operator fun getValue(thisRef: ViewObject, property: KProperty<*>): SpinnerElement {
+        return when (executionMode) {
+            ExecutionMode.SELENIDE -> SelenideSpinnerElement("${thisRef.id}-${property.name}")
+            ExecutionMode.CODED -> CodedSpinnerElement("${thisRef.id}-${property.name}")
+        }
+    }
+}

@@ -11,6 +11,7 @@ import org.amshove.kluent.shouldContain
 import org.openqa.selenium.By
 import org.openqa.selenium.InvalidArgumentException
 import org.openqa.selenium.NoSuchElementException
+import org.vaadin.spinkit.shared.SpinnerType
 import uk.q3c.krail.functest.*
 import uk.q3c.krail.functest.NotificationLevel.*
 
@@ -179,5 +180,17 @@ class SelenideNotificationElement : NotificationElement {
         notificationCaption.click()
     }
 
+
+}
+
+class SelenideSpinnerElement(id: String) : SpinnerElement, AbstractSelenideElement(id) {
+    override fun shouldBeVisible() {
+        `$`(fullId).shouldBe(visible)
+    }
+
+    override fun shouldBeOfType(type: SpinnerType) {
+        `$`(fullId).shouldBe(visible).shouldHave(cssClass(type.style))
+
+    }
 
 }

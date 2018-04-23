@@ -118,8 +118,9 @@ dependencies {
     compileOnly "com.vaadin:vaadin-testbench-api:$vaadinVersion"  // get an out of date API without this
 
     //UI components
-    compile 'de.steinwedel.vaadin.addon:messagebox:2.0.7'
+    //compile 'de.steinwedel.vaadin.addon:messagebox:4.0.21'
     compile 'org.vaadin.addons:stepper:2.4.0'
+    compile 'org.vaadin:spinkit:1.0.0'
     // Missing from stepper
     compile 'org.json:json:20141113'
 

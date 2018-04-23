@@ -1,20 +1,6 @@
 package uk.q3c.krail.testapp
 
-import uk.q3c.krail.functest.AbstractCustomObject
-import uk.q3c.krail.functest.AbstractPageObject
-import uk.q3c.krail.functest.AbstractViewObject
-import uk.q3c.krail.functest.Breadcrumb
-import uk.q3c.krail.functest.Button
-import uk.q3c.krail.functest.CheckBox
-import uk.q3c.krail.functest.ComboBox
-import uk.q3c.krail.functest.Grid
-import uk.q3c.krail.functest.Image
-import uk.q3c.krail.functest.Label
-import uk.q3c.krail.functest.MenuBar
-import uk.q3c.krail.functest.PasswordField
-import uk.q3c.krail.functest.TextArea
-import uk.q3c.krail.functest.TextField
-import uk.q3c.krail.functest.Tree
+import uk.q3c.krail.functest.*
 
 class TestAppPublicHomeViewObject : AbstractViewObject() {
 
@@ -75,12 +61,15 @@ class NotificationsViewObject : AbstractViewObject() {
 
 class IntStepperObject(id: String) : AbstractCustomObject(id)
 
+class SpinnerObject(id: String) : AbstractCustomObject(id)
+
 class WidgetsetViewObject : AbstractViewObject() {
 
     val stepper = IntStepperObject("WidgetsetView-stepper")
+    val spinner by Spinner()
+    val changeSpinnerType by Button()
     val infoArea by Label()
     val param2 by Label()
-    val popupButton by Button()
     val param1 by Label()
 }
 
