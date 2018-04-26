@@ -47,7 +47,10 @@ class SelenideTextFieldElement(id: String) : TextFieldElement, AbstractSelenideE
 
 class SelenideCheckBoxElement(id: String) : CheckBoxElement, AbstractSelenideElement(id) {
     override fun setValue(value: Boolean) {
-        `$`(fullId).value = value.toString()
+        val checkbox = `$`(fullId).find(Selectors.byXpath("input[@type='checkbox']"))
+        if (checkbox.isSelected != value) {
+            `$`(fullId).click()
+        }
     }
 
 

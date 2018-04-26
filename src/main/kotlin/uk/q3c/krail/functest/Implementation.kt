@@ -7,13 +7,17 @@ import kotlin.reflect.KProperty
 /**
  * Created by David Sowerby on 05 Feb 2018
  */
-fun createBrowser() {
-    when (executionMode) {
-        ExecutionMode.SELENIDE -> browser = SelenideBrowser()
-        ExecutionMode.CODED -> browser = CodedBrowser()
+fun createBrowser(applyGlobal: Boolean = true) : Browser {
+    val newBrowser = when (executionMode) {
+        ExecutionMode.SELENIDE -> SelenideBrowser()
+        ExecutionMode.CODED -> CodedBrowser()
     }
-    browser.setup()
+    if (applyGlobal) {
+        browser = newBrowser
+    }
+    newBrowser.setup()
     println(" =============================== BROWSER SETUP FOR ${executionMode} =======================================")
+    return newBrowser
 }
 
 
