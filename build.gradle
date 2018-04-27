@@ -49,6 +49,7 @@ description = 'Functional test application for Krail and its additional modules'
 
 group = 'uk.q3c.krail'
 
+ext.krailVersion = "0.16.3.0"
 ext.assertjVersion = '3.8.0'
 ext.vaadinTestbenchVersion = '5.0.0'
 ext.vaadinVersion='8.3.3'
@@ -60,7 +61,8 @@ ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ?
 
 kaytee {
     version {
-        number = "0.16.2.0"
+        number = krailVersion
+        qualifier = 1  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
     }
     release {
         mergeToMaster = false
@@ -111,7 +113,7 @@ dependencies {
 
 
 
-    compile 'uk.q3c.krail:krail:0.16.1.0' 
+    compile "uk.q3c.krail:krail:$krailVersion"
 
     //Testbench
     compileOnly "com.vaadin:vaadin-testbench:$vaadinTestbenchVersion"
