@@ -6,7 +6,7 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Provider
 import org.slf4j.LoggerFactory
-import uk.q3c.krail.config.ConfigurationException
+import uk.q3c.krail.core.ConfigurationException
 import uk.q3c.krail.core.navigate.NavigationState
 import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
 import uk.q3c.krail.core.navigate.sitemap.SitemapService

@@ -68,7 +68,7 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
     private Label infoArea;
     private Button infoButton;
     private Option option;
-    private OptionCache optionCache;
+    private final transient OptionCache optionCache;
     private OptionSource optionDaoProvider;
     private OptionPopup optionPopup;
     private Button systemLevelOptionButton;

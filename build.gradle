@@ -1,6 +1,6 @@
 buildscript {
     ext.kaytee_plugin_version = "0.20.1.0"
-    ext.kotlin_version = '1.2.40'
+    ext.kotlin_version = '1.2.41'
     repositories {
         jcenter()
         mavenCentral()
@@ -50,8 +50,10 @@ description = 'Functional test application for Krail and its additional modules'
 
 group = 'uk.q3c.krail'
 
+ext.krailVersion = "0.16.5.0"
 ext.assertjVersion = '3.8.0'
 ext.vaadinTestbenchVersion = '5.0.0'
+ext.vaadinVersion='8.3.3'
 ext.gsonVersion = '2.3.1'
 
 ext.defaultTestContainer = project.hasProperty("defaultTestContainer") ? project.getProperty("defaultTestContainer") : "tomcat8"
@@ -60,7 +62,8 @@ ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ?
 
 kaytee {
     version {
-        number = "0.17.0.0"
+        number = krailVersion
+        qualifier = 1  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
     }
     release {
         mergeToMaster = false
@@ -110,7 +113,11 @@ dependencies {
 
 
 
-    compile 'uk.q3c.krail:krail:0.17.0.0'
+    compile "uk.q3c.krail:krail:$krailVersion"
+
+    //Testbench
+    compileOnly "com.vaadin:vaadin-testbench:$vaadinTestbenchVersion"
+    compileOnly "com.vaadin:vaadin-testbench-api:$vaadinVersion"  // get an out of date API without this
 
     //UI components
     //compile 'de.steinwedel.vaadin.addon:messagebox:4.0.21'
@@ -121,13 +128,17 @@ dependencies {
 
     // compileOnly because sources requiring dependencies are in production sourceSet
     // but they are not needed at runtime
-    compileOnly "org.amshove.kluent:kluent:1.34"
+    compileOnly "org.amshove.kluent:kluent:1.35"
     compileOnly 'com.codeborne:selenide:4.9.1'
     // Dependencies are needed to compile also code in test sourceSet
-    testCompile "org.amshove.kluent:kluent:1.34"
+    testCompile "org.amshove.kluent:kluent:1.35"
     testCompile 'com.codeborne:selenide:4.9.1'
 
     compile 'io.jsonwebtoken:jjwt:0.9.0'
+//    testCompile 'junit:junit:4.12'
+//    testCompile('uk.q3c.krail:krail-bench:0.14.0.0') {
+//        exclude group: 'uk.q3c.krail', module: 'krail'
+//    }
 
     testCompile ('org.jetbrains.spek:spek-api:1.1.5'){
         exclude group: 'org.jetbrains.kotlin'
@@ -137,9 +148,9 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin'
     }
     testCompile 'uk.q3c.util:q3c-testutils:0.11.0.4'
-    testCompile 'uk.q3c.util:serialisation-tracer:0.1.0.0'
+    testCompile 'uk.q3c.util:serialisation-tracer:0.5.0.0'
 }
-
+//    testCompile project(':krail-orient')
 
 
 vaadin {

@@ -24,7 +24,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import uk.q3c.krail.config.ApplicationConfiguration;
-import uk.q3c.krail.config.config.ConfigKeys;
 import uk.q3c.krail.core.push.Broadcaster;
 import uk.q3c.krail.core.view.component.BroadcastMessageLog;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
@@ -78,7 +77,7 @@ public class PushView extends ViewBaseGrid {
 
             @Override
             public void valueChange(HasValue.ValueChangeEvent event) {
-                applicationConfiguration.setProperty(ConfigKeys.SERVER_PUSH_ENABLED, event.getValue());
+//                applicationConfiguration.setProperty(PushModule.SERVER_PUSH_ENABLED, event.getValue());
             }
 
         });

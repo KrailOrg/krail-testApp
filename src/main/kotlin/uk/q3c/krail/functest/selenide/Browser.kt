@@ -29,11 +29,11 @@ class SelenideBrowser : Browser {
 
     override var view: ViewElement = SelenideViewElement("")
         get() {
-            return SelenideViewElement(routeMap.viewFor(browser.currentFragment()).viewId.id)
+            return SelenideViewElement(routeMap.viewFor(currentFragment()).viewId.id)
         }
     override var page: PageElement = SelenidePageElement("")
         get() {
-            return SelenidePageElement(routeMap.uiFor(browser.currentFragment()).uiId.id)
+            return SelenidePageElement(routeMap.uiFor(currentFragment()).uiId.id)
         }
 
     private lateinit var routeMap: RouteMap
@@ -42,7 +42,7 @@ class SelenideBrowser : Browser {
         Selenide.open(fragment)
         view = SelenideViewElement(routeMap.viewFor(fragment).viewId.id)
         page = SelenidePageElement(routeMap.uiFor(fragment).uiId.id)
-        browser.fragmentShouldBe(fragment)
+        fragmentShouldBe(fragment)
     }
 
 

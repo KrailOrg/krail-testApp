@@ -51,7 +51,7 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
     private final OptionDao optionDao;
     private Option option;
     private UserHierarchy userHierarchy;
-    private OptionCache optionCache;
+    private final transient OptionCache optionCache;
     @Caption(caption = LabelKey.Set_System_Level, description = LabelKey.Set_System_Level)
     private Button adminButton;
     private Button setValue1Button;
