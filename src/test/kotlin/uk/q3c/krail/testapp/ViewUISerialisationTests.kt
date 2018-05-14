@@ -1,6 +1,8 @@
 package uk.q3c.krail.testapp
 
 import com.google.inject.Guice
+import com.vaadin.server.VaadinSession
+import com.vaadin.ui.UI
 import org.apache.commons.lang3.SerializationUtils
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
@@ -101,3 +103,7 @@ fun listViews(): List<Class<out KrailView>> {
     return classes
 }
 
+fun resetVaadin() {
+    VaadinSession.setCurrent(null)
+    UI.setCurrent(null)
+}
