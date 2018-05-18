@@ -14,7 +14,7 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.reflections.Reflections
 import uk.q3c.krail.config.ConfigFile
-import uk.q3c.krail.core.guice.ServletEnvironmentModule
+import uk.q3c.krail.core.env.ServletEnvironmentModule
 import uk.q3c.krail.core.guice.uiscope.UIKey
 import uk.q3c.krail.core.navigate.DefaultNavigator
 import uk.q3c.krail.core.navigate.Navigator

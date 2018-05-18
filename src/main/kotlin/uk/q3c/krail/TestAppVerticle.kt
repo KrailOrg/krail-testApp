@@ -2,7 +2,7 @@ package uk.q3c.krail
 
 import com.github.mcollovati.vertx.vaadin.VaadinVerticleConfiguration
 import com.vaadin.annotations.VaadinServletConfiguration
-import uk.q3c.krail.core.guice.KrailVerticle
+import uk.q3c.krail.core.env.KrailVerticle
 import uk.q3c.krail.testapp.ui.PointlessUI
 
 /**

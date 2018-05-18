@@ -27,7 +27,7 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
-import uk.q3c.krail.core.guice.ServletEnvironmentModule
+import uk.q3c.krail.core.env.ServletEnvironmentModule
 import uk.q3c.krail.core.i18n.I18NProcessor
 import uk.q3c.krail.core.i18n.LabelKey
 import uk.q3c.krail.core.navigate.Navigator
@@ -37,6 +37,7 @@ import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
 import uk.q3c.krail.core.navigate.sitemap.MasterSitemapNode
 import uk.q3c.krail.core.navigate.sitemap.SitemapService
 import uk.q3c.krail.core.push.Broadcaster
+import uk.q3c.krail.core.push.KrailPushConfiguration
 import uk.q3c.krail.core.push.PushMessageRouter
 import uk.q3c.krail.core.shiro.PageAccessControl
 import uk.q3c.krail.core.ui.ApplicationTitle
@@ -159,7 +160,10 @@ protected constructor(navigator: Navigator,
                       translate: Translate,
                       currentLocale: CurrentLocale,
                       translator: I18NProcessor,
-                      serializationSupport: SerializationSupport) : ScopedUI(navigator, errorHandler, broadcaster, pushMessageRouter, applicationTitle, translate, currentLocale, translator, serializationSupport) {
+                      serializationSupport: SerializationSupport,
+                      pushConfiguration: KrailPushConfiguration)
+
+    : ScopedUI(navigator, errorHandler, broadcaster, pushMessageRouter, applicationTitle, translate, currentLocale, translator, serializationSupport, pushConfiguration) {
 
     val label = Label("ui")
 

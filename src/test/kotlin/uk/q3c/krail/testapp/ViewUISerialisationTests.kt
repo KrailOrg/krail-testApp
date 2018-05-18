@@ -9,7 +9,7 @@ import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.reflections.Reflections
-import uk.q3c.krail.core.guice.ServletEnvironmentModule
+import uk.q3c.krail.core.env.ServletEnvironmentModule
 import uk.q3c.krail.core.ui.DefaultApplicationUI
 import uk.q3c.krail.core.ui.ScopedUIProvider
 import uk.q3c.krail.core.view.KrailView
