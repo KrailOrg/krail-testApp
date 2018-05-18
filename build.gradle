@@ -30,6 +30,7 @@ class Pause extends DefaultTask {
 
 plugins {
     id "com.devsoap.plugin.vaadin" version "1.3.0"
+    id "com.github.johnrengelman.shadow" version "2.0.3"
     id "com.chrisgahlert.gradle-dcompose-plugin" version "0.9.3"
 }
 
@@ -102,8 +103,7 @@ dependencies {
 
     //Krail
     compile 'uk.q3c.krail:eventbus-mbassador:0.5.0.0' // for Handler / Listener annotations
-//   compile group: 'com.vaadin', name: 'vaadin-compatibility-client', version: '8.1.3'
-//   compile group: 'com.vaadin', name: 'vaadin-compatibility-themes', version: '8.1.3'
+
 
     //assert
     compile 'org.assertj:assertj-core:' + assertjVersion
@@ -160,7 +160,7 @@ vaadin {
 }
 
 vaadinCompile{
-    manageWidgetset false
+    widgetset 'uk.q3c.krail.testapp.widgetset.testAppWidgetset'
 }
 
 ext.warName = (project.name.toLowerCase() + '.war')
@@ -259,4 +259,22 @@ vaadinRun {
     serverPort = 8001
     server = 'jetty'
     debug false
+}
+
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Vaadin Vertx Experiment - Gradle build',
+                'Implementation-Version': kaytee.version.number,
+                'Main-Class': 'io.vertx.core.Launcher',
+                'Main-Verticle': 'uk.q3c.krail.TestAppVerticle'
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/webapp"
+        }
+    }
 }
