@@ -35,6 +35,7 @@ import uk.q3c.krail.option.UserHierarchyDefault;
 import uk.q3c.krail.option.persist.OptionCache;
 import uk.q3c.krail.option.persist.OptionDao;
 import uk.q3c.krail.testapp.i18n.Caption;
+import uk.q3c.krail.testapp.i18n.DescriptionKey;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.util.guice.SerializationSupport;
 
@@ -52,7 +53,7 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
     private Option option;
     private UserHierarchy userHierarchy;
     private final transient OptionCache optionCache;
-    @Caption(caption = LabelKey.Set_System_Level, description = LabelKey.Set_System_Level)
+    @Caption(caption = LabelKey.Set_System_Level, description = DescriptionKey.Set_System_Level)
     private Button adminButton;
     private Button setValue1Button;
     private Button setValue2Button;

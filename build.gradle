@@ -37,20 +37,14 @@ plugins {
 apply plugin: 'uk.q3c.kaytee'
 apply plugin: 'kotlin'
 apply plugin: 'org.junit.platform.gradle.plugin'
+apply from : "gradle/spek.gradle"
 
-junitPlatform {
-    filters {
-        engines {
-            include 'spek'
-        }
-    }
-}
 
 description = 'Functional test application for Krail and its additional modules'
 
 group = 'uk.q3c.krail'
 
-ext.krailVersion = "0.16.7.0"
+ext.krailVersion = "0.16.8.0"
 ext.assertjVersion = '3.8.0'
 ext.vaadinTestbenchVersion = '5.0.0'
 ext.vaadinVersion='8.3.3'
@@ -63,7 +57,7 @@ ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ?
 kaytee {
     version {
         number = krailVersion
-        qualifier = 2  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
+        qualifier = 0  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
     }
     release {
         mergeToMaster = false
@@ -72,8 +66,8 @@ kaytee {
 }
 
 repositories {
-    mavenLocal()
     jcenter()
+    mavenLocal()
     mavenCentral()
     maven { url "http://dl.bintray.com/jetbrains/spek" }
 }
@@ -131,7 +125,6 @@ dependencies {
     compileOnly "org.amshove.kluent:kluent:1.35"
     compileOnly 'com.codeborne:selenide:4.9.1'
     // Dependencies are needed to compile also code in test sourceSet
-    testCompile "org.amshove.kluent:kluent:1.35"
     testCompile 'com.codeborne:selenide:4.9.1'
 
     compile 'io.jsonwebtoken:jjwt:0.9.0'
@@ -140,15 +133,10 @@ dependencies {
 //        exclude group: 'uk.q3c.krail', module: 'krail'
 //    }
 
-    testCompile ('org.jetbrains.spek:spek-api:1.1.5'){
-        exclude group: 'org.jetbrains.kotlin'
-    }
-    testRuntime ('org.jetbrains.spek:spek-junit-platform-engine:1.1.5'){
-        exclude group: 'org.junit.platform'
-        exclude group: 'org.jetbrains.kotlin'
-    }
+    compile 'uk.q3c.util:serialization-tracer:0.6.0.2'
+
     testCompile 'uk.q3c.util:q3c-testutils:0.11.0.4'
-    testCompile 'uk.q3c.util:serialisation-tracer:0.5.0.0'
+
 }
 //    testCompile project(':krail-orient')
 

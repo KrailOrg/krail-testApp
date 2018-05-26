@@ -38,7 +38,7 @@ import java.util.Locale;
 public @interface Caption {
     LabelKey caption();
 
-    LabelKey description();
+    DescriptionKey description();
 
     /**
      * The locale for an annotated component is usually taken from {@link CurrentLocale}, but if this optional parameter

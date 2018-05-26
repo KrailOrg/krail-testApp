@@ -7,6 +7,7 @@ import com.vaadin.server.VaadinSession
 import com.vaadin.ui.MenuBar
 import com.vaadin.ui.Tree
 import com.vaadin.ui.UI
+import io.mockk.mockk
 import org.amshove.kluent.shouldBeEmpty
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
@@ -16,6 +17,7 @@ import org.reflections.Reflections
 import uk.q3c.krail.config.ConfigFile
 import uk.q3c.krail.core.env.ServletEnvironmentModule
 import uk.q3c.krail.core.guice.uiscope.UIKey
+import uk.q3c.krail.core.i18n.VaadinCurrentLocale
 import uk.q3c.krail.core.navigate.DefaultNavigator
 import uk.q3c.krail.core.navigate.Navigator
 import uk.q3c.krail.core.navigate.sitemap.DirectSitemapEntry
@@ -35,8 +37,11 @@ import uk.q3c.krail.core.view.component.UserNavigationTree
 import uk.q3c.krail.core.view.component.UserNavigationTreeNodeModifier
 import uk.q3c.krail.functest.coded.CodedBrowser
 import uk.q3c.krail.i18n.test.MockCurrentLocale
+import uk.q3c.krail.option.OptionKey
 import uk.q3c.krail.service.ServiceKey
 import uk.q3c.krail.testapp.i18n.LabelKey
+import uk.q3c.krail.testapp.view.AutoForm
+import uk.q3c.krail.testapp.view.Person
 import uk.q3c.krail.testapp.view.TestAppBindingsCollator
 import uk.q3c.util.clazz.UnenhancedClassIdentifier
 import uk.q3c.util.forest.BasicForest
@@ -88,7 +93,19 @@ object SerialisationTest : Spek({
 
                 }
 
+            }
+        }
 
+        on("constructing AutoForm and invoking loadData()") {
+            val tracer = SerializationTracer()
+            val form = injector.getInstance(AutoForm::class.java)
+            form.init()
+            form.doBuild(mockk())
+            form.loadData(mockk())
+            tracer.trace(form)
+
+            it("should not have any trace failures") {
+                tracer.shouldNotHaveAny(SerializationOutcome.FAIL)
             }
         }
 
@@ -123,6 +140,13 @@ fun constructNonGuiceClass(clazz: Class<out Serializable>, injector: Injector): 
         ConfigFile::class.java -> ConfigFile("anyfile")
         DirectSitemapEntry::class.java -> DirectSitemapEntry(moduleName = "a", viewClass = EmptyView::class.java, labelKey = LabelKey.Accounts, pageAccessControl = PageAccessControl.AUTHENTICATION, positionIndex = 5)
         RedirectEntry::class.java -> RedirectEntry(redirectTarget = "home")
+//        KrailAutoBinder::class.java ->{
+//            val easyBinder = injector.getInstance(EasyBinder::class.java)
+//            return easyBinder.auto(TestObject::class.java)
+//        }
+        Person::class.java -> Person(name = "george", age = 23, title = "Mr")
+        OptionKey::class.java -> VaadinCurrentLocale.optionPreferredLocale
+
 
 
         else -> throw TestConfigurationException("We have no method for constructing $clazz, add it to function 'constructNonGuiceClass'")
@@ -144,3 +168,7 @@ fun resetVaadin() {
     UI.setCurrent(null)
 }
 
+class TestObject : Serializable {
+    val age: Int = 12
+    val name: String = "wiggly"
+}

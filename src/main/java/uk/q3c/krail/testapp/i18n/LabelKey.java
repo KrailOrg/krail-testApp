@@ -37,5 +37,5 @@ public enum LabelKey implements I18NKey {
     View1,
     View2,
     Yes,
-    Finance, Accounts, Payroll, Authenticated, Guest, Derby, HSQLDB_In_memory, Set_System_Level, Jpa, Push, Widgetset, id, age, Locale, Purchasing
+    Finance, Accounts, Payroll, Authenticated, Guest, Derby, HSQLDB_In_memory, Set_System_Level, Jpa, Push, Widgetset, id, age, Locale, Purchasing, title, name
 }

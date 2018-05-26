@@ -13,12 +13,9 @@
 package uk.q3c.krail.testapp.view;
 
 
-import java.util.Arrays;
-
 import com.google.inject.Inject;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
@@ -34,6 +31,7 @@ import uk.q3c.krail.core.view.component.AssignComponentId;
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.Caption;
+import uk.q3c.krail.testapp.i18n.DescriptionKey;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.util.guice.SerializationSupport;
 
@@ -45,9 +43,9 @@ public class WidgetsetView extends ViewBase {
     private IntStepper stepper;
     private Spinner spinner;
     private Button changeSpinnerType;
-    @Caption(caption = LabelKey.id, description = LabelKey.id)
+    @Caption(caption = LabelKey.id, description = DescriptionKey.id)
     private Label param1;
-    @Caption(caption = LabelKey.age, description = LabelKey.age)
+    @Caption(caption = LabelKey.age, description = DescriptionKey.age)
     private Label param2;
 
     @Inject
@@ -111,7 +109,7 @@ public class WidgetsetView extends ViewBase {
     }
 
     @Override
-    protected void loadData(AfterViewChangeBusMessage busMessage) {
+    public void loadData(AfterViewChangeBusMessage busMessage) {
         super.loadData(busMessage);
         param1.setValue(busMessage.getToState().getParameters().get("id"));
         param2.setValue(busMessage.getToState().getParameters().get("age"));

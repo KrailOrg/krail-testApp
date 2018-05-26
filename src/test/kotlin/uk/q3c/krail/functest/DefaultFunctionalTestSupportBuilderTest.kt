@@ -37,6 +37,7 @@ import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
 import uk.q3c.krail.core.navigate.sitemap.MasterSitemapNode
 import uk.q3c.krail.core.navigate.sitemap.SitemapService
 import uk.q3c.krail.core.push.Broadcaster
+import uk.q3c.krail.core.push.DefaultKrailPushConfiguration
 import uk.q3c.krail.core.push.KrailPushConfiguration
 import uk.q3c.krail.core.push.PushMessageRouter
 import uk.q3c.krail.core.shiro.PageAccessControl
@@ -208,6 +209,7 @@ class IdGeneratorModule : AbstractModule() {
         bind(I18NProcessor::class.java).toInstance(mockI18NProcessor)
         bind(ErrorHandler::class.java).toInstance(mockErrorHandler)
         bind(SerializationSupport::class.java).toInstance(mockSerializationSupport)
+        bind(KrailPushConfiguration::class.java).to(DefaultKrailPushConfiguration::class.java)
 
     }
 

@@ -14,7 +14,9 @@
 package uk.q3c.krail.testapp.view;
 
 import com.google.inject.Inject;
+import com.vaadin.data.Binder;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.TextField;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import uk.q3c.krail.core.shiro.SubjectProvider;
 import uk.q3c.krail.core.user.notify.UserNotifier;
@@ -84,6 +86,26 @@ public class AccountsView extends Grid3x3ViewBase {
         setTopLeft(shiroPermissionsPassButton);
         setBottomCentre(shiroRolePassButton);
         setBottomRight(shiroRoleFailButton);
+    }
+
+    public void fake() {
+        Binder<Person> binder = new Binder<>();
+
+        TextField titleField = new TextField();
+
+// Start by defining the Field instance to use
+        binder.forField(titleField)
+                // Finalize by doing the actual binding to the Person class
+                .bind(
+                        // Callback that loads the title from a person instance
+                        Person::getTitle,
+                        // Callback that saves the title in a person instance
+                        Person::setTitle);
+
+        TextField nameField = new TextField();
+
+// Shorthand for cases without extra configuration
+        binder.bind(nameField, Person::getName, Person::setName);
     }
 
     //    @RequiresRoles("hero")
