@@ -100,7 +100,7 @@ object SerialisationTest : Spek({
             val tracer = SerializationTracer()
             val form = injector.getInstance(AutoForm::class.java)
             form.init()
-            form.doBuild(mockk())
+            form.buildView(mockk())
             form.loadData(mockk())
             tracer.trace(form)
 

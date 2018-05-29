@@ -1,10 +1,10 @@
 package uk.q3c.krail.functest.coded
 
 import com.google.common.base.Splitter
-import com.vaadin.ui.*
 import com.vaadin.ui.Button
 import com.vaadin.ui.CheckBox
 import com.vaadin.ui.ComboBox
+import com.vaadin.ui.Component
 import com.vaadin.ui.Grid
 import com.vaadin.ui.Image
 import com.vaadin.ui.Label
@@ -23,7 +23,24 @@ import org.vaadin.spinkit.shared.SpinnerType
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.core.view.component.Breadcrumb
-import uk.q3c.krail.functest.*
+import uk.q3c.krail.functest.BaseElement
+import uk.q3c.krail.functest.BreadcrumbElement
+import uk.q3c.krail.functest.ButtonElement
+import uk.q3c.krail.functest.CheckBoxElement
+import uk.q3c.krail.functest.ComboBoxElement
+import uk.q3c.krail.functest.CompositeElement
+import uk.q3c.krail.functest.GridElement
+import uk.q3c.krail.functest.ImageElement
+import uk.q3c.krail.functest.LabelElement
+import uk.q3c.krail.functest.MenuBarElement
+import uk.q3c.krail.functest.NotificationElement
+import uk.q3c.krail.functest.NotificationLevel
+import uk.q3c.krail.functest.SpinnerElement
+import uk.q3c.krail.functest.TextAreaElement
+import uk.q3c.krail.functest.TextFieldElement
+import uk.q3c.krail.functest.TreeElement
+import uk.q3c.krail.functest.TreeGridElement
+import uk.q3c.krail.functest.browser
 import java.lang.reflect.Field
 
 abstract class AbstractCodedElement<T : Component>(final override val id: String) : BaseElement {
@@ -141,7 +158,27 @@ abstract class AbstractCodedElement<T : Component>(final override val id: String
 class CodedGridElement(id: String) : GridElement, AbstractCodedElement<Grid<Any>>(id)
 class CodedTreeGridElement(id: String) : TreeGridElement, AbstractCodedElement<TreeGrid<Any>>(id)
 
+
 class CodedTextFieldElement(id: String) : TextFieldElement, AbstractCodedElement<TextField>(id) {
+    override fun sendBackspace(times: Int) {
+        TODO()
+    }
+
+    override fun sendBackspace() {
+        TODO()
+    }
+
+    override fun sendBackspaceUntilClear() {
+        TODO()
+    }
+
+    override fun sendEnter() {
+        TODO()
+    }
+
+    override fun sendValue(value: String) {
+        nativeField.value = value
+    }
 
     override fun setValue(value: String) {
         nativeField.value = value
@@ -155,6 +192,9 @@ class CodedTextFieldElement(id: String) : TextFieldElement, AbstractCodedElement
 }
 
 class CodedCheckBoxElement(id: String) : CheckBoxElement, AbstractCodedElement<CheckBox>(id) {
+    override fun sendValue(value: Boolean) {
+        setValue(value)
+    }
 
     override fun setValue(value: Boolean) {
         nativeField.value = value
@@ -168,6 +208,25 @@ class CodedCheckBoxElement(id: String) : CheckBoxElement, AbstractCodedElement<C
 }
 
 class CodedTextAreaElement(id: String) : TextAreaElement, AbstractCodedElement<TextArea>(id) {
+    override fun sendBackspace(times: Int) {
+        TODO()
+    }
+
+    override fun sendBackspace() {
+        TODO()
+    }
+
+    override fun sendBackspaceUntilClear() {
+        TODO()
+    }
+
+    override fun sendEnter() {
+        TODO()
+    }
+
+    override fun sendValue(value: String) {
+        setValue(value)
+    }
 
     override fun setValue(value: String) {
         nativeField.value = value
@@ -232,6 +291,10 @@ class CodedMenuBarElement(id: String) : MenuBarElement, AbstractCodedElement<Men
 class CodedImageElement(id: String) : ImageElement, AbstractCodedElement<Image>(id)
 
 class CodedComboBoxElement(id: String) : ComboBoxElement, AbstractCodedElement<ComboBox<*>>(id) {
+    override fun sendValue(value: String) {
+        TODO()
+    }
+
     override fun valueShouldBe(expectedValue: String) {
         TODO()
     }

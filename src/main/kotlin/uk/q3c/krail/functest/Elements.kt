@@ -28,7 +28,22 @@ interface ValueElement<in T> {
 //    fun requiredIndicatorShouldNotBeVisible()
     fun valueShouldBe(expectedValue: T)
 
+    /**
+     * Uses Selenide's setValue instead of sendKeys.  Using this sometimes causes timing issues with event handling.  With validation, for example,
+     * Validators were receiving null values with [setValue], but work with [sendValue]
+     *
+     * @see setValue
+     */
+
     fun setValue(value: T)
+
+    /**
+     * Uses Selenide's sendKeys instead of setValue.  This may be necessary sometimes to avoid timing issues with event handling.  With validation, for example,
+     * Validators were receiving null values with [setValue], but work with [sendValue]
+     *
+     * @see setValue
+     */
+    fun sendValue(value: T)
 }
 
 interface LabelElement : BaseElement {
@@ -49,9 +64,16 @@ interface MenuBarElement : BaseElement {
 }
 
 
-interface TextFieldElement : BaseElement, ValueElement<String>
+interface TextBaseElement : ValueElement<String> {
+    fun sendBackspace(times: Int)
+    fun sendBackspace()
+    fun sendBackspaceUntilClear()
+    fun sendEnter()
+}
 
-interface TextAreaElement : BaseElement, ValueElement<String>
+interface TextFieldElement : BaseElement, TextBaseElement
+
+interface TextAreaElement : BaseElement, TextBaseElement
 
 interface TreeElement : BaseElement
 interface ImageElement : BaseElement

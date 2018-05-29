@@ -10,10 +10,26 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContain
 import org.openqa.selenium.By
 import org.openqa.selenium.InvalidArgumentException
+import org.openqa.selenium.Keys
 import org.openqa.selenium.NoSuchElementException
 import org.vaadin.spinkit.shared.SpinnerType
-import uk.q3c.krail.functest.*
+import uk.q3c.krail.functest.BaseElement
+import uk.q3c.krail.functest.BreadcrumbElement
+import uk.q3c.krail.functest.ButtonElement
+import uk.q3c.krail.functest.CheckBoxElement
+import uk.q3c.krail.functest.ComboBoxElement
+import uk.q3c.krail.functest.GridElement
+import uk.q3c.krail.functest.ImageElement
+import uk.q3c.krail.functest.LabelElement
+import uk.q3c.krail.functest.MenuBarElement
+import uk.q3c.krail.functest.NotificationElement
+import uk.q3c.krail.functest.NotificationLevel
 import uk.q3c.krail.functest.NotificationLevel.*
+import uk.q3c.krail.functest.SpinnerElement
+import uk.q3c.krail.functest.TextAreaElement
+import uk.q3c.krail.functest.TextFieldElement
+import uk.q3c.krail.functest.TreeElement
+import uk.q3c.krail.functest.TreeGridElement
 
 /**
  * Created by David Sowerby on 30 Jan 2018
@@ -32,20 +48,29 @@ class SelenideGridElement(id: String) : GridElement, AbstractSelenideElement(id)
 
 class SelenideTreeGridElement(id: String) : TreeGridElement, AbstractSelenideElement(id)
 
-class SelenideTextFieldElement(id: String) : TextFieldElement, AbstractSelenideElement(id) {
+class SelenideTextFieldElement(id: String) : AbstractSelenideTextElement(id) {
 
-    // ##checked
-    override fun setValue(value: String) {
-        `$`(fullId).value = value
-    }
-
-    // ##checked
-    override fun valueShouldBe(expectedValue: String) {
-        `$`(fullId).value.shouldBeEqualTo(expectedValue)
-    }
+//    // ##checked
+//    override fun setValue(value: String) {
+//        `$`(fullId).value = value
+//        valueShouldBe(value) // ensure value is set before moving on
+//    }
+//
+//    override fun sendValue(value: String) {
+//        `$`(fullId).sendKeys(value)
+//    }
+//
+//    // ##checked
+//    override fun valueShouldBe(expectedValue: String) {
+//        `$`(fullId).value.shouldBeEqualTo(expectedValue)
+//    }
 }
 
 class SelenideCheckBoxElement(id: String) : CheckBoxElement, AbstractSelenideElement(id) {
+    override fun sendValue(value: Boolean) {
+        setValue(value)
+    }
+
     override fun setValue(value: Boolean) {
         val checkbox = `$`(fullId).find(Selectors.byXpath("input[@type='checkbox']"))
         if (checkbox.isSelected != value) {
@@ -60,6 +85,9 @@ class SelenideCheckBoxElement(id: String) : CheckBoxElement, AbstractSelenideEle
 }
 
 class SelenideComboBoxElement(id: String) : ComboBoxElement, AbstractSelenideElement(id) {
+    override fun sendValue(value: String) {
+        TODO()
+    }
 
     override fun setValue(value: String) {
 //        `$`(fullId).value = value.toString()
@@ -71,7 +99,21 @@ class SelenideComboBoxElement(id: String) : ComboBoxElement, AbstractSelenideEle
     }
 }
 
-class SelenideTextAreaElement(id: String) : TextAreaElement, AbstractSelenideElement(id) {
+abstract class AbstractSelenideTextElement(id: String) : TextFieldElement, AbstractSelenideElement(id) {
+    override fun sendBackspace() {
+        `$`(fullId).sendKeys(Keys.BACK_SPACE)
+    }
+
+    override fun sendBackspace(times: Int) {
+        for (j in 1..times) {
+            sendBackspace()
+        }
+    }
+
+    override fun sendValue(value: String) {
+        `$`(fullId).sendKeys(value)
+    }
+
     override fun setValue(value: String) {
         `$`(fullId).value = value
     }
@@ -81,7 +123,21 @@ class SelenideTextAreaElement(id: String) : TextAreaElement, AbstractSelenideEle
         `$`(fullId).shouldBe(visible)
         `$`(fullId).shouldHave(exactValue(expectedValue))
     }
+
+    override fun sendBackspaceUntilClear() {
+        val currentValue = `$`(fullId).value
+        if (currentValue != null) {
+            sendBackspace(currentValue.length)
+        }
+    }
+
+    override fun sendEnter() {
+        `$`(fullId).sendKeys(Keys.ENTER)
+    }
 }
+
+
+class SelenideTextAreaElement(id: String) : AbstractSelenideTextElement(id), TextAreaElement
 
 class SelenideLabelElement(id: String) : LabelElement, AbstractSelenideElement(id) {
     // ##checked

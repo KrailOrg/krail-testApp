@@ -57,7 +57,7 @@ ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ?
 kaytee {
     version {
         number = krailVersion
-        qualifier = 0  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
+        qualifier = 1  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
     }
     release {
         mergeToMaster = false
@@ -133,7 +133,7 @@ dependencies {
 //        exclude group: 'uk.q3c.krail', module: 'krail'
 //    }
 
-    compile 'uk.q3c.util:serialization-tracer:0.6.0.2'
+    compile 'uk.q3c.util:serialization-tracer:0.7.0.0'
 
     testCompile 'uk.q3c.util:q3c-testutils:0.11.0.4'
 

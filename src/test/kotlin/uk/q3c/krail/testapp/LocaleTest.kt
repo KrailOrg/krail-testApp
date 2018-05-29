@@ -29,7 +29,7 @@ class LocaleAndValidationTest : Spek({
             browser.fragmentShouldBe("home")
             val page = TestAppUIObject()
 
-            it("default Locale should be UK") {
+            it("should default locale to Locale.UK") {
                 page.menu.select("Locale")
                 browser.viewShouldBe(LocaleChanger::class.java)
                 browser.fragmentShouldBe("locale")
@@ -45,8 +45,25 @@ class LocaleAndValidationTest : Spek({
             browser.fragmentShouldBe("form")
             val view = AutoFormObject()
 
+            view.validateButton.click()
+
+            it("should show validation no error message") {
+                view.validationMsg.valueShouldBe("No errors")
+            }
+        }
+
+
+        on("entering invalid data") {
+            val page = TestAppUIObject()
+            page.menu.select("Form")
+            browser.fragmentShouldBe("form")
+            val view = AutoFormObject()
+            view.ageField.sendBackspace(2)
+            view.ageField.sendValue("13")
+            view.validateButton.click()
+
             it("should show validation error message") {
-                view.validationMsg.valueShouldBe("must be less than or equal to 5")
+                view.validationMsg.valueShouldBe("must be less than or equal to 12")
             }
         }
 
@@ -68,9 +85,12 @@ class LocaleAndValidationTest : Spek({
             page.menu.select("Form")
             browser.fragmentShouldBe("form")
             val view = AutoFormObject()
+            view.ageField.sendBackspace(2)
+            view.ageField.sendValue("13")
+            view.validateButton.click()
 
             it("should show validation error message in German") {
-                view.validationMsg.valueShouldBe("muss kleiner oder gleich 5 sein")
+                view.validationMsg.valueShouldBe("muss kleiner oder gleich 12 sein")
             }
         }
 
