@@ -148,7 +148,7 @@ vaadin {
 }
 
 vaadinCompile{
-    widgetset 'uk.q3c.krail.testapp.widgetset.testAppWidgetset'
+    manageWidgetset false
 }
 
 ext.warName = (project.name.toLowerCase() + '.war')

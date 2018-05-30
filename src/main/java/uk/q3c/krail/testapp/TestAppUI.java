@@ -49,6 +49,7 @@ import uk.q3c.util.guice.SerializationSupport;
  * @author David Sowerby
  */
 @Theme(ValoTheme.THEME_NAME)
+//@Theme("krail")
 @Push
 public class TestAppUI extends DefaultApplicationUI {
 
