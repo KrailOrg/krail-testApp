@@ -29,7 +29,7 @@ class Pause extends DefaultTask {
 }
 
 plugins {
-    id "com.devsoap.plugin.vaadin" version "1.3.0"
+    id "com.devsoap.plugin.vaadin" version "1.3.1"
     id "com.github.johnrengelman.shadow" version "2.0.3"
     id "com.chrisgahlert.gradle-dcompose-plugin" version "0.9.3"
 }
@@ -57,7 +57,7 @@ ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ?
 kaytee {
     version {
         number = krailVersion
-        qualifier = 0  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
+        qualifier = 1  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
     }
     release {
         mergeToMaster = false
