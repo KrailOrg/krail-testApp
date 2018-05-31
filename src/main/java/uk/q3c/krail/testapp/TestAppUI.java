@@ -17,7 +17,6 @@ import com.google.inject.Inject;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.ErrorHandler;
-import com.vaadin.ui.themes.ValoTheme;
 import uk.q3c.krail.core.guice.uiscope.UIKey;
 import uk.q3c.krail.core.i18n.I18NProcessor;
 import uk.q3c.krail.core.navigate.Navigator;
@@ -48,8 +47,8 @@ import uk.q3c.util.guice.SerializationSupport;
  *
  * @author David Sowerby
  */
-@Theme(ValoTheme.THEME_NAME)
-//@Theme("krail")
+//@Theme(ValoTheme.THEME_NAME)
+@Theme("krail")
 @Push
 public class TestAppUI extends DefaultApplicationUI {
 

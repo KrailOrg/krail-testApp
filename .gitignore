@@ -20,3 +20,5 @@ README.md~
 .project
 /.vertx
 
+src/main/webapp/VAADIN/themes/**/*.css
+src/main/webapp/VAADIN/themes/**/*.css.gz
