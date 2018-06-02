@@ -1,5 +1,6 @@
 package uk.q3c.krail.functest.selenide
 
+import com.codeborne.selenide.Condition
 import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.Selenide.`$`
@@ -7,8 +8,13 @@ import com.codeborne.selenide.WebDriverRunner
 import com.google.inject.Injector
 import org.apache.commons.io.FileUtils
 import org.slf4j.LoggerFactory
-import uk.q3c.krail.functest.*
+import uk.q3c.krail.functest.Browser
+import uk.q3c.krail.functest.PageElement
+import uk.q3c.krail.functest.RouteMap
+import uk.q3c.krail.functest.ViewElement
 import uk.q3c.krail.functest.coded.FunctionalTestServletContextListener
+import uk.q3c.krail.functest.routeMapFromJson
+import uk.q3c.krail.functest.waitForNavigationState
 import java.io.File
 import java.net.URI
 
@@ -40,6 +46,10 @@ class SelenideBrowser : Browser {
 
     override fun navigateTo(fragment: String) {
         Selenide.open(fragment)
+        // TODO - the condition and timeout for this need to be configurable
+        val pageStatusId = "#TestAppUI-pageStatus"
+        `$`(pageStatusId).waitUntil(Condition.exactTextCaseSensitive("Ready"), 30000L)
+        //////////
         view = SelenideViewElement(routeMap.viewFor(fragment).viewId.id)
         page = SelenidePageElement(routeMap.uiFor(fragment).uiId.id)
         fragmentShouldBe(fragment)

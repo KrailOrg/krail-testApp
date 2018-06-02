@@ -200,5 +200,6 @@ class TestAppUIObject : AbstractPageObject() {
     val menu by MenuBar()
     val breadcrumb by Breadcrumb()
     val subpage = DefaultSubPagePanelObject("TestAppUI-subpage")
+    val pageStatus by Label()
 }
 

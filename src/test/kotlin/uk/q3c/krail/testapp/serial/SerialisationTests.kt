@@ -122,7 +122,7 @@ object SerialisationTest : Spek({
 fun constructNonGuiceClass(clazz: Class<out Serializable>, injector: Injector): Serializable {
 
     return when (clazz) {
-        UIKey::class.java -> UIKey(5)
+        UIKey::class.java -> UIKey()
         ServiceKey::class.java -> ServiceKey(LabelKey.Accounts)
         GuiceKeyProxy::class.java -> GuiceKeyProxy(Key.get(DefaultNavigator::class.java))
         ConverterPair::class.java -> ConverterPair(UIKey::class.java, ServiceKey::class.java)

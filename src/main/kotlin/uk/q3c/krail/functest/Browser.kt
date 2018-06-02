@@ -70,6 +70,7 @@ fun waitForNavigationState(source: () -> String, condition: (NavigationState) ->
     }
 }
 
+
 fun idc(qualifier: Optional<*>, vararg componentClasses: Class<*>): String {
     checkNotNull(qualifier)
     val buf = StringBuilder("#")

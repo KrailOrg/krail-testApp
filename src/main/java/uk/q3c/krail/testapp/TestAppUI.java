@@ -17,8 +17,15 @@ import com.google.inject.Inject;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.ErrorHandler;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import net.engio.mbassy.listener.Handler;
+import net.engio.mbassy.listener.Listener;
 import uk.q3c.krail.core.guice.uiscope.UIKey;
 import uk.q3c.krail.core.i18n.I18NProcessor;
+import uk.q3c.krail.core.monitor.PageLoadingMessage;
+import uk.q3c.krail.core.monitor.PageReadyMessage;
 import uk.q3c.krail.core.navigate.Navigator;
 import uk.q3c.krail.core.push.Broadcaster;
 import uk.q3c.krail.core.push.KrailPushConfiguration;
@@ -36,6 +43,7 @@ import uk.q3c.krail.core.view.component.SubPagePanel;
 import uk.q3c.krail.core.view.component.UserNavigationMenu;
 import uk.q3c.krail.core.view.component.UserNavigationTree;
 import uk.q3c.krail.core.view.component.UserStatusPanel;
+import uk.q3c.krail.eventbus.MessageBus;
 import uk.q3c.krail.i18n.CurrentLocale;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.option.Option;
@@ -50,7 +58,11 @@ import uk.q3c.util.guice.SerializationSupport;
 //@Theme(ValoTheme.THEME_NAME)
 @Theme("krail")
 @Push
+@Listener
 public class TestAppUI extends DefaultApplicationUI {
+
+    private Label pageStatus = new Label();
+    private transient MessageBus messageBus;
 
     @Inject
     protected TestAppUI(Navigator navigator, ErrorHandler errorHandler,
@@ -58,10 +70,12 @@ public class TestAppUI extends DefaultApplicationUI {
                         UserNavigationMenu menu, UserNavigationTree navTree, Breadcrumb breadcrumb,
                         SubPagePanel subpage, MessageBar messageBar, Broadcaster broadcaster,
                         PushMessageRouter pushMessageRouter, SessionObject sessionObject,
-                        ApplicationTitle applicationTitle, Translate translate, CurrentLocale currentLocale, I18NProcessor translator, LocaleSelector localeSelector, VaadinNotification vaadinNotification, Option option, SerializationSupport serializationSupport, KrailPushConfiguration pushConfiguration) {
+                        ApplicationTitle applicationTitle, Translate translate, CurrentLocale currentLocale, I18NProcessor translator, LocaleSelector localeSelector, VaadinNotification vaadinNotification, Option option, SerializationSupport serializationSupport, KrailPushConfiguration pushConfiguration, MessageBus messageBus) {
         super(navigator, errorHandler, logo, header, userStatus, menu, navTree, breadcrumb, subpage, messageBar, broadcaster,
                 pushMessageRouter, applicationTitle, translate, currentLocale, translator, localeSelector, vaadinNotification, option, serializationSupport, pushConfiguration);
 
+        this.messageBus = messageBus;
+        messageBus.subscribe(this);
     }
 
     @Override
@@ -69,5 +83,29 @@ public class TestAppUI extends DefaultApplicationUI {
         super.processBroadcastMessage(group, message, uiKey, messageId);
         getMessageBar().informationMessage(new InformationNotificationMessage(group + ':' + message));
     }
+
+    @Override
+    protected Component headerRow() {
+        HorizontalLayout headerRow = new HorizontalLayout(header, pageStatus, localeCombo, userStatus);
+        pageStatus.setValue("Loading");
+        headerRow.setWidth("100%");
+        headerRow.setExpandRatio(header, 1f);
+        return headerRow;
+    }
+
+    @Handler
+    public void pageLoading(PageLoadingMessage message) {
+        if (message.getUiKey() == this.getInstanceKey()) {
+            pageStatus.setValue("Loading");
+        }
+    }
+
+    @Handler
+    public void pageReady(PageReadyMessage message) {
+        if (message.getUiKey() == this.getInstanceKey()) {
+            pageStatus.setValue("Ready");
+        }
+    }
+
 
 }
