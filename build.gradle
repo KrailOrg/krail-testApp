@@ -57,7 +57,7 @@ ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ?
 kaytee {
     version {
         number = krailVersion
-        qualifier = 1  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
+        qualifier = 2  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
     }
     release {
         mergeToMaster = false
@@ -266,3 +266,15 @@ sourceSets {
         }
     }
 }
+
+
+shadowJar.dependsOn(vaadinThemeCompile)
+shadowJar.dependsOn(vaadinCompile)
+
+task runOnVertx(dependsOn:shadowJar) << {
+    javaexec {
+        main="-jar"
+        args = ["build/libs/krail-testApp-${version}-all.jar"]
+    }
+}
+
