@@ -32,22 +32,23 @@ plugins {
     id "com.devsoap.plugin.vaadin" version "1.3.1"
     id "com.github.johnrengelman.shadow" version "2.0.3"
     id "com.chrisgahlert.gradle-dcompose-plugin" version "0.9.3"
+    id "com.dorongold.task-tree" version "1.3"
 }
 
 apply plugin: 'uk.q3c.kaytee'
 apply plugin: 'kotlin'
 apply plugin: 'org.junit.platform.gradle.plugin'
-apply from : "gradle/spek.gradle"
+apply from: "gradle/spek.gradle"
 
 
 description = 'Functional test application for Krail and its additional modules'
 
 group = 'uk.q3c.krail'
 
-ext.krailVersion = "0.16.11.0"
+ext.krailVersion = "0.16.11.1"
 ext.assertjVersion = '3.8.0'
 ext.vaadinTestbenchVersion = '5.0.0'
-ext.vaadinVersion='8.4.2'
+ext.vaadinVersion = '8.4.2'
 ext.gsonVersion = '2.3.1'
 
 ext.defaultTestContainer = project.hasProperty("defaultTestContainer") ? project.getProperty("defaultTestContainer") : "tomcat8"
@@ -57,7 +58,7 @@ ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ?
 kaytee {
     version {
         number = krailVersion
-        qualifier = 0  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
+        qualifier = 1  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
     }
     release {
         mergeToMaster = false
@@ -81,23 +82,19 @@ configurations.all {
         force 'javax.validation:validation-api:1.0.0.GA'
 
         dependencySubstitution {
-            substitute module ('commons-beanutils:commons-beanutils-core') with module ('commons-beanutils:commons-beanutils:1.9.3')
+            substitute module('commons-beanutils:commons-beanutils-core') with module('commons-beanutils:commons-beanutils:1.9.3')
         }
     }
 }
 
 dependencies {
 
-
-
     // Kotlin
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-
     //Krail
     compile 'uk.q3c.krail:eventbus-mbassador:0.5.0.0' // for Handler / Listener annotations
-
 
     //assert
     compile 'org.assertj:assertj-core:' + assertjVersion
@@ -147,7 +144,7 @@ vaadin {
     push = true
 }
 
-vaadinCompile{
+vaadinCompile {
     manageWidgetset false
 }
 
@@ -162,9 +159,9 @@ task copyWar(type: Copy) {
     File userHome = new File(System.getProperty('user.home'))
     File source = new File(project.buildDir, "libs")
     File dest = new File(userHome, "tomcat8.5/webapps")
-    println ">>>>>>>>>>>>>>>>>>>>>>>>>>> from: ${source} to ${dest}"
     from source
     into dest
+
 }
 
 task pauseForApp(type: Pause) {
@@ -192,7 +189,7 @@ dcompose.services.all { service ->
 
     // Build a specific task to copy files in container
     def copyFilesTaskName = "copyFilesTo${containerName.capitalize()}ContainerBuildDir"
-    task "${copyFilesTaskName}" (type: Sync, group: taskGroup) {
+    task "${copyFilesTaskName}"(type: Sync, group: taskGroup) {
         from war
         from('src/main/docker/') {
             include service.dockerFilename
@@ -271,10 +268,11 @@ sourceSets {
 shadowJar.dependsOn(vaadinThemeCompile)
 shadowJar.dependsOn(vaadinCompile)
 
-task runOnVertx(dependsOn:shadowJar) << {
+task runOnVertx(dependsOn: shadowJar) << {
     javaexec {
-        main="-jar"
+        main = "-jar"
         args = ["build/libs/krail-testApp-${version}-all.jar"]
     }
 }
 
+// ./gradlew startTomcat8Container -PdefaultTestContainerPort=8080
