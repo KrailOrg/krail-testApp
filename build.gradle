@@ -139,7 +139,7 @@ dependencies {
 
 
 vaadin {
-    version = '8.3.3'
+    version = vaadinVersion
     logToConsole = true
     push = true
 }
