@@ -5,13 +5,18 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
-import uk.q3c.krail.functest.*
-import kotlin.concurrent.thread
+import org.jetbrains.spek.api.dsl.xon
+import uk.q3c.krail.functest.ExecutionMode
+import uk.q3c.krail.functest.browser
+import uk.q3c.krail.functest.createBrowser
+import uk.q3c.krail.functest.executionMode
+
 
 /**
  * Created by David Sowerby on 10 Feb 2018
  */
 class PushTest : Spek({
+    val pushPage = "notifications/push"
     given("an application that should react to messages from other clients") {
         beforeGroup {
             executionMode = ExecutionMode.SELENIDE
@@ -22,49 +27,46 @@ class PushTest : Spek({
         }
 
         on("a client sends a message") {
-            navigateToPushView(browser)
-            val pushView = PushViewObject()
-            pushView.messageLog.valueShouldBe("")
-            doInOtherBrowser {
-                sendMessage("TEST", "First test")
+            with(browser) {
+                navigateTo(pushPage)
+                openNewTab()
+                switchToTab(1)
+                navigateTo(pushPage)
             }
 
+            sendMessage("TEST", "First test")
+            browser.switchToTab(0)
+
+
             it("should receive the message") {
+                val pushView = PushViewObject()
                 pushView.messageLog.valueShouldBe("TEST:First test\n")
             }
 
         }
 
-        on("a client sends a message while push is not enabled") {
-            val pushView = PushViewObject()
-            pushView.messageLog.valueShouldBe("TEST:First test\n")
-            pushView.pushEnabled.setValue(false)
-            doInOtherBrowser {
-                PushViewObject().pushEnabled.setValue(false)
-                sendMessage("TEST", "Second test")
-            }
+        /**
+         * Ignored see https://github.com/KrailOrg/krail/issues/707
+         */
+        xon("a client sends a message while push is not enabled") {
+            browser.navigateTo(pushPage)
+            browser.openNewTab()
+            browser.switchToTab(1)
+            browser.navigateTo(pushPage)
+            val pushView1 = PushViewObject()
+            pushView1.pushEnabled.setValue(false)
+            sendMessage("TEST", "Second test")
+            browser.switchToTab(0)
+
             it("should receive the message") {
-                pushView.messageLog.valueShouldBe("TEST:First test\n")
+                val pushView0 = PushViewObject()
+                pushView0.messageLog.valueShouldBe("")
             }
         }
     }
 
 })
 
-fun navigateToPushView(theBrowser: Browser) {
-    theBrowser.navigateTo("notifications/push")
-    theBrowser.fragmentShouldBe("notifications/push")
-}
-
-fun doInOtherBrowser(block: (Browser) -> Unit) {
-    thread(start = true) {
-        val otherBrowser = createBrowser(applyGlobal = false)
-        navigateToPushView(otherBrowser)
-        block(otherBrowser)
-        Selenide.close()
-    }.join()
-
-}
 
 fun sendMessage(grp: String, msg: String) {
     val pushView = PushViewObject()
@@ -72,3 +74,4 @@ fun sendMessage(grp: String, msg: String) {
     pushView.messageInput.setValue(msg)
     pushView.sendButton.click()
 }
+

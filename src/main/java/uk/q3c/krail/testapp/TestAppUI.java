@@ -17,11 +17,13 @@ import com.google.inject.Inject;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.ErrorHandler;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
+import org.vaadin.addon.ewopener.EnhancedBrowserWindowOpener;
 import uk.q3c.krail.core.guice.uiscope.UIKey;
 import uk.q3c.krail.core.i18n.I18NProcessor;
 import uk.q3c.krail.core.monitor.PageLoadingMessage;
@@ -50,6 +52,8 @@ import uk.q3c.krail.option.Option;
 import uk.q3c.krail.testapp.view.SessionObject;
 import uk.q3c.util.guice.SerializationSupport;
 
+import java.net.URI;
+
 /**
  * The UI class used in this test application for Krail
  *
@@ -62,6 +66,7 @@ import uk.q3c.util.guice.SerializationSupport;
 public class TestAppUI extends DefaultApplicationUI {
 
     private Label pageStatus = new Label();
+    private Button newTab = new Button("new tab");
     private transient MessageBus messageBus;
 
     @Inject
@@ -86,8 +91,21 @@ public class TestAppUI extends DefaultApplicationUI {
 
     @Override
     protected Component headerRow() {
-        HorizontalLayout headerRow = new HorizontalLayout(header, pageStatus, localeCombo, userStatus);
+        HorizontalLayout headerRow = new HorizontalLayout(header, pageStatus, newTab, localeCombo, userStatus);
         pageStatus.setValue("Loading");
+
+
+        EnhancedBrowserWindowOpener opener = new EnhancedBrowserWindowOpener()
+                .popupBlockerWorkaround(true);
+
+        newTab.addClickListener(e -> {
+            URI currentLocation = this.getPage().getLocation();
+            opener.open(currentLocation.toString());
+        });
+        opener.extend(newTab);
+        newTab.click(); // pre-loads the connector
+
+
         headerRow.setWidth("100%");
         headerRow.setExpandRatio(header, 1f);
         return headerRow;

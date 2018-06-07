@@ -201,5 +201,6 @@ class TestAppUIObject : AbstractPageObject() {
     val breadcrumb by Breadcrumb()
     val subpage = DefaultSubPagePanelObject("TestAppUI-subpage")
     val pageStatus by Label()
+    val newTab by Button()
 }
 

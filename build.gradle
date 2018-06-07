@@ -58,7 +58,7 @@ ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ?
 kaytee {
     version {
         number = krailVersion
-        qualifier = 1  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
+        qualifier = 2  // increment this for changes to the test app itself, reset to 0 when krailVersion changes
     }
     release {
         mergeToMaster = false
@@ -71,6 +71,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven { url "http://dl.bintray.com/jetbrains/spek" }
+    maven { url "http://maven.vaadin.com/vaadin-addons" }
 }
 
 // guava 23.0 causes an error
@@ -88,6 +89,8 @@ configurations.all {
 }
 
 dependencies {
+
+    compile 'org.vaadin.addon:enhanced-window-opener:0.4'
 
     // Kotlin
 

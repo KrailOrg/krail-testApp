@@ -35,6 +35,30 @@ interface Browser {
     fun currentUrl(): String
     fun currentFragment(): String
     fun viewShouldBe(viewClass: Class<*>)
+
+    /**
+     * Wait until there are [requiredNumberOfTabs] open in the browser, or [timeout] is exceeded
+     *
+     * @param requiredNumberOfTabs how many tabs should be open
+     * @param timeout in milliseconds
+     */
+    fun waitForTabs(requiredNumberOfTabs: Int, timeout: Long) {
+        TODO()
+    }
+
+    /**
+     * Switch to the tab at [index]
+     */
+    fun switchToTab(index: Int) {
+        TODO()
+    }
+
+    /**
+     * Opens a new tab, but you may still need to [switchToTab] in order to control it
+     */
+    fun openNewTab() {
+        TODO()
+    }
 }
 
 

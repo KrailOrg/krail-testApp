@@ -3,10 +3,12 @@ package uk.q3c.krail.functest.selenide
 import com.codeborne.selenide.Condition
 import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selenide
+import com.codeborne.selenide.Selenide.Wait
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.WebDriverRunner
 import com.google.inject.Injector
 import org.apache.commons.io.FileUtils
+import org.openqa.selenium.support.ui.ExpectedConditions
 import org.slf4j.LoggerFactory
 import uk.q3c.krail.functest.Browser
 import uk.q3c.krail.functest.PageElement
@@ -101,6 +103,27 @@ class SelenideBrowser : Browser {
 
     override fun currentFragment(): String {
         return URI.create(currentUrl()).fragment
+    }
+
+    override fun waitForTabs(requiredNumberOfTabs: Int, timeout: Long) {
+//        Wait().withTimeout(Duration.ofMillis(timeout )).until(ExpectedConditions.numberOfWindowsToBe(2));
+        Wait().until(ExpectedConditions.numberOfWindowsToBe(2))
+        val pageStatusId = "#TestAppUI-pageStatus"
+        `$`(pageStatusId).waitUntil(Condition.exactTextCaseSensitive("Ready"), 30000L)
+    }
+
+    override fun switchToTab(index: Int) {
+        val driver = WebDriverRunner.getWebDriver()
+        val handles = driver.windowHandles.toList()
+        Selenide.switchTo().window(handles[index])
+    }
+
+    override fun openNewTab() {
+        val driver = WebDriverRunner.getWebDriver()
+        val currentTabCount = driver.windowHandles.size
+        val newTab = "#TestAppUI-newTab"
+        `$`(newTab).click()
+        waitForTabs(currentTabCount + 1, 4000)
     }
 }
 
