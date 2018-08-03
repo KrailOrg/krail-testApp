@@ -21,11 +21,11 @@ public class TestAppPages extends DirectSitemapModule {
 
     @Override
     protected void define() {
-        addEntry("notifications", NotificationsView.class, LabelKey.Notifications, PageAccessControl.PUBLIC);
-        addEntry("widgetset", WidgetsetView.class, LabelKey.Message_Box, PageAccessControl.PUBLIC);
-        addEntry("notifications/push", PushView.class, LabelKey.Push, PageAccessControl.PUBLIC);
-        addEntry("form", AutoForm.class, uk.q3c.krail.testapp.i18n.LabelKey.Form, PageAccessControl.PUBLIC);
-        addEntry("locale", LocaleChanger.class, uk.q3c.krail.testapp.i18n.LabelKey.Locale, PageAccessControl.PUBLIC);
+        addEntry("notifications", LabelKey.Notifications, PageAccessControl.PUBLIC, NotificationsView.class);
+        addEntry("widgetset", LabelKey.Message_Box, PageAccessControl.PUBLIC, WidgetsetView.class);
+        addEntry("notifications/push", LabelKey.Push, PageAccessControl.PUBLIC, PushView.class);
+        addEntry("form", uk.q3c.krail.testapp.i18n.LabelKey.Form, PageAccessControl.PUBLIC, AutoForm.class);
+        addEntry("locale", uk.q3c.krail.testapp.i18n.LabelKey.Locale, PageAccessControl.PUBLIC, LocaleChanger.class);
     }
 
 }

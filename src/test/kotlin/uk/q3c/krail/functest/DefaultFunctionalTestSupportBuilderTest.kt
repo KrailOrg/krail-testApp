@@ -84,8 +84,8 @@ class DefaultFunctionalTestSupportBuilderTest : Spek({
             masterSitemap = injector.getInstance(MasterSitemap::class.java)
             uiProvider = injector.getInstance(ScopedUIProvider::class.java)
             uiProvider.createInstance(UICreateEvent(mockRequest, TestUI::class.java))
-            masterSitemap.addNode(MasterSitemapNode(1, "simple", SimpleView::class.java, LoginLabelKey.Log_In, -1, PageAccessControl.PUBLIC, ImmutableList.of()))
-            masterSitemap.addNode(MasterSitemapNode(2, "simple/another", AnotherSimpleView::class.java, LabelKey.Active_Source, -1, PageAccessControl.PUBLIC, ImmutableList.of()))
+            masterSitemap.addNode(MasterSitemapNode(id = 1, uriSegment = "simple", viewClass = SimpleView::class.java, labelKey = LoginLabelKey.Log_In, positionIndex = -1, pageAccessControl = PageAccessControl.PUBLIC, roles = ImmutableList.of()))
+            masterSitemap.addNode(MasterSitemapNode(id = 2, uriSegment = "simple/another", viewClass = AnotherSimpleView::class.java, labelKey = LabelKey.Active_Source, positionIndex = -1, pageAccessControl = PageAccessControl.PUBLIC, roles = ImmutableList.of()))
 
         }
 

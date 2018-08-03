@@ -19,8 +19,8 @@ public class FinancePages extends DirectSitemapModule {
 
     @Override
     protected void define() {
-        addEntry("private/finance", FinanceView.class, LabelKey.Finance, PageAccessControl.PERMISSION);
-        addEntry("private/finance/accounts", AccountsView.class, LabelKey.Accounts, PageAccessControl.PERMISSION);
-        addEntry("private/finance/payroll", PayrollView.class, LabelKey.Payroll, PageAccessControl.PERMISSION);
+        addEntry("private/finance", LabelKey.Finance, PageAccessControl.PERMISSION, FinanceView.class);
+        addEntry("private/finance/accounts", LabelKey.Accounts, PageAccessControl.PERMISSION, AccountsView.class);
+        addEntry("private/finance/payroll", LabelKey.Payroll, PageAccessControl.PERMISSION, PayrollView.class);
     }
 }

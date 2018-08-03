@@ -16,6 +16,7 @@ import org.jetbrains.spek.api.dsl.on
 import org.reflections.Reflections
 import uk.q3c.krail.config.ConfigFile
 import uk.q3c.krail.core.env.ServletEnvironmentModule
+import uk.q3c.krail.core.form.ConverterPair
 import uk.q3c.krail.core.guice.uiscope.UIKey
 import uk.q3c.krail.core.i18n.VaadinCurrentLocale
 import uk.q3c.krail.core.navigate.DefaultNavigator
@@ -27,7 +28,6 @@ import uk.q3c.krail.core.navigate.sitemap.RedirectEntry
 import uk.q3c.krail.core.navigate.sitemap.UserSitemap
 import uk.q3c.krail.core.navigate.sitemap.UserSitemapNode
 import uk.q3c.krail.core.shiro.PageAccessControl
-import uk.q3c.krail.core.vaadin.ConverterPair
 import uk.q3c.krail.core.vaadin.TargetTreeWrapper_VaadinTree
 import uk.q3c.krail.core.vaadin.UserSitemapNodeCaption
 import uk.q3c.krail.core.view.component.ComponentIDAssignmentFilter

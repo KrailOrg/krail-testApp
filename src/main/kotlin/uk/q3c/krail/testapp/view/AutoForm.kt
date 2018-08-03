@@ -66,7 +66,7 @@ protected constructor(translate: Translate, serialisationSupport: SerializationS
         try {
             binder.bean
         } catch (e: UninitializedPropertyAccessException) {
-            binder = binderFactory.create(Person::class.java)
+            binder = binderFactory.create(Person::class)
             bindFields()
         }
     }
