@@ -26,6 +26,7 @@ public class TestAppPages extends DirectSitemapModule {
         addEntry("notifications/push", LabelKey.Push, PageAccessControl.PUBLIC, PushView.class);
         addEntry("form", uk.q3c.krail.testapp.i18n.LabelKey.Form, PageAccessControl.PUBLIC, AutoForm.class);
         addEntry("locale", uk.q3c.krail.testapp.i18n.LabelKey.Locale, PageAccessControl.PUBLIC, LocaleChanger.class);
+        addForm("person", uk.q3c.krail.testapp.i18n.LabelKey.Person, PageAccessControl.PUBLIC, PersonFormConfiguration.class);
     }
 
 }

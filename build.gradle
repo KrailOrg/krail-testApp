@@ -63,7 +63,7 @@ String meta = krailVersionNumber.getQualifier().substring(2)
 kaytee {
     version {
         number = krailVersionNumber.baseVersion.toString()
-        qualifier = "3-$meta" // increment this for changes to the test app itself, reset to 0 when krailVersion changes
+        qualifier = "4-$meta" // increment this for changes to the test app itself, reset to 0 when krailVersion changes
 
     }
     release {

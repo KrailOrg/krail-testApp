@@ -28,6 +28,7 @@ public enum LabelKey implements I18NKey {
     Login,
     Logout,
     No,
+    Person,
     Private,
     Public,
     Refresh_Account,
