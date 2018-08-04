@@ -3,6 +3,7 @@ package uk.q3c.krail.testapp.view;
 import com.google.inject.Module;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.q3c.krail.app.TestAppStartupModule;
 import uk.q3c.krail.core.guice.CoreBindingsCollator;
 import uk.q3c.krail.core.i18n.KrailI18NModule;
 import uk.q3c.krail.core.navigate.sitemap.SystemAccountManagementPages;
@@ -78,4 +79,8 @@ public class TestAppBindingsCollator extends CoreBindingsCollator {
                 .addRealm(TestAppRealm.class);
     }
 
+    @Override
+    protected Module startupModule() {
+        return new TestAppStartupModule();
+    }
 }

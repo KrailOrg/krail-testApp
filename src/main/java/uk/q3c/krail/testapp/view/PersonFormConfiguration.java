@@ -8,6 +8,6 @@ import uk.q3c.krail.core.form.FormConfiguration;
 public class PersonFormConfiguration extends FormConfiguration {
     @Override
     public void config() {
-        section("standard").entityClass(Person.class);
+        section("standard").entityClass(Person.class).columnOrder("title", "name", "age");
     }
 }

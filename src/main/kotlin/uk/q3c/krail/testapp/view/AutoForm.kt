@@ -81,7 +81,7 @@ protected constructor(translate: Translate, serialisationSupport: SerializationS
 
     override fun loadData(busMessage: AfterViewChangeBusMessage?) {
         checkBinder()
-        binder.bean = Person("Dr", "Who", 12)
+        binder.bean = Person(title = "Dr", name = "Who", age = 12)
     }
 
 
