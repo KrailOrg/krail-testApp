@@ -3,6 +3,7 @@ package uk.q3c.krail.testapp.view
 import uk.q3c.krail.core.form.Entity
 import uk.q3c.krail.core.form.MultiSelectPropertyDelegate
 import uk.q3c.krail.core.form.SingleSelectPropertyDelegate
+import uk.q3c.krail.i18n.I18NKey
 import java.io.Serializable
 import java.time.LocalDate
 import javax.validation.constraints.Max
@@ -28,3 +29,7 @@ class Person(
 }
 
 const val testUuid1 = "123e4567-e89b-12d3-a456-556642440000"
+
+enum class PersonKey : I18NKey {
+    id, Title, Name, Age, Join_Date, Date_of_Birth, Price_Plan, Roles
+}
