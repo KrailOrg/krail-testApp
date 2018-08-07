@@ -45,7 +45,7 @@ description = 'Functional test application for Krail and its additional modules'
 
 group = 'uk.q3c.krail'
 
-ext.krailVersion = "0.16.12.0-startup3"
+ext.krailVersion = "0.16.12.0-forms1"
 ext.assertjVersion = '3.8.0'
 ext.vaadinTestbenchVersion = '5.0.0'
 ext.vaadinVersion = '8.4.2'
