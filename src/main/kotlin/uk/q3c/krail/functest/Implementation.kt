@@ -1,7 +1,33 @@
 package uk.q3c.krail.functest
 
-import uk.q3c.krail.functest.coded.*
-import uk.q3c.krail.functest.selenide.*
+import uk.q3c.krail.functest.coded.CodedBrowser
+import uk.q3c.krail.functest.coded.CodedButtonElement
+import uk.q3c.krail.functest.coded.CodedCheckBoxElement
+import uk.q3c.krail.functest.coded.CodedComboBoxElement
+import uk.q3c.krail.functest.coded.CodedGridElement
+import uk.q3c.krail.functest.coded.CodedImageElement
+import uk.q3c.krail.functest.coded.CodedLabelElement
+import uk.q3c.krail.functest.coded.CodedMenuBarElement
+import uk.q3c.krail.functest.coded.CodedPageNavigationElement
+import uk.q3c.krail.functest.coded.CodedSpinnerElement
+import uk.q3c.krail.functest.coded.CodedTextAreaElement
+import uk.q3c.krail.functest.coded.CodedTextFieldElement
+import uk.q3c.krail.functest.coded.CodedTreeElement
+import uk.q3c.krail.functest.coded.CodedTreeGridElement
+import uk.q3c.krail.functest.selenide.SelenideBreadcrumbElement
+import uk.q3c.krail.functest.selenide.SelenideBrowser
+import uk.q3c.krail.functest.selenide.SelenideButtonElement
+import uk.q3c.krail.functest.selenide.SelenideCheckBoxElement
+import uk.q3c.krail.functest.selenide.SelenideComboBoxElement
+import uk.q3c.krail.functest.selenide.SelenideGridElement
+import uk.q3c.krail.functest.selenide.SelenideImageElement
+import uk.q3c.krail.functest.selenide.SelenideLabelElement
+import uk.q3c.krail.functest.selenide.SelenideMenuBarElement
+import uk.q3c.krail.functest.selenide.SelenideSpinnerElement
+import uk.q3c.krail.functest.selenide.SelenideTextAreaElement
+import uk.q3c.krail.functest.selenide.SelenideTextFieldElement
+import uk.q3c.krail.functest.selenide.SelenideTreeElement
+import uk.q3c.krail.functest.selenide.SelenideTreeGridElement
 import kotlin.reflect.KProperty
 
 /**
@@ -99,7 +125,7 @@ class Breadcrumb {
     operator fun getValue(thisRef: ViewObject, property: KProperty<*>): BreadcrumbElement {
         return when (executionMode) {
             ExecutionMode.SELENIDE -> SelenideBreadcrumbElement("${thisRef.id}-${property.name}")
-            ExecutionMode.CODED -> CodedBreadcrumbElement("${thisRef.id}-${property.name}")
+            ExecutionMode.CODED -> CodedPageNavigationElement("${thisRef.id}-${property.name}")
         }
     }
 }

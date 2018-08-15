@@ -22,7 +22,7 @@ import org.vaadin.spinkit.Spinner
 import org.vaadin.spinkit.shared.SpinnerType
 import uk.q3c.krail.core.ui.ScopedUI
 import uk.q3c.krail.core.view.KrailView
-import uk.q3c.krail.core.view.component.Breadcrumb
+import uk.q3c.krail.core.view.component.PageNavigationPanel
 import uk.q3c.krail.functest.BaseElement
 import uk.q3c.krail.functest.BreadcrumbElement
 import uk.q3c.krail.functest.ButtonElement
@@ -321,7 +321,7 @@ class CodedNotificationElement : NotificationElement {
     }
 }
 
-class CodedBreadcrumbElement(id: String) : BreadcrumbElement, AbstractCodedElement<Breadcrumb>(id) {
+class CodedPageNavigationElement(id: String) : BreadcrumbElement, AbstractCodedElement<PageNavigationPanel>(id) {
     override fun select(index: Int) {
         TODO()
     }

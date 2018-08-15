@@ -14,6 +14,7 @@
 package uk.q3c.krail.testapp;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.ErrorHandler;
@@ -38,10 +39,9 @@ import uk.q3c.krail.core.user.notify.InformationNotificationMessage;
 import uk.q3c.krail.core.user.notify.VaadinNotification;
 import uk.q3c.krail.core.view.component.ApplicationHeader;
 import uk.q3c.krail.core.view.component.ApplicationLogo;
-import uk.q3c.krail.core.view.component.Breadcrumb;
 import uk.q3c.krail.core.view.component.LocaleSelector;
 import uk.q3c.krail.core.view.component.MessageBar;
-import uk.q3c.krail.core.view.component.SubPagePanel;
+import uk.q3c.krail.core.view.component.PageNavigationPanel;
 import uk.q3c.krail.core.view.component.UserNavigationMenu;
 import uk.q3c.krail.core.view.component.UserNavigationTree;
 import uk.q3c.krail.core.view.component.UserStatusPanel;
@@ -49,7 +49,6 @@ import uk.q3c.krail.eventbus.MessageBus;
 import uk.q3c.krail.i18n.CurrentLocale;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.option.Option;
-import uk.q3c.krail.testapp.view.SessionObject;
 import uk.q3c.util.guice.SerializationSupport;
 
 import java.net.URI;
@@ -72,11 +71,11 @@ public class TestAppUI extends DefaultApplicationUI {
     @Inject
     protected TestAppUI(Navigator navigator, ErrorHandler errorHandler,
                         ApplicationLogo logo, ApplicationHeader header, UserStatusPanel userStatus,
-                        UserNavigationMenu menu, UserNavigationTree navTree, Breadcrumb breadcrumb,
-                        SubPagePanel subpage, MessageBar messageBar, Broadcaster broadcaster,
-                        PushMessageRouter pushMessageRouter, SessionObject sessionObject,
+                        UserNavigationMenu menu, UserNavigationTree navTree, Provider<PageNavigationPanel> pageNavigationPanelProvider,
+                        MessageBar messageBar, Broadcaster broadcaster,
+                        PushMessageRouter pushMessageRouter,
                         ApplicationTitle applicationTitle, Translate translate, CurrentLocale currentLocale, I18NProcessor translator, LocaleSelector localeSelector, VaadinNotification vaadinNotification, Option option, SerializationSupport serializationSupport, KrailPushConfiguration pushConfiguration, MessageBus messageBus) {
-        super(navigator, errorHandler, logo, header, userStatus, menu, navTree, breadcrumb, subpage, messageBar, broadcaster,
+        super(navigator, errorHandler, logo, header, userStatus, menu, navTree, pageNavigationPanelProvider, messageBar, broadcaster,
                 pushMessageRouter, applicationTitle, translate, currentLocale, translator, localeSelector, vaadinNotification, option, serializationSupport, pushConfiguration);
 
         this.messageBus = messageBus;
