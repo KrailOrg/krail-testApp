@@ -20,8 +20,6 @@ import org.reflections.Reflections
 import uk.q3c.krail.config.ConfigFile
 import uk.q3c.krail.core.env.ServletEnvironmentModule
 import uk.q3c.krail.core.form.ConverterPair
-import uk.q3c.krail.core.form.DefaultMultiSelectProperty
-import uk.q3c.krail.core.form.DefaultSingleSelectProperty
 import uk.q3c.krail.core.form.DetailPropertyInfo
 import uk.q3c.krail.core.form.Form
 import uk.q3c.krail.core.form.FormConfiguration
@@ -32,9 +30,7 @@ import uk.q3c.krail.core.form.FormTableSection
 import uk.q3c.krail.core.form.KrailBeanValidationBinder
 import uk.q3c.krail.core.form.KrailBeanValidationBinderFactory
 import uk.q3c.krail.core.form.MapDBBaseDao
-import uk.q3c.krail.core.form.MultiSelectPropertyDelegate
 import uk.q3c.krail.core.form.PropertyConfiguration
-import uk.q3c.krail.core.form.SingleSelectPropertyDelegate
 import uk.q3c.krail.core.guice.uiscope.UIKey
 import uk.q3c.krail.core.i18n.VaadinCurrentLocale
 import uk.q3c.krail.core.navigate.DefaultNavigator
@@ -48,6 +44,7 @@ import uk.q3c.krail.core.navigate.sitemap.UserSitemap
 import uk.q3c.krail.core.navigate.sitemap.UserSitemapNode
 import uk.q3c.krail.core.persist.MapDbFormDaoFactory
 import uk.q3c.krail.core.shiro.PageAccessControl
+import uk.q3c.krail.core.user.notify.UserNotifier
 import uk.q3c.krail.core.vaadin.TargetTreeWrapper_VaadinTree
 import uk.q3c.krail.core.vaadin.UserSitemapNodeCaption
 import uk.q3c.krail.core.view.NavigationStateExt
@@ -170,11 +167,7 @@ fun constructNonGuiceClass(clazz: Class<out Serializable>, injector: Injector): 
         FormSectionConfiguration::class.java -> sectionConfiguration()
         FormDao::class.java -> dao()
         MapDBBaseDao::class.java -> dao()
-        SingleSelectPropertyDelegate::class.java -> SingleSelectPropertyDelegate<Person, String>(setOf("a", "B"))
-        DefaultSingleSelectProperty::class.java -> DefaultSingleSelectProperty(setOf("a", "B"))
-        DefaultMultiSelectProperty::class.java -> DefaultMultiSelectProperty(setOf("a", "B"))
-        MultiSelectPropertyDelegate::class.java -> MultiSelectPropertyDelegate<Person, String>(setOf("a", "B"))
-        FormDetailSection::class.java -> FormDetailSection(dao = dao(), rootComponent = HorizontalLayout(), propertyMap = propertyMap(), binder = binder(injector))
+        FormDetailSection::class.java -> FormDetailSection(dao = dao(), rootComponent = HorizontalLayout(), propertyMap = propertyMap(), binder = binder(injector), escList = mutableListOf(), userNotifier = injector.getInstance(UserNotifier::class.java))
         DetailPropertyInfo::class.java -> detailPropertyInfo()
         FormTableSection::class.java -> FormTableSection(form = injector.getInstance(Form::class.java), rootComponent = Grid(), dao = dao())
 
@@ -194,7 +187,7 @@ private fun propertyMap(): Map<String, DetailPropertyInfo> {
 }
 
 private fun detailPropertyInfo(): DetailPropertyInfo {
-    return DetailPropertyInfo(LabelKey.Accounts, LabelKey.Authenticated, Label(), true)
+    return DetailPropertyInfo(LabelKey.Accounts, LabelKey.Authenticated, Label())
 }
 
 private fun userSitemapNode(): UserSitemapNode {

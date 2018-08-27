@@ -80,6 +80,7 @@ public class TestAppUI extends DefaultApplicationUI {
 
         this.messageBus = messageBus;
         messageBus.subscribe(this);
+        this.viewDisplayPanelSizeFull = false;
     }
 
     @Override

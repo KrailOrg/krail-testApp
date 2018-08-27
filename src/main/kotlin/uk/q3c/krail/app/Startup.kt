@@ -26,7 +26,7 @@ class TestAppVertxApplicationStartup @Inject constructor(val daoFactory: FormDao
         val p1 = Person(id = "1", name = "Monty", age = 42)
         val p2 = Person(id = "2", name = "Python", age = 43)
         val p3 = Person(id = "3", name = "Munchkin", age = 44)
-        dao.put(p1, p2, p3)
+        dao.insert(p1, p2, p3)
     }
 }
 
