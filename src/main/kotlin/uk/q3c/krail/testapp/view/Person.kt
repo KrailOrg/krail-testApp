@@ -1,6 +1,5 @@
 package uk.q3c.krail.testapp.view
 
-import org.dizitart.no2.objects.Id
 import uk.q3c.krail.core.form.Entity
 import uk.q3c.krail.i18n.I18NKey
 import java.io.Serializable
@@ -11,7 +10,7 @@ import javax.validation.constraints.Max
  * Created by David Sowerby on 25 May 2018
  */
 data class Person(
-        @field:Id override var id: String = testUuid1,
+        override var id: String = testUuid1,
         var title: String = "Mr",
         var name: String,
         @field:Max(12) var age: Int,
