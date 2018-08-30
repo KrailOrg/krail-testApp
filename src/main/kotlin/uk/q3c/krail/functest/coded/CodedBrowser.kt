@@ -44,9 +44,9 @@ import uk.q3c.krail.functest.browser
 import uk.q3c.krail.functest.toJson
 import uk.q3c.krail.functest.waitForNavigationState
 import uk.q3c.krail.testapp.TestAppServletContextListener
-import uk.q3c.krail.testapp.TestAppUI
 import uk.q3c.krail.testapp.ui.TestAppUIProvider
 import uk.q3c.krail.testapp.view.TestAppBindingsCollator
+import uk.q3c.krail.testapp.view.TestAppSimpleUI
 import uk.q3c.util.clazz.UnenhancedClassIdentifier
 import java.io.File
 import java.net.URI
@@ -99,8 +99,8 @@ class CodedBrowser : Browser {
         whenever(vaadinRequest.service).thenReturn(vaadinService)
         whenever(vaadinRequest.getParameter("v-loc")).thenReturn("http://localhost:8080/krail-testapp/#home")
         whenever(vaadinRequest.getAttribute(ApplicationConstants.UI_ROOT_PATH)).thenReturn("http://localhost:8080/krail-testapp")
-        val event = UICreateEvent(vaadinRequest, TestAppUI::class.java)
-        ui = uiProvider.createInstance(event) as TestAppUI
+        val event = UICreateEvent(vaadinRequest, TestAppSimpleUI::class.java)
+        ui = uiProvider.createInstance(event) as TestAppSimpleUI
         UI.setCurrent(ui)
         ui.session = session
         ui.doInit(vaadinRequest, 1, null)

@@ -40,7 +40,8 @@ class PersonFormConfiguration : FormConfiguration() {
                 .property("joinDate").componentClass(InlineDateField::class.java).caption(PersonKey.Join_Date).description(PersonKey.Join_Date).end()
                 .property("age").min(3).end()
                 .property("pricePlan").fieldType(FieldType.SINGLE_SELECT).selectDataProvider(PricePlanDataProvider::class.java).end()
-                .property("roles").fieldType(FieldType.MULTI_SELECT).selectDataProvider(RolesDataProvider::class.java)
+                .property("roles").fieldType(FieldType.MULTI_SELECT).selectDataProvider(RolesDataProvider::class.java).end()
+                .property("dob").caption(PersonKey.Date_of_Birth).description(PersonKey.Date_of_Birth).end()
     }
 }
 

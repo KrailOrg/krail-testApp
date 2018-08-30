@@ -55,6 +55,7 @@ import uk.q3c.krail.core.view.component.UserNavigationTree
 import uk.q3c.krail.core.view.component.UserNavigationTreeNodeModifier
 import uk.q3c.krail.functest.coded.CodedBrowser
 import uk.q3c.krail.i18n.test.MockCurrentLocale
+import uk.q3c.krail.i18n.test.MockTranslate
 import uk.q3c.krail.option.OptionKey
 import uk.q3c.krail.service.ServiceKey
 import uk.q3c.krail.testapp.i18n.LabelKey
@@ -167,7 +168,7 @@ fun constructNonGuiceClass(clazz: Class<out Serializable>, injector: Injector): 
         FormSectionConfiguration::class.java -> sectionConfiguration()
         FormDao::class.java -> dao()
         MapDBBaseDao::class.java -> dao()
-        FormDetailSection::class.java -> FormDetailSection(dao = dao(), rootComponent = HorizontalLayout(), propertyMap = propertyMap(), binder = binder(injector), escList = mutableListOf(), userNotifier = injector.getInstance(UserNotifier::class.java))
+        FormDetailSection::class.java -> FormDetailSection(dao = dao(), rootComponent = HorizontalLayout(), propertyMap = propertyMap(), binder = binder(injector), escList = mutableListOf(), userNotifier = injector.getInstance(UserNotifier::class.java), translate = MockTranslate(), currentLocale = MockCurrentLocale())
         DetailPropertyInfo::class.java -> detailPropertyInfo()
         FormTableSection::class.java -> FormTableSection(form = injector.getInstance(Form::class.java), rootComponent = Grid(), dao = dao())
 
