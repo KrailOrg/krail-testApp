@@ -43,7 +43,7 @@ class LocaleAndValidationTest : Spek({
             val page = TestAppUIObject()
             page.menu.select("Form")
             browser.fragmentShouldBe("form")
-            val view = AutoFormObject()
+            val view = ManualFormObject()
 
             view.validateButton.click()
 
@@ -57,7 +57,7 @@ class LocaleAndValidationTest : Spek({
             val page = TestAppUIObject()
             page.menu.select("Form")
             browser.fragmentShouldBe("form")
-            val view = AutoFormObject()
+            val view = ManualFormObject()
             view.ageField.sendBackspace(2)
             view.ageField.sendValue("13")
             view.validateButton.click()
@@ -84,7 +84,7 @@ class LocaleAndValidationTest : Spek({
             val page = TestAppUIObject()
             page.menu.select("Form")
             browser.fragmentShouldBe("form")
-            val view = AutoFormObject()
+            val view = ManualFormObject()
             view.ageField.sendBackspace(2)
             view.ageField.sendValue("13")
             view.validateButton.click()

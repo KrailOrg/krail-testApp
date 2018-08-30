@@ -10,25 +10,30 @@
  *  * specific language governing permissions and limitations under the License.
  *
  */
+
 package uk.q3c.krail.testapp.view
 
 import com.google.inject.Inject
 import com.vaadin.ui.Button
 import com.vaadin.ui.VerticalLayout
-import uk.q3c.krail.core.view.PublicHomeView
-import uk.q3c.krail.core.view.ViewBase
+import uk.q3c.krail.core.i18n.CommonLabelKey
 import uk.q3c.krail.core.view.component.ViewChangeBusMessage
 import uk.q3c.krail.i18n.Translate
 import uk.q3c.util.guice.SerializationSupport
 
-class TestAppPublicHomeView @Inject
-constructor(translate: Translate, serializationSupport: SerializationSupport) : ViewBase(translate, serializationSupport), PublicHomeView {
-    val button = Button("Generate an exception")
+class HelpView @Inject
+protected constructor(translate: Translate, serializationSupport: SerializationSupport) : GridViewBase(translate, serializationSupport) {
+
+    init {
+        nameKey = CommonLabelKey.Help
+    }
+
+    private val button = Button("Generate an exception")
 
 
-    public override fun doBuild(busMessage: ViewChangeBusMessage) {
+    override fun doBuild(message: ViewChangeBusMessage) {
 
-        button.addClickListener { _ -> throw IllegalStateException("Fake exception - generated for testing") }
+        button.addClickListener { throw IllegalStateException("Fake exception - generated for testing") }
         rootComponent = VerticalLayout(button)
     }
 }

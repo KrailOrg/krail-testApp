@@ -22,7 +22,7 @@ import uk.q3c.util.guice.SerializationSupport
 /**
  * Created by David Sowerby on 11 Feb 2018
  */
-class AutoForm @Inject
+class ManualForm @Inject
 protected constructor(translate: Translate, serialisationSupport: SerializationSupport, @field:Transient private val binderFactory: KrailBeanValidationBinderFactory) : ViewBase(translate, serialisationSupport) {
 
     @Caption(caption = LabelKey.title, description = DescriptionKey.title)

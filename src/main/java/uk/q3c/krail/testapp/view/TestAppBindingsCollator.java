@@ -12,7 +12,6 @@ import uk.q3c.krail.core.shiro.aop.KrailShiroAopModule;
 import uk.q3c.krail.core.sysadmin.SystemAdminPages;
 import uk.q3c.krail.core.ui.DefaultUIModule;
 import uk.q3c.krail.testapp.TestAppServletModule;
-import uk.q3c.krail.testapp.TestAppUI;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.krail.testapp.uac.TestAppRealm;
 
@@ -35,13 +34,17 @@ public class TestAppBindingsCollator extends CoreBindingsCollator {
     @Override
     protected void addSitemapModules(List<Module> modules) {
         super.addSitemapModules(modules);
-        modules.add(new SystemAccountManagementPages());
+        modules.add(new SystemAccountManagementPages().rootURI("p/system-account"));
         modules.add(new TestAppPages());
         modules.add(new FinancePages());
         modules.add(new AnnotationPagesModule());
-        modules.add(new SystemAdminPages().rootURI("private/sysadmin"));
+        modules.add(new SystemAdminPages().rootURI("p/sysadmin"));
     }
 
+    @Override
+    protected Module standardPagesModule() {
+        return new SimplePagesModule();
+    }
 
     @Override
     protected Module viewModule() {
@@ -61,7 +64,7 @@ public class TestAppBindingsCollator extends CoreBindingsCollator {
 
     @Override
     protected Module uiModule() {
-        return new DefaultUIModule().uiClass(TestAppUI.class)
+        return new DefaultUIModule().uiClass(TestAppSimpleUI.class)
                 .applicationTitleKey(LabelKey.Krail_Test);
     }
 

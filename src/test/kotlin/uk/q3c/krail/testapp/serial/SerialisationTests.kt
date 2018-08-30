@@ -58,7 +58,7 @@ import uk.q3c.krail.i18n.test.MockCurrentLocale
 import uk.q3c.krail.option.OptionKey
 import uk.q3c.krail.service.ServiceKey
 import uk.q3c.krail.testapp.i18n.LabelKey
-import uk.q3c.krail.testapp.view.AutoForm
+import uk.q3c.krail.testapp.view.ManualForm
 import uk.q3c.krail.testapp.view.Person
 import uk.q3c.krail.testapp.view.TestAppBindingsCollator
 import uk.q3c.util.clazz.UnenhancedClassIdentifier
@@ -116,7 +116,7 @@ object SerialisationTest : Spek({
 
         on("constructing AutoForm and invoking loadData()") {
             val tracer = SerializationTracer()
-            val form = injector.getInstance(AutoForm::class.java)
+            val form = injector.getInstance(ManualForm::class.java)
             form.init()
             form.buildView(mockk())
             form.loadData(mockk())

@@ -25,6 +25,7 @@ import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.q3c.krail.core.i18n.CommonLabelKey;
 import uk.q3c.krail.core.i18n.LabelKey;
 import uk.q3c.krail.core.i18n.MessageKey;
 import uk.q3c.krail.core.option.OptionPopup;
@@ -41,7 +42,6 @@ import uk.q3c.krail.option.OptionChangeMessage;
 import uk.q3c.krail.option.OptionKey;
 import uk.q3c.krail.option.persist.OptionCache;
 import uk.q3c.krail.option.persist.OptionSource;
-import uk.q3c.krail.testapp.TestAppUI;
 import uk.q3c.krail.testapp.i18n.DescriptionKey;
 import uk.q3c.util.guice.SerializationSupport;
 
@@ -51,11 +51,11 @@ import javax.annotation.Nonnull;
 @Listener
 @SubscribeTo(GlobalMessageBus.class)
 public class NotificationsView extends ViewBase implements VaadinOptionContext {
-    private static final OptionKey<Boolean> errorButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, LabelKey.Error, MessageKey
+    private static final OptionKey<Boolean> errorButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, CommonLabelKey.Error, MessageKey
             .Button_is_Visible);
     private static final OptionKey<Boolean> infoButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, LabelKey.Information, MessageKey
             .Button_is_Visible);
-    private static final OptionKey<Boolean> warningButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, LabelKey.Warning, MessageKey
+    private static final OptionKey<Boolean> warningButtonVisible = new OptionKey<>(Boolean.TRUE, NotificationsView.class, CommonLabelKey.Warning, MessageKey
             .Button_is_Visible);
     private static Logger log = LoggerFactory.getLogger(NotificationsView.class);
     private final UserNotifier userNotifier;
@@ -131,7 +131,7 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
 
 
         uiOptionsButton = new Button("Show UI options");
-        uiOptionsButton.addClickListener(c -> optionPopup.popup((TestAppUI) UI.getCurrent(), LabelKey.Application_Options));
+        uiOptionsButton.addClickListener(c -> optionPopup.popup((VaadinOptionContext) UI.getCurrent(), LabelKey.Application_Options));
         uiOptionsButton.setWidth("100%");
         verticalLayout.addComponent(uiOptionsButton);
 

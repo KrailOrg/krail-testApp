@@ -16,13 +16,13 @@ package uk.q3c.krail.testapp.ui;
 import com.vaadin.server.UIClassSelectionEvent;
 import com.vaadin.ui.UI;
 import uk.q3c.krail.core.ui.ScopedUIProvider;
-import uk.q3c.krail.testapp.TestAppUI;
+import uk.q3c.krail.testapp.view.TestAppSimpleUI;
 
 public class TestAppUIProvider extends ScopedUIProvider {
 
     @Override
     public Class<? extends UI> getUIClass(UIClassSelectionEvent event) {
-        return TestAppUI.class;
+        return TestAppSimpleUI.class;
     }
 
 }

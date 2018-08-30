@@ -113,12 +113,12 @@ class JpaViewObject : AbstractViewObject() {
 
 class FormLayoutObject(id: String) : AbstractCustomObject(id)
 
-class AutoFormObject : AbstractViewObject() {
+class ManualFormObject : AbstractViewObject() {
 
     val validationMsg by Label()
     val validateButton by Button()
     val ageField by TextField()
-    val layout = FormLayoutObject("AutoForm-layout")
+    val layout = FormLayoutObject("ManualForm-layout")
 }
 
 class LocaleChangerObject : AbstractViewObject() {

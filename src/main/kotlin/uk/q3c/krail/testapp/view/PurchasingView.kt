@@ -11,22 +11,25 @@
  *
  */
 
-package uk.q3c.krail.testapp.view;
+package uk.q3c.krail.testapp.view
 
 
-import com.google.inject.Inject;
-import uk.q3c.krail.core.navigate.sitemap.View;
-import uk.q3c.krail.core.shiro.PageAccessControl;
-import uk.q3c.krail.i18n.Translate;
-import uk.q3c.krail.testapp.i18n.LabelKey;
-import uk.q3c.util.guice.SerializationSupport;
+import com.google.inject.Inject
+import com.vaadin.ui.Button
+import uk.q3c.krail.core.navigate.sitemap.View
+import uk.q3c.krail.core.shiro.PageAccessControl
+import uk.q3c.krail.i18n.Translate
+import uk.q3c.krail.testapp.i18n.LabelKey
+import uk.q3c.util.guice.SerializationSupport
 
 @View(uri = "private/finance/purchasing", pageAccessControl = PageAccessControl.PERMISSION, labelKeyName = "Purchasing")
-public class PurchasingView extends GridViewBase {
+class PurchasingView @Inject
+protected constructor(translate: Translate, serializationSupport: SerializationSupport) : GridViewBase(translate, serializationSupport) {
 
-    @Inject
-    protected PurchasingView(Translate translate, SerializationSupport serializationSupport) {
-        super(translate, serializationSupport);
-        nameKey = LabelKey.Purchasing;
+    private val button = Button("Generate an exception")
+
+    init {
+        nameKey = LabelKey.Purchasing
     }
+
 }

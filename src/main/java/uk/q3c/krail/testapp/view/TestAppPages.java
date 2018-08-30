@@ -13,20 +13,27 @@
 
 package uk.q3c.krail.testapp.view;
 
+import uk.q3c.krail.core.i18n.CommonLabelKey;
 import uk.q3c.krail.core.i18n.LabelKey;
 import uk.q3c.krail.core.navigate.sitemap.DirectSitemapModule;
 import uk.q3c.krail.core.shiro.PageAccessControl;
 
 public class TestAppPages extends DirectSitemapModule {
 
+    public TestAppPages() {
+        rootURI("p");
+    }
+
     @Override
     protected void define() {
         addEntry("notifications", LabelKey.Notifications, PageAccessControl.PUBLIC, NotificationsView.class);
         addEntry("widgetset", LabelKey.Message_Box, PageAccessControl.PUBLIC, WidgetsetView.class);
-        addEntry("notifications/push", LabelKey.Push, PageAccessControl.PUBLIC, PushView.class);
-        addEntry("form", uk.q3c.krail.testapp.i18n.LabelKey.Form, PageAccessControl.PUBLIC, AutoForm.class);
+        addEntry("notifications/push", CommonLabelKey.Push, PageAccessControl.PUBLIC, PushView.class);
+        addEntry("form", uk.q3c.krail.testapp.i18n.LabelKey.Form, PageAccessControl.PUBLIC, ManualForm.class);
         addEntry("locale", uk.q3c.krail.testapp.i18n.LabelKey.Locale, PageAccessControl.PUBLIC, LocaleChanger.class);
+        addEntry("help", CommonLabelKey.Help, PageAccessControl.PUBLIC, HelpView.class);
         addForm("person", uk.q3c.krail.testapp.i18n.LabelKey.Person, PageAccessControl.PUBLIC, PersonFormConfiguration.class);
+
     }
 
 }

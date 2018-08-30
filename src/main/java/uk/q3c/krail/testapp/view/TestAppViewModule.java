@@ -12,6 +12,7 @@
  */
 package uk.q3c.krail.testapp.view;
 
+import uk.q3c.krail.core.view.PrivateHomeView;
 import uk.q3c.krail.core.view.PublicHomeView;
 import uk.q3c.krail.core.view.ViewModule;
 
@@ -22,4 +23,9 @@ public class TestAppViewModule extends ViewModule {
         bind(PublicHomeView.class).to(TestAppPublicHomeView.class);
     }
 
+    @Override
+    protected void bindPrivateHomeView() {
+        bind(PrivateHomeView.class).to(TestAppPrivateHomeView.class);
+
+    }
 }
