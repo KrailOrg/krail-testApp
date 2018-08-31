@@ -2,7 +2,6 @@ package uk.q3c.krail.testapp.view
 
 import com.google.inject.Inject
 import com.vaadin.data.provider.ListDataProvider
-import com.vaadin.ui.InlineDateField
 import uk.q3c.krail.core.form.FieldType
 import uk.q3c.krail.core.form.FormConfiguration
 import uk.q3c.krail.core.form.StyleBorderless
@@ -37,7 +36,7 @@ class PersonFormConfiguration : FormConfiguration() {
                 .sampleDescriptionKey(PersonKey.Age)
                 .fieldOrder("title", "name", "age", "dob", "joinDate", "pricePlan", "roles")
                 .property("title").styleAttributes(size = StyleSize.huge).end()
-                .property("joinDate").componentClass(InlineDateField::class.java).caption(PersonKey.Join_Date).description(PersonKey.Join_Date).end()
+                .property("joinDate").caption(PersonKey.Join_Date).description(PersonKey.Join_Date).end()
                 .property("age").min(3).end()
                 .property("pricePlan").fieldType(FieldType.SINGLE_SELECT).selectDataProvider(PricePlanDataProvider::class.java).end()
                 .property("roles").fieldType(FieldType.MULTI_SELECT).selectDataProvider(RolesDataProvider::class.java).end()
