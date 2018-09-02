@@ -7,8 +7,6 @@
 @import "../../../VAADIN/addons/stepper/stepper.scss";
 /* Provided by spinkit-1.0.0.jar */
 @import "../../../VAADIN/addons/spinkit/spinkit.scss";
-/* Provided by gofullscreen-addon-0.6.1.jar */
-@import "../../../VAADIN/addons/gofullscreen/gofullscreen.scss";
 
 
 /* Import and include this mixin into your project theme to include the addon themes */
@@ -16,6 +14,5 @@
   @include stepper;
   @include stepper;
   @include spinkit;
-  @include gofullscreen;
 }
 

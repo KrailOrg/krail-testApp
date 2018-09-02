@@ -1,10 +1,6 @@
 package uk.q3c.krail.testapp
 
-import com.codeborne.selenide.Condition
-import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selenide
-import org.amshove.kluent.`should be`
-import org.amshove.kluent.shouldBe
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
@@ -14,7 +10,6 @@ import uk.q3c.krail.functest.ExecutionMode
 import uk.q3c.krail.functest.browser
 import uk.q3c.krail.functest.createBrowser
 import uk.q3c.krail.functest.executionMode
-import uk.q3c.krail.testapp.view.PushView
 import uk.q3c.krail.testapp.view.WidgetsetView
 
 object WidgetsetTest : Spek({
@@ -31,7 +26,7 @@ object WidgetsetTest : Spek({
         }
 
         on("entering page") {
-            val page = TestAppUIObject()
+            val page = SimpleUIObject()
             page.menu.select("Message Box")
             browser.viewShouldBe(WidgetsetView::class.java)
             browser.fragmentShouldBe("widgetset")

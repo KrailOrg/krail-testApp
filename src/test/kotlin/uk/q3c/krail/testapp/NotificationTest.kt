@@ -5,8 +5,13 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
-import uk.q3c.krail.functest.*
+import uk.q3c.krail.functest.ExecutionMode
 import uk.q3c.krail.functest.NotificationLevel.*
+import uk.q3c.krail.functest.browser
+import uk.q3c.krail.functest.createBrowser
+import uk.q3c.krail.functest.executionMode
+import uk.q3c.krail.functest.notificationShouldBeVisible
+import uk.q3c.krail.functest.notificationShouldNotBeVisible
 import uk.q3c.krail.testapp.view.NotificationsView
 import uk.q3c.krail.testapp.view.PushView
 
@@ -28,7 +33,7 @@ object NotificationTest : Spek({
         }
 
         on("click the fake error button") {
-            val page = TestAppUIObject()
+            val page = SimpleUIObject()
             page.menu.select("Notifications/Push")
             browser.viewShouldBe(PushView::class.java)
             page.breadcrumb.select(0)
@@ -48,7 +53,7 @@ object NotificationTest : Spek({
 
         on("click the fake warn button") {
             val view = NotificationsViewObject()
-            val page = TestAppUIObject()
+            val page = SimpleUIObject()
             view.warnButton.click()
 
             it("displays warning notification") {
@@ -61,7 +66,7 @@ object NotificationTest : Spek({
 
         on("click the fake info button") {
             val view = NotificationsViewObject()
-            val page = TestAppUIObject()
+            val page = SimpleUIObject()
             view.infoButton.click()
 
             it("displays info notification") {

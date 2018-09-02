@@ -186,6 +186,11 @@ class DefaultMessageBarObject(id: String) : AbstractCustomObject(id) {
     val display by Label()
 }
 
+class NavigationBarObject(id: String) : AbstractCustomObject(id) {
+
+    val display by Label()
+}
+
 
 class DefaultSubPagePanelObject(id: String) : AbstractCustomObject(id)
 
@@ -204,3 +209,16 @@ class TestAppUIObject : AbstractPageObject() {
     val newTab by Button()
 }
 
+class SimpleUIObject : AbstractPageObject() {
+    val topBar = NavigationBarObject("SimpleUI-topBar")
+    val titleLabel by Label()
+    val menuButton by Button()
+    val homeButton by Button()
+    val helpButton by Button()
+    val notificationsButton by Button()
+    val settingsButton by Button()
+    val login_logout_Button by Button()
+}
+
+
+//"Loading ..."

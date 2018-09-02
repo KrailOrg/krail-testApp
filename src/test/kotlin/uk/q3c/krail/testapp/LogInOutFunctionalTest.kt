@@ -26,7 +26,7 @@ object LogInOutFunctionalTest : Spek({
         }
 
         on("navigating to login page") {
-            val page = TestAppUIObject()
+            val page = SimpleUIObject()
             page.userStatus.login_logout_Button.click()
 
 
@@ -58,7 +58,7 @@ object LogInOutFunctionalTest : Spek({
         }
         on("entering valid credentials") {
             val view = DefaultLoginViewObject()
-            val page = TestAppUIObject()
+            val page = SimpleUIObject()
             view.username.setValue("ds")
             view.password.setValue("password")
             view.submit.click()
@@ -76,7 +76,7 @@ object LogInOutFunctionalTest : Spek({
 
         }
         on("logout") {
-            val page = TestAppUIObject()
+            val page = SimpleUIObject()
             page.userStatus.login_logout_Button.click()
 
 

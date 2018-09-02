@@ -25,6 +25,9 @@ class SelenideViewElement(override val id: String) : ViewElement
 class SelenidePageElement(override val id: String) : PageElement
 
 class SelenideBrowser : Browser {
+    override fun clickOnNavigationButton(urlSegment: String) {
+        SelenideButtonElement("navigationbutton-$urlSegment").click()
+    }
 
 
     private val log = LoggerFactory.getLogger(this.javaClass.name)
@@ -49,8 +52,8 @@ class SelenideBrowser : Browser {
     override fun navigateTo(fragment: String) {
         Selenide.open(fragment)
         // TODO - the condition and timeout for this need to be configurable
-        val pageStatusId = "#TestAppUI-pageStatus"
-        `$`(pageStatusId).waitUntil(Condition.exactTextCaseSensitive("Ready"), 30000L)
+        val pageStatusId = "#SimpleUI-topBar-titleLabel"
+        `$`(pageStatusId).waitUntil(Condition.not(Condition.exactTextCaseSensitive("Loading ...")), 30000L)
         //////////
         view = SelenideViewElement(routeMap.viewFor(fragment).viewId.id)
         page = SelenidePageElement(routeMap.uiFor(fragment).uiId.id)
@@ -125,6 +128,8 @@ class SelenideBrowser : Browser {
         `$`(newTab).click()
         waitForTabs(currentTabCount + 1, 4000)
     }
+
+
 }
 
 

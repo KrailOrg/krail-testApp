@@ -59,6 +59,8 @@ interface Browser {
     fun openNewTab() {
         TODO()
     }
+
+    fun clickOnNavigationButton(urlSegment: String)
 }
 
 

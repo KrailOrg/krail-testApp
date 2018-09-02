@@ -6,7 +6,12 @@ import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import uk.q3c.krail.core.view.DefaultLogoutView
-import uk.q3c.krail.functest.*
+import uk.q3c.krail.functest.ExecutionMode
+import uk.q3c.krail.functest.NotificationLevel
+import uk.q3c.krail.functest.browser
+import uk.q3c.krail.functest.createBrowser
+import uk.q3c.krail.functest.executionMode
+import uk.q3c.krail.functest.notificationShouldBeVisible
 
 
 object LogoutBackSecurity : Spek({
@@ -23,7 +28,7 @@ object LogoutBackSecurity : Spek({
         }
 
         on("login, move to private page, logout and try to navigate back to private page") {
-            val page = TestAppUIObject()
+            val page = SimpleUIObject()
             login(page)
             page.menu.select("Private/Finance/Accounts")
             browser.fragmentShouldBe("private/finance/accounts")
@@ -45,7 +50,7 @@ object LogoutBackSecurity : Spek({
     }
 })
 
-fun login(page: TestAppUIObject) {
+fun login(page: SimpleUIObject) {
     page.userStatus.login_logout_Button.click()
     browser.fragmentShouldBe("login")
     val view = DefaultLoginViewObject()
