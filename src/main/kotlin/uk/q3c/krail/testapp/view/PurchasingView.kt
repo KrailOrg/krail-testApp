@@ -22,7 +22,7 @@ import uk.q3c.krail.i18n.Translate
 import uk.q3c.krail.testapp.i18n.LabelKey
 import uk.q3c.util.guice.SerializationSupport
 
-@View(uri = "private/finance/purchasing", pageAccessControl = PageAccessControl.PERMISSION, labelKeyName = "Purchasing")
+@View(uri = "p/purchasing", pageAccessControl = PageAccessControl.PERMISSION, labelKeyName = "Purchasing")
 class PurchasingView @Inject
 protected constructor(translate: Translate, serializationSupport: SerializationSupport) : GridViewBase(translate, serializationSupport) {
 

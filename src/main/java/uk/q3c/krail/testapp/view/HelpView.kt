@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import com.vaadin.ui.Button
 import com.vaadin.ui.VerticalLayout
 import uk.q3c.krail.core.i18n.CommonLabelKey
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage
 import uk.q3c.krail.i18n.Translate
 import uk.q3c.util.guice.SerializationSupport
 
@@ -31,7 +30,7 @@ protected constructor(translate: Translate, serializationSupport: SerializationS
     private val button = Button("Generate an exception")
 
 
-    override fun doBuild(message: ViewChangeBusMessage) {
+    override fun doBuild() {
 
         button.addClickListener { throw IllegalStateException("Fake exception - generated for testing") }
         rootComponent = VerticalLayout(button)

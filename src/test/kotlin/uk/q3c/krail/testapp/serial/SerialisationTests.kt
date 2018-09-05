@@ -10,7 +10,6 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.MenuBar
 import com.vaadin.ui.Tree
 import com.vaadin.ui.UI
-import io.mockk.mockk
 import org.amshove.kluent.shouldBeEmpty
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
@@ -119,8 +118,8 @@ object SerialisationTest : Spek({
             val tracer = SerializationTracer()
             val form = injector.getInstance(ManualForm::class.java)
             form.init()
-            form.buildView(mockk())
-            form.loadData(mockk())
+            form.buildView()
+            form.loadData()
             tracer.trace(form)
 
             it("should not have any trace failures") {

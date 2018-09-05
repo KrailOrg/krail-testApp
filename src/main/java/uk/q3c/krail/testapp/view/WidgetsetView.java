@@ -26,9 +26,7 @@ import org.vaadin.risto.stepper.IntStepper;
 import org.vaadin.spinkit.Spinner;
 import org.vaadin.spinkit.shared.SpinnerType;
 import uk.q3c.krail.core.view.ViewBase;
-import uk.q3c.krail.core.view.component.AfterViewChangeBusMessage;
 import uk.q3c.krail.core.view.component.AssignComponentId;
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.Caption;
 import uk.q3c.krail.testapp.i18n.DescriptionKey;
@@ -59,7 +57,7 @@ public class WidgetsetView extends ViewBase {
 
 
     @Override
-    public void doBuild(ViewChangeBusMessage event) {
+    public void doBuild() {
         buttonPanel = new Panel();
         VerticalLayout verticalLayout = new VerticalLayout();
         buttonPanel.setContent(verticalLayout);
@@ -109,9 +107,9 @@ public class WidgetsetView extends ViewBase {
     }
 
     @Override
-    public void loadData(AfterViewChangeBusMessage busMessage) {
-        super.loadData(busMessage);
-        param1.setValue(busMessage.getToState().getParameters().get("id"));
-        param2.setValue(busMessage.getToState().getParameters().get("age"));
+    public void loadData() {
+        super.loadData();
+        param1.setValue(navigationStateExt.getTo().getParameters().get("id"));
+        param2.setValue(navigationStateExt.getTo().getParameters().get("age"));
     }
 }

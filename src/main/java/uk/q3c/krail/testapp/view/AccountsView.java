@@ -22,7 +22,6 @@ import uk.q3c.krail.core.shiro.SubjectProvider;
 import uk.q3c.krail.core.user.notify.UserNotifier;
 import uk.q3c.krail.core.vaadin.ID;
 import uk.q3c.krail.core.view.Grid3x3ViewBase;
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.util.guice.SerializationSupport;
@@ -49,8 +48,8 @@ public class AccountsView extends Grid3x3ViewBase {
     }
 
     @Override
-    protected void doBuild(ViewChangeBusMessage busMessage) {
-        super.doBuild(busMessage);
+    protected void doBuild() {
+        super.doBuild();
 
 
         Button shiroPermissionsFailButton = new Button("shiro permissions fail");

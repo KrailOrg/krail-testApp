@@ -61,6 +61,7 @@ interface Browser {
     }
 
     fun clickOnNavigationButton(urlSegment: String)
+    fun clickOnNavigationButton(urlSegment: String, expectedFragment: String)
 }
 
 

@@ -16,7 +16,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
 import uk.q3c.krail.core.view.ViewBase;
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.util.guice.SerializationSupport;
 
@@ -34,7 +33,7 @@ public abstract class ViewBaseGrid extends ViewBase {
     }
 
     @Override
-    public void doBuild(ViewChangeBusMessage busMessage) {
+    public void doBuild() {
         GridLayout grid = new GridLayout(3, 4);
         Panel topMarginPanel = new Panel();
         topMarginPanel.setHeight(topMargin + "px");

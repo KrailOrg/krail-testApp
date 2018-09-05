@@ -3,27 +3,17 @@ package uk.q3c.krail.testapp
 import uk.q3c.krail.functest.AbstractCustomObject
 import uk.q3c.krail.functest.AbstractPageObject
 import uk.q3c.krail.functest.AbstractViewObject
-import uk.q3c.krail.functest.Breadcrumb
 import uk.q3c.krail.functest.Button
 import uk.q3c.krail.functest.CheckBox
-import uk.q3c.krail.functest.ComboBox
-import uk.q3c.krail.functest.Grid
-import uk.q3c.krail.functest.Image
 import uk.q3c.krail.functest.Label
-import uk.q3c.krail.functest.MenuBar
 import uk.q3c.krail.functest.PasswordField
 import uk.q3c.krail.functest.Spinner
 import uk.q3c.krail.functest.TextArea
 import uk.q3c.krail.functest.TextField
-import uk.q3c.krail.functest.Tree
 
-class TestAppPublicHomeViewObject : AbstractViewObject() {
-
-    val label by Label()
-}
+class TestAppPublicHomeViewObject : AbstractViewObject()
 
 class DefaultLoginViewObject : AbstractViewObject() {
-
     val label by Label()
     val username by TextField()
     val statusMessage by Label()
@@ -33,10 +23,9 @@ class DefaultLoginViewObject : AbstractViewObject() {
 
 class DefaultLogoutViewObject : AbstractViewObject()
 
-class DefaultSystemAccountViewObject : AbstractViewObject() {
+class TestAppPrivateHomeViewObject : AbstractViewObject()
 
-    val label by Label()
-}
+class DefaultNavigationViewObject : AbstractViewObject()
 
 class DefaultRequestSystemAccountCreateViewObject : AbstractViewObject() {
 
@@ -74,16 +63,16 @@ class NotificationsViewObject : AbstractViewObject() {
     val viewOptionsButton by Button()
 }
 
-class IntStepperObject(id: String) : AbstractCustomObject(id)
-
 class SpinnerObject(id: String) : AbstractCustomObject(id)
+
+class IntStepperObject(id: String) : AbstractCustomObject(id)
 
 class WidgetsetViewObject : AbstractViewObject() {
 
+    val spinner by Spinner() //= SpinnerObject ("WidgetsetView-spinner")
     val stepper = IntStepperObject("WidgetsetView-stepper")
-    val spinner by Spinner()
-    val changeSpinnerType by Button()
     val infoArea by Label()
+    val changeSpinnerType by Button()
     val param2 by Label()
     val param1 by Label()
 }
@@ -98,27 +87,16 @@ class PushViewObject : AbstractViewObject() {
     val infoArea by Label()
 }
 
-class JpaViewObject : AbstractViewObject() {
-
-    val countLabelFromContainer1 by Label()
-    val countLabelFromContainer2 by Label()
-    val saveBtn1 by Button()
-    val saveBtn2 by Button()
-    val saveBtn3 by Button()
-    val table1 by Grid()
-    val table2 by Grid()
-    val countLabelFromDao1 by Label()
-    val countLabelFromDao2 by Label()
-}
-
 class FormLayoutObject(id: String) : AbstractCustomObject(id)
 
 class ManualFormObject : AbstractViewObject() {
 
+    val nameField by TextField()
+    val ageField by TextField()
     val validationMsg by Label()
     val validateButton by Button()
-    val ageField by TextField()
     val layout = FormLayoutObject("ManualForm-layout")
+    val titleField by TextField()
 }
 
 class LocaleChangerObject : AbstractViewObject() {
@@ -129,10 +107,12 @@ class LocaleChangerObject : AbstractViewObject() {
     val layout = FormLayoutObject("LocaleChanger-layout")
 }
 
-class DefaultPrivateHomeViewObject : AbstractViewObject() {
+class HelpViewObject : AbstractViewObject() {
 
-    val label by Label()
+    val button by Button()
 }
+
+class DefaultFormObject : AbstractViewObject()
 
 class FinanceViewObject : AbstractViewObject()
 
@@ -149,12 +129,7 @@ class PayrollViewObject : AbstractViewObject() {
     val clearOptionDatabaseButton by Button()
 }
 
-class PurchasingViewObject : AbstractViewObject()
-
-class SystemAdminViewObject : AbstractViewObject() {
-
-    val buildReportBtn by Button()
-}
+class SystemAdminViewObject : AbstractViewObject()
 
 class SitemapReportViewObject : AbstractViewObject() {
 
@@ -170,55 +145,24 @@ class I18NViewObject : AbstractViewObject() {
     val exportStatus by Label()
 }
 
-class DefaultUserStatusPanelObject(id: String) : AbstractCustomObject(id) {
+class PurchasingViewObject : AbstractViewObject() {
 
-    val login_logout_Button by Button()
-    val usernameLabel by Label()
-}
-
-class DefaultApplicationHeaderObject(id: String) : AbstractCustomObject(id) {
-
-    val label by Label()
-}
-
-class DefaultMessageBarObject(id: String) : AbstractCustomObject(id) {
-
-    val display by Label()
+    val button by Button()
 }
 
 class NavigationBarObject(id: String) : AbstractCustomObject(id) {
 
-    val display by Label()
-}
-
-
-class DefaultSubPagePanelObject(id: String) : AbstractCustomObject(id)
-
-class TestAppUIObject : AbstractPageObject() {
-
-    val logo by Image()
-    val navTree by Tree()
-    val userStatus = DefaultUserStatusPanelObject("TestAppUI-userStatus")
-    val header = DefaultApplicationHeaderObject("TestAppUI-header")
-    val messageBar = DefaultMessageBarObject("TestAppUI-messageBar")
-    val localeCombo by ComboBox()
-    val menu by MenuBar()
-    val breadcrumb by Breadcrumb()
-    val subpage = DefaultSubPagePanelObject("TestAppUI-subpage")
-    val pageStatus by Label()
-    val newTab by Button()
-}
-
-class SimpleUIObject : AbstractPageObject() {
-    val topBar = NavigationBarObject("SimpleUI-topBar")
-    val titleLabel by Label()
     val menuButton by Button()
-    val homeButton by Button()
-    val helpButton by Button()
-    val notificationsButton by Button()
+    val titleLabel by Label()
     val settingsButton by Button()
     val login_logout_Button by Button()
+    val helpButton by Button()
+    val homeButton by Button()
+    val notificationsButton by Button()
 }
 
+class TestAppSimpleUIObject : AbstractPageObject() {
 
-//"Loading ..."
+    val topBar = NavigationBarObject("TestAppSimpleUI-topBar")
+}
+

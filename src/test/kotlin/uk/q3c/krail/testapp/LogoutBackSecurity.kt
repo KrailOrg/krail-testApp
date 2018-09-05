@@ -28,7 +28,7 @@ object LogoutBackSecurity : Spek({
         }
 
         on("login, move to private page, logout and try to navigate back to private page") {
-            val page = SimpleUIObject()
+            val page = TestAppSimpleUIObject()
             login(page)
             page.menu.select("Private/Finance/Accounts")
             browser.fragmentShouldBe("private/finance/accounts")
@@ -50,9 +50,9 @@ object LogoutBackSecurity : Spek({
     }
 })
 
-fun login(page: SimpleUIObject) {
-    page.userStatus.login_logout_Button.click()
-    browser.fragmentShouldBe("login")
+fun login(page: TestAppSimpleUIObject) {
+    page.topBar.login_logout_Button.click()
+    browser.fragmentShouldBe(login)
     val view = DefaultLoginViewObject()
     view.username.setValue("ds")
     view.password.setValue("password")

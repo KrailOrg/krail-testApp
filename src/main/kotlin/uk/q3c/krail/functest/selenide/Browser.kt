@@ -25,6 +25,11 @@ class SelenideViewElement(override val id: String) : ViewElement
 class SelenidePageElement(override val id: String) : PageElement
 
 class SelenideBrowser : Browser {
+    override fun clickOnNavigationButton(urlSegment: String, expectedFragment: String) {
+        clickOnNavigationButton(urlSegment)
+        fragmentShouldBe(expectedFragment)
+    }
+
     override fun clickOnNavigationButton(urlSegment: String) {
         SelenideButtonElement("navigationbutton-$urlSegment").click()
     }
@@ -78,7 +83,7 @@ class SelenideBrowser : Browser {
         val routeMapFile = File(resourcesDir, "routeMap.json")
         log.info("Reading RouteMap from ${routeMapFile.absolutePath}")
         routeMap = routeMapFromJson(routeMapFile)
-        navigateTo("home")
+        navigateTo("p")
     }
 
 

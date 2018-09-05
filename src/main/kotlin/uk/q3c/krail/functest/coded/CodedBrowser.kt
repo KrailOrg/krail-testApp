@@ -55,6 +55,10 @@ import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 
 class CodedBrowser : Browser {
+    override fun clickOnNavigationButton(urlSegment: String, expectedFragment: String) {
+        TODO()
+    }
+
     override fun clickOnNavigationButton(urlSegment: String) {
         TODO()
     }
@@ -111,7 +115,7 @@ class CodedBrowser : Browser {
         ui.page.location = URI.create("http://localhost:8080/krail-testapp/#home")
         setup = true
         log.debug("setup complete")
-        navigateTo("home")
+        navigateTo("p")
     }
 
     override fun forward() {

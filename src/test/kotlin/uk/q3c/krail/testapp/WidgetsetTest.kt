@@ -26,10 +26,9 @@ object WidgetsetTest : Spek({
         }
 
         on("entering page") {
-            val page = SimpleUIObject()
-            page.menu.select("Message Box")
+
+            browser.navigateTo(widgetset)
             browser.viewShouldBe(WidgetsetView::class.java)
-            browser.fragmentShouldBe("widgetset")
 
             val view = WidgetsetViewObject()
 
@@ -40,7 +39,7 @@ object WidgetsetTest : Spek({
         }
 
         on("click on change spinner type button") {
-            browser.fragmentShouldBe("widgetset")
+            browser.navigateTo(widgetset)
             val view = WidgetsetViewObject()
             view.changeSpinnerType.click()
 

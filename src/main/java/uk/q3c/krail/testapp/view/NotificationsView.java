@@ -33,7 +33,6 @@ import uk.q3c.krail.core.option.VaadinOptionContext;
 import uk.q3c.krail.core.user.notify.UserNotifier;
 import uk.q3c.krail.core.view.ViewBase;
 import uk.q3c.krail.core.view.component.AssignComponentId;
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.eventbus.GlobalMessageBus;
 import uk.q3c.krail.eventbus.SubscribeTo;
 import uk.q3c.krail.i18n.Translate;
@@ -91,7 +90,7 @@ public class NotificationsView extends ViewBase implements VaadinOptionContext {
 
 
     @Override
-    public void doBuild(ViewChangeBusMessage busMessage) {
+    public void doBuild() {
         buttonPanel = new Panel();
         VerticalLayout verticalLayout = new VerticalLayout();
         buttonPanel.setContent(verticalLayout);

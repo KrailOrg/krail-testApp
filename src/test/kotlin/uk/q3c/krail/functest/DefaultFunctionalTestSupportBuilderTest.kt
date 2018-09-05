@@ -52,7 +52,6 @@ import uk.q3c.krail.core.view.ViewFactory
 import uk.q3c.krail.core.view.component.ComponentIdEntry
 import uk.q3c.krail.core.view.component.ComponentIdGenerator
 import uk.q3c.krail.core.view.component.DefaultComponentIdGenerator
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage
 import uk.q3c.krail.i18n.CurrentLocale
 import uk.q3c.krail.i18n.Translate
 import uk.q3c.krail.option.Option
@@ -218,7 +217,7 @@ class IdGeneratorModule : AbstractModule() {
 class SimpleView @Inject constructor(translate: Translate, serializationSupport: SerializationSupport) : ViewBase(translate, serializationSupport) {
     lateinit var label: Label
     lateinit var custom: TestCustomComponent
-    override fun doBuild(busMessage: ViewChangeBusMessage?) {
+    override fun doBuild() {
         label = Label("boo")
         custom = TestCustomComponent()
     }
@@ -226,7 +225,7 @@ class SimpleView @Inject constructor(translate: Translate, serializationSupport:
 
 class AnotherSimpleView @Inject constructor(translate: Translate, serializationSupport: SerializationSupport) : ViewBase(translate, serializationSupport) {
     lateinit var button: Button
-    override fun doBuild(busMessage: ViewChangeBusMessage?) {
+    override fun doBuild() {
         button = Button("boo button")
     }
 }

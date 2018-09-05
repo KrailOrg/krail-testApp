@@ -10,8 +10,6 @@ import com.vaadin.ui.TextField
 import uk.q3c.krail.core.form.KrailBeanValidationBinder
 import uk.q3c.krail.core.form.KrailBeanValidationBinderFactory
 import uk.q3c.krail.core.view.ViewBase
-import uk.q3c.krail.core.view.component.AfterViewChangeBusMessage
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage
 import uk.q3c.krail.i18n.Translate
 import uk.q3c.krail.testapp.i18n.Caption
 import uk.q3c.krail.testapp.i18n.DescriptionKey
@@ -43,7 +41,7 @@ protected constructor(translate: Translate, serialisationSupport: SerializationS
         serializationSupport.excludedFieldNames = ImmutableList.of("binder")
     }
 
-    override fun doBuild(busMessage: ViewChangeBusMessage) {
+    override fun doBuild() {
         rootComponent = layout
         layout.addComponent(titleField)
         layout.addComponent(nameField)
@@ -75,11 +73,11 @@ protected constructor(translate: Translate, serialisationSupport: SerializationS
 
         binder.bind(titleField, "title")
         binder.bind(nameField, "name")
-        binder.forField(ageField).withConverter(StringToIntegerConverter("Rubbish error message"))
+        binder.forField(ageField).withConverter(StringToIntegerConverter(0, "Rubbish error message"))
                 .bind("age")
     }
 
-    override fun loadData(busMessage: AfterViewChangeBusMessage?) {
+    override fun loadData() {
         checkBinder()
         binder.bean = Person(title = "Dr", name = "Who", age = 12)
     }

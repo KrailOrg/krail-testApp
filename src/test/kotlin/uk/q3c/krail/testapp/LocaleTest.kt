@@ -26,11 +26,11 @@ class LocaleAndValidationTest : Spek({
         }
 
         on("opening the page") {
-            browser.clickOnNavigationButton("locale")
+            browser.clickOnNavigationButton("locale", "p/locale")
 
             it("should default locale to Locale.UK") {
                 browser.viewShouldBe(LocaleChanger::class.java)
-                browser.fragmentShouldBe("locale")
+                browser.fragmentShouldBe("p/locale")
                 val view = LocaleChangerObject()
                 view.changeToUK.click()
                 view.currentLocale.valueShouldBe("en-GB")
@@ -39,8 +39,7 @@ class LocaleAndValidationTest : Spek({
 
         on("going to validated page") {
             browser.back()
-            browser.clickOnNavigationButton("form")
-            browser.fragmentShouldBe("form")
+            browser.clickOnNavigationButton("form", "p/form")
             val view = ManualFormObject()
 
             view.validateButton.click()
@@ -52,7 +51,7 @@ class LocaleAndValidationTest : Spek({
 
 
         on("entering invalid data") {
-            browser.fragmentShouldBe("form")
+            browser.fragmentShouldBe("p/form")
             val view = ManualFormObject()
             view.ageField.sendBackspace(2)
             view.ageField.sendValue("13")
@@ -64,23 +63,27 @@ class LocaleAndValidationTest : Spek({
         }
 
         on("changing language") {
-            browser.navigateTo("locale")
+            browser.navigateTo("p/locale")
             val view = LocaleChangerObject()
             view.changeToGerman.click()
 
             it("should change translated elements to German") {
                 view.currentLocale.valueShouldBe("de-DE")
-                val page = SimpleUIObject()
-                page.titleLabel.valueShouldBe("unbenannt")
+                val page = TestAppSimpleUIObject()
+                page.topBar.titleLabel.valueShouldBe("unbenannt")
 
             }
         }
 
 
         on("checking validation message") {
-            val page = SimpleUIObject()
-            page.homeButton.click()
-            browser.clickOnNavigationButton("form")
+            val page = TestAppSimpleUIObject()
+            page.topBar.homeButton.click()
+            browser.navigateTo("p/locale")
+            val localeView = LocaleChangerObject()
+            localeView.changeToGerman.click()
+
+            browser.navigateTo("p/form")
             val view = ManualFormObject()
             view.ageField.sendBackspace(2)
             view.ageField.sendValue("13")

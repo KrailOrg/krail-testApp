@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.q3c.krail.core.option.VaadinOptionContext;
 import uk.q3c.krail.core.view.Grid3x3ViewBase;
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.eventbus.GlobalMessageBus;
 import uk.q3c.krail.eventbus.SubscribeTo;
 import uk.q3c.krail.i18n.Translate;
@@ -87,8 +86,8 @@ public class PayrollView extends Grid3x3ViewBase implements VaadinOptionContext 
     }
 
     @Override
-    protected void doBuild(ViewChangeBusMessage busMessage) {
-        super.doBuild(busMessage);
+    protected void doBuild() {
+        super.doBuild();
         adminButton = new Button();
         adminButton.addClickListener(click -> setSystemLevel());
         setTopLeft(adminButton);

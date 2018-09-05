@@ -11,6 +11,7 @@ import uk.q3c.krail.core.shiro.DefaultShiroModule;
 import uk.q3c.krail.core.shiro.aop.KrailShiroAopModule;
 import uk.q3c.krail.core.sysadmin.SystemAdminPages;
 import uk.q3c.krail.core.ui.DefaultUIModule;
+import uk.q3c.krail.functest.FunctionalTestSupportModule;
 import uk.q3c.krail.testapp.TestAppServletModule;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.krail.testapp.uac.TestAppRealm;
@@ -39,6 +40,7 @@ public class TestAppBindingsCollator extends CoreBindingsCollator {
         modules.add(new FinancePages());
         modules.add(new AnnotationPagesModule());
         modules.add(new SystemAdminPages().rootURI("p/sysadmin"));
+        modules.add(new FunctionalTestSupportModule());
     }
 
     @Override

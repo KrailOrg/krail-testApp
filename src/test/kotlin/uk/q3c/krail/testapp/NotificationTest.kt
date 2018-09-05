@@ -13,7 +13,6 @@ import uk.q3c.krail.functest.executionMode
 import uk.q3c.krail.functest.notificationShouldBeVisible
 import uk.q3c.krail.functest.notificationShouldNotBeVisible
 import uk.q3c.krail.testapp.view.NotificationsView
-import uk.q3c.krail.testapp.view.PushView
 
 /**
  * Created by David Sowerby on 10 Feb 2018
@@ -33,12 +32,8 @@ object NotificationTest : Spek({
         }
 
         on("click the fake error button") {
-            val page = SimpleUIObject()
-            page.menu.select("Notifications/Push")
-            browser.viewShouldBe(PushView::class.java)
-            page.breadcrumb.select(0)
+            browser.navigateTo(notifications)
             browser.viewShouldBe(NotificationsView::class.java)
-            browser.fragmentShouldBe("notifications")
             val view = NotificationsViewObject()
 
             view.errorButton.click()
@@ -47,33 +42,28 @@ object NotificationTest : Spek({
 
                 notificationShouldBeVisible(ERROR, msg)
                 notificationShouldNotBeVisible()
-                page.messageBar.display.valueShouldBe("ERROR: $msg")
             }
         }
 
         on("click the fake warn button") {
             val view = NotificationsViewObject()
-            val page = SimpleUIObject()
             view.warnButton.click()
 
             it("displays warning notification") {
 
                 notificationShouldBeVisible(WARNING, "You cannot use service Fake Service until it has been started")
                 notificationShouldNotBeVisible()
-                page.messageBar.display.valueShouldBe("Warning: $msg")
             }
         }
 
         on("click the fake info button") {
             val view = NotificationsViewObject()
-            val page = SimpleUIObject()
             view.infoButton.click()
 
             it("displays info notification") {
 
                 notificationShouldBeVisible(INFORMATION, "You cannot use service Fake Service until it has been started")
                 notificationShouldNotBeVisible()
-                page.messageBar.display.valueShouldBe(msg)
             }
         }
     }

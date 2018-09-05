@@ -17,7 +17,6 @@ import com.google.inject.Inject;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import uk.q3c.krail.core.view.ViewBase;
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.util.guice.SerializationSupport;
 
@@ -29,7 +28,7 @@ public class GridViewBase extends ViewBase {
     }
 
     @Override
-    protected void doBuild(ViewChangeBusMessage busMessage) {
+    protected void doBuild() {
         Label label = new Label("This is the " + this.getClass()
                                                      .getSimpleName());
         label.setHeight("100px");

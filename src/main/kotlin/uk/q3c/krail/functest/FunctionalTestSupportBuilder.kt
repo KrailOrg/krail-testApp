@@ -10,9 +10,10 @@ import uk.q3c.krail.core.ConfigurationException
 import uk.q3c.krail.core.navigate.NavigationState
 import uk.q3c.krail.core.navigate.sitemap.MasterSitemap
 import uk.q3c.krail.core.navigate.sitemap.SitemapService
+import uk.q3c.krail.core.navigate.sitemap.UserSitemapNode
 import uk.q3c.krail.core.ui.ScopedUI
+import uk.q3c.krail.core.view.NavigationStateExt
 import uk.q3c.krail.core.view.ViewFactory
-import uk.q3c.krail.core.view.component.AfterViewChangeBusMessage
 import uk.q3c.krail.core.view.component.ComponentIdEntry
 import uk.q3c.krail.core.view.component.ComponentIdGenerator
 import uk.q3c.util.clazz.UnenhancedClassIdentifier
@@ -68,23 +69,23 @@ class DefaultFunctionalTestSupportBuilder @Inject constructor(
         val uis: MutableMap<UIIdEntry, MutableGraph<ComponentIdEntry>> = mutableMapOf()
         uis[uiIdEntry] = uiGraph
 
-        masterSitemap.allNodes.forEach({ node ->
-            if (node.viewClass != null) {
-                val view = viewFactory.get(node.viewClass)
-                view.buildView(AfterViewChangeBusMessage(NavigationState(), NavigationState()))
-                val graph = componentIdGenerator.generateAndApply(view)
-                val route = masterSitemap.uri(node)
-                val viewName = realClassNameIdentifier.getOriginalClassFor(view).simpleName
-                val viewId = ComponentIdEntry(name = viewName, id = viewName, type = viewName, baseComponent = false)
-                val viewEntry = ViewIdEntry(viewId = viewId)
-                val entry = RouteIdEntry(route = route, uiId = uiIdEntry, viewId = viewEntry)
-                routes.map[route] = entry
-                views[viewEntry] = graph
-            } else {
-                log.debug("entry for route '${masterSitemap.uri(node)}' not created, because no view is defined for it")
-            }
+        masterSitemap.allNodes.forEach { node ->
+            val view = viewFactory.get(node.viewClass)
+            val userNode = UserSitemapNode(node)
+            val navigationStateExt = NavigationStateExt(NavigationState(), NavigationState(), userNode)
+            view.beforeBuild(navigationStateExt)
+            view.buildView()
+            val graph = componentIdGenerator.generateAndApply(view)
+            val route = masterSitemap.uri(node)
+            val viewName = realClassNameIdentifier.getOriginalClassFor(view).simpleName
+            val viewId = ComponentIdEntry(name = viewName, id = viewName, type = viewName, baseComponent = false)
+            val viewEntry = ViewIdEntry(viewId = viewId)
+            val entry = RouteIdEntry(route = route, uiId = uiIdEntry, viewId = viewEntry)
+            routes.map[route] = entry
+            views[viewEntry] = graph
 
-        })
+
+        }
         return FunctionalTestSupport(routes, uis, views)
     }
 }

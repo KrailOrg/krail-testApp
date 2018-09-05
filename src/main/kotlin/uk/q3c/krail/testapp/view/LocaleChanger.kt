@@ -8,7 +8,6 @@ import net.engio.mbassy.listener.Handler
 import net.engio.mbassy.listener.Listener
 import uk.q3c.krail.core.eventbus.SessionBus
 import uk.q3c.krail.core.view.ViewBase
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage
 import uk.q3c.krail.eventbus.SubscribeTo
 import uk.q3c.krail.i18n.CurrentLocale
 import uk.q3c.krail.i18n.LocaleChangeBusMessage
@@ -34,7 +33,7 @@ class LocaleChanger @Inject constructor(val locale: CurrentLocale, translate: Tr
 
     var layout = FormLayout()
 
-    override fun doBuild(busMessage: ViewChangeBusMessage) {
+    override fun doBuild() {
         layout = FormLayout()
         rootComponent = layout
         changeToUK = Button()

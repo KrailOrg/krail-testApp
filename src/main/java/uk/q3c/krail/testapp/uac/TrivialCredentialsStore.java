@@ -23,9 +23,9 @@ public class TrivialCredentialsStore {
 
     @Inject
     protected TrivialCredentialsStore() {
-        addAccount("eq", "eq", "hero", "page:view:private:*", "option:edit:SimpleUserHierarchy:eq:0:*:*", "pay:request-increase");
-        addAccount("fb", "fb", "villain", "page:view:private:*", "page:view:finance:*", "option:edit:SimpleUserHierarchy:fb:0:*:*");
-        addAccount("ds", "password", "hero", "page:view:private:*", "page:view:finance:*", "option:edit:SimpleUserHierarchy:ds:0:*:*");
+        addAccount("eq", "eq", "hero", "page:view:p/finance/accounts:*", "option:edit:SimpleUserHierarchy:eq:0:*:*", "pay:request-increase");
+        addAccount("fb", "fb", "villain", "page:view:p/finance:*", "option:edit:SimpleUserHierarchy:fb:0:*:*");
+        addAccount("ds", "password", "hero", "page:view:p/finance:*", "option:edit:SimpleUserHierarchy:ds:0:*:*");
         addAccount("admin", "password", "superhero", "page:view:*", "option:edit:*");
     }
 

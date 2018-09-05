@@ -1,13 +1,13 @@
 {
   "version": 1,
   "map": {
-    "home": {
-      "route": "home",
+    "p": {
+      "route": "p",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -20,13 +20,13 @@
         }
       }
     },
-    "login": {
-      "route": "login",
+    "p/login": {
+      "route": "p/login",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -39,13 +39,13 @@
         }
       }
     },
-    "logout": {
-      "route": "logout",
+    "p/logout": {
+      "route": "p/logout",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -58,32 +58,51 @@
         }
       }
     },
-    "system-account": {
-      "route": "system-account",
+    "p/private": {
+      "route": "p/private",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
       "viewId": {
         "viewId": {
-          "name": "DefaultSystemAccountView",
-          "id": "DefaultSystemAccountView",
-          "type": "DefaultSystemAccountView",
+          "name": "TestAppPrivateHomeView",
+          "id": "TestAppPrivateHomeView",
+          "type": "TestAppPrivateHomeView",
           "baseComponent": false
         }
       }
     },
-    "system-account/request-account": {
-      "route": "system-account/request-account",
+    "p/system-account": {
+      "route": "p/system-account",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultNavigationView",
+          "id": "DefaultNavigationView",
+          "type": "DefaultNavigationView",
+          "baseComponent": false
+        }
+      }
+    },
+    "p/system-account/request-account": {
+      "route": "p/system-account/request-account",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -96,13 +115,13 @@
         }
       }
     },
-    "system-account/enable-account": {
-      "route": "system-account/enable-account",
+    "p/system-account/enable-account": {
+      "route": "p/system-account/enable-account",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -115,13 +134,13 @@
         }
       }
     },
-    "system-account/refresh-account": {
-      "route": "system-account/refresh-account",
+    "p/system-account/refresh-account": {
+      "route": "p/system-account/refresh-account",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -134,13 +153,13 @@
         }
       }
     },
-    "system-account/reset-account": {
-      "route": "system-account/reset-account",
+    "p/system-account/reset-account": {
+      "route": "p/system-account/reset-account",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -153,13 +172,13 @@
         }
       }
     },
-    "system-account/unlock-account": {
-      "route": "system-account/unlock-account",
+    "p/system-account/unlock-account": {
+      "route": "p/system-account/unlock-account",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -172,13 +191,13 @@
         }
       }
     },
-    "notifications": {
-      "route": "notifications",
+    "p/notifications": {
+      "route": "p/notifications",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -191,13 +210,13 @@
         }
       }
     },
-    "widgetset": {
-      "route": "widgetset",
+    "p/widgetset": {
+      "route": "p/widgetset",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -210,13 +229,13 @@
         }
       }
     },
-    "notifications/push": {
-      "route": "notifications/push",
+    "p/notifications/push": {
+      "route": "p/notifications/push",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -229,51 +248,32 @@
         }
       }
     },
-    "jpa": {
-      "route": "jpa",
+    "p/form": {
+      "route": "p/form",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
       "viewId": {
         "viewId": {
-          "name": "JpaView",
-          "id": "JpaView",
-          "type": "JpaView",
+          "name": "ManualForm",
+          "id": "ManualForm",
+          "type": "ManualForm",
           "baseComponent": false
         }
       }
     },
-    "form": {
-      "route": "form",
+    "p/locale": {
+      "route": "p/locale",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
-          "baseComponent": false
-        }
-      },
-      "viewId": {
-        "viewId": {
-          "name": "AutoForm",
-          "id": "AutoForm",
-          "type": "AutoForm",
-          "baseComponent": false
-        }
-      }
-    },
-    "locale": {
-      "route": "locale",
-      "uiId": {
-        "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -286,32 +286,51 @@
         }
       }
     },
-    "private/home": {
-      "route": "private/home",
+    "p/help": {
+      "route": "p/help",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
       "viewId": {
         "viewId": {
-          "name": "DefaultPrivateHomeView",
-          "id": "DefaultPrivateHomeView",
-          "type": "DefaultPrivateHomeView",
+          "name": "HelpView",
+          "id": "HelpView",
+          "type": "HelpView",
           "baseComponent": false
         }
       }
     },
-    "private/finance": {
-      "route": "private/finance",
+    "p/person": {
+      "route": "p/person",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultForm",
+          "id": "DefaultForm",
+          "type": "DefaultForm",
+          "baseComponent": false
+        }
+      }
+    },
+    "p/finance": {
+      "route": "p/finance",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -324,13 +343,13 @@
         }
       }
     },
-    "private/finance/accounts": {
-      "route": "private/finance/accounts",
+    "p/finance/accounts": {
+      "route": "p/finance/accounts",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -343,13 +362,13 @@
         }
       }
     },
-    "private/finance/payroll": {
-      "route": "private/finance/payroll",
+    "p/finance/payroll": {
+      "route": "p/finance/payroll",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -362,32 +381,13 @@
         }
       }
     },
-    "private/finance/purchasing": {
-      "route": "private/finance/purchasing",
+    "p/sysadmin": {
+      "route": "p/sysadmin",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
-          "baseComponent": false
-        }
-      },
-      "viewId": {
-        "viewId": {
-          "name": "PurchasingView",
-          "id": "PurchasingView",
-          "type": "PurchasingView",
-          "baseComponent": false
-        }
-      }
-    },
-    "private/sysadmin": {
-      "route": "private/sysadmin",
-      "uiId": {
-        "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -400,13 +400,13 @@
         }
       }
     },
-    "private/sysadmin/sitemap-build-report": {
-      "route": "private/sysadmin/sitemap-build-report",
+    "p/sysadmin/sitemap-build-report": {
+      "route": "p/sysadmin/sitemap-build-report",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -419,13 +419,13 @@
         }
       }
     },
-    "private/sysadmin/entity": {
-      "route": "private/sysadmin/entity",
+    "p/sysadmin/entity": {
+      "route": "p/sysadmin/entity",
       "uiId": {
         "uiId": {
-          "name": "TestAppUI",
-          "id": "TestAppUI",
-          "type": "TestAppUI",
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
           "baseComponent": false
         }
       },
@@ -434,6 +434,63 @@
           "name": "I18NView",
           "id": "I18NView",
           "type": "I18NView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private": {
+      "route": "private",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultNavigationView",
+          "id": "DefaultNavigationView",
+          "type": "DefaultNavigationView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private/finance": {
+      "route": "private/finance",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "DefaultNavigationView",
+          "id": "DefaultNavigationView",
+          "type": "DefaultNavigationView",
+          "baseComponent": false
+        }
+      }
+    },
+    "private/finance/purchasing": {
+      "route": "private/finance/purchasing",
+      "uiId": {
+        "uiId": {
+          "name": "TestAppSimpleUI",
+          "id": "TestAppSimpleUI",
+          "type": "TestAppSimpleUI",
+          "baseComponent": false
+        }
+      },
+      "viewId": {
+        "viewId": {
+          "name": "PurchasingView",
+          "id": "PurchasingView",
+          "type": "PurchasingView",
           "baseComponent": false
         }
       }

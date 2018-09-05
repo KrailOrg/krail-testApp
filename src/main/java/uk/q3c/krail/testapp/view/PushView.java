@@ -26,7 +26,6 @@ import com.vaadin.ui.TextField;
 import uk.q3c.krail.config.ApplicationConfiguration;
 import uk.q3c.krail.core.push.Broadcaster;
 import uk.q3c.krail.core.view.component.BroadcastMessageLog;
-import uk.q3c.krail.core.view.component.ViewChangeBusMessage;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.util.guice.SerializationSupport;
@@ -54,8 +53,8 @@ public class PushView extends ViewBaseGrid {
 
 
     @Override
-    public void doBuild(ViewChangeBusMessage busMessage) {
-        super.doBuild(busMessage);
+    public void doBuild() {
+        super.doBuild();
         groupInput = new TextField("Group");
         groupInput.setWidth("100px");
         messageInput = new TextField("Message");
