@@ -6,6 +6,7 @@ import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.jetbrains.spek.api.dsl.xon
+import uk.q3c.krail.app.push
 import uk.q3c.krail.functest.ExecutionMode
 import uk.q3c.krail.functest.browser
 import uk.q3c.krail.functest.createBrowser
@@ -16,7 +17,6 @@ import uk.q3c.krail.functest.executionMode
  * Created by David Sowerby on 10 Feb 2018
  */
 class PushTest : Spek({
-    val pushPage = "notifications/push"
     given("an application that should react to messages from other clients") {
         beforeGroup {
             executionMode = ExecutionMode.SELENIDE
@@ -28,10 +28,10 @@ class PushTest : Spek({
 
         on("a client sends a message") {
             with(browser) {
-                navigateTo(pushPage)
+                navigateTo(push)
                 openNewTab()
                 switchToTab(1)
-                navigateTo(pushPage)
+                navigateTo(push)
             }
 
             sendMessage("TEST", "First test")
@@ -49,10 +49,10 @@ class PushTest : Spek({
          * Ignored see https://github.com/KrailOrg/krail/issues/707
          */
         xon("a client sends a message while push is not enabled") {
-            browser.navigateTo(pushPage)
+            browser.navigateTo(push)
             browser.openNewTab()
             browser.switchToTab(1)
-            browser.navigateTo(pushPage)
+            browser.navigateTo(push)
             val pushView1 = PushViewObject()
             pushView1.pushEnabled.setValue(false)
             sendMessage("TEST", "Second test")

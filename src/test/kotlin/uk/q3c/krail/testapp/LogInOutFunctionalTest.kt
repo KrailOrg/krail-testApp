@@ -5,6 +5,9 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
+import uk.q3c.krail.app.home
+import uk.q3c.krail.app.login
+import uk.q3c.krail.app.logout
 import uk.q3c.krail.functest.ExecutionMode
 import uk.q3c.krail.functest.browser
 import uk.q3c.krail.functest.createBrowser
@@ -26,12 +29,12 @@ object LogInOutFunctionalTest : Spek({
         }
 
         on("navigating to login page") {
-            val page = SimpleUIObject()
-            page.userStatus.login_logout_Button.click()
+            val page = TestAppSimpleUIObject()
+            page.topBar.login_logout_Button.click()
 
 
             it("should be at login page") {
-                browser.fragmentShouldBe("login")
+                browser.fragmentShouldBe(login)
             }
 
             it("displays correct captions") {
@@ -39,12 +42,6 @@ object LogInOutFunctionalTest : Spek({
                 view.password.captionShouldBe("Password")
                 view.username.captionShouldBe("User Name")
             }
-
-            it("shows users status as guest, and Log In on button") {
-                page.userStatus.usernameLabel.valueShouldBe("Guest")
-                page.userStatus.login_logout_Button.captionShouldBe("log in")
-            }
-
         }
 
         on("entering invalid credentials") {
@@ -58,36 +55,27 @@ object LogInOutFunctionalTest : Spek({
         }
         on("entering valid credentials") {
             val view = DefaultLoginViewObject()
-            val page = SimpleUIObject()
+            val page = TestAppSimpleUIObject()
             view.username.setValue("ds")
             view.password.setValue("password")
             view.submit.click()
 
 
-            it("navigates to private home page") {
-                browser.fragmentShouldBe("home")
+            it("navigates to home page") {
+                browser.fragmentShouldBe(home)
             }
-
-            it("shows users status as user name, and 'log out' on button") {
-                page.userStatus.usernameLabel.valueShouldBe("ds")
-                page.userStatus.login_logout_Button.captionShouldBe("log out")
-            }
-
 
         }
         on("logout") {
-            val page = SimpleUIObject()
-            page.userStatus.login_logout_Button.click()
+            val page = TestAppSimpleUIObject()
+            page.topBar.login_logout_Button.click()
 
 
             it("goes to logout page") {
-                browser.fragmentShouldBe("logout")
+                browser.fragmentShouldBe(logout)
             }
 
-            it("changes labels in user status") {
-                page.userStatus.usernameLabel.valueShouldBe("Guest")
-                page.userStatus.login_logout_Button.captionShouldBe("log in")
-            }
+
         }
     }
 })

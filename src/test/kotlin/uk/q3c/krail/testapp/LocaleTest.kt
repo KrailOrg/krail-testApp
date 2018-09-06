@@ -5,6 +5,8 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
+import uk.q3c.krail.app.form
+import uk.q3c.krail.app.locale
 import uk.q3c.krail.functest.ExecutionMode
 import uk.q3c.krail.functest.browser
 import uk.q3c.krail.functest.createBrowser
@@ -15,7 +17,7 @@ import uk.q3c.krail.testapp.view.LocaleChanger
  * Created by David Sowerby on 10 Feb 2018
  */
 class LocaleAndValidationTest : Spek({
-    given("we want to test something") {
+    given("we want change of locale to be ") {
         beforeGroup {
             executionMode = ExecutionMode.SELENIDE
 //        executionMode = ExecutionMode.CODED
@@ -26,11 +28,11 @@ class LocaleAndValidationTest : Spek({
         }
 
         on("opening the page") {
-            browser.clickOnNavigationButton("locale", "p/locale")
+            browser.clickOnNavigationButton("locale", locale)
 
             it("should default locale to Locale.UK") {
                 browser.viewShouldBe(LocaleChanger::class.java)
-                browser.fragmentShouldBe("p/locale")
+                browser.fragmentShouldBe(locale)
                 val view = LocaleChangerObject()
                 view.changeToUK.click()
                 view.currentLocale.valueShouldBe("en-GB")
@@ -39,10 +41,11 @@ class LocaleAndValidationTest : Spek({
 
         on("going to validated page") {
             browser.back()
-            browser.clickOnNavigationButton("form", "p/form")
+            browser.clickOnNavigationButton("form", form)
             val view = ManualFormObject()
 
             view.validateButton.click()
+            browser.waitFor(2000)
 
             it("should show validation no error message") {
                 view.validationMsg.valueShouldBe("No errors")
@@ -51,7 +54,7 @@ class LocaleAndValidationTest : Spek({
 
 
         on("entering invalid data") {
-            browser.fragmentShouldBe("p/form")
+            browser.fragmentShouldBe(form)
             val view = ManualFormObject()
             view.ageField.sendBackspace(2)
             view.ageField.sendValue("13")
@@ -63,7 +66,7 @@ class LocaleAndValidationTest : Spek({
         }
 
         on("changing language") {
-            browser.navigateTo("p/locale")
+            browser.navigateTo(locale)
             val view = LocaleChangerObject()
             view.changeToGerman.click()
 
@@ -79,11 +82,11 @@ class LocaleAndValidationTest : Spek({
         on("checking validation message") {
             val page = TestAppSimpleUIObject()
             page.topBar.homeButton.click()
-            browser.navigateTo("p/locale")
+            browser.navigateTo(locale)
             val localeView = LocaleChangerObject()
             localeView.changeToGerman.click()
 
-            browser.navigateTo("p/form")
+            browser.navigateTo(form)
             val view = ManualFormObject()
             view.ageField.sendBackspace(2)
             view.ageField.sendValue("13")

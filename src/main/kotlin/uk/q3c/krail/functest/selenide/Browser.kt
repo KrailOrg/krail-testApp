@@ -8,6 +8,7 @@ import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.WebDriverRunner
 import com.google.inject.Injector
 import org.apache.commons.io.FileUtils
+import org.openqa.selenium.TimeoutException
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.slf4j.LoggerFactory
 import uk.q3c.krail.functest.Browser
@@ -19,6 +20,7 @@ import uk.q3c.krail.functest.routeMapFromJson
 import uk.q3c.krail.functest.waitForNavigationState
 import java.io.File
 import java.net.URI
+import java.util.concurrent.TimeUnit
 
 
 class SelenideViewElement(override val id: String) : ViewElement
@@ -43,6 +45,10 @@ class SelenideBrowser : Browser {
         `$`("#${viewClass.simpleName}").`is`(visible)
     }
 
+    override fun viewShouldBeEither(viewClassA: Class<*>, viewClassB: Class<*>) {
+        (`$`("#${viewClassA.simpleName}").`is`(visible)) || (`$`("#${viewClassB.simpleName}").`is`(visible))
+    }
+
     override var view: ViewElement = SelenideViewElement("")
         get() {
             return SelenideViewElement(routeMap.viewFor(currentFragment()).viewId.id)
@@ -57,12 +63,16 @@ class SelenideBrowser : Browser {
     override fun navigateTo(fragment: String) {
         Selenide.open(fragment)
         // TODO - the condition and timeout for this need to be configurable
-        val pageStatusId = "#SimpleUI-topBar-titleLabel"
-        `$`(pageStatusId).waitUntil(Condition.not(Condition.exactTextCaseSensitive("Loading ...")), 30000L)
+        waitForPageReady()
         //////////
         view = SelenideViewElement(routeMap.viewFor(fragment).viewId.id)
         page = SelenidePageElement(routeMap.uiFor(fragment).uiId.id)
         fragmentShouldBe(fragment)
+    }
+
+    private fun waitForPageReady() {
+        val pageStatusId = "#SimpleUI-topBar-titleLabel"
+        `$`(pageStatusId).waitUntil(Condition.not(Condition.exactTextCaseSensitive("Loading ...")), 30000L)
     }
 
 
@@ -116,8 +126,16 @@ class SelenideBrowser : Browser {
     override fun waitForTabs(requiredNumberOfTabs: Int, timeout: Long) {
 //        Wait().withTimeout(Duration.ofMillis(timeout )).until(ExpectedConditions.numberOfWindowsToBe(2));
         Wait().until(ExpectedConditions.numberOfWindowsToBe(2))
-        val pageStatusId = "#TestAppUI-pageStatus"
-        `$`(pageStatusId).waitUntil(Condition.exactTextCaseSensitive("Ready"), 30000L)
+        waitForPageReady()
+    }
+
+
+    override fun waitFor(timeout: Long) {
+        try {
+            Wait().withTimeout(timeout, TimeUnit.MILLISECONDS).until(ExpectedConditions.numberOfWindowsToBe(10000))
+        } catch (e: TimeoutException) {
+            println("wait over")
+        }
     }
 
     override fun switchToTab(index: Int) {
@@ -129,7 +147,7 @@ class SelenideBrowser : Browser {
     override fun openNewTab() {
         val driver = WebDriverRunner.getWebDriver()
         val currentTabCount = driver.windowHandles.size
-        val newTab = "#TestAppUI-newTab"
+        val newTab = "#PushView-newTab"
         `$`(newTab).click()
         waitForTabs(currentTabCount + 1, 4000)
     }

@@ -55,6 +55,14 @@ import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 
 class CodedBrowser : Browser {
+    override fun viewShouldBeEither(viewClassA: Class<*>, viewClassB: Class<*>) {
+        TODO()
+    }
+
+    override fun waitFor(timeout: Long) {
+        TODO()
+    }
+
     override fun clickOnNavigationButton(urlSegment: String, expectedFragment: String) {
         TODO()
     }

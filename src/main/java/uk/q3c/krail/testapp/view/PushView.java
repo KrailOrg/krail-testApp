@@ -23,31 +23,38 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
+import org.vaadin.addon.ewopener.EnhancedBrowserWindowOpener;
 import uk.q3c.krail.config.ApplicationConfiguration;
 import uk.q3c.krail.core.push.Broadcaster;
+import uk.q3c.krail.core.ui.ScopedUIProvider;
 import uk.q3c.krail.core.view.component.BroadcastMessageLog;
 import uk.q3c.krail.i18n.Translate;
 import uk.q3c.krail.testapp.i18n.LabelKey;
 import uk.q3c.util.guice.SerializationSupport;
+
+import java.net.URI;
 
 public class PushView extends ViewBaseGrid {
 
     private final Broadcaster broadcaster;
     private final BroadcastMessageLog messageLog;
     private final ApplicationConfiguration applicationConfiguration;
+    private final ScopedUIProvider uiProvider;
     private TextField groupInput;
     private Label infoArea;
     private HorizontalLayout inputLayout;
     private TextField messageInput;
     private CheckBox pushEnabled;
     private Button sendButton;
+    private Button newTab = new Button("new tab");
 
     @Inject
-    protected PushView(Broadcaster broadcaster, SerializationSupport serializationSupport, BroadcastMessageLog messageLog, ApplicationConfiguration applicationConfiguration, Translate translate) {
+    protected PushView(Broadcaster broadcaster, SerializationSupport serializationSupport, BroadcastMessageLog messageLog, ApplicationConfiguration applicationConfiguration, Translate translate, ScopedUIProvider uiProvider) {
         super(translate, serializationSupport);
         this.broadcaster = broadcaster;
         this.messageLog = messageLog;
         this.applicationConfiguration = applicationConfiguration;
+        this.uiProvider = uiProvider;
         nameKey = LabelKey.Push;
     }
 
@@ -91,11 +98,26 @@ public class PushView extends ViewBaseGrid {
         setCentreCell(inputLayout);
         setTopLeftCell(infoArea);
         setBottomCentreCell(messageLog);
+        setMiddleLeftCell(newTab);
 
         getGrid().setComponentAlignment(pushEnabled, Alignment.MIDDLE_CENTER);
         getGrid().setComponentAlignment(inputLayout, Alignment.MIDDLE_CENTER);
+
+        prepareTabOpener();
     }
 
+    private void prepareTabOpener() {
+        EnhancedBrowserWindowOpener opener = new EnhancedBrowserWindowOpener()
+                .popupBlockerWorkaround(true);
+
+        newTab.addClickListener(e -> {
+            URI currentLocation = uiProvider.get().getPage().getLocation();
+            opener.open(currentLocation.toString());
+        });
+        opener.extend(newTab);
+        newTab.click(); // pre-loads the connector
+
+    }
 
 
 }

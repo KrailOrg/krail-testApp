@@ -70,6 +70,10 @@ public abstract class ViewBaseGrid extends ViewBase {
         getGrid().addComponent(component, 1, 3);
     }
 
+    protected void setMiddleLeftCell(Component component) {
+        getGrid().addComponent(component, 0, 2);
+    }
+
     /**
      * Get the top margin in pixels
      *

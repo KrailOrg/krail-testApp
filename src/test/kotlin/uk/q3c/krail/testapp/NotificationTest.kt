@@ -5,6 +5,7 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
+import uk.q3c.krail.app.notifications
 import uk.q3c.krail.functest.ExecutionMode
 import uk.q3c.krail.functest.NotificationLevel.*
 import uk.q3c.krail.functest.browser

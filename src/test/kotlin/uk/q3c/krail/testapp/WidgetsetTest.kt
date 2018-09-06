@@ -6,6 +6,7 @@ import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.vaadin.spinkit.shared.SpinnerType
+import uk.q3c.krail.app.widgetset
 import uk.q3c.krail.functest.ExecutionMode
 import uk.q3c.krail.functest.browser
 import uk.q3c.krail.functest.createBrowser
