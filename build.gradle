@@ -45,7 +45,7 @@ description = 'Functional test application for Krail and its additional modules'
 
 group = 'uk.q3c.krail'
 
-ext.krailVersion = "0.16.12.0-krail-752"
+ext.krailVersion = "0.16.12.0"
 ext.assertjVersion = '3.8.0'
 ext.vaadinTestbenchVersion = '5.0.0'
 ext.vaadinVersion = '8.4.2'
@@ -57,13 +57,19 @@ ext.defaultTestContainerPort = project.hasProperty("defaultTestContainerPort") ?
 
 // We have to fix the qualifier because we cannot change the scheme: https://github.com/KrailOrg/q3c-util/issues/17
 VersionNumber krailVersionNumber = VersionNumber.parse(krailVersion)
-String meta = krailVersionNumber.getQualifier().substring(2)
+
+
+String meta = ""
+if (krailVersionNumber.getQualifier().length() >= 3) {
+    def m = krailVersionNumber.getQualifier().substring(2)
+    meta = "-$m"
+}
 
 
 kaytee {
     version {
         number = krailVersionNumber.baseVersion.toString()
-        qualifier = "10-$meta" // increment this for changes to the test app itself, reset to 0 when krailVersion changes
+        qualifier = "11$meta" // increment this for changes to the test app itself, reset to 0 when krailVersion changes
 
     }
     release {
