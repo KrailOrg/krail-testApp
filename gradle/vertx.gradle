@@ -1,0 +1,28 @@
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Vaadin Vertx Experiment - Gradle build',
+                'Implementation-Version': kaytee.version.number,
+                'Main-Class': 'io.vertx.core.Launcher',
+                'Main-Verticle': 'uk.q3c.krail.TestAppVerticle'
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/webapp"
+        }
+    }
+}
+
+
+shadowJar.dependsOn(vaadinThemeCompile)
+shadowJar.dependsOn(vaadinCompile)
+
+task runOnVertx(dependsOn: shadowJar) << {
+    javaexec {
+        main = "-jar"
+        args = ["build/libs/krail-testApp-${version}-all.jar"]
+    }
+}
