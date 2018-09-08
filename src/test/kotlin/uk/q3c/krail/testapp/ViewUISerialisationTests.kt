@@ -10,11 +10,11 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.reflections.Reflections
 import uk.q3c.krail.core.env.ServletEnvironmentModule
+import uk.q3c.krail.core.ui.BootstrapUI
 import uk.q3c.krail.core.ui.DefaultApplicationUI
 import uk.q3c.krail.core.ui.ScopedUIProvider
 import uk.q3c.krail.core.view.KrailView
 import uk.q3c.krail.functest.coded.CodedBrowser
-import uk.q3c.krail.testapp.ui.PointlessUI
 import uk.q3c.krail.testapp.view.TestAppBindingsCollator
 import uk.q3c.util.serial.tracer.SerializationTracer
 import java.io.Serializable
@@ -70,7 +70,7 @@ object UIClassesSerialisationTest : Spek({
         val uiClasses: List<Class<out Serializable>> = listOf(
                 DefaultApplicationUI::class.java,
                 TestAppUI::class.java,
-                PointlessUI::class.java
+                BootstrapUI::class.java
         )
 
         uiClasses.forEach { classUnderTest ->

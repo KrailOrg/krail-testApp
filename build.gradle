@@ -46,7 +46,7 @@ description = 'Functional test application for Krail and its additional modules'
 
 group = 'uk.q3c.krail'
 
-ext.krailVersion = "0.16.12.0"
+ext.krailVersion = "0.16.13.0"
 ext.assertjVersion = '3.8.0'
 ext.vaadinTestbenchVersion = '5.0.0'
 ext.vaadinVersion = '8.4.2'
@@ -70,7 +70,7 @@ if (krailVersionNumber.getQualifier().length() >= 3) {
 kaytee {
     version {
         number = krailVersionNumber.baseVersion.toString()
-        qualifier = "12$meta" // increment this for changes to the test app itself, reset to 0 when krailVersion changes
+        qualifier = "0$meta" // increment this for changes to the test app itself, reset to 0 when krailVersion changes
 
     }
     release {
